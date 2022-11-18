@@ -1,5 +1,8 @@
-<<<<<<< Updated upstream
-def
-=======
+
 다른내용임
 >>>>>>> Stashed changes
+
+
+Hello World!
+We need love~
+lol
