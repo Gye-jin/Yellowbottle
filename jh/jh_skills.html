@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width, initial-scale=1.0, maximum-scale=1.0" /> 
+    <title>Skills</title>
+    <link rel="shortcut icon" href="/React-PortFolio/favicon.ico">
+    
+	<link rel="stylesheet" type="text/css"  href="./desktop.css" media="only screen and (min-width:401px)"  />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+	<script type="text/JavaScript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script type="text/JavaScript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript">
+		
+		jQuery(document).ready(function() {
+		   
+			var barProgress = jQuery(".progressbar");
+	
+	
+			// value 값의 숫자를 입력함으로서 내용을 채울 수 있다.
+	
+			barProgress.eq(0).progressbar({value:25});
+			barProgress.eq(0).find(".ui-progressbar-value").css({"background":"#CC66CC"});
+		   
+			barProgress.eq(1).progressbar({value:40});
+			barProgress.eq(1).find(".ui-progressbar-value").css({"background":"#FFCC66"});
+		   
+			barProgress.eq(2).progressbar({value:40});
+			barProgress.eq(2).find(".ui-progressbar-value").css({"background":"#DDDDDDD"});
+
+			barProgress.eq(3).progressbar({value:25});
+			barProgress.eq(3).find(".ui-progressbar-value").css({"background":"#FFE4C4"});
+
+			barProgress.eq(4).progressbar({value:25});
+			barProgress.eq(4).find(".ui-progressbar-value").css({"background":"#FFE4C4"});
+
+			barProgress.eq(5).progressbar({value:25});
+			barProgress.eq(5).find(".ui-progressbar-value").css({"background":"#DEB887"});
+
+			barProgress.eq(6).progressbar({value:25});
+			barProgress.eq(6).find(".ui-progressbar-value").css({"background":"#00FFFF"});
+		});
+	</script>
+	<style type="text/css">
+		.u.i-progressbar { position:relative; }
+    	.progress-label {
+        	position:absolute;
+        	left:50%;
+        	top:8px;
+	        font-weight:bold;
+    	    margin-left:-40px;
+    	}
+	</style>
+	<script defer src="..\jh\footer\footer.js"></script>
+</head>
+ 
+<body>
+<div id="skipNav">
+    <a href="#contents">JongSeo's Webpage</a>
+</div>
+<hr class="hidden" />
+
+<div id="wrap">
+	<div id="header">
+		<h1 id="logo"><img src="imgs_jh/maple.odium.jpeg" width="200" height="39" alt="JongSeo Pt" /></h1>
+		<h2 class="noVisible">메인메뉴</h2>
+		<ul id="menu">
+			<li><a href="jh_main.html">HOME</a></li>
+			<li><a href="jh_aboutme.html">ABOUT ME</a></li>
+			<li class="current"><a href="jh_skills.html">SKILLS</a></li>
+			<li><a href="jh_portfolio.html">PORTFOLIO</a></li>
+		</ul>
+		
+	</div>
+	<hr class="hidden" />
+	
+	<div id="contents">
+		<h1>SKILLS</h1>
+		<hr>
+		<h2 id="cert">자격증 <br>  </h2>
+		<h3 class="skill-padding">ㅇJAVA : 하</h3>
+		<div class="progressbar"><div class="progress-label"></div></div>
+		<br/>
+		<h3 class="skill-padding">ㅇPython : 중하</h3>
+		<div class="progressbar"><div class="progress-label"></div></div>
+		<br/>
+		<h3 class="skill-padding">ㅇHTML : 중하</h3>
+		<div class="progressbar"><div class="progress-label"></div></div>
+		<br/>
+		<h3 class="skill-padding">ㅇCSS : 히</h3>
+		<div class="progressbar"><div class="progress-label"></div></div>
+		<br/>
+		<h3 class="skill-padding">ㅇJavaScript : 하</h3>
+		<div class="progressbar"><div class="progress-label"></div></div>
+		<br/>
+		<h3 class="skill-padding">ㅇSQL : 하</h3>
+		<div class="progressbar"><div class="progress-label"></div></div>
+		<h3 class="skill-padding">ㅇLinux : 하</h3>
+		<div class="progressbar"><div class="progress-label"></div></div>
+
+
+	</div> 
+
+	
+	<!--  end of contents -->
+	<hr  class="hidden" />
+    
+</div>  <!--  end of wrap -->
+<div id="footer">Footer</div>
+</address>
+<footer></footer>
+</body>
+</html>
