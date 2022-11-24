@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 const PageUl = styled.ul`
   float: left;
   list-style: none;
@@ -38,14 +39,9 @@ const PageSpan = styled.span`
     background-color: #263a6c;
   }
 `;
-const Pagination = ({
-  pageNumbers,
-  totalPosts,
-  setCurrentPage,
-  prev,
-  next,
-  start,
-}) => {
+
+const Pagination = ({ prev, next, start, end, pageList, setCurrentPage }) => {
+  // const Pagination = ({ {prev, next, start, end, pageNoList}, setCurrentPage }) => {
   return (
     <div>
       <nav>
@@ -55,17 +51,13 @@ const Pagination = ({
           ) : (
             <></>
           )}
-          {pageNumbers ? (
-            pageNumbers.map((pageNumber) => (
-              <PageLi onClick={() => setCurrentPage(pageNumber)}>
-                <PageSpan>{pageNumber}</PageSpan>
-              </PageLi>
-            ))
-          ) : (
-            <></>
-          )}
+          {pageList.map((pageNo) => (
+            <PageLi key={pageNo} onClick={() => setCurrentPage(pageNo)}>
+              <PageSpan>{pageNo}</PageSpan>
+            </PageLi>
+          ))}
           {next ? (
-            <PageLi onClick={() => setCurrentPage(start + 10)}>→</PageLi>
+            <PageLi onClick={() => setCurrentPage(end + 1)}>→</PageLi>
           ) : (
             <></>
           )}
