@@ -4,6 +4,7 @@ import Posts from "./components/Posts";
 import Pagination from "./components/Pagination";
 import { fetchData } from "./Api/data";
 
+// master
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [size, setSize] = useState(10);
