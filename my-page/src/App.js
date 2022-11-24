@@ -1,14 +1,15 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import Posts from "./components/Posts";
-import Pagination from "./components/Pagination";
 import { fetchData } from "./Api/data";
+import { Routes, Route } from "react-router-dom";
+import Diary from "./components/Diary";
 
 // master
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [size, setSize] = useState(10);
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
   useEffect(() => {
     const response = fetchData(currentPage, size);
     response.then((response) => setData(response));
@@ -20,7 +21,7 @@ function App() {
   2. indexOfLastPage
   3. indexOfFirstPage
   4. currentPage
-*/
+  */
   return (
     <div className="App">
       <Routes>
