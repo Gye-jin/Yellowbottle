@@ -72,7 +72,7 @@ function App() {
             />
           }
         />
-        <Route path="/diary/:diaryNo" element={<Diary />} />
+        <Route path="/diary/:diaryNumber" element={<Diary />} />
       </Routes>
     </div>
   );

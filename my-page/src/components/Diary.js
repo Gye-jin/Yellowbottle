@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function Diary() {
-  const { diaryNo } = useParams();
+  const { diaryNumber } = useParams();
+  const [diaryNo, setDiaryNo] = useState(0);
 
   const [diary, setDiary] = useState([]);
 
@@ -15,7 +16,7 @@ function Diary() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        "http://localhost:8080/api/diary/" + { diaryNo }
+        "http://localhost:8080/api/diary/" + diaryNumber
       );
 
       setDiary(response.data);
@@ -31,7 +32,11 @@ function Diary() {
   return (
     <div>
       <div>
-        {diaryNo}-{title}-{content}-{createDate}-{modifiedDate}
+        {diaryNo}---{title}
+        <div>{content}</div>
+        <div>
+          {createDate}---{modifiedDate}
+        </div>
       </div>
     </div>
   );
