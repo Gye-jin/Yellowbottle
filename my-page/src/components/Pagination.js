@@ -38,14 +38,7 @@ const PageSpan = styled.span`
     background-color: #263a6c;
   }
 `;
-const Pagination = ({
-  pageNumbers,
-  totalPosts,
-  setCurrentPage,
-  prev,
-  next,
-  start,
-}) => {
+const Pagination = ({ prev, next, start, end, pageList, setCurrentPage }) => {
   return (
     <div>
       <nav>
@@ -55,8 +48,8 @@ const Pagination = ({
           ) : (
             <></>
           )}
-          {pageNumbers ? (
-            pageNumbers.map((pageNumber) => (
+          {pageList ? (
+            pageList.map((pageNumber) => (
               <PageLi onClick={() => setCurrentPage(pageNumber)}>
                 <PageSpan>{pageNumber}</PageSpan>
               </PageLi>
@@ -65,7 +58,7 @@ const Pagination = ({
             <></>
           )}
           {next ? (
-            <PageLi onClick={() => setCurrentPage(start + 10)}>→</PageLi>
+            <PageLi onClick={() => setCurrentPage(end + 1)}>→</PageLi>
           ) : (
             <></>
           )}
