@@ -11,3 +11,11 @@ export const fetchData = async (currentPage, size) => {
   });
   return response.data;
 };
+
+export const diaryFetchData = async (diaryNumber) => {
+  const response = await axios.get(
+    "http://localhost:8080/api/diary/" + diaryNumber
+  );
+
+  return response.data;
+};

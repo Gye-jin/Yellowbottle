@@ -2,9 +2,9 @@ import logo from "./logo.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Posts from "./components/Posts";
-import Pagination from "./components/Pagination";
-import "./App.css";
-import Header from "./components/Header";
+import { fetchData } from "./Api/data";
+import { Routes, Route } from "react-router-dom";
+import Diary from "./components/Diary";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(11);
