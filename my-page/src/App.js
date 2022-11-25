@@ -4,6 +4,7 @@ import Posts from "./components/Posts";
 import { fetchData } from "./Api/data";
 import { Routes, Route } from "react-router-dom";
 import Diary from "./components/Diary";
+import axios from "axios";
 
 // master
 function App() {
