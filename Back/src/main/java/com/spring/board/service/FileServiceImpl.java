@@ -22,11 +22,11 @@ public class FileServiceImpl implements FileService{
 	FileRepository fileRepo;
 	
 	@Autowired
-	BoardRepository diaryRepo;
+	BoardRepository boardRepo;
 	
 
 	@Override
-	public void insertFile(Long diaryId, List<MultipartFile> files) {
+	public void insertFile(Long boardId, List<MultipartFile> files) {
 
 		for (MultipartFile file : files) {
 			FileDTO fileDTO = FileDTO.builder()
@@ -36,16 +36,16 @@ public class FileServiceImpl implements FileService{
 									 .build();
 
 			File entity = fileDTO.dtoToEntity(fileDTO);
-			Board diary = diaryRepo.getDiaryByNo(diaryId);
+			Board board = boardRepo.getById(boardId);
 
-			entity.updateDiary(diary);
+			entity.updateBoard(board);
 			fileRepo.save(entity);
 		}
 	}
 	
 	@Override
-	public void deleteFileDiary(Long diaryId) {
-		fileRepo.deleteByDiaryNo(diaryId);
+	public void deleteFileBoard(Long diaryId) {
+		fileRepo.deleteByBoardNo(diaryId);
 	}
 	
 	@Override	
@@ -53,21 +53,6 @@ public class FileServiceImpl implements FileService{
 		fileRepo.deleteById(fileNo);
 	}
 	
-	@Override
-	public void updateFile(Long diaryId, List<MultipartFile> files) {
 
-		for (MultipartFile file : files) {
-			FileDTO fileDTO = FileDTO.builder()
-									 .originalFileNAME(file.getOriginalFilename())
-									 .fileName(UUID.randomUUID() + "_" + file.getOriginalFilename())
-									 .filePath(System.getProperty("user.dir") + "\\files")
-									 .build();
-
-			File entity = fileDTO.dtoToEntity(fileDTO);
-			Board diary = diaryRepo.getDiaryByNo(diaryId);
-
-			entity.updateDiary(diary);
-			fileRepo.save(entity);
-		}
-	}
 }
+

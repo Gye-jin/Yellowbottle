@@ -35,16 +35,18 @@ public class File {
 	@Column(name="file_no",nullable = false)
 	private Long fileNo;
 	
-	private String originalFileName;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="board_no")
+	private Board board;
+	
+
 	private String fileName;
 	private String filePath;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="diary_no")
-	private Board diary;
+	private String originalFileName;
 
-	public void updateDiary(Board diary) {
-		this.diary = diary;
+
+	public void updateBoard(Board board) {
+		this.board = board;
 	}
 	
 	public static FileDTO entotyToDTO(File file) {

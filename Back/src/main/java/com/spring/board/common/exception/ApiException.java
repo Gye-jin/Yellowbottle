@@ -21,8 +21,7 @@ public class ApiException {
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<String> handlerNoSuchElementException(NoSuchElementException e) {
 		logger.error(e.getMessage());
-//		return ResponseEntity.status(ExceptionEnum.NOT_FOUND.getStatusCode())
-//				.body(ExceptionEnum.NOT_FOUND.getMsg());
+
 		return ResponseEntity.status(ExceptionEnum.E0001.getStatusCode())
 				.body(ExceptionEnum.E0001.getMsg());
 		}

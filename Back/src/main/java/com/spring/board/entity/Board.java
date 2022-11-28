@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -37,15 +39,18 @@ import lombok.ToString;
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Board {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="diary_no")
+	@Column(name="board_no")
 	private Long no;
 	
-	private String title;
+	private String userId;
 	
-	private String content;
+	private String boardContent;
+	
+//    @ColumnDefault("0")
+	private Long likeCount;
 	
 	@CreatedDate
 	@Column(updatable = false)
@@ -54,32 +59,21 @@ public class Board {
 	@LastModifiedDate
 	private LocalDateTime modifiedDate;
 	
-	@OneToMany(mappedBy = "diary")
-	List<File> files = new ArrayList<File>();
+//    @ColumnDefault("0")
+	private Long viewCount;
 	
-	
-	// entity to dto
-	public static BoardDTO entityToDTO(Board diary) {
-
-		
-		
-		BoardDTO diaryDTO = BoardDTO.builder()
-								.no(diary.getNo())
-								.title(diary.getTitle())
-								.content(diary.getContent())
-								.createDate(diary.getWrittenDate())
-								.modifiedDate(diary.getModifiedDate())
-								.fileDTOs(diary.getFiles().stream()
-											  .map(file -> file.entotyToDTO(file))
-										      .collect(Collectors.toList()))
-								.build();
-		
-		return diaryDTO;
-	
-}
-	
-	public void updateDiary(BoardDTO diaryDTO) {
-		this.title = diaryDTO.getTitle();
-		this.content=diaryDTO.getContent();
+	public static BoardDTO entitytoDTO (Board board) {
+		BoardDTO boardDTO = BoardDTO.builder()
+									.no(board.getNo())
+									.userId(board.getUserId())
+									.boardContent(board.getBoardContent())
+									.likeCount(board.getLikeCount())
+									.createDate(board.getWrittenDate())
+									.modifiedDate(board.getModifiedDate())
+									.viewCount(board.getViewCount())
+									.build();
+		return boardDTO;
 	}
+	
+
 }

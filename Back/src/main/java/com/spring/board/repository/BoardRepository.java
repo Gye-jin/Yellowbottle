@@ -13,7 +13,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 	
 	public Board save(BoardDTO diaryDTO);
 	
-	public Board getDiaryByNo(Long no);
+	
+	
 	
 	
 }

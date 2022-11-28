@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.spring.board.entity.Board;
@@ -27,27 +29,23 @@ import lombok.NoArgsConstructor;
 public class BoardDTO {
 	
 	private Long no;
-	private String title;
-	private String content;
+	private String userId;
+	private String boardContent;
+	private Long likeCount;
 	private LocalDateTime createDate;
-	private LocalDateTime modifiedDate;
-	
-	@OneToMany(fetch = FetchType.LAZY)
-	List<FileDTO> fileDTOs = new ArrayList<FileDTO>();
-	
+	private LocalDateTime modifiedDate;	
+	private Long viewCount;
 
 
 	
-	// dto -> entity
-	public static Board dtoToEntity(BoardDTO diaryDTO){
-		Board diary = Board.builder()
-						.title(diaryDTO.getTitle())
-						.content(diaryDTO.getContent())
-//						.files(diaryDTO.getFileDTOs().stream()
-//								  .map(fileDTO -> fileDTO.dtoToEntity(fileDTO))
-//							      .collect(Collectors.toList()))
-						.build();
-		return diary;
+	public static  Board dtotoEntity(BoardDTO boardDTO) {
+		Board board = Board.builder()
+						   .userId(boardDTO.getUserId())
+						   .boardContent(boardDTO.getBoardContent())
+						   .likeCount(0L)
+						   .viewCount(0L)
+						   .build();
+		return board;
 	}
 	
 

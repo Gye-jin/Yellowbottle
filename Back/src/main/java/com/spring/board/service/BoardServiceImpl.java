@@ -15,8 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.board.common.dto.PageRequestDTO;
-import com.spring.board.common.dto.PageResultDTO;
+
 import com.spring.board.dto.BoardDTO;
 import com.spring.board.entity.Board;
 import com.spring.board.repository.BoardRepository;
@@ -26,74 +25,44 @@ public class BoardServiceImpl implements BoardService{
 	
 	
 	@Autowired
-	BoardRepository diaryRepo;
+	BoardRepository boardRepo;
 	
 	
 	@Autowired
 	FileServiceImpl fileService;
 	
 	@Override
-	public Long insertDiary(BoardDTO diaryDTO) {
-	Board diary = diaryDTO.dtoToEntity(diaryDTO);
+	public Long insertBoard(BoardDTO boardDTO) {
+	Board board = boardDTO.dtotoEntity(boardDTO);
 	
-	
-	return diaryRepo.save(diary).getNo();
+	System.out.println(board);
+	return boardRepo.save(board).getNo();
 	
 	}
 
 	@Override
-	public BoardDTO getDiaryByDiaryNo(Long diaryNo) throws NoSuchElementException{
+	public BoardDTO getBoardByBoardNo(Long BoardNo) throws NoSuchElementException{
 		
-		Board diary = diaryRepo.findById(diaryNo).orElseThrow(NoSuchElementException::new);
+		Board board = boardRepo.findById(BoardNo).orElseThrow(NoSuchElementException::new);
 		
+			
+		BoardDTO boardDTO = board.entitytoDTO(board);
 		
-//		Diary diary = diaryRepo.getDiaryByNo(diaryNo);		
-		BoardDTO diaryDTO = diary.entityToDTO(diary);
-		
-		return diaryDTO;
+		return boardDTO;
 	}
 	
 	@Override
-	public void deleteDiary(Long diaryNo){
+	public void deleteBoard(Long boardNo){
 		
 		
-		fileService.deleteFileDiary(diaryNo);
-		diaryRepo.deleteById(diaryNo);
+		fileService.deleteFileBoard(boardNo);
+		boardRepo.deleteById(boardNo);
 		
 		
 	}
 	
-	@Override
-	public void insertBatchData(List<BoardDTO> diaryList) {
-		
-		List<Board> entities = diaryList.stream()
-				.map(diaryDTO -> diaryDTO.dtoToEntity(diaryDTO))
-				.collect(Collectors.toList());
-		diaryRepo.saveAll(entities);
-	}
 	
-	@Override
-	public PageResultDTO<BoardDTO, Board> getList(PageRequestDTO requestDTO) {
-		Pageable pageable = requestDTO.getPageable();
-		Page<Board> result = diaryRepo.findAll(pageable);
-		
-		Function<Board, BoardDTO> fn = (diary -> diary.entityToDTO(diary));
-		
-		return new PageResultDTO<BoardDTO, Board>(result, fn);
-	}
-	
-	
-	@Override
-	@Transactional
-	public void updateDiary(Long diaryNo, BoardDTO newdiaryDTO) {
-
-	
-	Board diary = diaryRepo.getDiaryByNo(diaryNo);
-	
-	diary.updateDiary(newdiaryDTO);
 	
 
-	
-	}
 	
 }

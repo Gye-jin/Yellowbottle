@@ -17,7 +17,7 @@ public interface FileRepository extends JpaRepository<File, Long>{
 	public File save(FileDTO fileDTO);
 	
 	@Transactional
-	void deleteByDiaryNo(Long no);
+	void deleteByBoardNo(Long no);
 	
-	public List<File> getFileByDiaryNo(Long no);
+	public List<File> getFileByBoardNo(Long no);
 }
