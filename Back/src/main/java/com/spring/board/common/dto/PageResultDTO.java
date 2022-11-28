@@ -1,4 +1,4 @@
-package com.spring.diary.common.dto;
+package com.spring.board.common.dto;
 
 import java.util.List;
 import java.util.function.Function;
@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 import org.springframework.data.domain.Page;
 
-import com.spring.diary.entity.Diary;
+import com.spring.board.entity.Board;
 
 import lombok.Data;
 

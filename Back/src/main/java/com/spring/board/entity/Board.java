@@ -1,4 +1,4 @@
-package com.spring.diary.entity;
+package com.spring.board.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,8 +20,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.diary.dto.DiaryDTO;
-import com.spring.diary.dto.FileDTO;
+import com.spring.board.dto.BoardDTO;
+import com.spring.board.dto.FileDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +36,7 @@ import lombok.ToString;
 @ToString
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class Diary {
+public class Board {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,11 +59,11 @@ public class Diary {
 	
 	
 	// entity to dto
-	public static DiaryDTO entityToDTO(Diary diary) {
+	public static BoardDTO entityToDTO(Board diary) {
 
 		
 		
-		DiaryDTO diaryDTO = DiaryDTO.builder()
+		BoardDTO diaryDTO = BoardDTO.builder()
 								.no(diary.getNo())
 								.title(diary.getTitle())
 								.content(diary.getContent())
@@ -78,7 +78,7 @@ public class Diary {
 	
 }
 	
-	public void updateDiary(DiaryDTO diaryDTO) {
+	public void updateDiary(BoardDTO diaryDTO) {
 		this.title = diaryDTO.getTitle();
 		this.content=diaryDTO.getContent();
 	}

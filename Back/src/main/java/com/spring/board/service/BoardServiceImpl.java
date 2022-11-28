@@ -1,4 +1,4 @@
-package com.spring.diary.service;
+package com.spring.board.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,26 +15,26 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.diary.common.dto.PageRequestDTO;
-import com.spring.diary.common.dto.PageResultDTO;
-import com.spring.diary.dto.DiaryDTO;
-import com.spring.diary.entity.Diary;
-import com.spring.diary.repository.DiaryRepository;
+import com.spring.board.common.dto.PageRequestDTO;
+import com.spring.board.common.dto.PageResultDTO;
+import com.spring.board.dto.BoardDTO;
+import com.spring.board.entity.Board;
+import com.spring.board.repository.BoardRepository;
 
 @Service
-public class DiaryServiceImpl implements DiaryService{
+public class BoardServiceImpl implements BoardService{
 	
 	
 	@Autowired
-	DiaryRepository diaryRepo;
+	BoardRepository diaryRepo;
 	
 	
 	@Autowired
 	FileServiceImpl fileService;
 	
 	@Override
-	public Long insertDiary(DiaryDTO diaryDTO) {
-	Diary diary = diaryDTO.dtoToEntity(diaryDTO);
+	public Long insertDiary(BoardDTO diaryDTO) {
+	Board diary = diaryDTO.dtoToEntity(diaryDTO);
 	
 	
 	return diaryRepo.save(diary).getNo();
@@ -42,13 +42,13 @@ public class DiaryServiceImpl implements DiaryService{
 	}
 
 	@Override
-	public DiaryDTO getDiaryByDiaryNo(Long diaryNo) throws NoSuchElementException{
+	public BoardDTO getDiaryByDiaryNo(Long diaryNo) throws NoSuchElementException{
 		
-		Diary diary = diaryRepo.findById(diaryNo).orElseThrow(NoSuchElementException::new);
+		Board diary = diaryRepo.findById(diaryNo).orElseThrow(NoSuchElementException::new);
 		
 		
 //		Diary diary = diaryRepo.getDiaryByNo(diaryNo);		
-		DiaryDTO diaryDTO = diary.entityToDTO(diary);
+		BoardDTO diaryDTO = diary.entityToDTO(diary);
 		
 		return diaryDTO;
 	}
@@ -64,31 +64,31 @@ public class DiaryServiceImpl implements DiaryService{
 	}
 	
 	@Override
-	public void insertBatchData(List<DiaryDTO> diaryList) {
+	public void insertBatchData(List<BoardDTO> diaryList) {
 		
-		List<Diary> entities = diaryList.stream()
+		List<Board> entities = diaryList.stream()
 				.map(diaryDTO -> diaryDTO.dtoToEntity(diaryDTO))
 				.collect(Collectors.toList());
 		diaryRepo.saveAll(entities);
 	}
 	
 	@Override
-	public PageResultDTO<DiaryDTO, Diary> getList(PageRequestDTO requestDTO) {
+	public PageResultDTO<BoardDTO, Board> getList(PageRequestDTO requestDTO) {
 		Pageable pageable = requestDTO.getPageable();
-		Page<Diary> result = diaryRepo.findAll(pageable);
+		Page<Board> result = diaryRepo.findAll(pageable);
 		
-		Function<Diary, DiaryDTO> fn = (diary -> diary.entityToDTO(diary));
+		Function<Board, BoardDTO> fn = (diary -> diary.entityToDTO(diary));
 		
-		return new PageResultDTO<DiaryDTO, Diary>(result, fn);
+		return new PageResultDTO<BoardDTO, Board>(result, fn);
 	}
 	
 	
 	@Override
 	@Transactional
-	public void updateDiary(Long diaryNo, DiaryDTO newdiaryDTO) {
+	public void updateDiary(Long diaryNo, BoardDTO newdiaryDTO) {
 
 	
-	Diary diary = diaryRepo.getDiaryByNo(diaryNo);
+	Board diary = diaryRepo.getDiaryByNo(diaryNo);
 	
 	diary.updateDiary(newdiaryDTO);
 	

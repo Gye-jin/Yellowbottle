@@ -1,4 +1,4 @@
-package com.spring.diary.repository;
+package com.spring.board.repository;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.diary.dto.FileDTO;
-import com.spring.diary.entity.Diary;
-import com.spring.diary.entity.File;
+import com.spring.board.dto.FileDTO;
+import com.spring.board.entity.Board;
+import com.spring.board.entity.File;
 
 
 @Repository

@@ -1,4 +1,4 @@
-package com.spring.diary.controller;
+package com.spring.board.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.diary.common.dto.PageRequestDTO;
-import com.spring.diary.common.dto.PageResultDTO;
-import com.spring.diary.dto.DiaryDTO;
-import com.spring.diary.entity.Diary;
-import com.spring.diary.repository.DiaryRepository;
-import com.spring.diary.service.DiaryServiceImpl;
-import com.spring.diary.service.FileServiceImpl;
+import com.spring.board.common.dto.PageRequestDTO;
+import com.spring.board.common.dto.PageResultDTO;
+import com.spring.board.dto.BoardDTO;
+import com.spring.board.entity.Board;
+import com.spring.board.repository.BoardRepository;
+import com.spring.board.service.BoardServiceImpl;
+import com.spring.board.service.FileServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,16 +52,16 @@ public class BoardController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	DiaryServiceImpl diaryservice;
+	BoardServiceImpl diaryservice;
 	
 	@Autowired
-	DiaryRepository diaryRepo;
+	BoardRepository diaryRepo;
 	
 	@Autowired
 	FileServiceImpl fileService;
 
 	@PostMapping(value ="/diary")
-	public void createDiary(@ModelAttribute DiaryDTO diaryDTO, @RequestParam("file") List<MultipartFile> file) {
+	public void createDiary(@ModelAttribute BoardDTO diaryDTO, @RequestParam("file") List<MultipartFile> file) {
 		logger.info("다이어리 컨트롤러 : insertrquest");
 //		diaryservice.insertDiary(diaryDTO);
 		Long diaryId = diaryservice.insertDiary(diaryDTO);
@@ -73,9 +73,9 @@ public class BoardController {
 		
 	
 	@GetMapping("/diary/{diaryNo}")
-	public DiaryDTO getDiary(@PathVariable Long diaryNo) {
+	public BoardDTO getDiary(@PathVariable Long diaryNo) {
 	
-		DiaryDTO diaryDTO = null;
+		BoardDTO diaryDTO = null;
 
 			diaryDTO = diaryservice.getDiaryByDiaryNo(diaryNo);
 
@@ -94,10 +94,10 @@ public class BoardController {
 	
 	@GetMapping("/batch")
 	public void insertBatchData() {
-		List<DiaryDTO> diaryList = new ArrayList<DiaryDTO>();
+		List<BoardDTO> diaryList = new ArrayList<BoardDTO>();
 		
 		IntStream.rangeClosed(301, 500).forEach(i -> {
-			DiaryDTO diaryDTO = DiaryDTO.builder()
+			BoardDTO diaryDTO = BoardDTO.builder()
 										.title("Title "+i)
 										.content("Content "+i)
 										.build();
@@ -109,7 +109,7 @@ public class BoardController {
 	}
 	
 	@GetMapping(value ="/diaryupdate/{diaryNo}")
-	public void updateDiary(@PathVariable Long diaryNo, @ModelAttribute DiaryDTO newdiaryDTO) {
+	public void updateDiary(@PathVariable Long diaryNo, @ModelAttribute BoardDTO newdiaryDTO) {
 		logger.info("다이어리 컨트롤러 : updaterequest");
 //		diaryservice.insertDiary(diaryDTO);
 		diaryservice.updateDiary(diaryNo, newdiaryDTO);

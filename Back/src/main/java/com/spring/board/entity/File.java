@@ -1,4 +1,4 @@
-package com.spring.diary.entity;
+package com.spring.board.entity;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.diary.dto.DiaryDTO;
-import com.spring.diary.dto.FileDTO;
+import com.spring.board.dto.BoardDTO;
+import com.spring.board.dto.FileDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,9 +41,9 @@ public class File {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="diary_no")
-	private Diary diary;
+	private Board diary;
 
-	public void updateDiary(Diary diary) {
+	public void updateDiary(Board diary) {
 		this.diary = diary;
 	}
 	

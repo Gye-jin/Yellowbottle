@@ -1,4 +1,4 @@
-package com.spring.diary.common.exception;
+package com.spring.board.common.exception;
 
 import java.util.NoSuchElementException;
 
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.spring.diary.controller.BoardController;
+import com.spring.board.controller.BoardController;
 
 import lombok.extern.slf4j.Slf4j;
 
