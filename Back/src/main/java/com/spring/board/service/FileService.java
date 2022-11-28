@@ -1,4 +1,4 @@
-package com.spring.diary.service;
+package com.spring.board.service;
 
 import java.util.List;
 

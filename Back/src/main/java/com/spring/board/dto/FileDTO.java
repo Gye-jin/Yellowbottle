@@ -1,4 +1,4 @@
-package com.spring.diary.dto;
+package com.spring.board.dto;
 
 import java.util.UUID;
 
@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.diary.entity.File;
+import com.spring.board.entity.File;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

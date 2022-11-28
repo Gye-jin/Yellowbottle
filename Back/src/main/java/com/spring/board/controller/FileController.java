@@ -1,4 +1,4 @@
-package com.spring.diary.controller;
+package com.spring.board.controller;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.diary.dto.DiaryDTO;
-import com.spring.diary.dto.FileDTO;
-import com.spring.diary.service.FileServiceImpl;
+import com.spring.board.dto.BoardDTO;
+import com.spring.board.dto.FileDTO;
+import com.spring.board.service.FileServiceImpl;
 
 @RestController
 public class FileController {
