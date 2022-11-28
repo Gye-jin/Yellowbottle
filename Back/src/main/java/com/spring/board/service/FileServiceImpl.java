@@ -1,4 +1,4 @@
-package com.spring.diary.service;
+package com.spring.board.service;
 
 import java.util.List;
 import java.util.UUID;
@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.diary.dto.FileDTO;
-import com.spring.diary.entity.Diary;
-import com.spring.diary.entity.File;
-import com.spring.diary.repository.DiaryRepository;
-import com.spring.diary.repository.FileRepository;
+import com.spring.board.dto.FileDTO;
+import com.spring.board.entity.Board;
+import com.spring.board.entity.File;
+import com.spring.board.repository.BoardRepository;
+import com.spring.board.repository.FileRepository;
 
 @Service
 public class FileServiceImpl implements FileService{
@@ -22,7 +22,7 @@ public class FileServiceImpl implements FileService{
 	FileRepository fileRepo;
 	
 	@Autowired
-	DiaryRepository diaryRepo;
+	BoardRepository diaryRepo;
 	
 
 	@Override
@@ -36,7 +36,7 @@ public class FileServiceImpl implements FileService{
 									 .build();
 
 			File entity = fileDTO.dtoToEntity(fileDTO);
-			Diary diary = diaryRepo.getDiaryByNo(diaryId);
+			Board diary = diaryRepo.getDiaryByNo(diaryId);
 
 			entity.updateDiary(diary);
 			fileRepo.save(entity);
@@ -64,7 +64,7 @@ public class FileServiceImpl implements FileService{
 									 .build();
 
 			File entity = fileDTO.dtoToEntity(fileDTO);
-			Diary diary = diaryRepo.getDiaryByNo(diaryId);
+			Board diary = diaryRepo.getDiaryByNo(diaryId);
 
 			entity.updateDiary(diary);
 			fileRepo.save(entity);

@@ -1,4 +1,4 @@
-package com.spring.diary.dto;
+package com.spring.board.dto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import javax.persistence.OneToMany;
 
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.spring.diary.entity.Diary;
-import com.spring.diary.entity.File;
+import com.spring.board.entity.Board;
+import com.spring.board.entity.File;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DiaryDTO {
+public class BoardDTO {
 	
 	private Long no;
 	private String title;
@@ -39,8 +39,8 @@ public class DiaryDTO {
 
 	
 	// dto -> entity
-	public static Diary dtoToEntity(DiaryDTO diaryDTO){
-		Diary diary = Diary.builder()
+	public static Board dtoToEntity(BoardDTO diaryDTO){
+		Board diary = Board.builder()
 						.title(diaryDTO.getTitle())
 						.content(diaryDTO.getContent())
 //						.files(diaryDTO.getFileDTOs().stream()
