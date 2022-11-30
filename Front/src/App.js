@@ -1,37 +1,43 @@
-import React from "react";
+import React, { Component } from "react";
 import "./App.css";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import Main from "./pages/Main";
+import Login from "./pages/Login";
+import Join from "./pages/Join";
+import Feed from "./pages/Feed";
+import ReadBoard from "./pages/ReadBoard";
 import Header from "./components/Header";
-import Scroll from "./components/Scroll";
-// import { Route, Router } from "react-router-dom";
-import ButtonAppBar from "./components/Demo";
-import { useState } from "react";
-// import "./styles.css";
-import Example from "./components/Example";
-import Register from "./Register";
+import NotFound from "./pages/NotFound";
 
 function App() {
-  // const [showPopup, setShowPopup] = useState(false);
-
-  // const togglePopup = (event) => {
-  //   setShowPopup(event.target.value)
-  // };
-  const [ispopup, setIsPopup] = useState(false)
-  const handlePopup = () => {
-    return (
-        setIsPopup(!ispopup)
-    )
-}
   return (
-    <>
-      {/* <Header></Header> */}
-      {/* <Example/> */}
-      {/* <ButtonAppBar/> */}
-      {/* <Popup></Popup> */}
-      
-      {/* <Scroll></Scroll> */}
-      <Register/>
-      {/* </body> */}
-    </>
+    <div>
+      {/* //       <ul>
+//         <li>
+//           <Link to="/">Main</Link>
+//         </li>
+//         <li>
+//           <Link to="/login">로그인</Link>
+//         </li>
+//       </ul>
+//       <hr />
+//       <Route path="/" exact={true} component={Main} />
+//       <Route path="/login" component={Login} />
+//     </div> */}
+
+      {/* <BrowserRouter> */}
+      {/* <Header /> */}
+      <Scroll></Scroll>
+      <Routes>
+        <Route path="/main" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/join" element={<Join />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/readboard/*" element={<ReadBoard />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {/* </BrowserRouter> */}
+    </div>
   );
 }
 
