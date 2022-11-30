@@ -19,7 +19,7 @@ export default function Scroll() {
     <div className="Scroll">
       <section className="slider">
         <div className="slider__flex">
-          <div className="slider__col">
+          {/* <div className="slider__col">
             <div className="slider__prev">Prev</div>
 
             <div className="slider__thumbs">
@@ -27,7 +27,7 @@ export default function Scroll() {
                 onSwiper={setImagesNavSlider}
                 direction="vertical"
                 spaceBetween={24}
-                // slidesPerView={3}
+                
                 navigation={{
                   nextEl: ".slider__next",
                   prevEl: ".slider__prev"
@@ -56,7 +56,7 @@ export default function Scroll() {
             </div>
 
             <div className="slider__next">Next</div>
-          </div>
+          </div> */}
 
           <div className="slider__images">
             <Swiper

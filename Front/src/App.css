@@ -3,11 +3,11 @@
   text-align: center;
 }
 
-body {
+/* body {
   background: #121212;
-}
+} */
 .slider {
-  padding: 32px;
+  padding: 0px;
   color: #fff;
 }
 .slider .swiper-container1 {
@@ -26,7 +26,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 150px;
-  margin-right: 32px;
+  margin-right: 0px;
 }
 .slider__prev,
 .slider__next {
