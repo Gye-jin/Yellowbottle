@@ -1,31 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import Main from "./pages/Main";
-import Login from "./pages/Login";
-import Join from "./pages/Join";
-import Feed from "./pages/Feed";
-import ReadBoard from "./pages/ReadBoard";
-import NotFound from "./pages/NotFound";
+import Main from "./pages/Main.js";
+import Login from "./pages/Login.js";
+import Join from "./pages/Join.js";
+import Feed from "./pages/Feed.js";
+import ReadBoard from "./pages/ReadBoard.js";
+import NotFound from "./pages/NotFound.js";
 
 function App() {
   return (
     <div>
-      {/* //       <ul>
-//         <li>
-//           <Link to="/">Main</Link>
-//         </li>
-//         <li>
-//           <Link to="/login">로그인</Link>
-//         </li>
-//       </ul>
-//       <hr />
-//       <Route path="/" exact={true} component={Main} />
-//       <Route path="/login" component={Login} />
-//     </div> */}
 
-      {/* <BrowserRouter> */}
-      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
@@ -34,7 +20,7 @@ function App() {
         <Route path="/readboard/*" element={<ReadBoard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {/* </BrowserRouter> */}
+
     </div>
   );
 }
