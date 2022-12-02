@@ -10,7 +10,7 @@ const slides = [
   "https://picsum.photos/1920/1081",
   "https://picsum.photos/1920/1082",
   "https://picsum.photos/1920/1083",
-  "https://picsum.photos/1920/1084",
+  "https://picsum.photos/1920/1084"
 ];
 
 export default function Scroll() {
@@ -19,6 +19,45 @@ export default function Scroll() {
     <div className="Scroll">
       <section className="slider">
         <div className="slider__flex">
+          {/* <div className="slider__col">
+            <div className="slider__prev">Prev</div>
+
+            <div className="slider__thumbs">
+              <Swiper
+                onSwiper={setImagesNavSlider}
+                direction="vertical"
+                spaceBetween={24}
+                
+                navigation={{
+                  nextEl: ".slider__next",
+                  prevEl: ".slider__prev"
+                }}
+                className="swiper-container1"
+                breakpoints={{
+                  0: {
+                    direction: "vertical"
+                  },
+                  768: {
+                    direction: "vertical"
+                  }
+                }}
+                modules={[Navigation, Thumbs]}
+              >
+                {slides.map((slide, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <div className="slider__image">
+                        <img src={slide} alt="" />
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </div>
+
+            <div className="slider__next">Next</div>
+          </div> */}
+
           <div className="slider__images">
             <Swiper
               thumbs={{ swiper: imagesNavSlider }}
@@ -28,15 +67,15 @@ export default function Scroll() {
               mousewheel={true}
               navigation={{
                 nextEl: ".slider__next",
-                prevEl: ".slider__prev",
+                prevEl: ".slider__prev"
               }}
               breakpoints={{
                 0: {
-                  direction: "vertical",
+                  direction: "vertical"
                 },
                 768: {
-                  direction: "vertical",
-                },
+                  direction: "vertical"
+                }
               }}
               className="swiper-container2"
               modules={[Navigation, Thumbs, Mousewheel]}

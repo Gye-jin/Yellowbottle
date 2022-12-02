@@ -40,6 +40,7 @@ import Header from "../components/Header";
 
 function ConfirmId() {
   return (
+    // <ThemeProvider theme={theme}>
     <>
       <Header />
       <div className="comfirmId">
@@ -57,7 +58,8 @@ function ConfirmId() {
           <a href="/findPw">비밀번호찾기</a>
         </p>
       </div>
-    </>
+      {/* </ThemeProvider> */}
+      </>
   );
 }
 
