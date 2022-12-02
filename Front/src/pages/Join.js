@@ -61,7 +61,7 @@ const Join = () => {
     setChecked(event.target.checked);
   };
 
-  // dasf
+  
 
   const onhandlePost = async (data) => {
     const { id, email, name, password, birth } = data;
@@ -81,22 +81,35 @@ const Join = () => {
       });
   };
 
+// id가 중복된 아이디인지 검사하는 곳
+  const idCheck = (e) => {
+    e.preventDefaultI();
+    const data = new FormData(e.currentTarget);
+    const joinData = {
+      id: data.get("id"),
+    };
+    const { id } = joinData 
+    // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
+    if (id === data.get("id")) setIdError(' 중복된 아이디입니다.');
+    else setIdError('');
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = new FormData(e.currentTarget);
     const joinData = {
-      id: data.get("id"),
+      // id: data.get("id"),
       email: data.get('email'),
       name: data.get('name'),
       password: data.get('password'),
       birth: data.get('birth'),
     };
-    const { id, email, name, password, birth } = joinData;
+    const { email, name, password, birth } = joinData;
 
     // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    if (id !== data.get("id")) setIdError(' 중복된 아이디입니다.');
-    else setIdError('');
+    // if (id === data.get("id")) setIdError(' 중복된 아이디입니다.');
+    // else setIdError('');
 
     // 이메일 유효성 체크
     const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -157,7 +170,24 @@ const Join = () => {
           <Typography component="h1" variant="h5">
             회원가입
           </Typography>
-          {/* <Grid item xs={12}>
+          <Grid item xs={12}>
+                  <TextField
+                    required
+                    autoFocus
+                    fullWidth
+                    type="id"
+                    id="id"
+                    name="id"
+                    label="아이디"
+                    error={idError !== '' || false}
+                  />
+                </Grid>
+                <FormHelperTexts>{idError}</FormHelperTexts>
+                <button className='join-idCheck'onClick={idCheck}>아이디 중복검사</button>
+          <Boxs component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <FormControl component="fieldset" variant="standard">
+              <Grid container spacing={1.5}>
+                {/* <Grid item xs={12}>
                   <TextField
                     required
                     autoFocus
@@ -171,23 +201,6 @@ const Join = () => {
                 </Grid>
                 <FormHelperTexts>{idError}</FormHelperTexts>
                 <button className='join-idCheck'>아이디 중복검사</button> */}
-          <Boxs component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <FormControl component="fieldset" variant="standard">
-              <Grid container spacing={1.5}>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="id"
-                    id="id"
-                    name="id"
-                    label="아이디"
-                    error={idError !== '' || false}
-                  />
-                </Grid>
-                <FormHelperTexts>{idError}</FormHelperTexts>
-                <button className='join-idCheck'>아이디 중복검사</button>
                 <Grid item xs={12}>
                   <TextField
                     required

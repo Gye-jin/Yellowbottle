@@ -46,7 +46,7 @@
   outline: none;
 }
 .slider__images {
-  height: 711px;
+  height: 700px;
   width: 100%;
 }
 .slider__images .slider__image img {
@@ -112,4 +112,18 @@
 }
 .loginPage-join {
   width: 100%;
+}
+
+/* comfirmId */
+.comfirmId {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
+}
+.butom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
 }

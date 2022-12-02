@@ -16,6 +16,8 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Header from "../components/Header";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
 const FormHelperTexts = styled(FormHelperText)`
@@ -89,6 +91,7 @@ const FindId = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Header/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -110,17 +113,21 @@ const FindId = () => {
             sx={{ mt: 3 }}
           >
             {/* <FormHelperTexts>{nameError}</FormHelperTexts> */}
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                type="birth"
-                id="birth"
-                name="birth"
-                label="생년월일 입력(ex.990820)"
-                error={birthError !== "" || false}
-              />
-            </Grid>
+            <FormControl component="fieldset" variant="standard">
+              <Grid container spacing={1.5}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="birth"
+                    id="birth"
+                    name="birth"
+                    label="생년월일 입력(ex.990820)"
+                    error={birthError !== "" || false}
+                  />
+                </Grid>
+              </Grid>
+            </FormControl>
             <FormHelperTexts>{birthError}</FormHelperTexts>
 
             <Grid item xs={12}>
@@ -137,16 +144,17 @@ const FindId = () => {
             </Grid>
             <FormHelperTexts>{emailError}</FormHelperTexts>
 
-            <Button
-              onClick="location.href='/findId';"
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              size="large"
-            >
-              아이디 찾기
-            </Button>
+            <Link to="/confirmId">
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                size="large"
+              >
+                아이디 찾기
+              </Button>
+            </Link>
 
             <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
