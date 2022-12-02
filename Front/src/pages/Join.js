@@ -17,6 +17,12 @@ import {
 } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styled from 'styled-components';
+import Header from '../components/Header';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
 const FormHelperTexts = styled(FormHelperText)`
@@ -32,7 +38,9 @@ const Boxs = styled(Box)`
 
 const Join = () => {
   const theme = createTheme();
+  const [checkedGender, setCheckedGender] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [checkedEmail, setCheckedEmail] = useState(false);
   const [emailError, setEmailError] = useState('');
   // const [passwordState, setPasswordState] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -45,9 +53,15 @@ const Join = () => {
   const [registerError, setRegisterError] = useState('');
   const navigate = useNavigate();
 
+  const genderAgree = (e) => {
+    setCheckedGender(e.target.checkedGender);
+  }
+
   const handleAgree = (event) => {
     setChecked(event.target.checked);
   };
+
+  // dasf
 
   const onhandlePost = async (data) => {
     const { id, email, name, password, birth } = data;
@@ -81,7 +95,7 @@ const Join = () => {
     const { id, email, name, password, birth } = joinData;
 
     // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    if (id === data.get("id")) setIdError(' 중복된 아이디입니다.');
+    if (id !== data.get("id")) setIdError(' 중복된 아이디입니다.');
     else setIdError('');
 
     // 이메일 유효성 체크
@@ -105,17 +119,20 @@ const Join = () => {
     else setNameError('');
 
     // 성별 체크 검사
-    // if (!checked) alert 
+    if (!checkedGender) alert('성별을 체크해주세요.') 
 
     // 회원가입 동의 체크
     if (!checked) alert('회원가입 약관에 동의해주세요.');
+
 
     if (
       // 작성한 아이디 !== 기존 아이디 &&
       passwordRegex.test(password) &&
       // password === rePassword &&
       nameRegex.test(name) &&
+      birth.length.test(birth) &&
       emailRegex.test(email) &&
+      checkedGender &&
       checked
     ) {
       onhandlePost(joinData);
@@ -123,7 +140,9 @@ const Join = () => {
   };
 
   return (
+    
     <ThemeProvider theme={theme}>
+      <Header/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -138,6 +157,20 @@ const Join = () => {
           <Typography component="h1" variant="h5">
             회원가입
           </Typography>
+          {/* <Grid item xs={12}>
+                  <TextField
+                    required
+                    autoFocus
+                    fullWidth
+                    type="id"
+                    id="id"
+                    name="id"
+                    label="아이디"
+                    error={idError !== '' || false}
+                  />
+                </Grid>
+                <FormHelperTexts>{idError}</FormHelperTexts>
+                <button className='join-idCheck'>아이디 중복검사</button> */}
           <Boxs component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <FormControl component="fieldset" variant="standard">
               <Grid container spacing={1.5}>
@@ -154,6 +187,7 @@ const Join = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{idError}</FormHelperTexts>
+                <button className='join-idCheck'>아이디 중복검사</button>
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -202,10 +236,28 @@ const Join = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{emailError}</FormHelperTexts>
+                <FormControl>
+                    {/* <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel> */}
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      onChange={genderAgree}
+                    > <p className='join-gender'>성별</p>
+                      <FormControlLabel value="male" control={<Radio />} label="남" />
+                      <FormControlLabel value="female" control={<Radio />} label="여" />                     
+                    </RadioGroup>
+                </FormControl>
                 <Grid item xs={12}>
                   <FormControlLabel
                     control={<Checkbox onChange={handleAgree} color="primary" />}
                     label="개인정보 수집 동의"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleAgree} color="primary" />}
+                    label="(선택)이메일 수신 동의"
                   />
                 </Grid>
               </Grid>
