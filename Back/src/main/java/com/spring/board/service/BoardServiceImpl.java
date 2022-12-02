@@ -15,85 +15,97 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.board.common.dto.PageRequestDTO;
-import com.spring.board.common.dto.PageResultDTO;
+
 import com.spring.board.dto.BoardDTO;
 import com.spring.board.entity.Board;
+import com.spring.board.entity.Tag;
 import com.spring.board.repository.BoardRepository;
+import com.spring.board.repository.mapping.BoardMapping;
+import com.spring.board.tag.tag;
+
 
 @Service
 public class BoardServiceImpl implements BoardService{
 	
 	
 	@Autowired
-	BoardRepository diaryRepo;
-	
+	BoardRepository boardRepo;
 	
 	@Autowired
 	FileServiceImpl fileService;
 	
+	@Autowired
+	TagServiceImpl tagService;
+	
 	@Override
-	public Long insertDiary(BoardDTO diaryDTO) {
-	Board diary = diaryDTO.dtoToEntity(diaryDTO);
+	public Long insertBoard(BoardDTO boardDTO) {
+	Board board = boardDTO.dtotoEntity(boardDTO);
 	
-	
-	return diaryRepo.save(diary).getNo();
+	return boardRepo.save(board).getNo();
 	
 	}
 
 	@Override
-	public BoardDTO getDiaryByDiaryNo(Long diaryNo) throws NoSuchElementException{
+	@Transactional
+	public BoardDTO getBoardByBoardNo(Long BoardNo) throws NoSuchElementException{
 		
-		Board diary = diaryRepo.findById(diaryNo).orElseThrow(NoSuchElementException::new);
+		Board board = boardRepo.findById(BoardNo).orElseThrow(NoSuchElementException::new);
 		
+			
+		BoardDTO boardDTO = board.entitytoDTO(board);
 		
-//		Diary diary = diaryRepo.getDiaryByNo(diaryNo);		
-		BoardDTO diaryDTO = diary.entityToDTO(diary);
-		
-		return diaryDTO;
+		return boardDTO;
 	}
-	
-	@Override
-	public void deleteDiary(Long diaryNo){
-		
-		
-		fileService.deleteFileDiary(diaryNo);
-		diaryRepo.deleteById(diaryNo);
-		
-		
-	}
-	
-	@Override
-	public void insertBatchData(List<BoardDTO> diaryList) {
-		
-		List<Board> entities = diaryList.stream()
-				.map(diaryDTO -> diaryDTO.dtoToEntity(diaryDTO))
-				.collect(Collectors.toList());
-		diaryRepo.saveAll(entities);
-	}
-	
-	@Override
-	public PageResultDTO<BoardDTO, Board> getList(PageRequestDTO requestDTO) {
-		Pageable pageable = requestDTO.getPageable();
-		Page<Board> result = diaryRepo.findAll(pageable);
-		
-		Function<Board, BoardDTO> fn = (diary -> diary.entityToDTO(diary));
-		
-		return new PageResultDTO<BoardDTO, Board>(result, fn);
-	}
-	
 	
 	@Override
 	@Transactional
-	public void updateDiary(Long diaryNo, BoardDTO newdiaryDTO) {
-
-	
-	Board diary = diaryRepo.getDiaryByNo(diaryNo);
-	
-	diary.updateDiary(newdiaryDTO);
-	
-
-	
+	public void deleteBoard(Long boardNo){
+		
+		tagService.deleteTagBoard(boardNo);
+		fileService.deleteFileBoard(boardNo);
+		boardRepo.deleteById(boardNo);
+		
 	}
+	
+//	@Override
+//	@Transactional
+//	public List<BoardDTO> getBoardByUserId(String userId) {
+//		
+//		List<Board> boards = boardRepo.findByUserId(userId);
+//		
+//		List<BoardDTO> boardDTOs = boards.stream()
+//				  .map(board -> board.entitytoDTO(board))
+//				  .collect(Collectors.toList());
+//
+//		return boardDTOs;
+//	}
+	
+	@Override
+	@Transactional
+	// userId로 board의 boardNo, userId, files의 fileName만 출력하는 메소드 -> 
+	// 수정 예정 : 1) Entity 출력을 DTO 혹은 다른 객체로 변경?, Mapping을 써야 하는가?
+	public List<BoardMapping> getBoardByUserId(String userId) {
+		
+		List<BoardMapping> boardMappings = null;
+			boardMappings = boardRepo.findByUserId(userId);
+		
+		return boardMappings;
+	}
+	
+	@Override
+	@Transactional
+	public void updateBoard(Long boardNo, Tag tag, BoardDTO newboardDTO) {
+
+	
+	Board board = boardRepo.getById(boardNo);
+	
+	tag.updateTag(tag);
+	
+	board.updateBoard(newboardDTO);
+	
+
+	}
+	
+
 	
 }

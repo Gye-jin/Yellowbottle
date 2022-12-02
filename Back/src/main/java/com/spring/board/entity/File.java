@@ -12,9 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.spring.board.dto.BoardDTO;
 import com.spring.board.dto.FileDTO;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +24,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+//@ToString
 @Builder
 public class File {
 	@Id
@@ -35,16 +32,18 @@ public class File {
 	@Column(name="file_no",nullable = false)
 	private Long fileNo;
 	
-	private String originalFileName;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="board_no")
+	private Board board;
+	
+
 	private String fileName;
 	private String filePath;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="diary_no")
-	private Board diary;
+	private String originalFileName;
 
-	public void updateDiary(Board diary) {
-		this.diary = diary;
+
+	public void updateBoard(Board board) {
+		this.board = board;
 	}
 	
 	public static FileDTO entotyToDTO(File file) {
@@ -54,9 +53,11 @@ public class File {
 				 .filePath(System.getProperty("user.dir")+"\\files")
 				 .build();
 		return fileDTO;
-}
+	}
 	
-	
+	public interface FileMapping {
+	    String getFileName();
+	}
 	
 	
 }

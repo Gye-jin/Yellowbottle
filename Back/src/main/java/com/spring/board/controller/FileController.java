@@ -26,9 +26,9 @@ public class FileController {
 	@Autowired
 	FileServiceImpl fileservice;
 	
-	public void insertFile(@RequestParam("diaryNo")Long diaryId, List<MultipartFile> file) {
+	public void insertFile(@RequestParam("boardNo")Long boardNo, List<MultipartFile> file) {
 
-		fileservice.insertFile(diaryId, file);
+		fileservice.insertFile(boardNo, file);
 	
 
 	}

@@ -1,14 +1,5 @@
 package com.spring.board.dto;
 
-import java.util.UUID;
-
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import com.spring.board.entity.File;
 
 import lombok.AllArgsConstructor;
@@ -37,4 +28,7 @@ public class FileDTO {
 		return file;
 	}
 	
+	public interface FileDTOMapping {
+	    String getFileName();
+	}
 }
