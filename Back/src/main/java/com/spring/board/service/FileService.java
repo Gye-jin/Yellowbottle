@@ -12,5 +12,5 @@ public interface FileService {
 	public void deleteFile(Long fileNo);
 	
 	
-	public void deleteFileBoard(Long diaryId);
+	public void deleteFileBoard(Long boardId);
 }

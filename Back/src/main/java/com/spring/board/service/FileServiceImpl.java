@@ -2,9 +2,9 @@ package com.spring.board.service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;import org.hibernate.query.criteria.internal.expression.function.LengthFunction;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,11 +44,13 @@ public class FileServiceImpl implements FileService{
 	}
 	
 	@Override
-	public void deleteFileBoard(Long diaryId) {
-		fileRepo.deleteByBoardNo(diaryId);
+	@Transactional
+	public void deleteFileBoard(Long boardId) {
+		fileRepo.deleteByBoardNo(boardId);
 	}
 	
-	@Override	
+	@Override
+	@Transactional
 	public void deleteFile(Long fileNo) {
 		fileRepo.deleteById(fileNo);
 	}

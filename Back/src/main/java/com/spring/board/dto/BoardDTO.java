@@ -3,19 +3,12 @@ package com.spring.board.dto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import javax.persistence.Column;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import com.spring.board.entity.Board;
-import com.spring.board.entity.File;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +29,11 @@ public class BoardDTO {
 	private LocalDateTime modifiedDate;	
 	private Long viewCount;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	List<FileDTO> fileDTOs = new ArrayList<FileDTO>();
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	List<TagDTO> tagDTOs = new ArrayList<TagDTO>();
 
 	
 	public static  Board dtotoEntity(BoardDTO boardDTO) {
@@ -47,6 +45,8 @@ public class BoardDTO {
 						   .build();
 		return board;
 	}
+	
+
 	
 
 }

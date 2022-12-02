@@ -8,22 +8,17 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.board.dto.BoardDTO;
-import com.spring.board.dto.FileDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +30,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = {"files", "tags"})
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Board {
@@ -49,7 +44,6 @@ public class Board {
 	
 	private String boardContent;
 	
-//    @ColumnDefault("0")
 	private Long likeCount;
 	
 	@CreatedDate
@@ -59,8 +53,17 @@ public class Board {
 	@LastModifiedDate
 	private LocalDateTime modifiedDate;
 	
-//    @ColumnDefault("0")
 	private Long viewCount;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "board")
+//	추후 : @BatchSize 전략 사용
+	List<File> files = new ArrayList<File>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "board")
+//	추후 : @Query 사용
+	List<Tag> tags = new ArrayList<Tag>();
 	
 	public static BoardDTO entitytoDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
@@ -71,9 +74,18 @@ public class Board {
 									.createDate(board.getWrittenDate())
 									.modifiedDate(board.getModifiedDate())
 									.viewCount(board.getViewCount())
+									.fileDTOs(board.getFiles().stream()
+											  .map(file -> file.entotyToDTO(file))
+										      .collect(Collectors.toList()))
+									.tagDTOs(board.getTags().stream()
+											.map(tag -> tag.entotyToDTO(tag))
+											.collect(Collectors.toList()))
 									.build();
 		return boardDTO;
 	}
 	
-
+	public void updateBoard(BoardDTO boardDTO) {
+		 this.boardContent = boardDTO.getBoardContent();
+	}
+	
 }

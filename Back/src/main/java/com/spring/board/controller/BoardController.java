@@ -1,44 +1,29 @@
 package com.spring.board.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.IntStream;
 
-import javax.persistence.EntityNotFoundException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.board.dto.BoardDTO;
-import com.spring.board.entity.Board;
-import com.spring.board.repository.BoardRepository;
+import com.spring.board.entity.Tag;
 import com.spring.board.service.BoardServiceImpl;
 import com.spring.board.service.FileServiceImpl;
-
+import com.spring.board.service.TagServiceImpl;
+import com.spring.board.tag.tag;         
 import lombok.extern.slf4j.Slf4j;
-
-
-
-
 
 
 @Slf4j
@@ -52,18 +37,25 @@ public class BoardController {
 		
 	@Autowired
 	FileServiceImpl fileService;
+	
+	@Autowired
+	TagServiceImpl tagService;
 
-	@PostMapping(value ="/board")
-	public void createDiary(@ModelAttribute BoardDTO boardDTO, @RequestParam("file") List<MultipartFile> file) {
-		Long boardId = boardservice.insertBoard(boardDTO);
+	@PostMapping("/board")
+	public void createBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files,@RequestParam("tag") List<tag> tags) {
 		
-		fileService.insertFile(boardId, file);
+		
+		Long boardId = boardservice.insertBoard(boardDTO);
+		 
+
+		fileService.insertFile(boardId, files);
+		tagService.insertTag(boardId, tags);
 		
 	}
 		
 	
 	@GetMapping("/board/{boardNo}")
-	public BoardDTO getDiary(@PathVariable Long boardNo) {
+	public BoardDTO getBoard(@PathVariable Long boardNo) {
 	
 		BoardDTO boardDTO = null;
 
@@ -71,7 +63,33 @@ public class BoardController {
 		
 		return boardDTO;
 
-	}		
-
-
+	}
+	
+	
+//	 마이페이지에서 유저 아이디로 접속을 했을 경우에 해당 유저 아이디의 
+//	@GetMapping("/boardList/{userId}")
+//	public List<BoardDTO> getBoards(@PathVariable String userId){
+//		
+//		List<BoardDTO> boardDTOs= null;
+//
+//		boardDTOs = boardservice.getBoardByUserId(userId);
+//		
+//		return boardDTOs;
+//	}
+//	
+	@GetMapping(value ="/boardupdate/{boardNo}")
+	public void updateBoard(@RequestParam Long boardNo,@RequestParam Tag tag, @ModelAttribute BoardDTO newboardDTO) {
+		boardservice.updateBoard(boardNo, tag, newboardDTO);
+	}
+	
+	@DeleteMapping("/boarddelete/{boardNo}")
+	public void deleteBoard(@PathVariable Long boardNo) {
+		
+		boardservice.deleteBoard(boardNo);
+		
+	}
+	
+	
+	
+	
 }
