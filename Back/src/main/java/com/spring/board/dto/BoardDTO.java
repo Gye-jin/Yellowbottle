@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class BoardDTO {
 	
-	private Long no;
+	private Long boardNo;
 	private String userId;
 	private String boardContent;
 	private Long likeCount;
@@ -35,8 +35,7 @@ public class BoardDTO {
 	@OneToMany(fetch = FetchType.LAZY)
 	List<TagDTO> tagDTOs = new ArrayList<TagDTO>();
 
-	
-	public static  Board dtotoEntity(BoardDTO boardDTO) {
+	public static  Board boardDtotoEntity(BoardDTO boardDTO) {
 		Board board = Board.builder()
 						   .userId(boardDTO.getUserId())
 						   .boardContent(boardDTO.getBoardContent())

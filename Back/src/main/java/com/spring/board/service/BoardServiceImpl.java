@@ -27,59 +27,35 @@ import com.spring.board.tag.tag;
 @Service
 public class BoardServiceImpl implements BoardService{
 	
-	
+	// Repository와 연결
 	@Autowired
 	BoardRepository boardRepo;
-	
 	@Autowired
 	FileServiceImpl fileService;
-	
 	@Autowired
 	TagServiceImpl tagService;
 	
+	// Create -----------------------------------------------------------------------------------------------------
 	@Override
 	public Long insertBoard(BoardDTO boardDTO) {
-	Board board = boardDTO.dtotoEntity(boardDTO);
+	Board board = boardDTO.boardDtotoEntity(boardDTO);
 	
-	return boardRepo.save(board).getNo();
-	
+	return boardRepo.save(board).getBoardNo();
 	}
 
+	// Read -------------------------------------------------------------------------------------------------------
+	// 특정 게시글 불러오기
 	@Override
 	@Transactional
-	public BoardDTO getBoardByBoardNo(Long BoardNo) throws NoSuchElementException{
-		
+	public BoardDTO getBoardByBoardNo(Long BoardNo) {
+		// 게시글 번호를 활용하여 특정 게시글  받기
 		Board board = boardRepo.findById(BoardNo).orElseThrow(NoSuchElementException::new);
-		
-			
-		BoardDTO boardDTO = board.entitytoDTO(board);
+		BoardDTO boardDTO = board.boardEntitytoDTO(board);
 		
 		return boardDTO;
 	}
 	
-	@Override
-	@Transactional
-	public void deleteBoard(Long boardNo){
-		
-		tagService.deleteTagBoard(boardNo);
-		fileService.deleteFileBoard(boardNo);
-		boardRepo.deleteById(boardNo);
-		
-	}
-	
-//	@Override
-//	@Transactional
-//	public List<BoardDTO> getBoardByUserId(String userId) {
-//		
-//		List<Board> boards = boardRepo.findByUserId(userId);
-//		
-//		List<BoardDTO> boardDTOs = boards.stream()
-//				  .map(board -> board.entitytoDTO(board))
-//				  .collect(Collectors.toList());
-//
-//		return boardDTOs;
-//	}
-	
+	// mypage 형식에 맞춰 게시글 등 불러오기
 	@Override
 	@Transactional
 	// userId로 board의 boardNo, userId, files의 fileName만 출력하는 메소드 -> 
@@ -87,25 +63,29 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardMapping> getBoardByUserId(String userId) {
 		
 		List<BoardMapping> boardMappings = null;
-			boardMappings = boardRepo.findByUserId(userId);
+		boardMappings = boardRepo.findByUserId(userId);
 		
 		return boardMappings;
 	}
 	
+	// Update -----------------------------------------------------------------------------------------------------
 	@Override
 	@Transactional
 	public void updateBoard(Long boardNo, Tag tag, BoardDTO newboardDTO) {
-
-	
-	Board board = boardRepo.getById(boardNo);
-	
-	tag.updateTag(tag);
-	
-	board.updateBoard(newboardDTO);
-	
-
+		
+		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
+		tag.updateTag(tag);
+		
+		board.updateBoard(newboardDTO);
 	}
 	
-
-	
+	// Delete -----------------------------------------------------------------------------------------------------
+	@Override
+	@Transactional
+	public void deleteBoard(Long boardNo){
+		// 태그, 파일, 게시글 전부 삭제
+		tagService.deleteTagBoard(boardNo);
+		fileService.deleteFileBoard(boardNo);
+		boardRepo.deleteById(boardNo);
+	}
 }

@@ -3,7 +3,9 @@ package com.spring.board.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.board.dto.UserDTO;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +23,10 @@ import lombok.ToString;
 public class User {
 	// sql에서 받아온 데이터 entity객체로 설정
 	@Id
+	@JsonIgnore
+	@OneToOne(mappedBy = "user")
 	private String userId;
+	
 	private String userPw;
 	private String email;
 	private String birth;

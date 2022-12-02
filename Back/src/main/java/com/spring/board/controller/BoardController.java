@@ -25,71 +25,60 @@ import com.spring.board.service.TagServiceImpl;
 import com.spring.board.tag.tag;         
 import lombok.extern.slf4j.Slf4j;
 
-
+// 보안적인 측면에서 논의 필요
+// => url로 요청을 보내면 바로 함수가 실행된다는 문제가 발생
 @Slf4j
 @RestController
 @RequestMapping(value="/api", produces = "application/json")
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class BoardController {
-		
+	// Service 연결
 	@Autowired
 	BoardServiceImpl boardservice;
-		
 	@Autowired
 	FileServiceImpl fileService;
-	
 	@Autowired
 	TagServiceImpl tagService;
 
+	// Create ------------------------------------------------------------------------------------------------------
+	// 새로운 게시글 작성하기
 	@PostMapping("/board")
-	public void createBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files,@RequestParam("tag") List<tag> tags) {
-		
-		
+	public void createBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files, @RequestParam("tag") List<tag> tags) {
+		// 게시글 삽입 후 게시글 번호 가져오기
 		Long boardId = boardservice.insertBoard(boardDTO);
 		 
-
+		// 해당하는 게시글 번호에 맞춰 파일과 태그 DB에 삽입
 		fileService.insertFile(boardId, files);
 		tagService.insertTag(boardId, tags);
-		
 	}
-		
 	
+	// Read --------------------------------------------------------------------------------------------------------
+	// 게시글 번호를 사용하여 게시글 불러오기
 	@GetMapping("/board/{boardNo}")
 	public BoardDTO getBoard(@PathVariable Long boardNo) {
-	
-		BoardDTO boardDTO = null;
-
-		boardDTO = boardservice.getBoardByBoardNo(boardNo);
-		
+		// boardService를 거쳐 DB에 들어있는 게시글 가져오기
+		BoardDTO boardDTO = boardservice.getBoardByBoardNo(boardNo);
+		// 게시글 객체 반환
 		return boardDTO;
-
 	}
 	
+	// 최신 순으로 10개씩 게시글 불러오기(필요)
 	
-//	 마이페이지에서 유저 아이디로 접속을 했을 경우에 해당 유저 아이디의 
-//	@GetMapping("/boardList/{userId}")
-//	public List<BoardDTO> getBoards(@PathVariable String userId){
-//		
-//		List<BoardDTO> boardDTOs= null;
-//
-//		boardDTOs = boardservice.getBoardByUserId(userId);
-//		
-//		return boardDTOs;
-//	}
-//	
+	// 태그별 최신 순 10개씩 게시글 불러오기(필요)
+	
+	// Update ------------------------------------------------------------------------------------------------------
+	// 게시글 번호를 활용하여 게시글 업데이트
 	@GetMapping(value ="/boardupdate/{boardNo}")
-	public void updateBoard(@RequestParam Long boardNo,@RequestParam Tag tag, @ModelAttribute BoardDTO newboardDTO) {
+	public void updateBoard(@RequestParam Long boardNo, @RequestParam Tag tag, @ModelAttribute BoardDTO newboardDTO) {
+		// tag에 대한 논의가 필요함
+		// => 여러 태그가 존재하는 경우가 있기 때문에 List로 변경 필요
 		boardservice.updateBoard(boardNo, tag, newboardDTO);
 	}
 	
+	// Delete ------------------------------------------------------------------------------------------------------
+	// 게시글 번호를 통해 게시글 삭제
 	@DeleteMapping("/boarddelete/{boardNo}")
 	public void deleteBoard(@PathVariable Long boardNo) {
-		
 		boardservice.deleteBoard(boardNo);
-		
 	}
-	
-	
-	
-	
 }

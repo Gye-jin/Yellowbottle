@@ -30,7 +30,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = {"files", "tags"})
+@ToString(exclude = {"files", "tags", "comments"})
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Board {
@@ -38,7 +38,7 @@ public class Board {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="board_no")
-	private Long no;
+	private Long boardNo;
 	
 	private String userId;
 	
@@ -65,9 +65,13 @@ public class Board {
 //	추후 : @Query 사용
 	List<Tag> tags = new ArrayList<Tag>();
 	
-	public static BoardDTO entitytoDTO (Board board) {
+	@JsonIgnore
+	@OneToMany(mappedBy = "board")
+	List<Comment> comments = new ArrayList<Comment>();
+	
+	public static BoardDTO boardEntitytoDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
-									.no(board.getNo())
+									.boardNo(board.getBoardNo())
 									.userId(board.getUserId())
 									.boardContent(board.getBoardContent())
 									.likeCount(board.getLikeCount())
