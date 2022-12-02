@@ -8,6 +8,7 @@ import Feed from "./pages/Feed.js";
 import ReadBoard from "./pages/ReadBoard.js";
 import NotFound from "./pages/NotFound.js";
 import FindPw from "./pages/FindPw";
+import ResetPw from "./pages/ResetPw";
 import FindId from "./pages/FindId";
 import ConfirmId from "./pages/ConfirmId";
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/findId" element={<FindId />} />
         <Route path="/confirmId" element={<ConfirmId />} />
         <Route path="/findPw" element={<FindPw />} />
+        <Route path="/resetPw" element={<ResetPw />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

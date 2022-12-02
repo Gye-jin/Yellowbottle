@@ -18,6 +18,7 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
 const FormHelperTexts = styled(FormHelperText)`
@@ -54,7 +55,7 @@ const FindPw = () => {
 
     // post
     await axios
-      // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
+      // spring에 보낼 url : controller와 Dto를 확인해서 수정하자!
       .post("/member/join", postData)
       .then(function (response) {
         console.log(response, "성공");
@@ -172,17 +173,17 @@ const FindPw = () => {
                 </Grid>
                 <FormHelperTexts>{birthError}</FormHelperTexts>
               </Grid>
-              {/* <Link to={'/resetPw'}> */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                size="large"
-              >
-                비밀번호 찾기
-              </Button>
-              {/* </Link> */}
+              <Link to={"/resetPw"}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  size="large"
+                >
+                  비밀번호 찾기
+                </Button>
+              </Link>
             </FormControl>
             <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>

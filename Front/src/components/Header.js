@@ -22,21 +22,21 @@ export default function Header() {
   // navigate(이동)하는 함수
   const navigate = useNavigate();
   // navigateToJoin: 회원가입 버튼 클릭시 회원가입 페이지로 이동
-  const navigateToJoin = () => {
-    navigate("/Join");
-  };
+  // const navigateToJoin = () => {
+  //   navigate("/Join");
+  // };
   // navigateToLogin: 로그인 버튼 클릭시 회원가입 페이지로 이동
-  const navigateToLogin = () => {
-    navigate("/Login");
-  };
+  // const navigateToLogin = () => {
+  //   navigate("/Login");
+  // };
   // navigateToFeed: 실천내용 버튼 클릭시 회원가입 페이지로 이동
-  const navigateToFeed = () => {
-    navigate("/Feed");
-  };
+  // const navigateToFeed = () => {
+  //   navigate("/Feed");
+  // };
   // navigateToMain: 로고버튼 누르면 메인페이지로 이동
-  const navigateToMain = () => {
-    navigate("/");
-  };
+  // const navigateToMain = () => {
+  //   navigate("/");
+  // };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -48,7 +48,8 @@ export default function Header() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={navigateToMain}
+            // onClick={navigateToMain}
+            onClick={() => navigate("/")}
           >
             {/* 로고 */}
             <img
@@ -59,17 +60,26 @@ export default function Header() {
             />
           </IconButton>
           <Typography
-            onClick={navigateToFeed}
+            // onClick={navigateToFeed}
+            onClick={() => navigate("/Feed")}
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}
           >
             실천내용
           </Typography>
-          <Button color="inherit" onClick={navigateToLogin}>
+          <Button
+            color="inherit"
+            // onClick={navigateToLogin}>
+            onClick={() => navigate("/Login")}
+          >
             로그인
           </Button>
-          <Button color="inherit" onClick={navigateToJoin}>
+          <Button
+            color="inherit"
+            // onClick={navigateToJoin}>
+            onClick={() => navigate("/Join")}
+          >
             회원가입
           </Button>
         </Toolbar>
