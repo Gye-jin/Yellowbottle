@@ -46,7 +46,7 @@
 .slider__next:focus {
   outline: none;
 }
-.slider__thumbs {
+/* .slider__thumbs {
   height: calc(400px - 96px);
 }
 .slider__thumbs .slider__image {
@@ -62,9 +62,9 @@
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
   opacity: 1;
-}
+} */
 .slider__images {
-  height: 400px;
+  height: 700px;
   width: 100%;
 }
 .slider__images .slider__image img {
@@ -110,4 +110,33 @@
     height: auto;
     width: 32px;
   }
+}
+
+/* 로그인 기본단 */
+.loginPage-findId {
+  /* float: left; */
+  width: 49%;
+  display: inline-block;
+}
+.loginPage-findPw {
+  /* float: right; */
+  width: 50%;
+  display: inline-block;
+}
+.loginPage-join {
+  width: 100%;
+}
+
+/* comfirmId */
+.comfirmId {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
+}
+.butom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
 }

@@ -7,12 +7,9 @@ import {
   CssBaseline,
   TextField,
   FormControl,
-  FormControlLabel,
-  Checkbox,
   FormHelperText,
   Grid,
   Box,
-  Typography,
   Container,
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -20,6 +17,7 @@ import styled from "styled-components";
 // import Header from '../components/Header';
 import "../App.css";
 import Header from "../components/Header";
+// import { useNavigate } from "react-router-dom";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
 const FormHelperTexts = styled(FormHelperText)`
@@ -33,10 +31,10 @@ const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
 
-const Login = () => {
+const ResetPw = () => {
   const theme = createTheme();
   const [checked, setChecked] = useState(false);
-  // const [passwordState, setPasswordState] = useState('');
+  const [passwordState, setPasswordState] = useState("");
   const [passwordError, setPasswordError] = useState("");
   // 아이디 추가
   const [idError, setIdError] = useState("");
@@ -48,20 +46,22 @@ const Login = () => {
   };
 
   const onhandlePost = async (data) => {
-    const { id, password } = data;
-    const postData = { id, password };
+    const { rePassword, password } = data;
+    const postData = { rePassword, password };
 
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/member/id", postData)
+      .post("/member/join", postData)
       .then(function (response) {
         console.log(response, "성공");
         navigate.push("/login");
       })
       .catch(function (err) {
         console.log(err);
-        setRegisterError("회원가입에 실패하였습니다. 다시한번 확인해 주세요.");
+        setRegisterError(
+          "비밀번호 변경에 실패하였습니다. 다시한번 확인해 주세요."
+        );
       });
   };
 
@@ -70,15 +70,10 @@ const Login = () => {
 
     const data = new FormData(e.currentTarget);
     const joinData = {
-      id: data.get("id"),
+      repassword: data.get("repassword"),
       password: data.get("password"),
     };
-    const { id, password } = joinData;
-
-    // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    if (id !== data.get("id"))
-      setIdError(" 잘못된 아이디입니다. 다시 입력해주세요 ");
-    else setIdError("");
+    const { rePassword, password } = joinData;
 
     // 비밀번호 유효성 체크
     const passwordRegex =
@@ -89,10 +84,15 @@ const Login = () => {
       );
     else setPasswordError("");
 
+    // 비밀번호 같은지 체크
+    if (password !== rePassword)
+      setPasswordError("비밀번호가 일치하지 않습니다.");
+    else setPasswordError("");
+
     if (
       // 작성한 아이디 !== 기존 아이디 &&
       passwordRegex.test(password) &&
-      // password === rePassword &&
+      password === rePassword &&
       // nameRegex.test(name) &&
       checked
     ) {
@@ -114,9 +114,9 @@ const Login = () => {
           }}
         >
           {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} /> */}
-          <Typography component="h1" variant="h5">
+          {/* <Typography component="h1" variant="h5">
             로그인
-          </Typography>
+          </Typography> */}
           <Boxs
             component="form"
             noValidate
@@ -125,19 +125,6 @@ const Login = () => {
           >
             <FormControl component="fieldset" variant="standard">
               <Grid container spacing={1.5}>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="id"
-                    id="id"
-                    name="id"
-                    label="아이디"
-                    error={idError !== "" || false}
-                  />
-                </Grid>
-                <FormHelperTexts>{idError}</FormHelperTexts>
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -150,25 +137,32 @@ const Login = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{passwordError}</FormHelperTexts>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="password"
+                    id="rePassword"
+                    name="rePassword"
+                    label="비밀번호 재입력"
+                    error={passwordError !== "" || false}
+                  />
+                </Grid>
+                <FormHelperTexts>{passwordError}</FormHelperTexts>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                size="large"
-              >
-                로그인
-              </Button>
+              <Link to={"/"}>
+                {" "}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  size="large"
+                >
+                  비밀번호 변경
+                </Button>
+              </Link>
             </FormControl>
-            <Link to="/findId">
-              <Button className="loginPage-findId">아이디찾기</Button>
-            </Link>
-            <Link to="/findPw">
-              <Button className="loginPage-findPw">비밀번호찾기</Button>
-            </Link>
-            <br />
-            <Button className="loginPage-join">회원가입</Button>
             <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
         </Box>
@@ -177,4 +171,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPw;
