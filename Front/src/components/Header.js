@@ -21,19 +21,19 @@ export default function Header() {
 
   // navigate(이동)하는 함수
   const navigate = useNavigate();
-  // navigateToJoin: 회원가입 버튼 클릭시 회원가입 페이지로 이동
+  // // navigateToJoin: 회원가입 버튼 클릭시 회원가입 페이지로 이동
   // const navigateToJoin = () => {
   //   navigate("/Join");
   // };
-  // navigateToLogin: 로그인 버튼 클릭시 회원가입 페이지로 이동
+  // // navigateToLogin: 로그인 버튼 클릭시 회원가입 페이지로 이동
   // const navigateToLogin = () => {
   //   navigate("/Login");
   // };
-  // navigateToFeed: 실천내용 버튼 클릭시 회원가입 페이지로 이동
+  // // navigateToFeed: 실천내용 버튼 클릭시 회원가입 페이지로 이동
   // const navigateToFeed = () => {
   //   navigate("/Feed");
   // };
-  // navigateToMain: 로고버튼 누르면 메인페이지로 이동
+  // // navigateToMain: 로고버튼 누르면 메인페이지로 이동
   // const navigateToMain = () => {
   //   navigate("/");
   // };
@@ -68,18 +68,14 @@ export default function Header() {
           >
             실천내용
           </Typography>
-          <Button
-            color="inherit"
+          <Button color="inherit" 
             // onClick={navigateToLogin}>
-            onClick={() => navigate("/Login")}
-          >
+            onClick={() => navigate("/Login")}>
             로그인
           </Button>
-          <Button
-            color="inherit"
+          <Button color="inherit" 
             // onClick={navigateToJoin}>
-            onClick={() => navigate("/Join")}
-          >
+            onClick={() => navigate("/Join")}>
             회원가입
           </Button>
         </Toolbar>

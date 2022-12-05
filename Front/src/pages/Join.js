@@ -38,9 +38,9 @@ const Boxs = styled(Box)`
 
 const Join = () => {
   const theme = createTheme();
-  const [checkedGender, setCheckedGender] = useState(false);
+  // const [checkedGender, setCheckedGender] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [checkedEmail, setCheckedEmail] = useState(false);
+  // const [checkedEmail, setCheckedEmail] = useState(false);
   const [emailError, setEmailError] = useState("");
   // const [passwordState, setPasswordState] = useState('');
   const [passwordError, setPasswordError] = useState("");
@@ -53,24 +53,22 @@ const Join = () => {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
-  const genderAgree = (e) => {
-    setCheckedGender(e.target.checkedGender);
-  };
+  // const genderAgree = (e) => {
+  //   setCheckedGender(e.target.checkedGender);
+  // }
 
   const handleAgree = (event) => {
     setChecked(event.target.checked);
   };
 
-  // dasf
-
   const onhandlePost = async (data) => {
-    const { id, email, name, password, birth } = data;
-    const postData = { id, email, name, password, birth };
+    // const { id, email, name, password, birth } = data;
+    // const postData = { id, email, name, password, birth };
 
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/member/join", postData)
+      .post("/member/join", data)
       .then(function (response) {
         console.log(response, "성공");
         navigate.push("/login");
@@ -81,8 +79,21 @@ const Join = () => {
       });
   };
 
+  // id가 중복된 아이디인지 검사하는 곳
+  // const idCheck = (e) => {
+  //   e.preventDefaultI();
+  //   const data = new FormData(e.currentTarget);
+  //   const joinData = {
+  //     id: data.get("id"),
+  //   };
+  // const { id } = joinData
+  // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
+  //   if (id === data.get("id")) setIdError(' 중복된 아이디입니다.');
+  //   else setIdError('');
+  // }
+
   const handleSubmit = (e) => {
-    e.preventDefault(); //새로고침 막기
+    e.preventDefault();
 
     const data = new FormData(e.currentTarget);
     const joinData = {
@@ -90,13 +101,13 @@ const Join = () => {
       email: data.get("email"),
       name: data.get("name"),
       password: data.get("password"),
-      birth: data.get("birth"), //
+      birth: data.get("birth"),
     };
     const { id, email, name, password, birth } = joinData;
 
     // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    if (id !== data.get("id")) setIdError(" 중복된 아이디입니다.");
-    else setIdError("");
+    // if (id === data.get("id")) setIdError(' 중복된 아이디입니다.');
+    // else setIdError('');
 
     // 이메일 유효성 체크
     const emailRegex =
@@ -115,8 +126,12 @@ const Join = () => {
     else setPasswordError("");
 
     // 생년월일 유효성 체크
-    if (birth.length !== 6)
-      setBirthError("형식이 일치하지 않습니다. 990101과 같이 입력해주세요!");
+    const birthRegex =
+      /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    if (!birthRegex.test(birth))
+      setBirthError(
+        "형식이 일치하지 않습니다. 1999-08-20과 같이 입력해주세요!"
+      );
     else setBirthError("");
 
     // 이름 유효성 검사
@@ -126,7 +141,7 @@ const Join = () => {
     else setNameError("");
 
     // 성별 체크 검사
-    if (!checkedGender) alert("성별을 체크해주세요.");
+    // if (!checkedGender) alert('성별을 체크해주세요.')
 
     // 회원가입 동의 체크
     if (!checked) alert("회원가입 약관에 동의해주세요.");
@@ -136,9 +151,9 @@ const Join = () => {
       passwordRegex.test(password) &&
       // password === rePassword &&
       nameRegex.test(name) &&
-      birth.length.test(birth) &&
+      // birth.length.test(birth) &&
       emailRegex.test(email) &&
-      checkedGender &&
+      // checkedGender &&
       checked
     ) {
       onhandlePost(joinData);
@@ -175,11 +190,11 @@ const Join = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{idError}</FormHelperTexts>
-                <button className='join-idCheck'>아이디 중복검사</button> */}
+                <button className='join-idCheck'onClick={idCheck}>아이디 중복검사</button> */}
           <Boxs
             component="form"
-            //noValidate
-            onSubmit={handleSubmit} //form을 확인하고, 참일 경우 넘김
+            noValidate
+            onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <FormControl component="fieldset" variant="standard">
@@ -197,7 +212,6 @@ const Join = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{idError}</FormHelperTexts>
-
                 <button className="join-idCheck">아이디 중복검사</button>
                 <Grid item xs={12}>
                   <TextField
@@ -229,7 +243,7 @@ const Join = () => {
                     type="birth"
                     id="birth"
                     name="birth"
-                    label="생년월일 입력(ex.990820)"
+                    label="생년월일 입력(ex.1999-08-20)"
                     error={birthError !== "" || false}
                   />
                 </Grid>
@@ -253,18 +267,17 @@ const Join = () => {
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
-                    onChange={genderAgree}
                   >
                     {" "}
                     <p className="join-gender">성별</p>
                     <FormControlLabel
                       value="male"
-                      control={<Radio />}
+                      control={<Checkbox onChange={handleAgree} />}
                       label="남"
                     />
                     <FormControlLabel
                       value="female"
-                      control={<Radio />}
+                      control={<Checkbox onChange={handleAgree} />}
                       label="여"
                     />
                   </RadioGroup>
