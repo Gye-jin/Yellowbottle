@@ -41,14 +41,14 @@ const Login = () => {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
-  const onhandlePost = async (data) => {
+  const onhandlePost = async (joindata) => {
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/member/login", data)
+      .post("/api/login", joindata)
       .then(function (response) {
         console.log(response, "성공");
-        navigate.push("/");
+        navigate("/");
       })
       .catch(function (err) {
         console.log(err);
@@ -59,25 +59,14 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //백에서 가져오기
-    const loginData = async (id, password) => {
-      const response = await axios.get("http://localhost:8080/api/user_login", {
-        params: {
-          user_id: id,
-          user_pw: password,
-        },
-      });
-      return response.data;
-    };
-
     //-----------------------
 
     const data = new FormData(e.currentTarget);
     const joinData = {
-      id: data.get("id"), // id의  e.currentTarget.value
-      password: data.get("password"),
+      userId: data.get("id"), // id의  e.currentTarget.value
+      userPw: data.get("password"),
     };
-    const { id, password } = joinData;
+    const { userId, userPw } = joinData;
     console.log(joinData);
     // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
     // if (id !== data.get("id"))
@@ -87,7 +76,7 @@ const Login = () => {
     // 비밀번호 유효성 체크
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password))
+    if (!passwordRegex.test(userPw))
       setPasswordError(
         "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
       );
@@ -95,7 +84,7 @@ const Login = () => {
 
     if (
       // 작성한 아이디 !== 기존 아이디 &&
-      passwordRegex.test(password)
+      passwordRegex.test(userPw)
       // password === rePassword &&
       // nameRegex.test(name) &&
       // checked
