@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 
 import org.springframework.data.domain.Page;
 
-import com.spring.board.entity.Board;
 
 import lombok.Data;
 

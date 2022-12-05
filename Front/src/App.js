@@ -15,20 +15,18 @@ import ConfirmId from "./pages/ConfirmId";
 function App() {
   return (
     <div>
-
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/readboard/*" element={<ReadBoard />} />
-        <Route path="/findId" element={<FindId/>}/>
-        <Route path="/findPw" element={<FindPw/>}/>
+        <Route path="/findId" element={<FindId />} />
+        <Route path="/findPw" element={<FindPw />} />
         <Route path="/confirmId" element={<ConfirmId />} />
-        <Route path="/resetPw" element={<ResetPw/>}/>
+        <Route path="/resetPw" element={<ResetPw />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-
     </div>
   );
 }
