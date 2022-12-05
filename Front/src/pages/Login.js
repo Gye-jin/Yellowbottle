@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
-  Avatar,
   Button,
   CssBaseline,
   TextField,
   FormControl,
-  FormControlLabel,
-  Checkbox,
   FormHelperText,
   Grid,
   Box,
@@ -20,6 +17,7 @@ import styled from "styled-components";
 // import Header from '../components/Header';
 import "../App.css";
 import Header from "../components/Header";
+// import { useNavigate } from "react-router-dom";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
 const FormHelperTexts = styled(FormHelperText)`
@@ -43,42 +41,48 @@ const Login = () => {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
-  const handleAgree = (event) => {
-    setChecked(event.target.checked);
-  };
-
   const onhandlePost = async (data) => {
-    const { id, password } = data;
-    const postData = { id, password };
-
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/member/id", postData)
+      .post("/member/login", data)
       .then(function (response) {
         console.log(response, "성공");
-        navigate.push("/login");
+        navigate.push("/");
       })
       .catch(function (err) {
         console.log(err);
-        setRegisterError("회원가입에 실패하였습니다. 다시한번 확인해 주세요.");
+        setRegisterError("로그인에 실패하였습니다. 다시한번 확인해 주세요.");
       });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    //백에서 가져오기
+    const loginData = async (id, password) => {
+      const response = await axios.get("http://localhost:8080/api/user_login", {
+        params: {
+          user_id: id,
+          user_pw: password,
+        },
+      });
+      return response.data;
+    };
+
+    //-----------------------
+
     const data = new FormData(e.currentTarget);
     const joinData = {
-      id: data.get("id"),
+      id: data.get("id"), // id의  e.currentTarget.value
       password: data.get("password"),
     };
     const { id, password } = joinData;
-
+    console.log(joinData);
     // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    if (id !== data.get("id"))
-      setIdError(" 잘못된 아이디입니다. 다시 입력해주세요 ");
-    else setIdError("");
+    // if (id !== data.get("id"))
+    //   setIdError(" 잘못된 아이디입니다. 다시 입력해주세요 ");
+    // else setIdError("");
 
     // 비밀번호 유효성 체크
     const passwordRegex =
@@ -91,14 +95,17 @@ const Login = () => {
 
     if (
       // 작성한 아이디 !== 기존 아이디 &&
-      passwordRegex.test(password) &&
+      passwordRegex.test(password)
       // password === rePassword &&
       // nameRegex.test(name) &&
-      checked
+      // checked
     ) {
       onhandlePost(joinData);
     }
   };
+  // const navigateToJoin = () => {
+  //   navigate("/Join");
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -161,15 +168,18 @@ const Login = () => {
                 로그인
               </Button>
             </FormControl>
-            <Link to="/findId">
+            <FormHelperTexts>{registerError}</FormHelperTexts>
+
+            <Link to={"/FindId"}>
               <Button className="loginPage-findId">아이디찾기</Button>
             </Link>
-            <Link to="/findPw">
+            <Link to={"/FindPw"}>
               <Button className="loginPage-findPw">비밀번호찾기</Button>
             </Link>
             <br />
-            <Button className="loginPage-join">회원가입</Button>
-            <FormHelperTexts>{registerError}</FormHelperTexts>
+            <Link to={"/Join"}>
+              <Button className="loginPage-join">회원가입</Button>
+            </Link>
           </Boxs>
         </Box>
       </Container>

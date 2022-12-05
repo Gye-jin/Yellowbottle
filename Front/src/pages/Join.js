@@ -82,7 +82,7 @@ const Join = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); //새로고침 막기
 
     const data = new FormData(e.currentTarget);
     const joinData = {
@@ -90,7 +90,7 @@ const Join = () => {
       email: data.get("email"),
       name: data.get("name"),
       password: data.get("password"),
-      birth: data.get("birth"),
+      birth: data.get("birth"), //
     };
     const { id, email, name, password, birth } = joinData;
 
@@ -178,8 +178,8 @@ const Join = () => {
                 <button className='join-idCheck'>아이디 중복검사</button> */}
           <Boxs
             component="form"
-            noValidate
-            onSubmit={handleSubmit}
+            //noValidate
+            onSubmit={handleSubmit} //form을 확인하고, 참일 경우 넘김
             sx={{ mt: 3 }}
           >
             <FormControl component="fieldset" variant="standard">
@@ -197,6 +197,7 @@ const Join = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{idError}</FormHelperTexts>
+
                 <button className="join-idCheck">아이디 중복검사</button>
                 <Grid item xs={12}>
                   <TextField

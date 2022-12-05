@@ -3,8 +3,11 @@
   text-align: center;
 }
 
+body {
+  background: #121212;
+}
 .slider {
-  padding: 0px;
+  padding: 32px;
   color: #fff;
 }
 .slider .swiper-container1 {
@@ -23,7 +26,7 @@
   display: flex;
   flex-direction: column;
   width: 150px;
-  margin-right: 0px;
+  margin-right: 32px;
 }
 .slider__prev,
 .slider__next {
@@ -43,9 +46,25 @@
 .slider__next:focus {
   outline: none;
 }
-
+.slider__thumbs {
+  height: calc(400px - 96px);
+}
+.slider__thumbs .slider__image {
+  transition: 0.25s;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+.slider__thumbs .slider__image:hover {
+  opacity: 1;
+}
+.slider__thumbs .swiper-slide-thumb-active .slider__image {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+  opacity: 1;
+}
 .slider__images {
-  height: 700px;
+  height: 400px;
   width: 100%;
 }
 .slider__images .slider__image img {
@@ -91,58 +110,4 @@
     height: auto;
     width: 32px;
   }
-}
-
-/* 회원가입 페이지 */
-.join-gender {
-  margin-left: 10px;
-  margin-right: 50px;
-}
-.join-idCheck {
-  margin-left: 11px;
-}
-
-/* 로그인 페이지 */
-.loginPage-findId {
-  /* float: left; */
-  width: 49%;
-  display: inline-block;
-}
-.loginPage-findPw {
-  /* float: right; */
-  width: 50%;
-  display: inline-block;
-}
-.loginPage-join {
-  width: 100%;
-}
-
-/* comfirmId */
-.comfirmId {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* min-height: 100vh; */
-}
-.butom {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* min-height: 100vh; */
-}
-
-/* 비밀번호 찾기 --추후 반응형으로 위치변경*/
-input[name="numgo"] {
-  border: solid 1px #ababab;
-  border-radius: 4px;
-  margin-left: 58px;
-  margin-top: 30px;
-  cursor: pointer;
-  padding: 5px;
-}
-
-input {
-  margin-left: 50px;
-  padding: 5px;
-  width: 50%;
 }

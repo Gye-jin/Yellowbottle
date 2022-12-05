@@ -37,11 +37,13 @@ const FindPw = () => {
   const [checked, setChecked] = useState(false);
   const [emailError, setEmailError] = useState("");
   // const [passwordState, setPasswordState] = useState('');
-  const [passwordError, setPasswordError] = useState("");
+  // const [passwordError, setPasswordError] = useState("");
   // 아이디 추가
   const [idError, setIdError] = useState("");
   // 생년월일 추가
   const [birthError, setBirthError] = useState("");
+  //인증번호 추가
+  const [cfnumError, setcfnumError] = useState("");
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
@@ -49,9 +51,10 @@ const FindPw = () => {
     setChecked(event.target.checked);
   };
 
+  //post
   const onhandlePost = async (data) => {
-    const { id, email, birth } = data;
-    const postData = { id, email, birth };
+    const { id, email, birth, cfnum } = data;
+    const postData = { id, email, birth, cfnum };
 
     // post
     await axios
@@ -77,11 +80,12 @@ const FindPw = () => {
       id: data.get("id"),
       email: data.get("email"),
       birth: data.get("birth"),
+      cfnum: data.get("cfnum"),
     };
-    const { id, email, birth } = joinData;
+    const { id, email, birth, cfnum } = joinData;
 
     // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    if (id === data.get("id")) setIdError(' id = data.get("id)');
+    if (id === data.get("id")) setIdError(' id = data.get("id")');
     else setIdError("");
 
     // 이메일 유효성 체크
@@ -95,6 +99,11 @@ const FindPw = () => {
     if (birth.length !== 6)
       setBirthError("형식이 일치하지 않습니다. 990101과 같이 입력해주세요!");
     else setBirthError("");
+
+    // 인증번호 동일여부 체크 --(이메일 전송 인증번호) ---------논의 필요
+    if (cfnum === data.get("cfnum"))
+      setcfnumError(' cfnum = data.get("cfnum")');
+    else setcfnumError("");
 
     if (
       // 작성한 아이디 !== 기존 아이디 &&
@@ -122,10 +131,6 @@ const FindPw = () => {
             alignItems: "center",
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} /> */}
-          {/* <Typography component="h1" variant="h5">
-            
-          </Typography> */}
           <Boxs
             component="form"
             noValidate
@@ -147,6 +152,7 @@ const FindPw = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{idError}</FormHelperTexts>
+
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -160,6 +166,7 @@ const FindPw = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{emailError}</FormHelperTexts>
+
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -172,20 +179,52 @@ const FindPw = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{birthError}</FormHelperTexts>
+
+                <Grid item xs={12}>
+                  {/* <Link to={"/resetPw"}> */}
+                  <Button
+                    type="click"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    size="large"
+                  >
+                    인증번호 발송
+                  </Button>
+                  {/* </Link> */}
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    autoFocus
+                    fullWidth
+                    type="varchar"
+                    id="cfnum"
+                    name="cfnum"
+                    label="인증번호 6자리"
+                  />
+                </Grid>
+                <FormHelperTexts>{cfnumError}</FormHelperTexts>
               </Grid>
-              <Link to={"/resetPw"}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  size="large"
-                >
-                  비밀번호 찾기
-                </Button>
-              </Link>
+
+              {/* <Link to={"/resetPw"}> */}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                size="large"
+              >
+                인증번호 확인
+              </Button>
+              {/* </Link> */}
             </FormControl>
-            <FormHelperTexts>{registerError}</FormHelperTexts>
+            {registerError ? (
+              <FormHelperTexts>{registerError}</FormHelperTexts>
+            ) : (
+              <Link to={"/resetPw"} />
+            )}
           </Boxs>
         </Box>
       </Container>
