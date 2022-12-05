@@ -41,14 +41,14 @@ const Login = () => {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
-  const onhandlePost = async (data) => {
+  const onhandlePost = async (joinData) => {
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/member/join", data)
+      .post("/member/join", joinData)
       .then(function (response) {
         console.log(response, "성공");
-        navigate.push("/");
+        navigate("/");
       })
       .catch(function (err) {
         console.log(err);
@@ -61,33 +61,26 @@ const Login = () => {
 
     const data = new FormData(e.currentTarget);
     const joinData = {
-      id: data.get("id"), // id의  e.currentTarget.value
-      password: data.get("password"),
+      userId: data.get("id"), // id의  e.currentTarget.value
+      userPw: data.get("password"),
     };
-    const { id, password } = joinData;
+    const { userId, userPw } = joinData;
     console.log(joinData);
-    // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    // if (id !== data.get("id"))
-    //   setIdError(" 잘못된 아이디입니다. 다시 입력해주세요 ");
-    // else setIdError("");
 
     // 비밀번호 유효성 체크
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password))
+    if (!passwordRegex.test(userPw))
       // test()는 문자열 일치를 확인해준다. 또한 여기 있는 password는 위에 data.get("password")이다.
       setPasswordError(
         "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
       );
     else setPasswordError("");
 
-    if (passwordRegex.test(password)) {
+    if (passwordRegex.test(userPw)) {
       onhandlePost(joinData);
     }
   };
-  // const navigateToJoin = () => {
-  //   navigate("/Join");
-  // }
 
   return (
     <ThemeProvider theme={theme}>

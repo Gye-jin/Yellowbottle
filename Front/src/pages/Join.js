@@ -126,8 +126,12 @@ const Join = () => {
     else setPasswordError("");
 
     // 생년월일 유효성 체크
-    if (birth.length !== 6)
-      setBirthError("형식이 일치하지 않습니다. 990101과 같이 입력해주세요!");
+    const birthRegex =
+      /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    if (!birthRegex.test(birth))
+      setBirthError(
+        "형식이 일치하지 않습니다. 1999-08-20과 같이 입력해주세요!"
+      );
     else setBirthError("");
 
     // 이름 유효성 검사
@@ -239,7 +243,7 @@ const Join = () => {
                     type="birth"
                     id="birth"
                     name="birth"
-                    label="생년월일 입력(ex.990820)"
+                    label="생년월일 입력(ex.1999-08-20)"
                     error={birthError !== "" || false}
                   />
                 </Grid>
