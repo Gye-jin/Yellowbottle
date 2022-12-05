@@ -45,7 +45,7 @@ const Login = () => {
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/member/join", joinData)
+      .post("http://localhost:8080/api/login", joinData)
       .then(function (response) {
         console.log(response, "성공");
         navigate("/");
