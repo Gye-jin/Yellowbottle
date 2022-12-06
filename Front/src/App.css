@@ -95,7 +95,16 @@
   margin-right: 50px;
 }
 .join-idCheck {
-  margin-left: 11px;
+  width: 50%;
+  /* position: absolute; */
+  /* top: 0px; */
+  /* right: 5px; */
+  background-color: dodgerblue;
+  color: white;
+  height: 30px;
+}
+.join-inputId {
+  width: 100%;
 }
 
 /* 로그인 페이지 */

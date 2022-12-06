@@ -1,13 +1,11 @@
 import axios from "axios";
 
-// findEqeulAPI.js
-export const findEqeulAPI = async (userId, email, birth) => {
+// duplicationCheckAPI.js
+export const duplicationCheckAPI = async (userId) => {
   let return_value;
   await axios
-    .post("http://localhost:8080/api/findId", {
+    .post("http://localhost:8080/api/join", {
       userId: userId,
-      email: email,
-      birth: birth,
     })
     .then((response) => {
       return_value = response.data;
