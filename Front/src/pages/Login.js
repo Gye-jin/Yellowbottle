@@ -77,6 +77,7 @@ const Login = () => {
       );
     else setPasswordError("");
 
+    //통과하면 post되는 코드
     if (passwordRegex.test(userPw)) {
       onhandlePost(joinData);
     }
