@@ -22,7 +22,7 @@ import com.spring.board.entity.Tag;
 import com.spring.board.service.BoardServiceImpl;
 import com.spring.board.service.FileServiceImpl;
 import com.spring.board.service.TagServiceImpl;
-import com.spring.board.tag.tag;         
+import com.spring.board.tag.Category;         
 import lombok.extern.slf4j.Slf4j;
 
 // 보안적인 측면에서 논의 필요
@@ -43,7 +43,7 @@ public class BoardController {
 	// Create ------------------------------------------------------------------------------------------------------
 	// 새로운 게시글 작성하기
 	@PostMapping("/board")
-	public void createBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files, @RequestParam("tag") List<tag> tags) {
+	public void createBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files, @RequestParam("tag") List<Category> tags) {
 		// 게시글 삽입 후 게시글 번호 가져오기
 		Long boardId = boardservice.insertBoard(boardDTO);
 		 
