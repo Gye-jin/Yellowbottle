@@ -16,7 +16,7 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { numGoAPI } from "../Api/data";
+import { numGoAPI } from "../Api/FindPwData";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
 const FormHelperTexts = styled(FormHelperText)`

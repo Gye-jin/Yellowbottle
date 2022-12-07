@@ -41,12 +41,12 @@ export const duplicationCheck = (setUsableId) => {
   });
 };
 
-export default function PostJoinData(joinData, setRegisterError) {
+export default function ForPostJoinData(joinData, setRegisterError) {
   // 입력된 joinData값들을 백에 보내는 함수
-  const joinDataPost = async (joinData) => {
+  const postJoinData = async (joinData) => {
     // post
     await axios
-      // 백에 입력된 joinData를 보낸다.
+      // 입력된 joinData를 백에 보낸다.
       .post("http://localhost:8080/api/join", joinData)
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
@@ -58,11 +58,9 @@ export default function PostJoinData(joinData, setRegisterError) {
       .catch(function (err) {
         // 백에서 오류(err)가 온다면 회원가입 실패
         console.log(err);
-        setRegisterError(
-          "회원가입에 실패   하였습니다. 다시한번 확인해 주세요."
-        );
+        setRegisterError("회원가입에 실패하였습니다. 다시한번 확인해 주세요.");
       });
   };
-  // 위에서 만든 함수를 PostJoinData가 회원가입 페이지에서 실행되면 실행
-  joinDataPost(joinData);
+  // 위에서 만든 함수를 postJoinData 가 회원가입 페이지에서 실행되면 실행
+  postJoinData(joinData);
 }

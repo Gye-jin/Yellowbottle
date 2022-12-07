@@ -16,10 +16,10 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../components/Header";
-import Test, { duplicationCheck } from "../Api/JoinData";
-import PostJoinData from "../Api/JoinData";
+import { duplicationCheck } from "../Api/JoinData";
+import ForPostJoinData from "../Api/JoinData";
 
-// mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
+// mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
   width: 100%;
   padding-left: 16px;
@@ -31,7 +31,7 @@ const Boxs = styled(Box)`
 `;
 
 const Join = () => {
-  // mui 태마
+  // mui 테마
   const theme = createTheme();
   // 개인정보 체크박스 체크여부확인
   const [CheckedPersonal, setCheckedPersonal] = useState(false);
@@ -55,7 +55,7 @@ const Join = () => {
     setCheckedPersonal(event.target.checked);
   };
 
-  // 회원가입 버튼 누를때 실행되는 함수: joinData(입력된 값)를 유효성 검사를 통해 JoinData에 있는 Test 함수에 보내준다.
+  // 회원가입 버튼 누를때 실행되는 함수: joinData(입력된 값)를 유효성 검사를 통해 JoinData.js에 있는 ForPostJoinData 함수에 보내준다.
   const createJoinData = (e) => {
     // 실행시 화면새로고침 방지
     e.preventDefault();
@@ -75,6 +75,11 @@ const Join = () => {
     console.log(joinData);
 
     // joinData에 넣은 각각의 값들은 유효성 검사를 거친다.
+    // 아이디 유효성 체크
+    const idRegex = /^[a-z]+[a-z0-9]{5,19}$/g;
+    if (!idRegex.test(userId))
+      setIdError("아이디는 영문자 또는 숫자 6~20자리로 입력해주세요");
+
     // 이메일 유효성 체크
     const emailRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -112,14 +117,14 @@ const Join = () => {
     // 회원가입 동의 체크
     if (!CheckedPersonal) alert("회원가입 약관에 동의해주세요.");
 
-    // 만약 위 유효성 검사를 모두 통과하면 PostJoinData()를 실행한다.
+    // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
     if (
       passwordRegex.test(userPw) &&
       nameRegex.test(name) &&
       emailRegex.test(email) &&
       CheckedPersonal
     ) {
-      PostJoinData(joinData, setRegisterError);
+      ForPostJoinData(joinData, setRegisterError);
     }
   };
 
