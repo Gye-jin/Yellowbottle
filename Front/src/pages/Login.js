@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Button,
@@ -37,7 +37,7 @@ const Login = () => {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
-  const onhandlePost = async (loginData) => {
+  const loginDataPost = async (loginData) => {
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
@@ -45,7 +45,7 @@ const Login = () => {
       .then(function (response) {
         // response 는 백에서 프론트로 ... request는 프론트에서 백으로
         console.log(response, "성공");
-        sessionStorage.setItem("userId", document.getElementById("id"));
+        sessionStorage.setItem("userId", document.getElementById("id").value);
         navigate("/");
       })
       .catch(function (err) {
@@ -76,7 +76,7 @@ const Login = () => {
     else setPasswordError("");
 
     if (passwordRegex.test(userPw)) {
-      onhandlePost(loginData);
+      loginDataPost(loginData);
     }
   };
 
