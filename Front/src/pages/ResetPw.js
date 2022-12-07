@@ -19,7 +19,7 @@ import "../App.css";
 import Header from "../components/Header";
 // import { useNavigate } from "react-router-dom";
 
-// mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
+// mui 기본 css 적용
 const FormHelperTexts = styled(FormHelperText)`
   width: 100%;
   padding-left: 16px;
@@ -52,7 +52,7 @@ const ResetPw = () => {
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/member/join", postData)
+      .post("/api/updatePw", postData)
       .then(function (response) {
         console.log(response, "성공");
         navigate.push("/login");
@@ -100,6 +100,7 @@ const ResetPw = () => {
     }
   };
 
+  console.log(sessionStorage.getItem("id", "birth", "email") + "findPw");
   return (
     <ThemeProvider theme={theme}>
       <Header />
