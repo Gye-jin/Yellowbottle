@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.MypageDTO;
-import com.spring.back.repository.mapping.BoardMapping;
 import com.spring.back.service.BoardServiceImpl;
 import com.spring.back.service.FileServiceImpl;
 
