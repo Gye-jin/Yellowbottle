@@ -4,7 +4,7 @@ import axios from "axios";
 export const duplicationCheckAPI = async (userId) => {
   let return_value;
   await axios
-    .post("http://localhost:8080/api/join", {
+    .post("http://localhost:8080/api/userSearch", {
       userId: userId,
     })
     .then((response) => {

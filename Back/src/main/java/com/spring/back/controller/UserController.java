@@ -48,8 +48,8 @@ public class UserController {
 
 	// [ID 중복확인]
 	@PostMapping(value = "/userSearch")
-	public boolean userSearch(@RequestParam String userId) {
-		return userService.searchUserId(userId);
+	public boolean userSearch(@RequestBody UserDTO userDTO) {
+		return userService.searchUserId(userDTO.getUserId());
 	}
 
 	// [아이디 찾기]
