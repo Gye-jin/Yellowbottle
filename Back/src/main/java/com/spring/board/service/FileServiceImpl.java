@@ -50,7 +50,7 @@ public class FileServiceImpl implements FileService{
 	@Override
 	@Transactional
 	public void deleteFileBoard(Long boardId) {
-		fileRepo.deleteByBoardNo(boardId);
+		fileRepo.deletFileByBoardNo(boardId);
 	}
 	
 	@Override

@@ -12,7 +12,7 @@ import com.spring.board.entity.Board;
 import com.spring.board.entity.Tag;
 import com.spring.board.repository.BoardRepository;
 import com.spring.board.repository.TagRepository;
-import com.spring.board.tag.tag;
+import com.spring.board.tag.Category;
 
 @Service
 public class TagServiceImpl implements TagService{
@@ -24,9 +24,9 @@ public class TagServiceImpl implements TagService{
 	
 	// 태그 DB에 삽입하기
 	@Override
-	public void insertTag(Long boardId, List<tag> tags) {
+	public void insertTag(Long boardId, List<Category> tags) {
 		// tags객체 해체 후 tag하나하나 DB에 삽입
-		for (tag tag : tags) {
+		for (Category tag : tags) {
 			Tag tagentity = Tag.builder()
 					 .tagContent(tag)
 					 .build();
@@ -42,7 +42,7 @@ public class TagServiceImpl implements TagService{
 	@Override
 	@Transactional
 	public void deleteTagBoard(Long boardId) {
-		tagRepo.deleteByBoardNo(boardId);
+		tagRepo.deleteTagByBoardNo(boardId);
 	}
 	
 	

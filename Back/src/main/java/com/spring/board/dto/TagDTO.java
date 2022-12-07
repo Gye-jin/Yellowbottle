@@ -1,7 +1,7 @@
 package com.spring.board.dto;
 
 import com.spring.board.entity.Tag;
-import com.spring.board.tag.tag;
+import com.spring.board.tag.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class TagDTO {
 	private Long tagNo;
-	private tag tagContent;
+	private Category tagContent;
 	
 	
 	public static Tag dtoToEntity(TagDTO tagDTO){

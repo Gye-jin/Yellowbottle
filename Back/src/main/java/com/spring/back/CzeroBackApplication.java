@@ -1,16 +1,15 @@
-package com.spring.board;
+package com.spring.back;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EnableJpaAuditing
-public class BoardApplication {
+@EnableJpaAuditing	// 설명 : createdate를 사용하기 위한 설정
+public class CzeroBackApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BoardApplication.class, args);
+		SpringApplication.run(CzeroBackApplication.class, args);
 	}
 
 }

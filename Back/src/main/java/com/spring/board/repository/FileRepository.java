@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +19,10 @@ public interface FileRepository extends JpaRepository<File, Long>{
 	
 	public File save(FileDTO fileDTO);
 	
-	void deleteByBoardNo(Long no);
+	void deletFileByBoardNo(Long boardNo);
 	
-	public List<File> getFileByBoardNo(Long no);
+	@Query("select f from File f where f.board.boardNo = :no")
+	public List<File> getFileByBoardNo(@Param("no") Long no);
 	
 	
 }
