@@ -90,18 +90,21 @@
 }
 
 /* 회원가입 페이지 */
-.join-gender {
+.join-genderRadio {
   margin-left: 10px;
-  margin-right: 50px;
+  margin-top: 15px;
 }
 .join-idCheck {
-  width: 50%;
-  /* position: absolute; */
+  width: 35%;
   /* top: 0px; */
   /* right: 5px; */
   background-color: dodgerblue;
   color: white;
-  height: 30px;
+  height: 20px;
+  border: 0;
+  margin-bottom: 10px;
+  margin-left: 130px;
+  padding-left: 10px;
 }
 .join-inputId {
   width: 100%;

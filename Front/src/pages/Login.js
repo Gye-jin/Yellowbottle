@@ -14,10 +14,8 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-// import Header from '../components/Header';
 import "../App.css";
 import Header from "../components/Header";
-// import { useNavigate } from "react-router-dom";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
 const FormHelperTexts = styled(FormHelperText)`
@@ -33,8 +31,6 @@ const Boxs = styled(Box)`
 
 const Login = () => {
   const theme = createTheme();
-  const [checked, setChecked] = useState(false);
-  // const [passwordState, setPasswordState] = useState('');
   const [passwordError, setPasswordError] = useState("");
   // 아이디 추가
   const [idError, setIdError] = useState("");
@@ -49,6 +45,7 @@ const Login = () => {
       .then(function (response) {
         // response 는 백에서 프론트로 ... request는 프론트에서 백으로
         console.log(response, "성공");
+        sessionStorage.setItem("userId", document.getElementById("id"));
         navigate("/");
       })
       .catch(function (err) {
@@ -144,16 +141,26 @@ const Login = () => {
                 로그인
               </Button>
             </FormControl>
-            <Link to={"/FindId"}>
-              <Button className="loginPage-findId">아이디찾기</Button>
-            </Link>
-            <Link to={"/FindPw"}>
-              <Button className="loginPage-findPw">비밀번호찾기</Button>
-            </Link>
+
+            <Button
+              className="loginPage-findId"
+              onClick={() => navigate("/FindId")}
+            >
+              아이디찾기
+            </Button>
+            <Button
+              className="loginPage-findPw"
+              onClick={() => navigate("/FindPw")}
+            >
+              비밀번호찾기
+            </Button>
             <br />
-            <Link to={"/Join"}>
-              <Button className="loginPage-join">회원가입</Button>
-            </Link>
+            <Button
+              className="loginPage-join"
+              onClick={() => navigate("/Join")}
+            >
+              회원가입
+            </Button>
             <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
         </Box>

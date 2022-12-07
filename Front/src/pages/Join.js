@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
-  Avatar,
   Button,
   CssBaseline,
   TextField,
@@ -19,11 +18,6 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../components/Header";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-import FormLabel from "@mui/material/FormLabel";
 import { duplicationCheckAPI } from "../Api/data";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
@@ -42,9 +36,7 @@ const Join = () => {
   const theme = createTheme();
   const [checkedGender, setCheckedGender] = useState(false);
   const [CheckedPersonal, setCheckedPersonal] = useState(false);
-  // const [checkedEmail, setCheckedEmail] = useState(false);
   const [emailError, setEmailError] = useState("");
-  // const [passwordState, setPasswordState] = useState('');
   const [passwordError, setPasswordError] = useState("");
   // 아이디 추가
   const [userId, setUserId] = useState("");
@@ -53,26 +45,22 @@ const Join = () => {
   const [usableId, setUsableId] = useState(false);
   // 생년월일 추가
   const [birthError, setBirthError] = useState("");
-
+  // 성별 추가
   const [nameError, setNameError] = useState("");
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
-
-  // const genderAgree = (e) => {
-  //   setCheckedGender(e.target.checkedGender);
-  // }
 
   const handlePersonalAgree = (event) => {
     setCheckedPersonal(event.target.checked);
   };
 
-  const handleGenderAgree = (e) => {
-    setCheckedGender(e.target.value);
+  const handleGender = (event) => {
+    setCheckedGender(event.target.checked);
   };
 
-  const userIdHandler = (e) => {
-    setUserId(e.target.value);
-  };
+  // const userIdHandler = (e) => {
+  //   setUserId(e.target.value);
+  // };
 
   const onhandlePost = async (joinData) => {
     // post
@@ -86,12 +74,13 @@ const Join = () => {
       .catch(function (err) {
         console.log(err);
         setRegisterError("회원가입에 실패하였습니다. 다시한번 확인해 주세요.");
+        // navigate("/");
       });
   };
 
   // id가 중복된 아이디인지 검사하는 곳
   const duplicationCheck = () => {
-    // const userId = event.currentTarget.get("id");
+    const userId = document.getElementById("id");
     duplicationCheckAPI(userId).then((response) => {
       console.log(response);
       if (response === false) {
@@ -115,13 +104,11 @@ const Join = () => {
       name: data.get("name"),
       userPw: data.get("password"),
       birth: data.get("birth"),
-      sex: data.get(""),
+      sex: data.get("gender"),
+      subStatus: data.get("userEmail") == "on" ? 1 : 0,
     };
-    const { userId, email, name, userPw, birth } = joinData;
-
-    // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    // if (id === data.get("id")) setIdError(' 중복된 아이디입니다.');
-    // else setIdError('');
+    const { userId, email, name, userPw, birth, sex, subStatus } = joinData;
+    console.log(joinData);
 
     // 이메일 유효성 체크
     const emailRegex =
@@ -155,7 +142,7 @@ const Join = () => {
     else setNameError("");
 
     // 성별 체크 검사
-    if (!checkedGender) alert("성별을 체크해주세요.");
+    if (sex == null) alert("성별을 체크해주세요.");
 
     // 회원가입 동의 체크
     if (!CheckedPersonal) alert("회원가입 약관에 동의해주세요.");
@@ -192,28 +179,6 @@ const Join = () => {
             회원가입
           </Typography>
 
-          <div className="join-inputId">
-            <Grid item xs={12}>
-              <TextField
-                required
-                autoFocus
-                fullWidth
-                type="id"
-                id="id"
-                name="id"
-                onChange={userIdHandler}
-                value={userId}
-                label="아이디"
-                error={idError !== "" || false}
-                // className="join-inputId"
-              />
-            </Grid>
-          </div>
-          <FormHelperTexts>{idError}</FormHelperTexts>
-          <button className="join-idCheck" onClick={duplicationCheck}>
-            아이디 중복검사
-          </button>
-
           <Boxs
             component="form"
             noValidate
@@ -221,6 +186,25 @@ const Join = () => {
             sx={{ mt: 3 }}
           >
             <FormControl component="fieldset" variant="standard">
+              <div className="join-inputId">
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    autoFocus
+                    fullWidth
+                    type="text"
+                    id="id"
+                    name="id"
+                    label="아이디"
+                    error={idError !== "" || false}
+                  />
+                </Grid>
+              </div>
+              <FormHelperTexts>{idError}</FormHelperTexts>
+              <a className="join-idCheck" onClick={duplicationCheck}>
+                아이디 중복검사
+              </a>
+
               <Grid container spacing={1.5}>
                 <Grid item xs={12}>
                   <TextField
@@ -270,30 +254,14 @@ const Join = () => {
                   />
                 </Grid>
                 <FormHelperTexts>{emailError}</FormHelperTexts>
-                <FormControl>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                  >
-                    {/* {" "} */}
-                    <p className="join-gender" onChange={handleGenderAgree}>
-                      성별
-                      <FormControlLabel
-                        id="male"
-                        value="M"
-                        control={<Checkbox />}
-                        label="남"
-                      />
-                      <FormControlLabel
-                        id="female"
-                        value="F"
-                        control={<Checkbox />}
-                        label="여"
-                      />
-                    </p>
-                  </RadioGroup>
-                </FormControl>
+                <div className="join-genderRadio">
+                  <span>성별 </span>
+                  <input type="radio" id="gender" name="gender" value="F" />
+                  여성
+                  <input type="radio" id="gender" name="gender" value="M" />
+                  남성
+                  <div id="result"></div>
+                </div>
                 <Grid item xs={12}>
                   <FormControlLabel
                     control={
@@ -309,7 +277,8 @@ const Join = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        onChange={handlePersonalAgree}
+                        id="userEmail"
+                        name="userEmail"
                         color="primary"
                       />
                     }

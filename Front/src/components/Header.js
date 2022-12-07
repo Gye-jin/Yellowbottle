@@ -5,9 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-// import MenuIcon from '@mui/icons-material/Menu';
 import { createTheme } from "@material-ui/core/styles";
-// import { ThemeProvider } from '@material-ui/styles';
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
@@ -21,22 +19,6 @@ export default function Header() {
 
   // navigate(이동)하는 함수
   const navigate = useNavigate();
-  // // navigateToJoin: 회원가입 버튼 클릭시 회원가입 페이지로 이동
-  // const navigateToJoin = () => {
-  //   navigate("/Join");
-  // };
-  // // navigateToLogin: 로그인 버튼 클릭시 회원가입 페이지로 이동
-  // const navigateToLogin = () => {
-  //   navigate("/Login");
-  // };
-  // // navigateToFeed: 실천내용 버튼 클릭시 회원가입 페이지로 이동
-  // const navigateToFeed = () => {
-  //   navigate("/Feed");
-  // };
-  // // navigateToMain: 로고버튼 누르면 메인페이지로 이동
-  // const navigateToMain = () => {
-  //   navigate("/");
-  // };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -48,7 +30,6 @@ export default function Header() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            // onClick={navigateToMain}
             onClick={() => navigate("/")}
           >
             {/* 로고 */}
@@ -60,7 +41,6 @@ export default function Header() {
             />
           </IconButton>
           <Typography
-            // onClick={navigateToFeed}
             onClick={() => navigate("/Feed")}
             variant="h6"
             component="div"
@@ -68,14 +48,10 @@ export default function Header() {
           >
             실천내용
           </Typography>
-          <Button color="inherit" 
-            // onClick={navigateToLogin}>
-            onClick={() => navigate("/Login")}>
+          <Button color="inherit" onClick={() => navigate("/Login")}>
             로그인
           </Button>
-          <Button color="inherit" 
-            // onClick={navigateToJoin}>
-            onClick={() => navigate("/Join")}>
+          <Button color="inherit" onClick={() => navigate("/Join")}>
             회원가입
           </Button>
         </Toolbar>
