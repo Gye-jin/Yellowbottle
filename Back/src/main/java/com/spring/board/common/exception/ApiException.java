@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.spring.board.controller.BoardController;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,8 +20,7 @@ public class ApiException {
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<String> handlerNoSuchElementException(NoSuchElementException e) {
 		logger.error(e.getMessage());
-//		return ResponseEntity.status(ExceptionEnum.NOT_FOUND.getStatusCode())
-//				.body(ExceptionEnum.NOT_FOUND.getMsg());
+
 		return ResponseEntity.status(ExceptionEnum.E0001.getStatusCode())
 				.body(ExceptionEnum.E0001.getMsg());
 		}

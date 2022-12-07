@@ -1,25 +1,29 @@
 package com.spring.board.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.board.common.dto.PageRequestDTO;
-import com.spring.board.common.dto.PageResultDTO;
 import com.spring.board.dto.BoardDTO;
 import com.spring.board.entity.Board;
+import com.spring.board.entity.Tag;
+import com.spring.board.repository.mapping.BoardMapping;
+import com.spring.board.tag.Category;
 
 public interface BoardService {
 	
-	public Long insertDiary(BoardDTO diaryDTO);
+	public Long insertBoard(BoardDTO boardDTO);
 	
-	public BoardDTO getDiaryByDiaryNo(Long diaryNo) throws Exception;
+	public BoardDTO getBoardByBoardNo(Long BoardNo) throws Exception;
 	
-	public void deleteDiary(Long diaryNo);
+	public void deleteBoard(Long boardNo);
 	
-	public void insertBatchData(List<BoardDTO> diaryList);
+//	public BoardMapping getBoardByUserId(String userId);
+//	public void getBoardByUserId(String userId);
+	public List<BoardMapping> getBoardByUserId(String userId);
+
 	
-	public PageResultDTO<BoardDTO, Board> getList(PageRequestDTO requestDTO);
-	
-	public void updateDiary(Long diaryNo, BoardDTO newdiaryDTO);
+	public void updateBoard(Long boardNo, Tag tag, BoardDTO newboardDTO);
 }

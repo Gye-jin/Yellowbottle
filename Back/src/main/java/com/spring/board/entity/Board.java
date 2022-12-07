@@ -8,20 +8,17 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.board.dto.BoardDTO;
-import com.spring.board.dto.FileDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,19 +30,23 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = {"files", "tags", "comments"})
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Board {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="diary_no")
-	private Long no;
+	@Column(name="board_no")
+	private Long boardNo;
 	
-	private String title;
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private String userId;
 	
-	private String content;
+	private String boardContent;
+	
+	private Long likeCount;
 	
 	@CreatedDate
 	@Column(updatable = false)
@@ -54,32 +55,43 @@ public class Board {
 	@LastModifiedDate
 	private LocalDateTime modifiedDate;
 	
-	@OneToMany(mappedBy = "diary")
+	private Long viewCount;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "board")
+//	추후 : @BatchSize 전략 사용
 	List<File> files = new ArrayList<File>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "board")
+//	추후 : @Query 사용
+	List<Tag> tags = new ArrayList<Tag>();
 	
-	// entity to dto
-	public static BoardDTO entityToDTO(Board diary) {
-
-		
-		
-		BoardDTO diaryDTO = BoardDTO.builder()
-								.no(diary.getNo())
-								.title(diary.getTitle())
-								.content(diary.getContent())
-								.createDate(diary.getWrittenDate())
-								.modifiedDate(diary.getModifiedDate())
-								.fileDTOs(diary.getFiles().stream()
+	@JsonIgnore
+	@OneToMany(mappedBy = "board")
+	List<Comment> comments = new ArrayList<Comment>();
+	
+	public static BoardDTO boardEntitytoDTO (Board board) {
+		BoardDTO boardDTO = BoardDTO.builder()
+									.boardNo(board.getBoardNo())
+									.userId(board.getUserId())
+									.boardContent(board.getBoardContent())
+									.likeCount(board.getLikeCount())
+									.createDate(board.getWrittenDate())
+									.modifiedDate(board.getModifiedDate())
+									.viewCount(board.getViewCount())
+									.fileDTOs(board.getFiles().stream()
 											  .map(file -> file.entotyToDTO(file))
 										      .collect(Collectors.toList()))
-								.build();
-		
-		return diaryDTO;
-	
-}
-	
-	public void updateDiary(BoardDTO diaryDTO) {
-		this.title = diaryDTO.getTitle();
-		this.content=diaryDTO.getContent();
+									.tagDTOs(board.getTags().stream()
+											.map(tag -> tag.entotyToDTO(tag))
+											.collect(Collectors.toList()))
+									.build();
+		return boardDTO;
 	}
+	
+	public void updateBoard(BoardDTO boardDTO) {
+		 this.boardContent = boardDTO.getBoardContent();
+	}
+	
 }

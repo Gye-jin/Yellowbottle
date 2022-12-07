@@ -1,10 +1,11 @@
 package com.spring.board.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;import org.hibernate.query.criteria.internal.expression.function.LengthFunction;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,57 +18,47 @@ import com.spring.board.repository.FileRepository;
 
 @Service
 public class FileServiceImpl implements FileService{
-	
+
+	// Repository 연결
 	@Autowired
 	FileRepository fileRepo;
-	
 	@Autowired
-	BoardRepository diaryRepo;
+	BoardRepository boardRepo;
 	
-
+	// 새로운 File 삽입
 	@Override
-	public void insertFile(Long diaryId, List<MultipartFile> files) {
-
+	public void insertFile(Long boardId, List<MultipartFile> files) {
+		// files객체 분해 후 DB 삽입
 		for (MultipartFile file : files) {
+			// fileNo는 autoincrement이기 때문에 제외 후 builder로 DTO객체 생성
 			FileDTO fileDTO = FileDTO.builder()
 									 .originalFileNAME(file.getOriginalFilename())
 									 .fileName(UUID.randomUUID() + "_" + file.getOriginalFilename())
 									 .filePath(System.getProperty("user.dir") + "\\files")
 									 .build();
-
-			File entity = fileDTO.dtoToEntity(fileDTO);
-			Board diary = diaryRepo.getDiaryByNo(diaryId);
-
-			entity.updateDiary(diary);
-			fileRepo.save(entity);
+			// 생성한 DTO를 entity로 변경
+			File fileEntity = FileDTO.dtoToEntity(fileDTO);
+			// 파라미터로 전달받은 boardId를 활용하여 board entity 받기
+			Board board = boardRepo.findById(boardId).orElseThrow(NoSuchElementException::new);
+			// 받아온 board를 file entity에 채워서 file객체 완성
+			fileEntity.updateBoard(board);
+			// 완성한 entity DB에 삽입
+			fileRepo.save(fileEntity);
 		}
 	}
 	
 	@Override
-	public void deleteFileDiary(Long diaryId) {
-		fileRepo.deleteByDiaryNo(diaryId);
+	@Transactional
+	public void deleteFileBoard(Long boardId) {
+		fileRepo.deletFileByBoardNo(boardId);
 	}
 	
-	@Override	
+	@Override
+	@Transactional
 	public void deleteFile(Long fileNo) {
 		fileRepo.deleteById(fileNo);
 	}
 	
-	@Override
-	public void updateFile(Long diaryId, List<MultipartFile> files) {
 
-		for (MultipartFile file : files) {
-			FileDTO fileDTO = FileDTO.builder()
-									 .originalFileNAME(file.getOriginalFilename())
-									 .fileName(UUID.randomUUID() + "_" + file.getOriginalFilename())
-									 .filePath(System.getProperty("user.dir") + "\\files")
-									 .build();
-
-			File entity = fileDTO.dtoToEntity(fileDTO);
-			Board diary = diaryRepo.getDiaryByNo(diaryId);
-
-			entity.updateDiary(diary);
-			fileRepo.save(entity);
-		}
-	}
 }
+
