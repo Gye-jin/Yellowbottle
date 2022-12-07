@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.spring.back.category.ContentCategory;
+import com.spring.back.content.ContentCategory;
 import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.ContentDTO;
 

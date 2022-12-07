@@ -1,9 +1,13 @@
 package com.spring.back.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.back.service.MailServiceImpl;
@@ -18,9 +22,9 @@ public class AdminController {
 
 	// 사람들에게 컨텐츠 전달 기능.
 	@PostMapping("/mail")
-	public boolean sendMail(Long contentNo) {
+	public boolean sendMail(@RequestParam Long FirstcontentNo,@RequestParam Long SecondcontentNo,@RequestParam Long ThirdcontentNo) {
+		return mailservice.sendMail(FirstcontentNo,SecondcontentNo,ThirdcontentNo);
 
-		return mailservice.sendMail(contentNo);
-
+//		return true;
 	}
 }
