@@ -41,12 +41,13 @@ const Login = () => {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
-  const onhandlePost = async (joinData) => {
+  const onhandlePost = async (loginData) => {
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("http://localhost:8080/api/login", joinData)
+      .post("http://localhost:8080/api/login", loginData)
       .then(function (response) {
+        // response 는 백에서 프론트로 ... request는 프론트에서 백으로
         console.log(response, "성공");
         navigate("/");
       })
@@ -60,16 +61,12 @@ const Login = () => {
     e.preventDefault();
 
     const data = new FormData(e.currentTarget);
-    const joinData = {
+    const loginData = {
       userId: data.get("id"), // id의  e.currentTarget.value
       userPw: data.get("password"),
     };
-    const { userId, userPw } = joinData;
-    console.log(joinData);
-    // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    // if (id !== data.get("id"))
-    //   setIdError(" 잘못된 아이디입니다. 다시 입력해주세요 ");
-    // else setIdError("");
+    const { userId, userPw } = loginData;
+    console.log(loginData);
 
     // 비밀번호 유효성 체크
     const passwordRegex =
@@ -82,12 +79,9 @@ const Login = () => {
     else setPasswordError("");
 
     if (passwordRegex.test(userPw)) {
-      onhandlePost(joinData);
+      onhandlePost(loginData);
     }
   };
-  // const navigateToJoin = () => {
-  //   navigate("/Join");
-  // }
 
   return (
     <ThemeProvider theme={theme}>
