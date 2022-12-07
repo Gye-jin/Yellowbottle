@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 
 import com.spring.board.dto.BoardDTO;
 import com.spring.board.dto.TagDTO;
-import com.spring.board.tag.tag;
+import com.spring.board.tag.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,7 +38,7 @@ public class Tag {
 	private Board board;
 	
 	@Enumerated(EnumType.STRING)
-	private tag tagContent;
+	private Category tagContent;
 	
 	
 	public static TagDTO entotyToDTO(Tag tag) {

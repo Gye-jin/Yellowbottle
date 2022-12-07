@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 		// 전달받은 DTO객체를 Entity객체로 전환
 		User user = UserDTO.userDTOToEntity(userDTO);
 		// save를 통해 user Entity객체 DB에 삽입
-		userRepo.save(user).getUserId();
+		userRepo.save(user);
 		return true;
 	}
 	

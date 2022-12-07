@@ -1,15 +1,8 @@
-package com.spring.board.dto;
+package com.spring.back.dto;
 
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.spring.board.entity.Board;
-import com.spring.board.entity.Comment;
-import com.spring.board.entity.User;
-import com.spring.board.repository.BoardRepository;
-import com.spring.board.service.BoardService;
-import com.spring.board.service.BoardServiceImpl;
+import com.spring.back.entity.Comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +22,7 @@ public class CommentDTO {
 	private Long boardNo;
 	private String userId;
 	private String commentContent;
-	private String commentDate;
+	private LocalDateTime commentDate;
 	
 	// comment객체 DTO에서 entity로 변경
 	public static Comment commentDtoToEntity(CommentDTO commentDTO) {
@@ -40,6 +33,4 @@ public class CommentDTO {
 								 .build();
 		return comment;
 	}
-	
-	
 }

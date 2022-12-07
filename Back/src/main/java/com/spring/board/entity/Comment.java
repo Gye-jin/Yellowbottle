@@ -1,10 +1,15 @@
 package com.spring.board.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.spring.board.dto.CommentDTO;
 
@@ -20,7 +25,10 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
+@Table(name = "comment")
 public class Comment {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long commentNo;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -39,9 +47,19 @@ public class Comment {
 	public static CommentDTO commentEntityToDTO(Comment comment) {
 		CommentDTO commentDTO = CommentDTO.builder()
 									  .commentNo(comment.getCommentNo())
+									  .userId(comment.getUser().getUserId())
+									  .boardNo(comment.getBoard().getBoardNo())
 									  .commentContent(comment.getCommentContent())
 									  .commentDate(comment.getCommentDate())
 									  .build();
 		return commentDTO;
+	}
+	
+	public void boardInComment(Board board) {
+		this.board = board;
+	}
+
+	public void userInComment(User user) {
+		this.user = user;
 	}
 }

@@ -21,19 +21,22 @@ import com.spring.board.entity.Board;
 import com.spring.board.entity.Tag;
 import com.spring.board.repository.BoardRepository;
 import com.spring.board.repository.mapping.BoardMapping;
-import com.spring.board.tag.tag;
+import com.spring.board.tag.Category;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
 	
 	// Repository와 연결
-	@Autowired
-	BoardRepository boardRepo;
-	@Autowired
-	FileServiceImpl fileService;
-	@Autowired
-	TagServiceImpl tagService;
+//	@Autowired
+	final	BoardRepository boardRepo;
+//	@Autowired
+	final FileServiceImpl fileService;
+//	@Autowired
+	final TagServiceImpl tagService;
 	
 	// Create -----------------------------------------------------------------------------------------------------
 	@Override
@@ -84,8 +87,8 @@ public class BoardServiceImpl implements BoardService{
 	@Transactional
 	public void deleteBoard(Long boardNo){
 		// 태그, 파일, 게시글 전부 삭제
-		tagService.deleteTagBoard(boardNo);
-		fileService.deleteFileBoard(boardNo);
+//		tagService.deleteTagBoard(boardNo);
+//		fileService.deleteFileBoard(boardNo);
 		boardRepo.deleteById(boardNo);
 	}
 }

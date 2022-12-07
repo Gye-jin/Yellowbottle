@@ -25,6 +25,7 @@ public class User {
 	@Id
 	@JsonIgnore
 	@OneToOne(mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	private String userId;
 	
 	private String userPw;

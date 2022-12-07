@@ -10,7 +10,7 @@ import com.spring.board.dto.BoardDTO;
 import com.spring.board.entity.Board;
 import com.spring.board.entity.Tag;
 import com.spring.board.repository.mapping.BoardMapping;
-import com.spring.board.tag.tag;
+import com.spring.board.tag.Category;
 
 public interface BoardService {
 	
