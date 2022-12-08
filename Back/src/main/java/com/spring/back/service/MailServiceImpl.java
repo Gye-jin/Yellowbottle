@@ -1,5 +1,6 @@
 package com.spring.back.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.content.ContentTemplate;
+import com.spring.back.entity.Content;
 import com.spring.back.entity.User;
+import com.spring.back.repository.ContentRepository;
 import com.spring.back.repository.UserRepository;
 
 @Service
@@ -25,8 +29,8 @@ public class MailServiceImpl implements MailService {
 	// [Repository]
 	@Autowired
 	UserRepository userRepo;
-//   @Autowired
-//   ContentRepository contentRepo;
+   @Autowired
+   ContentRepository contentRepo;
 
 	// Default Value
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -39,11 +43,12 @@ public class MailServiceImpl implements MailService {
 	// 설명 : 해당 컨텐츠 고객 상태가 true인 고객을 대상으로 메일 발송
 	// 특이사항 : 아직 컨텐츠 내용이 없어서 추후 메소드 수정 수정 후 확인 필요
 	@Override
-	public boolean sendMail() {
-//	public boolean sendMail(Long contentNo) {
+	public boolean sendMail(Long first,Long second, Long third) {
 
 		List<User> users = userRepo.findBySubStatus(true);
-//      Content content=contentRepo. findByContentNo(contentNo);
+		Content content1=contentRepo.findByContentNo(first);
+		Content content2=contentRepo.findByContentNo(second);
+		Content content3=contentRepo.findByContentNo(third);
 		List<String> toUserList = null;
 
 		toUserList = users.stream().map(user -> user.getEmail()).collect(Collectors.toList());
@@ -54,8 +59,18 @@ public class MailServiceImpl implements MailService {
 			helper = new MimeMessageHelper(message, true, "utf-8");
 			helper.setFrom(setFrom);
 			helper.setTo((String[]) toUserList.toArray(new String[toUserList.size()]));
-			helper.setSubject("정계진");
-			helper.setText("null");
+			// 제목
+			helper.setSubject("TEST");
+			// 내용
+			helper.setText(ContentTemplate.contentTemplate(content1,content2,content3), true);
+			
+			// -----------------------------------------------------------------------------
+			//템플릿에 전달할 데이터 설정
+	        HashMap<String, String> emailValues = new HashMap<>();
+			
+			
+			// -----------------------------------------------------------------------------
+
 			javaMailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
