@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   Button,
   CssBaseline,
@@ -15,7 +14,6 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { numGoAPI } from "../Api/FindPwData";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
@@ -32,38 +30,65 @@ const Boxs = styled(Box)`
 
 const FindPw = () => {
   const theme = createTheme();
+  const [checked, setChecked] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [idError, setIdError] = useState("");
+  const [userId, setUserId] = useState("");
+  const [birth, setBirth] = useState("");
+  const [email, setEmail] = useState("");
   const [birthError, setBirthError] = useState("");
   const [registerError, setRegisterError] = useState("");
   const [cfnumError, setCfnumError] = useState("");
+  const [cfnum, setcfnum] = useState("");
+  const [confNum, setconfNum] = useState("");
   const navigate = useNavigate();
 
-  const onhandlePost = async (joindata) => {
-    // post
-    await axios
-      // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("http://localhost:8080/api/findPw", joindata)
-      .then(function (response) {
-        console.log(response, "인증번호 발송 성공");
-      })
-      .catch(function (err) {
-        console.log(err);
-        setRegisterError(
-          "인증번호 발송에 실패했습니다. 이메일주소를 확인해주세요."
-        );
-      });
+  const userIdhandler = (e) => {
+    setUserId(e.target.value);
   };
 
-  //인증번호 발송(이메일확인)
+  const birthhandler = (e) => {
+    setBirth(e.target.value);
+  };
+
+  const emailhandler = (e) => {
+    setEmail(e.target.value);
+  };
+
+  // const onhandlePost = async (findData) => {
+  //   // post
+  //   await axios
+  //     // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
+  //     .post("http://localhost:8080/api/findPw", findData)
+  //     .then(function (response) {
+  //       sessionStorage.setItem("userid", document.getElementById("id"));
+  //       sessionStorage.setItem("birth", document.getElementById("birth"));
+  //       sessionStorage.setItem("email", document.getElementById("email"));
+  //       console.log(response, "인증번호 발송 성공");
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //       setRegisterError(
+  //         "인증번호 발송에 실패했습니다. 이메일주소를 확인해주세요."
+  //       );
+  //     });
+  // };
+
+  //인증번호 발송확인alert창
   const NumGo = () => {
-    const userId = document.getElementById("id");
-    const birth = document.getElementById("birth");
-    const email = document.getElementById("email");
-    numGoAPI(email, userId, birth).then((response) => {
+    // const userId = document.getElementById("id").value;
+    // const birth = document.getElementById("birth").value;
+    // const email = document.getElementById("email").value;
+    console.log(userId);
+    console.log();
+    numGoAPI(email, userId, birth, confNum, setconfNum).then((response) => {
       console.log(response);
-      if (response === true) {
+      if (response !== false) {
         alert("인증번호가 발송되었습니다.");
+        sessionStorage.setItem("userid", document.getElementById("id"));
+        sessionStorage.setItem("birth", document.getElementById("birth"));
+        sessionStorage.setItem("email", document.getElementById("email"));
       } else {
         alert("없는 email입니다. 다시 입력해주세요");
       }
@@ -97,6 +122,7 @@ const FindPw = () => {
                 type="id"
                 id="id"
                 name="id"
+                onChange={userIdhandler}
                 label="아이디"
                 error={idError !== "" || false}
               />
@@ -111,6 +137,7 @@ const FindPw = () => {
                 type="email"
                 id="email"
                 name="email"
+                onChange={emailhandler}
                 label="이메일 주소"
                 error={emailError !== "" || false}
               />
@@ -123,6 +150,7 @@ const FindPw = () => {
                 type="birth"
                 id="birth"
                 name="birth"
+                onChange={birthhandler}
                 label="생년월일 입력(ex.1998-02-15)"
                 error={birthError !== "" || false}
               />
@@ -130,7 +158,7 @@ const FindPw = () => {
           </Grid>
           <FormHelperTexts>{birthError}</FormHelperTexts>
 
-          <button className="numgo" onClick={NumGo}>
+          <button type="submit" className="numgo" onClick={NumGo}>
             인증번호 발송
           </button>
 
@@ -142,23 +170,30 @@ const FindPw = () => {
                   autoFocus
                   fullWidth
                   type="varchar"
-                  id="cfnum"
+                  id="confNum"
                   name="cfnum"
                   label="인증번호 6자리"
                 />
               </Grid>
               <FormHelperTexts>{cfnumError}</FormHelperTexts>
+
+              {/* <button className="numgo" onClick={NumGo}>
+                인증번호 확인
+              </button> */}
+
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 size="large"
-                onClick={() => navigate("/resetPw")}
+                // onClick={() => navigate("/resetPw")}
+                // onClick={(cfnum === response.data) => navigate("/resetPw")}
               >
                 인증번호 확인
               </Button>
             </FormControl>
+            {/* <div>{}</div> */}
           </Boxs>
         </Box>
       </Container>
