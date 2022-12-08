@@ -45,16 +45,14 @@ const ResetPw = () => {
     setChecked(event.target.checked);
   };
 
-  const onhandlePost = async (data) => {
-    const { rePassword, password } = data;
-    const postData = { rePassword, password };
-
+  const onhandlePost = async (postResetPwData) => {
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/api/updatePw", postData)
+      .post("/api/updatePw", postResetPwData)
       .then(function (response) {
         console.log(response, "성공");
+        alert("비밀번호 변경에 성공하셨습니다!");
         navigate.push("/login");
       })
       .catch(function (err) {
@@ -69,11 +67,11 @@ const ResetPw = () => {
     e.preventDefault();
 
     const data = new FormData(e.currentTarget);
-    const joinData = {
+    const postResetPwData = {
       repassword: data.get("repassword"),
       password: data.get("password"),
     };
-    const { rePassword, password } = joinData;
+    const { rePassword, password } = postResetPwData;
 
     // 비밀번호 유효성 체크
     const passwordRegex =
@@ -92,11 +90,10 @@ const ResetPw = () => {
     if (
       // 작성한 아이디 !== 기존 아이디 &&
       passwordRegex.test(password) &&
-      password === rePassword &&
+      password === rePassword
       // nameRegex.test(name) &&
-      checked
     ) {
-      onhandlePost(joinData);
+      onhandlePost(postResetPwData);
     }
   };
 
@@ -114,10 +111,6 @@ const ResetPw = () => {
             alignItems: "center",
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} /> */}
-          {/* <Typography component="h1" variant="h5">
-            로그인
-          </Typography> */}
           <Boxs
             component="form"
             noValidate
@@ -152,7 +145,6 @@ const ResetPw = () => {
                 <FormHelperTexts>{passwordError}</FormHelperTexts>
               </Grid>
               <Link to={"/"}>
-                {" "}
                 <Button
                   type="submit"
                   fullWidth

@@ -10,7 +10,6 @@ import NotFound from "./pages/NotFound.js";
 import FindPw from "./pages/FindPw";
 import FindId from "./pages/FindId";
 import ResetPw from "./pages/ResetPw";
-import ConfirmId from "./pages/ConfirmId";
 import MyPage from "./pages/MyPage";
 
 function App() {
@@ -24,7 +23,6 @@ function App() {
         <Route path="/readboard/*" element={<ReadBoard />} />
         <Route path="/findId" element={<FindId />} />
         <Route path="/findPw" element={<FindPw />} />
-        {/* <Route path="/confirmId" element={<ConfirmId />} /> */}
         <Route path="/resetPw" element={<ResetPw />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/mypage" element={<MyPage />} />
