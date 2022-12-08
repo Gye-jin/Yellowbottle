@@ -24,7 +24,7 @@ function App() {
         <Route path="/readboard/*" element={<ReadBoard />} />
         <Route path="/findId" element={<FindId />} />
         <Route path="/findPw" element={<FindPw />} />
-        <Route path="/confirmId" element={<ConfirmId />} />
+        {/* <Route path="/confirmId" element={<ConfirmId />} /> */}
         <Route path="/resetPw" element={<ResetPw />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/mypage" element={<MyPage />} />

@@ -5,10 +5,10 @@ import Scroll from "../components/Scroll.js";
 import Header from "../components/Header.js";
 
 function Main() {
+  console.log(sessionStorage.getItem("id") + "main");
   return (
     <>
       <Header />
-
       <Scroll />
     </>
   );

@@ -131,6 +131,17 @@
   align-items: center;
   /* min-height: 100vh; */
 }
+
+.conf {
+  width: 35%;
+  background-color: dodgerblue;
+  color: white;
+  height: 20px;
+  border: 0;
+  margin-bottom: 10px;
+  margin-left: 130px;
+  padding-left: 10px;
+}
 .butom {
   display: flex;
   justify-content: center;

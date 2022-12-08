@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   Button,
   CssBaseline,
@@ -14,34 +15,39 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import { numGoAPI } from "../Api/FindPwData";
+// import { numGoAPI } from "../Api/FindPwData";
 
-// mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
+//mui 템플릿 사용
 const FormHelperTexts = styled(FormHelperText)`
   width: 100%;
   padding-left: 16px;
   font-weight: 700 !important;
   color: #d32f2f !important;
 `;
-
+// mui의 css 우선순위가 높기때문에 important를 설정.
 const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
 
 const FindPw = () => {
+  // mui 테마
   const theme = createTheme();
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
+  // 이메일 입력오류
   const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  // 아이디 입력오류
   const [idError, setIdError] = useState("");
+  //생년월일 입력오류
+  const [birthError, setBirthError] = useState("");
+  // const [registerError, setRegisterError] = useState("");
   const [userId, setUserId] = useState("");
   const [birth, setBirth] = useState("");
   const [email, setEmail] = useState("");
-  const [birthError, setBirthError] = useState("");
-  const [registerError, setRegisterError] = useState("");
-  const [cfnumError, setCfnumError] = useState("");
-  const [cfnum, setcfnum] = useState("");
-  const [confNum, setconfNum] = useState("");
+  //인증번호 입력오류
+  const [inputnumError, setinputnumError] = useState("");
+  const [inputNum, setinputNum] = useState("");
+  const [certiNum, setCertiNum] = useState("");
+  // 페이지 이동 함수
   const navigate = useNavigate();
 
   const userIdhandler = (e) => {
@@ -56,35 +62,22 @@ const FindPw = () => {
     setEmail(e.target.value);
   };
 
-  // const onhandlePost = async (findData) => {
-  //   // post
-  //   await axios
-  //     // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-  //     .post("http://localhost:8080/api/findPw", findData)
-  //     .then(function (response) {
-  //       sessionStorage.setItem("userid", document.getElementById("id"));
-  //       sessionStorage.setItem("birth", document.getElementById("birth"));
-  //       sessionStorage.setItem("email", document.getElementById("email"));
-  //       console.log(response, "인증번호 발송 성공");
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //       setRegisterError(
-  //         "인증번호 발송에 실패했습니다. 이메일주소를 확인해주세요."
-  //       );
-  //     });
-  // };
+  //인증번호 확인 버튼 클릭 시, 삼항연산자 실행(인증번호 입력값이 동일할 경우에 비밀번호 재설정페이지로 넘어가도록.)
+  const passResetPw = () => {
+    <div>{certiNum === inputNum ? navigate("/resetPw") : <></>}</div>;
+  };
 
   //인증번호 발송확인alert창
-  const NumGo = () => {
+  const SendCertiNum = () => {
     // const userId = document.getElementById("id").value;
     // const birth = document.getElementById("birth").value;
     // const email = document.getElementById("email").value;
     console.log(userId);
-    console.log();
-    numGoAPI(email, userId, birth, confNum, setconfNum).then((response) => {
-      console.log(response);
-      if (response !== false) {
+    console.log(email);
+    SendCertiNumAPI(email, userId, birth).then((response) => {
+      setCertiNum(response.data); //.data
+      console.log(response, "인증번호 전송");
+      if (response !== 0) {
         alert("인증번호가 발송되었습니다.");
         sessionStorage.setItem("userid", document.getElementById("id"));
         sessionStorage.setItem("birth", document.getElementById("birth"));
@@ -95,6 +88,19 @@ const FindPw = () => {
       console.log("이메일로 인증번호 발송");
     });
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   const data = new FormData(e.currentTarget);
+  //   const findData = {
+  //     userId: data.get("id"),
+  //     email: data.get("email"),
+  //     birth: data.get("birth"),
+  //   };
+  //   const { userId, email, birth } = findData;
+  //   console.log(findData);
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -158,11 +164,16 @@ const FindPw = () => {
           </Grid>
           <FormHelperTexts>{birthError}</FormHelperTexts>
 
-          <button type="submit" className="numgo" onClick={NumGo}>
+          <button type="submit" className="numgo" onClick={SendCertiNum}>
             인증번호 발송
           </button>
 
-          <Boxs component="form" noValidate sx={{ mt: 3 }}>
+          <Boxs
+            component="form"
+            noValidate
+            onSubmit={passResetPw}
+            sx={{ mt: 3 }}
+          >
             <FormControl component="fieldset" variant="standard">
               <Grid item xs={12}>
                 <TextField
@@ -170,12 +181,13 @@ const FindPw = () => {
                   autoFocus
                   fullWidth
                   type="varchar"
-                  id="confNum"
-                  name="cfnum"
+                  id="inputNum"
+                  // value={inputNum}
+                  name="inputNum"
                   label="인증번호 6자리"
                 />
               </Grid>
-              <FormHelperTexts>{cfnumError}</FormHelperTexts>
+              <FormHelperTexts>{inputnumError}</FormHelperTexts>
 
               {/* <button className="numgo" onClick={NumGo}>
                 인증번호 확인
@@ -193,7 +205,6 @@ const FindPw = () => {
                 인증번호 확인
               </Button>
             </FormControl>
-            {/* <div>{}</div> */}
           </Boxs>
         </Box>
       </Container>

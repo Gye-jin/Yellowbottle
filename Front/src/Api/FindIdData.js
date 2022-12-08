@@ -2,8 +2,8 @@ import axios from "axios";
 
 export default function ForPostFindIdData(
   findIdData,
-  setUserId,
-  setRegisterError
+  setUserId, //FindId.js에 const정의해둔 것을 가져오기 위해 인수로 지정
+  setRegisterError //FindId.js에 const정의해둔 것을 가져오기 위해 인수로 지정
 ) {
   const forPostFindIdData = async (findIdData) => {
     // post
