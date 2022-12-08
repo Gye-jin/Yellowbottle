@@ -1,6 +1,5 @@
 import Header from "../components/Header";
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 import {
   Button,
   CssBaseline,
@@ -13,7 +12,7 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import { SendCertiNumAPI } from "../Api/FindPwData";
+import { ForSendCertiNum, passResetPw } from "../Api/FindPwData";
 
 //mui 템플릿 사용
 const Boxs = styled(Box)`
@@ -31,55 +30,24 @@ const FindPw = () => {
   const [email, setEmail] = useState("");
   // 인증 번호
   const [inputNum, setinputNum] = useState("");
+  // 백에서 받은 인증번호
   const [certiNum, setCertiNum] = useState("");
-  // 페이지 이동 함수
-  const navigate = useNavigate();
 
-  const userIdhandler = (e) => {
+  // userId input값 바뀔 때마다 변하게 하는 함수
+  const userIdHandler = (e) => {
     setUserId(e.target.value);
   };
-
-  const birthhandler = (e) => {
+  // birth input값 바뀔 때마다 변하게 하는 함수
+  const birthHandler = (e) => {
     setBirth(e.target.value);
   };
-
-  const emailhandler = (e) => {
+  // email input값 바뀔 때마다 변하게 하는 함수
+  const emailHandler = (e) => {
     setEmail(e.target.value);
   };
-
+  // 인증번호 input값 바뀔 때마다 변하게 하는 함수
   const inputNumHandler = (e) => {
     setinputNum(e.target.value);
-  };
-
-  //인증번호 확인 버튼 클릭 시, 삼항연산자 실행(인증번호 입력값이 동일할 경우에 비밀번호 재설정페이지로 넘어가도록.)
-  const passResetPw = () => {
-    <div>
-      {setCertiNum === inputNum
-        ? navigate("/resetPw")
-        : alert("인증번호가 틀렸습니다. 다시 시도해주세요")}
-    </div>;
-  };
-
-  //인증번호 발송확인alert창
-  const SendCertiNum = () => {
-    console.log(userId);
-    console.log(email);
-    SendCertiNumAPI(email, userId, birth).then((response) => {
-      // console.log(response.data); // 인증번호
-      console.log(response, "인증번호 전송"); // response가 인증번호
-      console.log("----------------");
-      if (response !== true) {
-        alert("인증번호가 발송되었습니다.");
-        setCertiNum(response);
-        console.log(setCertiNum);
-        sessionStorage.setItem("userid", document.getElementById("id"));
-        sessionStorage.setItem("birth", document.getElementById("birth"));
-        sessionStorage.setItem("email", document.getElementById("email"));
-      } else {
-        alert("없는 email입니다. 다시 입력해주세요");
-      }
-      // console.log("이메일로 인증번호 발송");
-    });
   };
 
   return (
@@ -99,83 +67,80 @@ const FindPw = () => {
             비밀번호 찾기
           </Typography>
 
-          <Grid container spacing={1.5}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                autoFocus
-                fullWidth
-                type="id"
-                id="id"
-                name="id"
-                // value={userId}
-                onChange={userIdhandler}
-                label="아이디"
-                // error={idError !== "" || false}
-              />
-            </Grid>
-
-            {/* <FormHelperTexts>{idError}</FormHelperTexts> */}
-            <Grid item xs={12}>
-              <TextField
-                required
-                autoFocus
-                fullWidth
-                type="email"
-                id="email"
-                name="email"
-                // value={email}
-                onChange={emailhandler}
-                label="이메일 주소"
-                // error={emailError !== "" || false}
-              />
-            </Grid>
-            {/* <FormHelperTexts>{emailError}</FormHelperTexts> */}
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                type="birth"
-                id="birth"
-                name="birth"
-                // value={birth}
-                onChange={birthhandler}
-                label="생년월일 입력(ex.1998-02-15)"
-                // error={birthError !== "" || false}
-              />
-            </Grid>
-            {/* <FormHelperTexts>{birthError}</FormHelperTexts> */}
-          </Grid>
-
-          <button type="submit" className="numgo" onClick={SendCertiNum}>
-            인증번호 발송
-          </button>
-
-          <Boxs
-            component="form"
-            noValidate
-            onSubmit={passResetPw}
-            sx={{ mt: 3 }}
-          >
+          <Boxs component="form" noValidate sx={{ mt: 3 }}>
             <FormControl component="fieldset" variant="standard">
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  autoFocus
-                  fullWidth
-                  type="varchar"
-                  id="inputNum"
-                  onChange={inputNumHandler}
-                  name="inputNum"
-                  label="인증번호 6자리"
-                />
+              <div className="join-inputId">
+                {/* 아이디 입력칸 */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    autoFocus
+                    fullWidth
+                    type="text"
+                    id="id"
+                    name="id"
+                    label="아이디"
+                    onChange={userIdHandler}
+                  />
+                </Grid>
+                {/* 이메일 입력칸 */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    autoFocus
+                    fullWidth
+                    type="email"
+                    id="email"
+                    name="email"
+                    label="이메일 주소"
+                    onChange={emailHandler}
+                  />
+                </Grid>
+                {/* 생년월일 입력칸 */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="birth"
+                    id="birth"
+                    name="birth"
+                    label="생년월일 입력(ex.1999-08-20)"
+                    onChange={birthHandler}
+                  />
+                </Grid>
+              </div>
+              {/*  인증번호 발송 버튼을 누르면 입력된 값을 백에 존재하는 값들과 비교해서 
+              존재여부를 파악하고 있다면 인증번호를 해당 이메일로 발송한다. */}
+              <a
+                className="join-idCheck"
+                onClick={() =>
+                  ForSendCertiNum(userId, email, birth, setCertiNum)
+                }
+              >
+                인증번호 발송
+              </a>
+              <Grid container spacing={1.5}>
+                {/* 인증번호 입력칸 */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="inputNum"
+                    id="inputNum"
+                    name="inputNum"
+                    label="인증번호 6자리 입력"
+                    onChange={inputNumHandler}
+                  />
+                </Grid>
               </Grid>
+              {/* 비밀번호 변경 버튼을 누르면  */}
               <Button
-                type="submit"
+                type="button"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 size="large"
+                onClick={() => passResetPw(certiNum, inputNum)}
               >
                 인증번호 확인
               </Button>
