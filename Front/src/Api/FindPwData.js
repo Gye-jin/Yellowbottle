@@ -34,11 +34,12 @@ export function ForSendCertiNum(userId, email, birth, setCertiNum) {
       // response는 인증번호
       console.log(response, "인증번호 전송 전 확인 메세지");
       if (response !== 0) {
+        sessionStorage.clear();
         //  만약 반응이 0이 아니라면 인증번호, 세션 발급
         alert("인증번호가 발송되었습니다.");
-        sessionStorage.setItem("userid", document.getElementById("id"));
-        sessionStorage.setItem("birth", document.getElementById("birth"));
-        sessionStorage.setItem("email", document.getElementById("email"));
+        sessionStorage.setItem("userId", userId);
+        sessionStorage.setItem("birth", birth);
+        sessionStorage.setItem("email", email);
       } else {
         //  반응(response)가 0이라면 경고문구 출력
         alert("없는 email입니다. 다시 입력해주세요");

@@ -24,8 +24,8 @@ function App() {
         <Route path="/findId" element={<FindId />} />
         <Route path="/findPw" element={<FindPw />} />
         <Route path="/resetPw" element={<ResetPw />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

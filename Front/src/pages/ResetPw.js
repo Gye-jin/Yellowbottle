@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
-  Avatar,
   Button,
   CssBaseline,
   TextField,
@@ -33,27 +32,23 @@ const Boxs = styled(Box)`
 
 const ResetPw = () => {
   const theme = createTheme();
-  const [checked, setChecked] = useState(false);
-  const [passwordState, setPasswordState] = useState("");
   const [passwordError, setPasswordError] = useState("");
   // 아이디 추가
-  const [idError, setIdError] = useState("");
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
-  const handleAgree = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  const onhandlePost = async (postResetPwData) => {
+  const onhandlePost = async (password) => {
     // post
     await axios
       // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post("/api/updatePw", postResetPwData)
+      .post("http://localhost:8080/api/updatePw", {
+        userId: sessionStorage.getItem("userId"),
+        userPw: password,
+      })
       .then(function (response) {
         console.log(response, "성공");
         alert("비밀번호 변경에 성공하셨습니다!");
-        navigate.push("/login");
+        navigate("/login");
       })
       .catch(function (err) {
         console.log(err);
@@ -65,39 +60,41 @@ const ResetPw = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const data = new FormData(e.currentTarget);
     const postResetPwData = {
-      repassword: data.get("repassword"),
       password: data.get("password"),
+      rePassword: data.get("rePassword"),
     };
-    const { rePassword, password } = postResetPwData;
+    const { password, rePassword } = postResetPwData;
 
     // 비밀번호 유효성 체크
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password))
+    if (!passwordRegex.test(password)) {
       setPasswordError(
         "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
       );
-    else setPasswordError("");
+    } else {
+      setPasswordError("");
+    }
 
     // 비밀번호 같은지 체크
-    if (password !== rePassword)
+    if (password != rePassword) {
       setPasswordError("비밀번호가 일치하지 않습니다.");
-    else setPasswordError("");
+    } else {
+      setPasswordError("");
+    }
 
     if (
       // 작성한 아이디 !== 기존 아이디 &&
       passwordRegex.test(password) &&
       password === rePassword
-      // nameRegex.test(name) &&
     ) {
-      onhandlePost(postResetPwData);
+      console.log(sessionStorage.getItem("userId"));
+      onhandlePost(password);
     }
   };
 
-  console.log(sessionStorage.getItem("id", "birth", "email") + "findPw");
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -144,17 +141,15 @@ const ResetPw = () => {
                 </Grid>
                 <FormHelperTexts>{passwordError}</FormHelperTexts>
               </Grid>
-              <Link to={"/"}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  size="large"
-                >
-                  비밀번호 변경
-                </Button>
-              </Link>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                size="large"
+              >
+                비밀번호 변경
+              </Button>
             </FormControl>
             <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
