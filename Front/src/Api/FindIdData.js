@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// createFindData함수에서 유효성 검사를 거친 바디를 백에 보내주는 함수
 export default function ForPostFindIdData(
   findIdData,
   setUserId, //FindId.js에 const정의해둔 것을 가져오기 위해 인수로 지정
