@@ -148,3 +148,17 @@
   align-items: center;
   /* min-height: 100vh; */
 }
+
+/* BoardWrite : 게시글 작성화면 css */
+/* 게시글 쓰는 부분 css */
+.BoardWrite-rightBox {
+  background-color: blue;
+  float: right;
+  width: 50%;
+}
+/* 사진 선택하는 부분 css */
+.BoardWrite-leftBox {
+  background-color: red;
+  float: left;
+  width: 50%;
+}

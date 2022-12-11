@@ -7,11 +7,13 @@ export default function ForResetPwPost(password, setRegisterError) {
     await axios
       // 백에 userId와 userPw를 전송한다.
       .post("http://localhost:8080/api/updatePw", {
-        userId: sessionStorage.getItem("userId"),
+        userId: sessionStorage.getItem("Id"),
         userPw: password,
       })
       // 백에서 반응(response)가 정상적으로 오면 성공메세지와 함께 로그인 페이지로 이동
       .then(function (response) {
+        // 비밀번호가 정상적으로 변경되면 세션이 clear된다.
+        // sessionStorage.clear();
         console.log(response, "성공");
         alert("비밀번호 변경에 성공하셨습니다!");
         window.location.href = "/login";
