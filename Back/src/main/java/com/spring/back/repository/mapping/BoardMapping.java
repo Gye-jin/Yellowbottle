@@ -2,8 +2,6 @@ package com.spring.back.repository.mapping;
 
 import java.util.List;
 
-import com.spring.back.entity.User;
-
 public interface BoardMapping {
 	
 	// Element

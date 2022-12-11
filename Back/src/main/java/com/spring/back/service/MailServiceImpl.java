@@ -1,6 +1,5 @@
 package com.spring.back.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,13 +62,6 @@ public class MailServiceImpl implements MailService {
 			helper.setSubject("TEST");
 			// 내용
 			helper.setText(ContentTemplate.contentTemplate(content1,content2,content3), true);
-			
-			// -----------------------------------------------------------------------------
-			//템플릿에 전달할 데이터 설정
-	        HashMap<String, String> emailValues = new HashMap<>();
-			
-			
-			// -----------------------------------------------------------------------------
 
 			javaMailSender.send(message);
 		} catch (MessagingException e) {

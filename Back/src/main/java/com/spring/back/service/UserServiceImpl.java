@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserService {
 	public boolean updatePw(String userId, String newUserPw) {
 		User user = userRepo.findByUserId(userId);
 		user.updatePw(newUserPw);
+		userRepo.save(user);
 		return true;
 	}
 
