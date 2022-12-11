@@ -13,7 +13,7 @@ const slides = [
   "https://picsum.photos/1920/1084",
 ];
 
-export default function Scroll() {
+export default function ScrollMain() {
   const [imagesNavSlider, setImagesNavSlider] = useState(null);
   return (
     <div className="Scroll">

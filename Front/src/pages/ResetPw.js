@@ -46,6 +46,7 @@ const ResetPw = () => {
         userPw: password,
       })
       .then(function (response) {
+        sessionStorage.clear();
         console.log(response, "성공");
         alert("비밀번호 변경에 성공하셨습니다!");
         navigate("/login");

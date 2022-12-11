@@ -5,7 +5,7 @@ import Main from "./pages/Main.js";
 import Login from "./pages/Login.js";
 import Join from "./pages/Join.js";
 import Feed from "./pages/Feed.js";
-import ReadBoard from "./pages/ReadBoard.js";
+import WriteBoard from "./pages//WriteBoard.js";
 import NotFound from "./pages/NotFound.js";
 import FindPw from "./pages/FindPw";
 import FindId from "./pages/FindId";
@@ -20,7 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/feed" element={<Feed />} />
-        <Route path="/readboard/*" element={<ReadBoard />} />
+        <Route path="/writeBoard" element={<WriteBoard />} />
         <Route path="/findId" element={<FindId />} />
         <Route path="/findPw" element={<FindPw />} />
         <Route path="/resetPw" element={<ResetPw />} />

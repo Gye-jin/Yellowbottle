@@ -28,7 +28,7 @@ const FindPw = () => {
   const [birth, setBirth] = useState("");
   // 이메일
   const [email, setEmail] = useState("");
-  // 인증 번호
+  // 입력된 인증 번호
   const [inputNum, setinputNum] = useState("");
   // 백에서 받은 인증번호
   const [certiNum, setCertiNum] = useState("");

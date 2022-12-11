@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.css";
-import Scroll from "../components/Scroll.js";
+import ScrollMain from "../components/ScrollMain";
 // import { Route, Router } from "react-router-dom";
 import Header from "../components/Header.js";
 
@@ -9,7 +9,7 @@ function Main() {
   return (
     <>
       <Header />
-      <Scroll />
+      <ScrollMain />
     </>
   );
 }
