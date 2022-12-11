@@ -54,12 +54,12 @@ public class UserServiceImpl implements UserService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [로그인]
 	@Override
-	public boolean login(String userId, String userPw) {
+	public User login(String userId, String userPw) {
 		User user = userRepo.findByUserId(userId);
 		if (userPw.equals(user.getUserPw())) {
-			return true;
+			return user;
 		}
-		return false;
+		return null;
 	}
 
 	// [아이디 중복 확인]
@@ -86,9 +86,9 @@ public class UserServiceImpl implements UserService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [비밀번호 변경]
 	@Override
-	public boolean updatePw(String userId, String newUserPw) {
-		User user = userRepo.findByUserId(userId);
-		user.updatePw(newUserPw);
+	public boolean updatePw(UserDTO userDTO) {
+		User user = userRepo.findByUserId(userDTO.getUserId());
+		user.updatePw(userDTO);
 		userRepo.save(user);
 		return true;
 	}

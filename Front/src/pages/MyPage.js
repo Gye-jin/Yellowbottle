@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 
-function Feed() {
+function MyPage() {
   return (
     <>
       <Header />
@@ -9,4 +9,4 @@ function Feed() {
   );
 }
 
-export default Feed;
+export default MyPage;
