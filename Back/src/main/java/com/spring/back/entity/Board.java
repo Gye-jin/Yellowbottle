@@ -42,7 +42,7 @@ public class Board {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="board_no")
+	@Column(name="board_no",nullable = false)
 	private Long boardNo;
 	
 	private String boardContent;
@@ -107,5 +107,13 @@ public class Board {
 	// [User 채워주기]
 	public void updateUser(User user) {
 		this.user = user;
+	}
+	// [ViewCountupdate]
+	public void updateViewCount(Long viewCount) {
+		this.viewCount = viewCount;
+	}
+	// [LikeCountupdate]
+	public void updateLikeCount(Long likeCount) {
+		this.likeCount = likeCount;
 	}
 }

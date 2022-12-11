@@ -1,6 +1,7 @@
 package com.spring.back.service;
 
 import com.spring.back.dto.UserDTO;
+import com.spring.back.entity.User;
 
 public interface UserService {
 
@@ -11,7 +12,7 @@ public interface UserService {
 	public int findPwByEmailAndBirthAndUserId(String email, String birth, String UserId);
 	
 	// [로그인]
-	public boolean login(String userId, String userPw);
+	public User login(String userId, String userPw);
 	
 	// [아이디 중복 확인]
 	public boolean searchUserId(String userId);
@@ -20,7 +21,7 @@ public interface UserService {
 	public String[] findUserIdByEmailAndBirth(String email, String birth);
 
 	// [비밀번호 변경]
-	public boolean updatePw(String userId, String userPw);
+	public boolean updatePw(UserDTO userDTO);
 
 	// [회원정보 수정]
 	public UserDTO updateUserInfo(UserDTO newUserDTO);
