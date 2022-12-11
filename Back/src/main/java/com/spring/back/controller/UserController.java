@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.back.dto.UserDTO;
+import com.spring.back.entity.User;
 import com.spring.back.service.UserServiceImpl;
 
 @RestController
@@ -29,25 +30,34 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [회원가입]
 	@PostMapping(value = "/join")
-	public boolean insertUser(@RequestBody UserDTO userDTO) {
+	public boolean insertUser(@RequestBody UserDTO userDTO, HttpSession session) {
+		System.out.println(session.getAttribute("userId"));
+//		return userService.insertUser(userDTO);
 		return userService.insertUser(userDTO);
 	}
 
 	// [(비밀번호 찾기용)인증번호 발송]
-	@GetMapping(value = "/findPw")
-	public int findPwByEmailAndBirthAndUserId(@RequestParam String email, @RequestParam String birth,
-			@RequestParam String userId) {
-		return userService.findPwByEmailAndBirthAndUserId(email, birth, userId);
+	@PostMapping(value = "/findPw")
+	public int findPwByEmailAndBirthAndUserId(@RequestBody UserDTO userDTO) {
+		return userService.findPwByEmailAndBirthAndUserId(userDTO.getEmail(), userDTO.getBirth(), userDTO.getUserId());
 	}
 	
 	// Read
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [로그인]
 	@PostMapping(value = "/login")
-	public boolean login(@RequestBody UserDTO userDTO) {
-		return userService.login(userDTO.getUserId(), userDTO.getUserPw());
-	}
+	public String login(@RequestBody UserDTO userDTO, HttpSession session) {
 
+		User user = userService.login(userDTO.getUserId(), userDTO.getUserPw());
+
+		if (user != null) {
+			session.setAttribute("userId", user.getUserId());
+			return session.getId();
+		}
+		return null;
+	}
+	// [로그아웃]
+	
 	// [ID 중복확인]
 	@PostMapping(value = "/userSearch")
 	public boolean userSearch(@RequestBody UserDTO userDTO) {
@@ -55,9 +65,9 @@ public class UserController {
 	}
 
 	// [아이디 찾기]
-	@GetMapping(value = "/findId")
-	public String[] findUserIdByEmailAndBirth(@RequestParam String email, @RequestParam String birth) {
-		String[] userIds = userService.findUserIdByEmailAndBirth(email, birth);
+	@PostMapping(value = "/findId")
+	public String[] findUserIdByEmailAndBirth(@RequestBody UserDTO userDTO) {
+		String[] userIds = userService.findUserIdByEmailAndBirth(userDTO.getEmail(), userDTO.getBirth());
 		return userIds;
 	}
 	
@@ -65,8 +75,8 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [비밀번호 변경]
 	@PostMapping(value = "/updatePw")
-	public boolean updatePw(@RequestParam String userId, @RequestParam String newUserPw) {
-		return userService.updatePw(userId, newUserPw);
+	public boolean updatePw(@RequestBody UserDTO userDTO) {
+		return userService.updatePw(userDTO);
 	}
 
 	// [회원정보 수정]

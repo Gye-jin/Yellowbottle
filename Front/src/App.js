@@ -26,6 +26,7 @@ function App() {
         <Route path="/resetPw" element={<ResetPw />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </div>
   );
