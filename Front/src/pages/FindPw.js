@@ -19,6 +19,7 @@ const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
 
+// 비밀번호 찾기 페이지
 const FindPw = () => {
   // mui 테마
   const theme = createTheme();
