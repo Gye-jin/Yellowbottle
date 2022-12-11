@@ -3,11 +3,16 @@ package com.spring.back.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
@@ -36,10 +41,30 @@ public class BoardServiceImpl implements BoardService {
 	
 	// [Service]
 	@Autowired
+	UserServiceImpl userService;
+	@Autowired
 	FileServiceImpl fileService;
 	@Autowired
 	CommentServiceImpl commentService;
 
+	// readAll
+	// --------------------------------------------------------------------------------------------------------------------------------
+	// [전체 게시글]
+	public Page<BoardDTO> getBoardPages(Long boardNo, Pageable pageble) {
+		System.out.println(boardNo);
+	   Page<Board> returnBoards = boardRepo.findByBoardNoInOrderByDesc(boardNo,pageble);
+	   System.out.println(returnBoards);
+	   Page<BoardDTO> PageBoardDTOs = (Page<BoardDTO>) returnBoards.stream()
+			   									  .map(returnBoard -> Board.boardEntitytoDTO(returnBoard))
+			   									  .collect(Collectors.toList());
+		
+	    return PageBoardDTOs;
+	}
+	
+	
+	
+	
+	
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 작성]
@@ -59,6 +84,7 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public BoardDTO getBoardByBoardNo(Long BoardNo) {
 		Board board = boardRepo.findById(BoardNo).orElseThrow(NoSuchElementException::new);
+		board.updateViewCount(board.getViewCount()+1);
 		BoardDTO boardDTO = Board.boardEntitytoDTO(board);
 		return boardDTO;
 	}
@@ -89,7 +115,17 @@ public class BoardServiceImpl implements BoardService {
 		// 기존 File 삭제
 		fileService.deleteFileBoardNo(boardDTO.getBoardNo());
 		// 새로운 File 추가
-		fileService.insertFile(boardDTO.getBoardNo(), files);
+		fileService.uploadFile(boardDTO.getBoardNo(), files);
+		return boardDTO;
+	}
+	
+	@Override
+	@Transactional
+	public BoardDTO updateLikeCount(Long boardDTONo) {
+		Board board = boardRepo.findById(boardDTONo).orElseThrow(NoSuchElementException::new);
+		board.updateLikeCount(board.getLikeCount()+1);
+		BoardDTO boardDTO = Board.boardEntitytoDTO(board);
+
 		return boardDTO;
 	}
 

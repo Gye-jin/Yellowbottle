@@ -20,7 +20,10 @@ public interface BoardService {
 
 	// [게시글 수정]
 	public BoardDTO updateBoard(BoardDTO newboardDTO, List<MultipartFile> files);
-
+	
+	// [추천 +1]
+	public BoardDTO updateLikeCount(Long boardDTONo);
+	
 	// [게시글 삭제]
 	public boolean deleteBoard(BoardDTO boardDTO);
 
