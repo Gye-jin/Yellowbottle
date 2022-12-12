@@ -69,7 +69,7 @@ const Join = () => {
       userPw: data.get("password"),
       birth: data.get("birth"),
       sex: data.get("gender"),
-      subStatus: data.get("userEmail") == "on" ? 1 : 0,
+      subStatus: data.get("userEmail") === "on" ? 1 : 0,
     };
     // 입력된 값들을 joinData에 넣는다.
     const { userId, email, name, userPw, birth, sex, subStatus } = joinData;
@@ -78,8 +78,9 @@ const Join = () => {
     // joinData에 넣은 각각의 값들은 유효성 검사를 거친다.
     // 아이디 유효성 체크
     const idRegex = /^[a-z]+[a-z0-9]{4,19}$/g;
-    if (!idRegex.test(userId))
+    if (!idRegex.test(userId)) {
       setIdError("아이디는 영문자 또는 숫자 5~20자리로 입력해주세요");
+    }
 
     // 이메일 유효성 체크
     const emailRegex =
