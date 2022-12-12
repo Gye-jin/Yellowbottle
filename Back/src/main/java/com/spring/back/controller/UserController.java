@@ -31,8 +31,6 @@ public class UserController {
 	// [회원가입]
 	@PostMapping(value = "/join")
 	public boolean insertUser(@RequestBody UserDTO userDTO, HttpSession session) {
-		System.out.println(session.getAttribute("userId"));
-//		return userService.insertUser(userDTO);
 		return userService.insertUser(userDTO);
 	}
 

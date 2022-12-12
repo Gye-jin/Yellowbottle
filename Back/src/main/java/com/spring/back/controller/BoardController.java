@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,11 +76,9 @@ public class BoardController {
 	// [전체 게시글]
 	// 설명 : 최신 순으로 10개씩 게시글 불러오기(필요)
 	@GetMapping("/Allboard")
-	public Page<BoardDTO> getBoardPages(@RequestParam Long boardNo) {
-		System.out.println(boardNo);
-		Pageable pageble = PageRequest.of(0, 5);
-	    Page<BoardDTO> boardResponse = boardService.getBoardPages(boardNo,pageble);
-	    return boardResponse;
+	public List<BoardDTO> getBoardPages(@RequestParam int pageNo) {
+		PageRequest pageRequest = PageRequest.of(pageNo-1, 10, Sort.by("boardNo").descending() ); 
+	    return boardService.findBoardsByPage(pageRequest);
 	}
 	
 	// [추천 게시글]
@@ -96,7 +99,7 @@ public class BoardController {
 	// 설명 : 수정한 게시글 내용으로 게시글 업데이트
 	// click : 게시글 수정 완료
 	@PostMapping(value = "/boardupdate")
-	public BoardDTO updateBoard(@ModelAttribute BoardDTO boardDTO,
+	public BoardDTO updateBoard(@RequestParam String userSession, @ModelAttribute BoardDTO boardDTO,
 			@RequestParam("files") List<MultipartFile> files) {
 		BoardDTO newBoardDTO = boardService.updateBoard(boardDTO,files);
 		return newBoardDTO;
