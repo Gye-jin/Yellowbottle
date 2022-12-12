@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { createTheme } from "@material-ui/core/styles";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function HeaderLogin(props) {
   const theme = createTheme({
@@ -23,11 +24,27 @@ export default function HeaderLogin(props) {
   // const isLogin = props.isLogin;
 
   // 로그아웃 함수
-  const onLogout = () => {
+  const onLogout = async () => {
     // sessionStoage에 userId로 저장되어 있는 아이템을 삭제한다.
-    sessionStorage.removeItem("userId");
+    // sessionStorage.removeItem("userId");
     // 메인화면으로 이동(새로고침)
-    document.location.href = "/";
+    // document.location.href = "/";
+
+    // 이 부분부터 새롭게 쓴 logout
+    await axios
+      // 백에 userId 세션을 보내서 확인되면 로그아웃 진행 오류는 경고창
+      .post("http://localhost:8080/api/updatePw", {
+        userId: sessionStorage.getItem("userId"),
+      })
+      // 백에서 정상적으로 처리되면 로그아웃 성공!
+      .then((response) => {
+        console.log(response, "로그아웃 성공!");
+        alert("로그아웃 성공했습니다!😍");
+      })
+      .catch(function (err) {
+        console.log(err, "로그아웃 실패하셨습니다.");
+        alert("😥로그아웃 실패😥");
+      });
   };
 
   return (

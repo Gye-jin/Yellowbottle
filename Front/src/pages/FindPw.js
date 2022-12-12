@@ -150,7 +150,7 @@ const FindPw = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 size="large"
-                onClick={() => passResetPw(certiNum, inputNum)}
+                onClick={() => passResetPw(inputNum)}
               >
                 인증번호 확인
               </Button>
