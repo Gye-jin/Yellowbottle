@@ -52,9 +52,30 @@ export function ForSendCertiNum(userId, email, birth, setCertiNum) {
 }
 
 //인증번호 확인 버튼 클릭 시, 삼항연산자 실행(인증번호 입력값이 동일할 경우에 비밀번호 재설정페이지로 넘어가도록.)
-export const passResetPw = (certiNum, inputNum) => {
-  certiNum == inputNum
-    ? //  인증번호와 입력한 인증번호 값이 같다면 비밀번호 변경페이지로 이동
-      (window.location.href = "/resetPw")
-    : alert("인증번호가 틀렸습니다. 다시 시도해주세요");
+// export const passResetPw = (certiNum, inputNum) => {
+//   certiNum == inputNum
+//     ? //  인증번호와 입력한 인증번호 값이 같다면 비밀번호 변경페이지로 이동
+//       (window.location.href = "/resetPw")
+//     : alert("인증번호가 틀렸습니다. 다시 시도해주세요");
+// };
+
+// 인증번호 확인 버튼을 눌렀을 때 사용자가 입력한 인증번호와 인증번호 발송버튼을 눌렀을 때 발급된 userId session을 백으로 보내 response 또는 err 받는 함수
+export const passResetPw = async (inputNum) => {
+  // post
+  await axios
+    // 백에 입력한 인증번호와 userSession을 request한다.
+    .post("http://localhost:8080/api/checkCertifiedNo", {
+      userId: sessionStorage.getItem("Id"),
+      certifiedNo: inputNum,
+    })
+    // 백에서 response가 정상적으로 오면
+    .then((response) => {
+      console.log(response, "인증번호 인증 성공!");
+      alert("비밀번호변경 페이지로 이동합니다.😚");
+      window.location.href = "/resetPw";
+    })
+    .catch(function (err) {
+      console.log(err, "에러 ㅠㅠ");
+      alert("잘못된 정보입니다. 다시 시도해주세요.");
+    });
 };

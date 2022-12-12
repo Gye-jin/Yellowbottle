@@ -67,7 +67,7 @@ const ResetPw = () => {
 
     // 위에서 설정한 유효성검사를 모두 통과하면 ForResetPwPost함수 실행
     if (passwordRegex.test(password) && password === rePassword) {
-      console.log(sessionStorage.getItem("userId"));
+      console.log(sessionStorage.getItem("Id"));
       ForResetPwPost(password, setRegisterError);
     }
   };

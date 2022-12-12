@@ -14,8 +14,8 @@ export default function ForResetPwPost(password, setRegisterError) {
       .then(function (response) {
         // 비밀번호가 정상적으로 변경되면 세션이 clear된다.
         // sessionStorage.clear();
-        console.log(response, "성공");
-        alert("비밀번호 변경에 성공하셨습니다!");
+        console.log(response, "비밀번호 변경 성공");
+        alert("비밀번호 변경에 성공하셨습니다!😁");
         window.location.href = "/login";
       })
       // 백에서 오류(err)가 온다면 밑에 오류메세지를 보여준다.
