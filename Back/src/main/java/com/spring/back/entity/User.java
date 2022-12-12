@@ -63,7 +63,7 @@ public class User {
 	// Entity Element Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [userPw 변경]
-	public void updatePw(String newPw) {
-		this.userPw = newPw;
+	public void updatePw(UserDTO userDTO) {
+		this.userPw = userDTO.getUserPw();
 	}
 }

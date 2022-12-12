@@ -90,18 +90,19 @@
 }
 
 /* 회원가입 페이지 */
-.join-gender {
+.join-genderRadio {
   margin-left: 10px;
-  margin-right: 50px;
+  margin-top: 15px;
 }
 .join-idCheck {
-  width: 50%;
-  /* position: absolute; */
-  /* top: 0px; */
-  /* right: 5px; */
+  width: 35%;
   background-color: dodgerblue;
   color: white;
-  height: 30px;
+  height: 20px;
+  border: 0;
+  margin-bottom: 10px;
+  margin-left: 130px;
+  padding-left: 10px;
 }
 .join-inputId {
   width: 100%;
@@ -130,9 +131,34 @@
   align-items: center;
   /* min-height: 100vh; */
 }
+
+.conf {
+  width: 35%;
+  background-color: dodgerblue;
+  color: white;
+  height: 20px;
+  border: 0;
+  margin-bottom: 10px;
+  margin-left: 130px;
+  padding-left: 10px;
+}
 .butom {
   display: flex;
   justify-content: center;
   align-items: center;
   /* min-height: 100vh; */
+}
+
+/* BoardWrite : 게시글 작성화면 css */
+/* 게시글 쓰는 부분 css */
+.BoardWrite-rightBox {
+  background-color: blue;
+  float: right;
+  width: 50%;
+}
+/* 사진 선택하는 부분 css */
+.BoardWrite-leftBox {
+  background-color: red;
+  float: left;
+  width: 50%;
 }

@@ -1,6 +1,7 @@
 package com.spring.back.service;
 
 import java.io.IOException;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -11,13 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.Storage.BlobTargetOption;
+import com.google.cloud.storage.Storage.PredefinedAcl;
 import com.spring.back.dto.FileDTO;
 import com.spring.back.entity.Board;
 import com.spring.back.entity.File;
 import com.spring.back.repository.BoardRepository;
 import com.spring.back.repository.FileRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
 	// Connection
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -26,20 +35,35 @@ public class FileServiceImpl implements FileService {
 	FileRepository fileRepo;
 	@Autowired
 	BoardRepository boardRepo;
+	
+	private final Storage storage;
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [File 생성]
 	// 설명 : boardNo의 게시글에 File 삽입
 	@Override
-	public void insertFile(Long boardNo, List<MultipartFile> files) {
+	@SuppressWarnings("deprecation")
+	public void uploadFile(Long boardNo, List<MultipartFile> files) {
 		// files객체 분해 후 DB 삽입
 		for (MultipartFile file : files) {
+
 			try {
-				// fileNo는 자동생성이기 때문에 제외 후 builder로 DTO객체 생성
+				// bloInfo라는 객체를 통해서 
+				BlobInfo blobInfo = storage.create(
+						// 저장 bucket 이름과 저장할 이름 설정
+						BlobInfo.newBuilder("czero-storage", UUID.randomUUID() + "_" + file.getOriginalFilename()).build(), 
+						// 저장 파일로 변경
+						file.getBytes(), 
+						// 파일 전송 허용
+						BlobTargetOption.predefinedAcl(PredefinedAcl.PUBLIC_READ)
+				);
+				
+	
+				// 파일 저장후 DTO타입으로 변경 후 파일
 				FileDTO fileDTO = FileDTO.builder().originalFileNAME(file.getOriginalFilename())
-						.fileName(UUID.randomUUID() + "_" + file.getOriginalFilename())
-						.filePath(System.getProperty("user.dir") + "\\files").build();
+						.fileName(blobInfo.getName())
+						.filePath("https://storage.googleapis.com/czero-storage/").build();
 				// 생성한 DTO를 entity로 변경
 				File fileEntity = FileDTO.dtoToEntity(fileDTO);
 				// 파라미터로 전달받은 boardId를 활용하여 board entity 받기
@@ -48,10 +72,11 @@ public class FileServiceImpl implements FileService {
 				fileEntity.updateBoard(board);
 				// 완성한 entity DB에 삽입
 				fileRepo.save(fileEntity);
-				file.transferTo(new java.io.File(fileDTO.getFilePath() + "//" + fileDTO.getFileName()));
-			} catch (IllegalStateException | IOException e) {
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -64,4 +89,7 @@ public class FileServiceImpl implements FileService {
 	public void deleteFileBoardNo(Long boardNo) {
 		fileRepo.deleteByBoardNo(boardNo);
 	}
+	
+	
+	
 }
