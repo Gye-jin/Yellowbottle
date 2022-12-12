@@ -1,15 +1,15 @@
 import React from "react";
 import "../App.css";
-import Scroll from "../components/Scroll.js";
-// import { Route, Router } from "react-router-dom";
+import ScrollMain from "../components/ScrollMain.js";
 import Header from "../components/Header.js";
 
+// 메인 페이지
 function Main() {
   console.log(sessionStorage.getItem("id") + "main");
   return (
     <>
       <Header />
-      <Scroll />
+      <ScrollMain />
     </>
   );
 }

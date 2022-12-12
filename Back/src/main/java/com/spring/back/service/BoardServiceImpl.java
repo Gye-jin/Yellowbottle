@@ -50,15 +50,12 @@ public class BoardServiceImpl implements BoardService {
 	// readAll
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [전체 게시글]
-	public Page<BoardDTO> getBoardPages(Long boardNo, Pageable pageble) {
-		System.out.println(boardNo);
-	   Page<Board> returnBoards = boardRepo.findByBoardNoInOrderByDesc(boardNo,pageble);
-	   System.out.println(returnBoards);
-	   Page<BoardDTO> PageBoardDTOs = (Page<BoardDTO>) returnBoards.stream()
-			   									  .map(returnBoard -> Board.boardEntitytoDTO(returnBoard))
-			   									  .collect(Collectors.toList());
-		
-	    return PageBoardDTOs;
+	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest) {
+	  
+	 		
+	    return boardRepo.findAll(pageRequest).stream()
+	    		.map(board -> Board.boardEntitytoDTO(board))
+	    		.collect(Collectors.toList());
 	}
 	
 	

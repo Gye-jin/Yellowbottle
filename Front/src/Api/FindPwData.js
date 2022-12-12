@@ -38,7 +38,7 @@ export function ForSendCertiNum(userId, email, birth, setCertiNum) {
         sessionStorage.clear();
         //  만약 반응이 0이 아니라면 인증번호, 세션 발급
         alert("인증번호가 발송되었습니다.");
-        sessionStorage.setItem("userId", userId);
+        sessionStorage.setItem("Id", userId);
         sessionStorage.setItem("birth", birth);
         sessionStorage.setItem("email", email);
       } else {

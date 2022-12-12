@@ -28,6 +28,7 @@ const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
 
+// 아이디 찾기 페이지
 const FindId = () => {
   //mui테마
   const theme = createTheme();

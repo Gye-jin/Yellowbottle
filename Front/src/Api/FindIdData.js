@@ -14,7 +14,7 @@ export default function ForPostFindIdData(
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
         setUserId(response.data);
-        console.log(response.data, "아이디찾기 성공");
+        console.log(response.data + "아이디찾기 성공");
       })
       .catch(function (err) {
         // 백에서 오류(err)가 뜬다면 아이디 찾기 실패
