@@ -1,6 +1,5 @@
 package com.spring.back.entity;
 
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import com.spring.back.content.ContentCategory;
-import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.ContentDTO;
 
 import lombok.AllArgsConstructor;
