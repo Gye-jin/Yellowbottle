@@ -63,9 +63,11 @@ export const passResetPw = async (inputNum) => {
   // post
   await axios
     // 백에 입력한 인증번호와 userSession을 request한다.
-    .post("http://localhost:8080/api/checkCertifiedNo", {
-      userId: sessionStorage.getItem("Id"),
-      certifiedNo: inputNum,
+    .get("http://localhost:8080/api/checkCertifiedNo", {
+      params: {
+        userId: sessionStorage.getItem("Id"),
+        certifiedNo: inputNum,
+      },
     })
     // 백에서 response가 정상적으로 오면
     .then((response) => {

@@ -9,7 +9,9 @@ import { createTheme } from "@material-ui/core/styles";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import HeaderLogin from "./HeaderLogin";
+import HeaderAdmin from "./HeaderAdmin";
 
+// 상태값에 따른 헤더 부여 함수 및 비회원용 헤더
 export default function Header() {
   const theme = createTheme({
     palette: {
@@ -21,66 +23,139 @@ export default function Header() {
 
   // navigate(이동)하는 함수
   const navigate = useNavigate();
-
+  // login 상태값... 기본값은 false
   const [isLogin, setIsLogin] = useState(false);
 
   // const isLogin = props.isLogin;
 
+  // useEffect(() => {
+  // // sessionStorage에 userId라는 key값으로 저장된 값이 없다면
+  // if (sessionStorage.getItem("userId") === null) {
+  //   console.log("isLogin ?? ::", isLogin);
+  // } else {
+  //   // sessionStoage에 userId라는 key값으로 저장된 값이 있다면
+  //   // 로그인 상태 변경
+  //   setIsLogin(true);
+  //   console.log("isLogin ?? ::", isLogin);
+  // }
+
+  //   sessionStorage.getItem("userId")
+  //     ? setIsLogin(true)
+  //     : console.log("비회원입니당");
+  // });
+  // session을 확인해 userId의 값에따라 Header부분을 변경함
   useEffect(() => {
-    // sessionStoage에 userId라는 key값으로 저장된 값이 없다면
-    if (sessionStorage.getItem("userId") === null) {
-      console.log("isLogin ?? ::", isLogin);
-    } else {
-      // sessionStoage에 userId라는 key값으로 저장된 값이 있다면
-      // 로그인 상태 변경
+    // userId 키를 이용해 세션을 찾음
+    const whoSession = sessionStorage.getItem("userId");
+    // 세션값이 없으면 비회원
+    if (whoSession === null) {
+      console.log("비회원입니당");
+    }
+    // 세션값이 백에서 지정한 관리자 값이면 isLogin값을 admin으로 수정
+    else if (whoSession === "관리자") {
+      console.log("관리자입니당");
+      setIsLogin("admin");
+    }
+    // 세션값이 존재한다면 isLogin값을 true로 수정 --> 만약 setisLogin("admin")이 안된다면 isLogin의 초기값을 false가 아닌 ""로 설정하자
+    else {
+      console.log("회원입니당");
       setIsLogin(true);
-      console.log("isLogin ?? ::", isLogin);
     }
   });
 
-  return (
-    <div>
-      {isLogin ? (
-        // Header 컴포넌트 호출 시 isLogin 이라는 props 값을 전달
-        <HeaderLogin isLogin={isLogin} />
-      ) : (
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static" theme={theme}>
-            <Toolbar>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-                onClick={() => navigate("/")}
-              >
-                {/* 로고 */}
-                <img
-                  className="logo"
-                  src="img/czero_Logo.jpg"
-                  width="120"
-                  height="70"
-                />
-              </IconButton>
-              <Typography
-                onClick={() => navigate("/Feed")}
-                variant="h6"
-                component="div"
-                sx={{ flexGrow: 1 }}
-              >
-                실천내용
-              </Typography>
-              <Button color="inherit" onClick={() => navigate("/Login")}>
-                로그인
-              </Button>
-              <Button color="inherit" onClick={() => navigate("/Join")}>
-                회원가입
-              </Button>
-            </Toolbar>
-          </AppBar>
-        </Box>
-      )}
-    </div>
-  );
+  // return되는 Header
+  // 만약 isLogin값이 기본값 false이면 비회원용 헤더를 보여준다.
+  if (isLogin === false) {
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" theme={theme}>
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={() => navigate("/")}
+            >
+              {/* 로고 */}
+              <img
+                className="logo"
+                src="img/czero_Logo.jpg"
+                width="120"
+                height="70"
+              />
+            </IconButton>
+            <Typography
+              onClick={() => navigate("/Feed")}
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              실천내용
+            </Typography>
+            <Button color="inherit" onClick={() => navigate("/Login")}>
+              로그인
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/Join")}>
+              회원가입
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    );
+  }
+  // 만약 isLogin 값이 admin이라면 관리자용 헤더를 보여준다.
+  else if (isLogin === "admin") {
+    return <HeaderAdmin isLogin={isLogin} />;
+  }
+  // 만약 isLogin 값이 true라면 회원용 헤더를 보여준다.
+  else {
+    return <HeaderLogin isLogin={isLogin} />;
+  }
+
+  // return (
+  //   <div>
+  //     {isLogin ? (
+  //       <HeaderLogin isLogin={isLogin} />
+  //     ) : (
+  //       <Box sx={{ flexGrow: 1 }}>
+  //         <AppBar position="static" theme={theme}>
+  //           <Toolbar>
+  //             <IconButton
+  //               size="large"
+  //               edge="start"
+  //               color="inherit"
+  //               aria-label="menu"
+  //               sx={{ mr: 2 }}
+  //               onClick={() => navigate("/")}
+  //             >
+  //               {/* 로고 */}
+  //               <img
+  //                 className="logo"
+  //                 src="img/czero_Logo.jpg"
+  //                 width="120"
+  //                 height="70"
+  //               />
+  //             </IconButton>
+  //             <Typography
+  //               onClick={() => navigate("/Feed")}
+  //               variant="h6"
+  //               component="div"
+  //               sx={{ flexGrow: 1 }}
+  //             >
+  //               실천내용
+  //             </Typography>
+  //             <Button color="inherit" onClick={() => navigate("/Login")}>
+  //               로그인
+  //             </Button>
+  //             <Button color="inherit" onClick={() => navigate("/Join")}>
+  //               회원가입
+  //             </Button>
+  //           </Toolbar>
+  //         </AppBar>
+  //       </Box>
+  //     )}
+  //   </div>
+  // );
 }
