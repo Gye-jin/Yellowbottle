@@ -10,8 +10,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.back.dto.CertifiedDTO;
-import com.spring.back.dto.MypageDTO;
 import com.spring.back.dto.UserDTO;
 import com.spring.back.entity.Certified;
 import com.spring.back.entity.Session;

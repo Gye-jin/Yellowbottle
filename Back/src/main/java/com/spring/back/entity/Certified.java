@@ -7,7 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.spring.back.dto.CertifiedDTO;
-import com.spring.back.dto.UserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.back.dto.UserDTO;
-import com.spring.back.entity.Certified;
-import com.spring.back.entity.User;
 import com.spring.back.service.CertifiedServiceImpl;
 import com.spring.back.service.UserServiceImpl;
 
