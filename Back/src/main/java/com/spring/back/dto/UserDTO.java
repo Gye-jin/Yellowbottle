@@ -1,8 +1,5 @@
 package com.spring.back.dto;
 
-import javax.persistence.OneToMany;
-
-import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 
 import lombok.AllArgsConstructor;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import LikeCountData, { BoardFetchData } from "../Api/BoardData";
+import { Link } from "react-router-dom";
+import { BoardFetchData } from "../Api/BoardData";
 import axios from "axios";
 
 const Boards = () => {

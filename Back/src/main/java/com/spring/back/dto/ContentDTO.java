@@ -1,10 +1,5 @@
 package com.spring.back.dto;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
 import com.spring.back.content.ContentCategory;
 import com.spring.back.entity.Content;
 

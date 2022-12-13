@@ -5,7 +5,6 @@ import Main from "./pages/Main.js";
 import Login from "./pages/Login.js";
 import Join from "./pages/Join.js";
 import Feed from "./pages/Feed.js";
-import BoardDetail from "./pages/BoardDetail";
 import NotFound from "./pages/NotFound.js";
 import FindPw from "./pages/FindPw";
 import FindId from "./pages/FindId";
@@ -14,6 +13,7 @@ import MyPage from "./pages/MyPage";
 import BoardWrite from "./pages/BoardWrite";
 import AdminLogPage from "./pages/AdminLogPage";
 import Boards from "./components/Board";
+import DetailBoard from "./pages/DetailBoard";
 import AdminMailPage from "./pages/AdminMailPage";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/feed" element={<Feed />} />
-        <Route path="/boardDetail/*" element={<BoardDetail />} />
+        <Route path="/DetailBoard/:boardNo" element={<DetailBoard />} />
         <Route path="/findId" element={<FindId />} />
         <Route path="/findPw" element={<FindPw />} />
         <Route path="/resetPw" element={<ResetPw />} />
