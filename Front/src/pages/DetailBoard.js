@@ -2,19 +2,15 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { DetailBoardFetchData } from "../Api/DetailBoardData";
-import LikeCountData from "../Api/BoardData";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
-const DetailBoard = ({ match }) => {
-  const [boardNo, setBoardNo] = useState(50);
+const DetailBoard = () => {
   const [board, setBoard] = useState([]);
   //좋아요 갯수
   //   const [like, setLike] = useState(0);
+  const boardNo = useParams().boardNo;
 
   useEffect(() => {
-    console.log("hello world");
-    // const no = match.params;
-    // console.log(no);
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
   }, []);
@@ -52,9 +48,7 @@ const DetailBoard = ({ match }) => {
                   <h3>
                     <span>
                       {board.likeCount}
-                      <button onClick={() => LikeCountData(board.boardNo)}>
-                        👍
-                      </button>
+                      <button>👍</button>
                       {board.viewCount}
                     </span>
                   </h3>

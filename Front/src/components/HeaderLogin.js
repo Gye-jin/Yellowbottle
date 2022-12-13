@@ -42,7 +42,7 @@ export default function HeaderLogin() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className="header-Header">
       <AppBar position="static" theme={theme}>
         <Toolbar>
           <IconButton

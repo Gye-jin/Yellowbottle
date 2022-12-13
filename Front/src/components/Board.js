@@ -1,21 +1,74 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import LikeCountData, { BoardFetchData, likeBoardNum } from "../Api/BoardData";
+import { BoardFetchData } from "../Api/BoardData";
+import axios from "axios";
 
 const Boards = () => {
   //백에서 보낸 10개씩 게시물을 담는 공간
   const [boards, setBoards] = useState([]);
-  //좋아요 갯수
-  //   const [like, setLike] = useState(0);
   //페이지 하나당 10개의 게시물(spring참고)
   const [pageNo, setPageNo] = useState(1);
+  // 추가 boards를 로드할지 안할지를 담기위한 state
+  const [fetching, setFetching] = useState(false);
 
+  // // 페이지 넘버 변경해주는 함수
+  const fetchMoreBoards = async () => {
+    // fetching을 true값으로 바꿔 fetching 값이 바뀌기 전까지 리렌더링 되는걸 방지
+    setFetching(true);
+    await axios
+      // 백으로부터 기존pageNo + 1에 해당하는 페이지의 게시물(10개 묶음)을 가져온다.
+      .get(`http://localhost:8080/api/Allboard?pageNo=${pageNo + 1}`)
+      .then((response) => {
+        console.log(response.data);
+        setBoards(boards.concat(response.data));
+        // setPageNo(pageNo + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("비상 오류 발생!");
+      });
+    setFetching(false);
+    console.log("왕왕   ::", fetching);
+  };
+
+  // 스크롤 이벤트 핸들러
+  const handleScroll = () => {
+    // 한페이지 전체 스크롤양
+    const scrollHeight = document.documentElement.scrollHeight;
+    // 사용자가 스크롤을 얼마나 내렸는지
+    const scrollTop = document.documentElement.scrollTop;
+    // 사용자가 보는 스크롤양
+    const clientHeight = document.documentElement.clientHeight;
+    // console.log(scrollTop + clientHeight + ":: 합");
+    // console.log(scrollHeight + ":: 비교비교");
+    // 페이지 끝에 도달하면 추가 데이터를 받아온다.
+    if (scrollTop + clientHeight >= scrollHeight - 0.5) {
+      console.log("스크롤 최하단 도착!");
+      if (fetching === false) {
+        console.log("되는데?");
+        setPageNo(pageNo + 1);
+        fetchMoreBoards();
+      }
+    }
+  };
+  // 스크롤 이벤트를 설정해준 useEffect
   useEffect(() => {
+    // scroll이벤트 실행하면 handleScroll 함수 실행!
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      // 실행한뒤 scroll event 제거!
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
+  // 초기 렌더링시 실천내용 화면에 게시물 10개 출력!
+  useEffect(() => {
+    // response는 해당페이지(게시물 10개 들어있음)
     const response = BoardFetchData(pageNo);
     response.then((data) => setBoards(data));
   }, []);
-  console.log(boards);
-  //   console.log(pageNo); //추후 스크롤로 올려줄 예정
+  // console.log(boards);
+  console.log(fetching);
+  console.log("현재 pageNo ::", pageNo); //추후 스크롤로 올려줄 예정
   return (
     <>
       <div>
@@ -47,12 +100,10 @@ const Boards = () => {
                       ))}
                     <div>
                       <h3>
-                        <span>
+                        {/* <span>
                           {board.likeCount}
-                          <button onClick={() => LikeCountData(board.boardNo)}>
-                            ❤️
-                          </button>
-                        </span>
+                          <button>❤️</button>
+                        </span> */}
                       </h3>
                     </div>
                   </div>
