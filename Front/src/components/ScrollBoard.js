@@ -9,7 +9,7 @@
 //     // ?? 백으로부터 받아온 다음 페이지 데이터를 저장
 //     const [boardPaging, setboardPaging] = useState<BoardPagingData>({ next: undefined });
 
-//     const fetchBoardData = async = () => {
+//     const fetchBoardData = async () => {
 //         // 로딩중인 상태로 전환
 //         setLoading(true);
 
