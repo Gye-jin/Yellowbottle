@@ -10,6 +10,8 @@ import com.spring.back.dto.MypageDTO;
 
 public interface BoardService {
 	
+	// [전체 게시글 조회]
+	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest);
 	// [게시글 작성]
 	public Long insertBoard(BoardDTO boardDTO);
 

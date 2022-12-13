@@ -1,5 +1,7 @@
 package com.spring.back.service;
 
+import javax.servlet.http.HttpSession;
+
 import com.spring.back.dto.UserDTO;
 import com.spring.back.entity.User;
 
@@ -12,7 +14,10 @@ public interface UserService {
 	public int findPwByEmailAndBirthAndUserId(String email, String birth, String UserId);
 	
 	// [로그인]
-	public User login(String userId, String userPw);
+	public String login(String userId, String userPw, HttpSession session);
+	
+	// [로그아웃]
+	public boolean logout(String sessionId);
 	
 	// [아이디 중복 확인]
 	public boolean searchUserId(String userId);

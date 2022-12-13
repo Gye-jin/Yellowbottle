@@ -90,6 +90,7 @@ public class BoardController {
 	    return boardService.findBoardsByPage(pageRequest);
 	}
 
+	
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [수정 게시글 불러오기]

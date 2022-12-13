@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -49,7 +50,8 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Comment> comments = new ArrayList<Comment>();
-
+	
+	
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
@@ -65,4 +67,5 @@ public class User {
 	public void updatePw(UserDTO userDTO) {
 		this.userPw = userDTO.getUserPw();
 	}
+
 }

@@ -58,18 +58,21 @@ const Login = () => {
     // loginData에 넣은 각각의 값들은 유효성 검사를 거친다.
     // 아이디 유효성 체크
     const idRegex = /^[a-z]+[a-z0-9]{4,19}$/g;
-    if (!idRegex.test(userId))
+    if (!idRegex.test(userId)) {
       setIdError("아이디는 영문자 또는 숫자 5~20자리로 입력해주세요");
+    }
 
     // 비밀번호 유효성 체크
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(userPw))
+    if (!passwordRegex.test(userPw)) {
       // test()는 문자열 일치를 확인해준다. 또한 여기 있는 password는 위에 data.get("password")이다.
       setPasswordError(
         "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
       );
-    else setPasswordError("");
+    } else {
+      setPasswordError("");
+    }
 
     // 만약 위 유효성 검사를 모두 통과하면 ForPostLoginData를 실행한다.
     if (passwordRegex.test(userPw)) {
