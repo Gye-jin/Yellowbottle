@@ -216,6 +216,11 @@
   align-items: center;
   padding: 20px;
 }
+/* board-UserId */
+.board_UserId {
+  text-align: left;
+  padding-left: 20px;
+}
 
 /* BoardWrite : 게시글 작성화면 css */
 /* 게시글 쓰는 부분 css */
