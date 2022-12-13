@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { DetailBoardFetchData } from "../Api/DetailBoardData";
-import LikeCountData from "../Api/BoardData";
 import { Navigate, useParams } from "react-router-dom";
 
 const DetailBoard = () => {
@@ -49,9 +48,7 @@ const DetailBoard = () => {
                   <h3>
                     <span>
                       {board.likeCount}
-                      <button onClick={() => LikeCountData(board.boardNo)}>
-                        👍
-                      </button>
+                      <button>👍</button>
                       {board.viewCount}
                     </span>
                   </h3>
