@@ -1,5 +1,6 @@
 package com.spring.back.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.back.dto.UserDTO;
+import com.spring.back.entity.Certified;
 import com.spring.back.entity.User;
+import com.spring.back.service.CertifiedServiceImpl;
 import com.spring.back.service.UserServiceImpl;
 
 @RestController
@@ -26,6 +29,8 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 
+	@Autowired
+	CertifiedServiceImpl certifiedService;
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [회원가입]
@@ -40,21 +45,28 @@ public class UserController {
 		return userService.findPwByEmailAndBirthAndUserId(userDTO.getEmail(), userDTO.getBirth(), userDTO.getUserId());
 	}
 	
+	// [인증번호 검증]
+	@GetMapping(value = "/checkCertifiedNo")
+	public boolean checkCertifiedNo(@RequestParam String userId,int certifiedNo) {
+	
+		return certifiedService.findByCertifiedNo(userId,certifiedNo);
+	}
+	
 	// Read
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [로그인]
 	@PostMapping(value = "/login")
 	public String login(@RequestBody UserDTO userDTO, HttpSession session) {
 
-		User user = userService.login(userDTO.getUserId(), userDTO.getUserPw());
-
-		if (user != null) {
-			session.setAttribute("userId", user.getUserId());
-			return session.getId();
-		}
-		return null;
+		
+		 return userService.login(userDTO.getUserId(), userDTO.getUserPw(), session);
 	}
 	// [로그아웃]
+	@PostMapping(value = "/logout")
+	public boolean logout(@RequestBody UserDTO userDTO) {
+		return userService.logout(userDTO.getUserId());
+		
+	}
 	
 	// [ID 중복확인]
 	@PostMapping(value = "/userSearch")

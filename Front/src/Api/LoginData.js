@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default function ForPostLoginData(loginData, setRegisterError) {
+export default function ForPostLoginData(loginData) {
   // 입력된 loginData값들을 백에 보내는 함수
   console.log(loginData);
   const postLoginData = async (loginData) => {
@@ -16,7 +16,7 @@ export default function ForPostLoginData(loginData, setRegisterError) {
               "userId",
               response.data
             )((window.location.href = "/"))
-          : alert("🤘🏿😝😜🤘🏿" + " " + "세션부여실패");
+          : alert("🤘🏿😝😜🤘🏿" + " " + "로그인실패");
 
         // console.log(response.data);
         // if (response.data !== null) {
