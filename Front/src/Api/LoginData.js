@@ -30,6 +30,7 @@ export default function ForPostLoginData(loginData) {
         //   alert("🤘🏿😝😜🤘🏿" + " " + "세션부여실패");
         // }
       });
+    // 로그인 틀렸을때 경고창 나오도록 설정
     // .catch(function (err) {
     //   // 백에서 오류(err)가 온다면 회원가입 실패
     //   console.log(err);

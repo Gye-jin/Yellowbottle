@@ -25,24 +25,7 @@ export default function Header() {
   const navigate = useNavigate();
   // login 상태값... 기본값은 false
   const [isLogin, setIsLogin] = useState(false);
-
   // const isLogin = props.isLogin;
-
-  // useEffect(() => {
-  // // sessionStorage에 userId라는 key값으로 저장된 값이 없다면
-  // if (sessionStorage.getItem("userId") === null) {
-  //   console.log("isLogin ?? ::", isLogin);
-  // } else {
-  //   // sessionStoage에 userId라는 key값으로 저장된 값이 있다면
-  //   // 로그인 상태 변경
-  //   setIsLogin(true);
-  //   console.log("isLogin ?? ::", isLogin);
-  // }
-
-  //   sessionStorage.getItem("userId")
-  //     ? setIsLogin(true)
-  //     : console.log("비회원입니당");
-  // });
   // session을 확인해 userId의 값에따라 Header부분을 변경함
   useEffect(() => {
     // userId 키를 이용해 세션을 찾음
@@ -62,11 +45,11 @@ export default function Header() {
       setIsLogin(true);
     }
   });
-
   // return되는 Header
   // 만약 isLogin값이 기본값 false이면 비회원용 헤더를 보여준다.
   if (isLogin === false) {
     return (
+      // <div className="header-Header">
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" theme={theme}>
           <Toolbar>
@@ -103,6 +86,7 @@ export default function Header() {
           </Toolbar>
         </AppBar>
       </Box>
+      // </div>
     );
   }
   // 만약 isLogin 값이 admin이라면 관리자용 헤더를 보여준다.
@@ -113,49 +97,4 @@ export default function Header() {
   else {
     return <HeaderLogin isLogin={isLogin} />;
   }
-
-  // return (
-  //   <div>
-  //     {isLogin ? (
-  //       <HeaderLogin isLogin={isLogin} />
-  //     ) : (
-  //       <Box sx={{ flexGrow: 1 }}>
-  //         <AppBar position="static" theme={theme}>
-  //           <Toolbar>
-  //             <IconButton
-  //               size="large"
-  //               edge="start"
-  //               color="inherit"
-  //               aria-label="menu"
-  //               sx={{ mr: 2 }}
-  //               onClick={() => navigate("/")}
-  //             >
-  //               {/* 로고 */}
-  //               <img
-  //                 className="logo"
-  //                 src="img/czero_Logo.jpg"
-  //                 width="120"
-  //                 height="70"
-  //               />
-  //             </IconButton>
-  //             <Typography
-  //               onClick={() => navigate("/Feed")}
-  //               variant="h6"
-  //               component="div"
-  //               sx={{ flexGrow: 1 }}
-  //             >
-  //               실천내용
-  //             </Typography>
-  //             <Button color="inherit" onClick={() => navigate("/Login")}>
-  //               로그인
-  //             </Button>
-  //             <Button color="inherit" onClick={() => navigate("/Join")}>
-  //               회원가입
-  //             </Button>
-  //           </Toolbar>
-  //         </AppBar>
-  //       </Box>
-  //     )}
-  //   </div>
-  // );
 }

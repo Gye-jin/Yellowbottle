@@ -5,6 +5,10 @@ import Boards from "../components/Board";
 
 // 실천내용 전체 페이지
 function Feed() {
+  // 버튼 클릭 시 맨 위로 이동
+  const goToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <>
       <Header />
@@ -17,6 +21,9 @@ function Feed() {
             onClick={() => AccessAgreeBoardWrite()}
           >
             실천내용 작성하기
+          </button>
+          <button className="goToTop" onClick={goToTop}>
+            상단이동
           </button>
         </div>
       </body>
