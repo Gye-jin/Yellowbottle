@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.dto.CertifiedDTO;
+import com.spring.back.dto.MypageDTO;
 import com.spring.back.dto.UserDTO;
+import com.spring.back.entity.Certified;
+import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.UserRepository;
 
@@ -24,6 +29,12 @@ public class UserServiceImpl implements UserService {
 	// [Service]
 	@Autowired
 	MailServiceImpl mailService;
+	
+	@Autowired
+	SessionServiceImpl sessionService;
+	
+	@Autowired
+	CertifiedServiceImpl certifiedService;
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -40,12 +51,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int findPwByEmailAndBirthAndUserId(String email, String birth, String userId) {
 		User user = userRepo.findByEmailAndBirthAndUserId(email, birth, userId);
-
+		Certified certification = certifiedService.findByUser(user);
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		Certified certified = Certified.builder().certifiedNo(checkNum).user(user).build();
 		if (user != null) {
-			Random random = new Random();
-			int checkNum = random.nextInt(888888) + 111111;
-			mailService.checkEmail(checkNum, email);
-			return checkNum;
+			if (certification == null) {
+				certifiedService.insertCertified(certified);
+				mailService.checkEmail(checkNum, email);
+				return checkNum;
+			} else {
+				certifiedService.deleteCertified(user);
+				certifiedService.insertCertified(certified);
+				mailService.checkEmail(checkNum, email);
+				return checkNum;
+			}
+
 		}
 		return 0;
 	}
@@ -54,14 +75,33 @@ public class UserServiceImpl implements UserService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [로그인]
 	@Override
-	public User login(String userId, String userPw) {
+	public String login(String userId, String userPw, HttpSession httpsession) {
 		User user = userRepo.findByUserId(userId);
+		Session usersession = sessionService.findByUser(user);
 		if (userPw.equals(user.getUserPw())) {
-			return user;
+			if (usersession == null) {
+
+				httpsession.setAttribute("userId", user.getUserId());
+				String sessionId = httpsession.getId();
+				Session session = Session.builder().sessionId(sessionId).user(user).build();
+				sessionService.insertSession(session);
+				return sessionId;
+			}
+			else {
+				System.out.println(usersession.getSessionId());
+				return usersession.getSessionId();
+			}
 		}
 		return null;
 	}
-
+	// [로그아웃]
+	@Override
+	public boolean logout(String sessionId) {
+		sessionService.deleteSession(sessionId);
+			return true;
+	
+	}
+	
 	// [아이디 중복 확인]
 	@Override
 	public boolean searchUserId(String userId) {
@@ -89,6 +129,7 @@ public class UserServiceImpl implements UserService {
 	public boolean updatePw(UserDTO userDTO) {
 		User user = userRepo.findByUserId(userDTO.getUserId());
 		user.updatePw(userDTO);
+		certifiedService.deleteCertified(user);
 		userRepo.save(user);
 		return true;
 	}

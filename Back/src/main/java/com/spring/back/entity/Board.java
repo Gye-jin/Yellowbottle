@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -74,6 +75,8 @@ public class Board {
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
 	List<Comment> comments = new ArrayList<Comment>();
+	
+
 	
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
