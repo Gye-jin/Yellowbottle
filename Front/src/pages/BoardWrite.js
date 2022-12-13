@@ -87,7 +87,13 @@ function BoardWrite() {
           <div>
             {/* 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}
             {fileImage && (
-              <img alt="sample" src={fileImage} style={{ margin: "auto" }} />
+              <img
+                alt="sample"
+                src={fileImage}
+                style={{ margin: "auto" }}
+                width="350"
+                height="350"
+              />
             )}
           </div>
         </div>

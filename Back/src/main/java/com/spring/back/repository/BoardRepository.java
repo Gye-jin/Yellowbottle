@@ -1,6 +1,5 @@
 package com.spring.back.repository;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
