@@ -47,13 +47,12 @@ public class Board {
 	private Long boardNo;
 	
 	private String boardContent;
+	private Long viewCount;
 	private Long likeCount;
 	
 	@CreatedDate
 	@Column(updatable = false)
 	private LocalDateTime writtenDate;
-	
-	private Long viewCount;
 	
 	@LastModifiedDate
 	private LocalDateTime modifiedDate;
@@ -81,7 +80,7 @@ public class Board {
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
-	public static BoardDTO boardEntitytoDTO (Board board) {
+	public static BoardDTO boardEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
 									.boardNo(board.getBoardNo())
 									.userId(board.getUser().getUserId())
