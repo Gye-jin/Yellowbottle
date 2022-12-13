@@ -6,7 +6,6 @@ export const BoardFetchData = async (pageNo) => {
   const response = await axios.get(
     `http://localhost:8080/api/Allboard?pageNo=${pageNo}`
   );
-
   return response.data;
 };
 
