@@ -1,8 +1,11 @@
 package com.spring.back.repository;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
+import java.util.List;
 
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +24,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 	
 	// 해당 user가 작성한 board의 개수 반환
 	Long countByUser(User user);
-	
+
 }

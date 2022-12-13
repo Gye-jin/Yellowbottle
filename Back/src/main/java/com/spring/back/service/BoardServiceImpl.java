@@ -50,6 +50,7 @@ public class BoardServiceImpl implements BoardService {
 	// readAll
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [전체 게시글]
+	@Override
 	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest) {
 	  
 	 		
@@ -59,8 +60,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	
-	
-	
+
 	
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
