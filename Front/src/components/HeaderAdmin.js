@@ -56,32 +56,27 @@ export default function HeaderAdmin() {
           >
             {/* 로고 */}
             <img
+              alt="로고"
               className="logo"
               src="img/czero_Logo.jpg"
               width="120"
               height="70"
             />
           </IconButton>
+          {/* 실천내용 */}
           <Typography
             onClick={() => navigate("/Feed")}
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}
           >
-            메일발송
+            실천내용
           </Typography>
-          <Typography
-            onClick={() => navigate("/")}
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1 }}
-          >
-            로그관리
-          </Typography>
+          {/* 로그아웃 */}
           <Button color="inherit" onClick={onLogout}>
             로그아웃
           </Button>
-          <Button color="inherit" onClick={() => navigate("/adminPage")}>
+          <Button color="inherit" onClick={() => navigate("/adminLogPage")}>
             관리자페이지
           </Button>
         </Toolbar>

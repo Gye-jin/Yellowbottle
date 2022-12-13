@@ -3,7 +3,6 @@ package com.spring.back.service;
 import javax.servlet.http.HttpSession;
 
 import com.spring.back.dto.UserDTO;
-import com.spring.back.entity.User;
 
 public interface UserService {
 
