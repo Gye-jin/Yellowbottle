@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../components/Header";
-import ScrollBoard from "../components/ScrollBoard";
 import { AccessAgreeBoardWrite } from "../components/AccessAgree";
 import Boards from "../components/Board";
 
@@ -11,7 +10,6 @@ function Feed() {
       <Header />
       <body>
         <div className="container">
-          {/* <ScrollBoard /> */}
           <Boards />
           <button
             className="writeBoard"
