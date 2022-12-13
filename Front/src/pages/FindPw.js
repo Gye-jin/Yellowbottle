@@ -1,143 +1,96 @@
 import Header from "../components/Header";
-import React, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
 import {
-  Avatar,
   Button,
   CssBaseline,
   TextField,
   FormControl,
-  FormControlLabel,
-  Checkbox,
-  FormHelperText,
   Grid,
   Box,
   Typography,
   Container,
-} from '@mui/material/';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import styled from 'styled-components';
-import { Link } from "react-router-dom";
+} from "@mui/material/";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import styled from "styled-components";
+import { ForSendCertiNum, passResetPw } from "../Api/FindPwData";
 
-// mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
-const FormHelperTexts = styled(FormHelperText)`
-  width: 100%;
-  padding-left: 16px;
-  font-weight: 700 !important;
-  color: #d32f2f !important;
-`;
-
+//mui 템플릿 사용
 const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
 
+// 비밀번호 찾기 페이지
 const FindPw = () => {
+  // mui 테마
   const theme = createTheme();
-  const [checked, setChecked] = useState(false);
-  const [emailError, setEmailError] = useState('');
-  // const [passwordState, setPasswordState] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  // 아이디 추가
-  const [idError, setIdError] = useState('');
-  // 생년월일 추가
-  const [birthError, setBirthError] = useState('');
-  const [registerError, setRegisterError] = useState('');
-  const navigate = useNavigate();
+  // 아이디, 생년월일, 이메일
+  const [userId, setUserId] = useState("");
+  const [birth, setBirth] = useState("");
+  const [email, setEmail] = useState("");
+  // 인증 번호
+  const [inputNum, setinputNum] = useState("");
+  // 백에서 받은 인증번호
+  const [certiNum, setCertiNum] = useState("");
+  // 오류메세지(아이디, 생년월일, 이메일)
+  const [userIdMessage, setUserIdMessage] = useState("");
+  const [birthMessage, setBirthMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  // 유효성검사(아이디, 생년월일, 이메일)
+  const [userIdError, setUserIdError] = useState("");
+  const [birthError, setBirthError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
-  const handleAgree = (event) => {
-    setChecked(event.target.checked);
+  // userId input값 바뀔 때마다 변하게 하는 함수
+  const userIdHandler = (e) => {
+    setUserId(e.target.value);
   };
-
-  const onhandlePost = async (data) => {
-    const { id, email, birth } = data;
-    const postData = { id, email, birth };
-
-    // post
-    await axios
-    // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
-      .post('/member/join', postData)
-      .then(function (response) {
-        console.log(response, '성공');
-        navigate.push('/');
-      })
-      .catch(function (err) {
-        console.log(err);
-        setRegisterError('비밀번호 찾기에 실패하였습니다. 다시한번 확인해 주세요.');
-      });
+  // birth input값 바뀔 때마다 변하게 하는 함수
+  const birthHandler = (e) => {
+    setBirth(e.target.value);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const data = new FormData(e.currentTarget);
-    const joinData = {
-      id: data.get("id"),
-      email: data.get('email'),
-      birth: data.get('birth'),
-    };
-    const { id, email, birth } = joinData;
-
-    // 아이디 유효성 체크: 기존 데이터와 비교해야하는데 이걸 모르겠음 -- 보류 의논 필요( t/f 로 받을지, 아이디로 받을지)
-    if (id === data.get("id")) setIdError(' id = data.get("id)');
-    else setIdError('');
-
-    // 이메일 유효성 체크
-    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!emailRegex.test(email)) setEmailError('올바른 이메일 형식이 아닙니다.');
-    else setEmailError('');
-
-    // 생년월일 유효성 체크
-    if (birth.length !== 6) setBirthError('형식이 일치하지 않습니다. 990101과 같이 입력해주세요!');
-    else setBirthError('');
-
-    if (
-      // 작성한 아이디 !== 기존 아이디 &&
-    //   passwordRegex.test(password) &&
-      // password === rePassword &&
-    //   nameRegex.test(name) &&
-      emailRegex.test(email) &&
-      birth.length.test(birth) &&
-      checked
-    ) {
-      onhandlePost(joinData);
-    }
+  // email input값 바뀔 때마다 변하게 하는 함수
+  const emailHandler = (e) => {
+    setEmail(e.target.value);
+  };
+  // 인증번호 input값 바뀔 때마다 변하게 하는 함수
+  const inputNumHandler = (e) => {
+    setinputNum(e.target.value);
   };
 
   return (
-    
     <ThemeProvider theme={theme}>
-      <Header/>
+      <Header />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} /> */}
-          {/* <Typography component="h1" variant="h5">
-            
-          </Typography> */}
-          <Boxs component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Typography component="h1" variant="h5">
+            비밀번호 찾기
+          </Typography>
+
+          <Boxs component="form" noValidate sx={{ mt: 3 }}>
             <FormControl component="fieldset" variant="standard">
-              <Grid container spacing={1.5}>
+              <div className="join-inputId">
+                {/* 아이디 입력칸 */}
                 <Grid item xs={12}>
                   <TextField
                     required
                     autoFocus
                     fullWidth
-                    type="id"
+                    type="text"
                     id="id"
                     name="id"
                     label="아이디"
-                    error={idError !== '' || false}
+                    onChange={userIdHandler}
                   />
                 </Grid>
-                <FormHelperTexts>{idError}</FormHelperTexts>
+                {/* 이메일 입력칸 */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -147,10 +100,10 @@ const FindPw = () => {
                     id="email"
                     name="email"
                     label="이메일 주소"
-                    error={emailError !== '' || false}
+                    onChange={emailHandler}
                   />
                 </Grid>
-                <FormHelperTexts>{emailError}</FormHelperTexts>
+                {/* 생년월일 입력칸 */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -158,29 +111,53 @@ const FindPw = () => {
                     type="birth"
                     id="birth"
                     name="birth"
-                    label="생년월일 입력(ex.990820)"
-                    error={birthError !== '' || false}
+                    label="생년월일 입력(ex.1999-08-20)"
+                    onChange={birthHandler}
                   />
                 </Grid>
-                <FormHelperTexts>{birthError}</FormHelperTexts>
+              </div>
+              {/*  인증번호 발송 버튼을 누르면 입력된 값을 백에 존재하는 값들과 비교해서 
+              존재여부를 파악하고 있다면 인증번호를 해당 이메일로 발송한다. */}
+              <a
+                className="join-idCheck"
+                onClick={() =>
+                  ForSendCertiNum(userId, email, birth, setCertiNum)
+                }
+              >
+                인증번호 발송
+              </a>
+              <Grid container spacing={1.5}>
+                {/* 인증번호 입력칸 */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="inputNum"
+                    id="inputNum"
+                    name="inputNum"
+                    label="인증번호 6자리 입력"
+                    onChange={inputNumHandler}
+                  />
+                </Grid>
               </Grid>
-              <Link to={'/resetPw'}>
-                <Button
-                type="submit"
+              {/* 비밀번호 변경 버튼을 누르면  */}
+              {/* click은 데이터를 클릭하는 것에서 그치지만, submit은 데이터를 통으로 보낸다.
+                또한, submit은 데이터를 받는 대상이 있어야만 제대로 작동한다.
+                따라서 방금처럼 데이터를 받는 대상 없을 때는 submit을 쓸 수 없다. */}
+              <Button
+                type="button"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 size="large"
+                onClick={() => passResetPw(inputNum)}
               >
-                비밀번호 찾기
+                인증번호 확인
               </Button>
-              </Link>
             </FormControl>
-            <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
         </Box>
       </Container>
-      
     </ThemeProvider>
   );
 };

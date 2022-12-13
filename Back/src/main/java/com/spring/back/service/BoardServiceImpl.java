@@ -3,10 +3,12 @@ package com.spring.back.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +38,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	// [Service]
 	@Autowired
+	UserServiceImpl userService;
+	@Autowired
 	FileServiceImpl fileService;
 	@Autowired
 	CommentServiceImpl commentService;
@@ -54,15 +58,37 @@ public class BoardServiceImpl implements BoardService {
 
 	// Read
 	// --------------------------------------------------------------------------------------------------------------------------------
-	// [특정 게시글 불러오기]
+	// [전체 게시글 불러오기]
 	@Override
-	@Transactional
-	public BoardDTO getBoardByBoardNo(Long BoardNo) {
-		Board board = boardRepo.findById(BoardNo).orElseThrow(NoSuchElementException::new);
-		BoardDTO boardDTO = Board.boardEntitytoDTO(board);
-		return boardDTO;
+	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest) {
+		return boardRepo.findAll(pageRequest).stream()
+				.map(board -> Board.boardEntityToDTO(board))
+				.collect(Collectors.toList());
 	}
 
+	/* [특정 게시글 불러오기]
+	 * 설명 : 해당 함수가 실행될 때마다 조회수 +1
+	 */
+	@Override
+	@Transactional
+	public BoardDTO getBoardByBoardNo(Long boardNo) {
+		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
+		board.updateViewCount(board.getViewCount()+1);
+		BoardDTO boardDTO = Board.boardEntityToDTO(board);
+		return boardDTO;
+	}
+	
+	/* [추천게시글 가져오기]
+	 * 설명 : boardNo와 동일한 군집 중 조회수와 좋아요수가 많은 상위 3개 출력
+	 */
+	@Override
+	public List<BoardDTO> findRecoBoard(Long boardNo) {
+		// 추천 게시글 불러오기
+		List<Board> recoBoard = boardRepo.findRecommendedBoardByBoardNo(boardNo);
+		List<BoardDTO> boardDTOs = recoBoard.stream().map(board -> Board.boardEntityToDTO(board)).collect(Collectors.toList());
+		return boardDTOs;
+	}
+	
 	// [개인 페이지 게시글 불러오기]
 	@Override
 	@Transactional
@@ -85,11 +111,21 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDTO updateBoard(BoardDTO newboardDTO, List<MultipartFile> files) {
 		Board board = boardRepo.findById(newboardDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
 		board.updateBoard(newboardDTO);
-		BoardDTO boardDTO = Board.boardEntitytoDTO(board);
+		BoardDTO boardDTO = Board.boardEntityToDTO(board);
 		// 기존 File 삭제
 		fileService.deleteFileBoardNo(boardDTO.getBoardNo());
 		// 새로운 File 추가
-		fileService.insertFile(boardDTO.getBoardNo(), files);
+		fileService.uploadFile(boardDTO.getBoardNo(), files);
+		return boardDTO;
+	}
+	
+	// [좋아요 수 +1]
+	@Override
+	@Transactional
+	public BoardDTO updateLikeCount(Long boardNo) {
+		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
+		board.updateLikeCount(board.getLikeCount()+1);
+		BoardDTO boardDTO = Board.boardEntityToDTO(board);
 		return boardDTO;
 	}
 

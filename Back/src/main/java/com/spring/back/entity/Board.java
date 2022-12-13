@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -42,17 +43,16 @@ public class Board {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="board_no")
+	@Column(name="board_no",nullable = false)
 	private Long boardNo;
 	
 	private String boardContent;
+	private Long viewCount;
 	private Long likeCount;
 	
 	@CreatedDate
 	@Column(updatable = false)
 	private LocalDateTime writtenDate;
-	
-	private Long viewCount;
 	
 	@LastModifiedDate
 	private LocalDateTime modifiedDate;
@@ -75,10 +75,12 @@ public class Board {
 	@OneToMany(mappedBy = "board")
 	List<Comment> comments = new ArrayList<Comment>();
 	
+
+	
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
-	public static BoardDTO boardEntitytoDTO (Board board) {
+	public static BoardDTO boardEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
 									.boardNo(board.getBoardNo())
 									.userId(board.getUser().getUserId())
@@ -107,5 +109,13 @@ public class Board {
 	// [User 채워주기]
 	public void updateUser(User user) {
 		this.user = user;
+	}
+	// [ViewCountupdate]
+	public void updateViewCount(Long viewCount) {
+		this.viewCount = viewCount;
+	}
+	// [LikeCountupdate]
+	public void updateLikeCount(Long likeCount) {
+		this.likeCount = likeCount;
 	}
 }
