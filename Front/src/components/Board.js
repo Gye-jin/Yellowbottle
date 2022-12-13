@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import LikeCountData, { BoardFetchData, likeBoardNum } from "../Api/BoardData";
 
 const Boards = () => {
@@ -31,16 +32,18 @@ const Boards = () => {
                     {/* 따라서 true && expression을 설정해서 앞에 값들이 들어오면 그때 expression을 실행시키게 하면된다! */}
                     {board.fileDTOs &&
                       board.fileDTOs.map((fileDTO) => (
-                        <img
-                          // React 라이브러리는 컴포넌트와 DOM요소 간의 관계를 이용해 리렌더링 여부를 결정한다. 따라서 불필요한 리렌더링을 방지하기 위해 각 자식 컴포넌트마다 독립적인 Key값을 넣어줘야한다.
-                          key={fileDTO}
-                          className="boardImage"
-                          // 두개 이상의 자식을 붙여서 사용할때는 ${}를 따로 두개 쓰는 것이 아니라 ${} 하나에 + 를 사용해서 넣자!
-                          src={`${fileDTO.filePath + fileDTO.fileName}`}
-                          width="350" // 350,300 고정값으로 가되, 추후 반응형 세부작업 가능성
-                          height="300"
-                          alt="boardimage"
-                        />
+                        <Link to={`/DetailBoard/${board.boardNo}`}>
+                          <img
+                            // React 라이브러리는 컴포넌트와 DOM요소 간의 관계를 이용해 리렌더링 여부를 결정한다. 따라서 불필요한 리렌더링을 방지하기 위해 각 자식 컴포넌트마다 독립적인 Key값을 넣어줘야한다.
+                            key={fileDTO}
+                            className="boardImage"
+                            // 두개 이상의 자식을 붙여서 사용할때는 ${}를 따로 두개 쓰는 것이 아니라 ${} 하나에 + 를 사용해서 넣자!
+                            src={`${fileDTO.filePath + fileDTO.fileName}`}
+                            width="350" // 350,300 고정값으로 가되, 추후 반응형 세부작업 가능성
+                            height="300"
+                            alt="boardimage"
+                          />
+                        </Link>
                       ))}
                     <div>
                       <h3>
