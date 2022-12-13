@@ -15,8 +15,14 @@ public interface BoardService {
 	// [게시글 작성]
 	public Long insertBoard(BoardDTO boardDTO);
 
+	// [전체 게시글 불러오기]
+	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest);
+
 	// [특정 게시글 불러오기]
-	public BoardDTO getBoardByBoardNo(Long BoardNo);
+	public BoardDTO getBoardByBoardNo(Long boardNo);
+
+	// [추천게시글 가져오기]
+	public List<BoardDTO> findRecoBoard(Long boardNo);
 
 	// [개인 페이지 게시글 불러오기]
 	public MypageDTO getBoardByUserId(String userId);
