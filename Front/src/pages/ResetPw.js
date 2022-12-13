@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   Button,
   CssBaseline,
@@ -11,9 +13,10 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
+// import Header from '../components/Header';
 import "../App.css";
 import Header from "../components/Header";
-import ForResetPwPost from "../Api/ResetPwData";
+// import { useNavigate } from "react-router-dom";
 
 // mui 기본 css 적용
 const FormHelperTexts = styled(FormHelperText)`
@@ -28,18 +31,36 @@ const Boxs = styled(Box)`
 `;
 
 const ResetPw = () => {
-  // mui 테마
   const theme = createTheme();
-  // 비밀번호 오류
   const [passwordError, setPasswordError] = useState("");
-  // 비밀번호 변경실패 오류
+  // 아이디 추가
   const [registerError, setRegisterError] = useState("");
+  const navigate = useNavigate();
 
-  // 비밀번호 변경버튼 눌렀을 때 실행되는 함수
-  const postPasswordData = (e) => {
-    // 새로고침 방지
+  const onhandlePost = async (password) => {
+    // post
+    await axios
+      // spring에 보낼 url : controller 와 Dto를 확인해서 수정하자!
+      .post("http://localhost:8080/api/updatePw", {
+        userId: sessionStorage.getItem("userId"),
+        userPw: password,
+      })
+      .then(function (response) {
+        sessionStorage.clear();
+        console.log(response, "성공");
+        alert("비밀번호 변경에 성공하셨습니다!");
+        navigate("/login");
+      })
+      .catch(function (err) {
+        console.log(err);
+        setRegisterError(
+          "비밀번호 변경에 실패하였습니다. 다시한번 확인해 주세요."
+        );
+      });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // FormData를 이용해 변화되는 입력값들을 설정
     const data = new FormData(e.currentTarget);
     const postResetPwData = {
       password: data.get("password"),
@@ -59,16 +80,19 @@ const ResetPw = () => {
     }
 
     // 비밀번호 같은지 체크
-    if (password !== rePassword) {
+    if (password != rePassword) {
       setPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
       setPasswordError("");
     }
 
-    // 위에서 설정한 유효성검사를 모두 통과하면 ForResetPwPost함수 실행
-    if (passwordRegex.test(password) && password === rePassword) {
+    if (
+      // 작성한 아이디 !== 기존 아이디 &&
+      passwordRegex.test(password) &&
+      password === rePassword
+    ) {
       console.log(sessionStorage.getItem("userId"));
-      ForResetPwPost(password, setRegisterError);
+      onhandlePost(password);
     }
   };
 
@@ -85,16 +109,14 @@ const ResetPw = () => {
             alignItems: "center",
           }}
         >
-          {/* 비밀번호 변경버튼을 눌렀을 때 postPasswordData 함수가 실행된다. */}
           <Boxs
             component="form"
             noValidate
-            onSubmit={postPasswordData}
+            onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <FormControl component="fieldset" variant="standard">
               <Grid container spacing={1.5}>
-                {/* 비밀번호 입력칸 */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -106,9 +128,7 @@ const ResetPw = () => {
                     error={passwordError !== "" || false}
                   />
                 </Grid>
-                {/* 비밀번호 입력 오류 창 */}
                 <FormHelperTexts>{passwordError}</FormHelperTexts>
-                {/* rePassword 입력칸 */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -120,10 +140,8 @@ const ResetPw = () => {
                     error={passwordError !== "" || false}
                   />
                 </Grid>
-                {/* rePassword 입력 오류 */}
                 <FormHelperTexts>{passwordError}</FormHelperTexts>
               </Grid>
-              {/* 이 버튼을 클릭할 시 postPasswordData 함수를 실행시킨다. */}
               <Button
                 type="submit"
                 fullWidth

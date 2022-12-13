@@ -30,7 +30,6 @@ const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
 
-// 회원가입 페이지
 const Join = () => {
   // mui 테마
   const theme = createTheme();

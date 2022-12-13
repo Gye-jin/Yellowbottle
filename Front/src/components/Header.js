@@ -27,17 +27,15 @@ export default function Header() {
   // const isLogin = props.isLogin;
 
   useEffect(() => {
-    // // sessionStoage에 userId라는 key값으로 저장된 값이 없다면
-    // if (sessionStorage.getItem("userId") === null) {
-    //   console.log("isLogin ?? ::", isLogin);
-    // } else {
-    //   // sessionStoage에 userId라는 key값으로 저장된 값이 있다면
-    //   // 로그인 상태 변경
-    //   setIsLogin(true);
-    //   console.log("isLogin ?? ::", isLogin);
-    // }
-
-    sessionStorage.getItem("userId") ? setIsLogin(true) : console.log("dd");
+    // sessionStoage에 userId라는 key값으로 저장된 값이 없다면
+    if (sessionStorage.getItem("userId") === null) {
+      console.log("isLogin ?? ::", isLogin);
+    } else {
+      // sessionStoage에 userId라는 key값으로 저장된 값이 있다면
+      // 로그인 상태 변경
+      setIsLogin(true);
+      console.log("isLogin ?? ::", isLogin);
+    }
   });
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   Button,
   CssBaseline,
@@ -28,7 +28,6 @@ const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
 
-// 로그인 페이지
 const Login = () => {
   // mui 테마
   const theme = createTheme();
