@@ -9,8 +9,8 @@ import { createTheme } from "@material-ui/core/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// 회원용 헤더
-export default function HeaderLogin() {
+// 관리자용 헤더
+export default function HeaderAdmin() {
   const theme = createTheme({
     palette: {
       primary: {
@@ -32,6 +32,7 @@ export default function HeaderLogin() {
       .post("http://localhost:8080/api/logout", {
         userId: sessionStorage.getItem("userId"),
       })
+
       .then((response) => {
         response.data
           ? // 백에서 정상적으로 처리되면 로그아웃 성공! 후 메인페이지로 이동
@@ -67,13 +68,21 @@ export default function HeaderLogin() {
             component="div"
             sx={{ flexGrow: 1 }}
           >
-            실천내용
+            메일발송
+          </Typography>
+          <Typography
+            onClick={() => navigate("/")}
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          >
+            로그관리
           </Typography>
           <Button color="inherit" onClick={onLogout}>
             로그아웃
           </Button>
-          <Button color="inherit" onClick={() => navigate("/Mypage")}>
-            마이페이지
+          <Button color="inherit" onClick={() => navigate("/adminPage")}>
+            관리자페이지
           </Button>
         </Toolbar>
       </AppBar>

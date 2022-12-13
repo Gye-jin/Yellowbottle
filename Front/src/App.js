@@ -12,6 +12,8 @@ import FindId from "./pages/FindId";
 import ResetPw from "./pages/ResetPw";
 import MyPage from "./pages/MyPage";
 import BoardWrite from "./pages/BoardWrite";
+import AdminPage from "./pages/AdminPage";
+import Boards from "./components/Board";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/boardWrite" element={<BoardWrite />} />
+        <Route path="/adminPage" element={<AdminPage />} />
+        <Route path="/boards" element={<Boards />} />
       </Routes>
     </div>
   );
