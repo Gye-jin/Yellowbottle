@@ -1,7 +1,6 @@
 package com.spring.back.service;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -10,10 +9,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
 import com.spring.back.entity.Certified;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
+import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 
 @Service
@@ -23,6 +24,8 @@ public class UserServiceImpl implements UserService {
 	// [Repository]
 	@Autowired
 	UserRepository userRepo;
+	@Autowired
+	SessionRepository sessionRepo;
 
 	// [Service]
 	@Autowired
@@ -134,11 +137,12 @@ public class UserServiceImpl implements UserService {
 
 	// [회원정보 수정]
 	@Override
-	public UserDTO updateUserInfo(UserDTO newUserDTO) {
+	public UserDTO updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
 		User NewUser = UserDTO.userDTOToEntity(newUserDTO);
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		NewUser.updateId(session.getUser().getUserId());
 		userRepo.save(NewUser);
-		User updateUser = userRepo.findById(newUserDTO.getUserId()).orElseThrow(NoSuchElementException::new);
-		return User.userEntityToDTO(updateUser);
+		return User.userEntityToDTO(NewUser);
 	}
 
 	// Delete
@@ -146,13 +150,13 @@ public class UserServiceImpl implements UserService {
 	// [회원 탈퇴]
 	@Override
 	@Transactional
-	public boolean deleteUser(String userId, String userPw) {
+	public boolean deleteUser(String sessionId, String userPw) {
 //		System.out.println(userId + " - " + userPw);
 //		userRepo.deleteByUserIdAndUserPw(userId, userPw);
-		User user = userRepo.findById(userId).orElseThrow(NoSuchElementException::new);
+		User userSession = sessionRepo.findBySessionId(sessionId).getUser();
 
-		if (user.getUserPw().equals(userPw)) {
-			userRepo.deleteById(userId);
+		if (userSession.getUserPw().equals(userPw)) {
+			userRepo.deleteById(userSession.getUserId());
 			return true;
 		}
 		return false;

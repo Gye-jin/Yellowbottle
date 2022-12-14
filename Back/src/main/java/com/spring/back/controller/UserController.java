@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
 import com.spring.back.service.CertifiedServiceImpl;
 import com.spring.back.service.UserServiceImpl;
@@ -61,8 +62,8 @@ public class UserController {
 	}
 	// [로그아웃]
 	@PostMapping(value = "/logout")
-	public boolean logout(@RequestBody UserDTO userDTO) {
-		return userService.logout(userDTO.getUserId());
+	public boolean logout(@RequestBody SessionDTO sessionDTO) {
+		return userService.logout(sessionDTO.getSessionId());
 		
 	}
 	
@@ -89,15 +90,15 @@ public class UserController {
 
 	// [회원정보 수정]
 	@PutMapping(value = "/updateUser")
-	public UserDTO updateUserInfo(@RequestBody UserDTO userDTO) {
-		return userService.updateUserInfo(userDTO);
+	public UserDTO updateUserInfo(@RequestBody SessionDTO sessionDTO, UserDTO userDTO) {
+		return userService.updateUserInfo(sessionDTO,userDTO);
 	}
 
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [회원 탈퇴]
 	@PostMapping(value = "/deleteUser")
-	public boolean deleteUser(@RequestParam String userId, @RequestParam String userPw) {
-		return userService.deleteUser(userId, userPw);
+	public boolean deleteUser(@RequestParam String sessionId, @RequestParam String userPw) {
+		return userService.deleteUser(sessionId, userPw);
 	}
 }
