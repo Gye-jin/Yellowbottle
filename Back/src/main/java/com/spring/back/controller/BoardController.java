@@ -63,7 +63,7 @@ public class BoardController {
 	 * click : 특정 게시글 클릭시 조회수 +1
 	 * 출력 : List[불러올 게시글, 추천게시글1, 추천게시글2, 추천게시글3]
 	 */
-	@GetMapping("/recomendBoard/{boardNo}")
+	@GetMapping("/RecomentBoard/{boardNo}")
 	public List<BoardDTO> findRecommendBoard(@PathVariable Long boardNo) {
 		return boardService.findRecoBoard(boardNo);
 	}
@@ -93,9 +93,9 @@ public class BoardController {
 	// 설명 : 수정한 게시글 내용으로 게시글 업데이트
 	// click : 게시글 수정 완료
 	@PostMapping(value = "/boardupdate")
-	public BoardDTO updateBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
-		BoardDTO newBoardDTO = boardService.updateBoard(boardDTO, files);
-		return newBoardDTO;
+	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
+	
+		return boardService.updateBoard(sessionDTO,boardDTO, files);
 	}
 	
 	// [추천]
@@ -112,7 +112,7 @@ public class BoardController {
 	// [게시글 삭제]
 	// 설명 : 본인 게시글 지우기
 	@DeleteMapping("/boarddelete")
-	public boolean deleteBoard(@RequestBody BoardDTO boardDTO) {
-		return boardService.deleteBoard(boardDTO);
+	public boolean deleteBoard(@RequestBody SessionDTO sessionDTO,BoardDTO boardDTO) {
+		return boardService.deleteBoard(sessionDTO,boardDTO);
 	}
 }

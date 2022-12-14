@@ -1,6 +1,7 @@
 package com.spring.back.entity;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.CommentDTO;
 
 import lombok.AllArgsConstructor;
@@ -58,8 +60,22 @@ public class Comment {
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
-	public static CommentDTO commentEntityToDTO(Comment comment) {
+	public static CommentDTO falseEntityToDTO(Comment comment) {
 		CommentDTO commentDTO = CommentDTO.builder()
+									  .editor(false)
+									  .commentNo(comment.getCommentNo())
+									  .userId(comment.getUser().getUserId())
+									  .boardNo(comment.getBoard().getBoardNo())
+									  .commentContent(comment.getCommentContent())
+									  .commentDate(comment.getCommentDate())
+									  .build();
+		return commentDTO;
+	}
+	
+	
+	public static CommentDTO trueEntityToDTO(Comment comment) {
+		CommentDTO commentDTO = CommentDTO.builder()
+									  .editor(true)
 									  .commentNo(comment.getCommentNo())
 									  .userId(comment.getUser().getUserId())
 									  .boardNo(comment.getBoard().getBoardNo())
@@ -71,6 +87,7 @@ public class Comment {
 	
 	// Entity Element Update
 	// --------------------------------------------------------------------------------------------------------------------------------
+	
 	// [Board 채워주기]
 	public void boardInComment(Board board) {
 		this.board = board;

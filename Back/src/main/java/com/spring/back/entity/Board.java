@@ -79,9 +79,9 @@ public class Board {
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
-	public static BoardDTO boardEntityToDTO (Board board) {
+	public static BoardDTO FalseEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
-									.Editor(false)
+									.editor(false)
 									.boardNo(board.getBoardNo())
 									.userId(board.getUser().getUserId())
 									.boardContent(board.getBoardContent())
@@ -92,16 +92,16 @@ public class Board {
 											  .map(file -> File.entotyToDTO(file))
 										      .collect(Collectors.toList()))
 									.comments(board.getComments().stream()
-											  .map(comment -> Comment.commentEntityToDTO(comment))
+											  .map(comment -> Comment.falseEntityToDTO(comment))
 											  .collect(Collectors.toList()))
 									.modifiedDate(board.getModifiedDate())
 									.build();
 		return boardDTO;
 	}
 	
-	public static BoardDTO StatusboardEntityToDTO (Board board) {
+	public static BoardDTO TrueboardEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
-				.Editor(true)
+				.editor(true)
 				.boardNo(board.getBoardNo())
 				.userId(board.getUser().getUserId())
 				.boardContent(board.getBoardContent())
@@ -112,7 +112,7 @@ public class Board {
 						.map(file -> File.entotyToDTO(file))
 						.collect(Collectors.toList()))
 				.comments(board.getComments().stream()
-						.map(comment -> Comment.commentEntityToDTO(comment))
+						.map(comment -> Comment.trueEntityToDTO(comment))
 						.collect(Collectors.toList()))
 				.modifiedDate(board.getModifiedDate())
 				.build();

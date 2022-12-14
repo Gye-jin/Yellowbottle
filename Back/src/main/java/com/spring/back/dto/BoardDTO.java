@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class BoardDTO {
 	// Column
 	// --------------------------------------------------------------------------------------------------------------------------------
-	private boolean Editor;
+	private boolean editor;
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
