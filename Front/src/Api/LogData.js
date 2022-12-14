@@ -14,7 +14,7 @@ export function ForPostLoginData(loginData, setRegisterError) {
         // 백에서 반응(response)가 정상적으로 온다면 userId라는 키값과 백에서 보내주는 세션값을 value라고 세션에 저장한다.
         response.data
           ? sessionStorage.setItem(
-              "userId",
+              "sessionId",
               response.data
             )((window.location.href = "/"))
           : alert("🤘🏿😝😜🤘🏿" + " " + "로그인실패");
@@ -162,6 +162,8 @@ export const passResetPw = async (inputNum) => {
     // 백에서 response가 정상적으로 오면
     .then((response) => {
       console.log(response, "인증번호 인증 성공!");
+      // 인증번호 인증에 성공하면 이메일 발송시 발급받은 세션값 전체 삭제!
+      sessionStorage.clear();
       alert("비밀번호변경 페이지로 이동합니다.😚");
       window.location.href = "/resetPw";
     })

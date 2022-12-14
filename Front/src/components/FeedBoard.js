@@ -48,8 +48,8 @@ const FeedBoard = () => {
     response.then((data) => setFeedBoard(data));
   }, []);
   // console.log(FeedBoard);
-  console.log(fetching);
-  console.log("현재 pageNo ::", pageNo); //추후 스크롤로 올려줄 예정
+  // console.log(fetching);
+  // console.log("현재 pageNo ::", pageNo); //추후 스크롤로 올려줄 예정
   return (
     <>
       <div className="outer">

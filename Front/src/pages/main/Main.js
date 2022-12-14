@@ -5,7 +5,7 @@ import Header from "../../components/header/Header.js";
 
 // 메인 페이지
 function Main() {
-  console.log(sessionStorage.getItem("id") + "main");
+  // console.log(sessionStorage.getItem("sessionId") + "main");
   return (
     <>
       <Header />

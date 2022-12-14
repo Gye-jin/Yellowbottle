@@ -9,7 +9,7 @@ function BoardWrite() {
   const [fileImage, setFileImage] = useState([]);
   // 게시글 작성 페이지는 로그인된 회원만 들어올 수 있음
   // 따라서 세션에 저장되어있는 userId의 value값을 이용해 백에다 누가 글을 썼는지 확인시킬 수 있음
-  const userSession = sessionStorage.getItem("userId");
+  const userSession = sessionStorage.getItem("sessionId");
   // 게시글 작성하면 그 value를 인식하게 해주는 함수
   const changeBoardContent = (e) => {
     // e.preventDefault();
