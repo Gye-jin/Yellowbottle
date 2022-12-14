@@ -155,7 +155,7 @@ export const passResetPw = async (inputNum) => {
     // 백에 입력한 인증번호와 userSession을 request한다.
     .get("http://localhost:8080/api/checkCertifiedNo", {
       params: {
-        userId: sessionStorage.getItem("Id"),
+        sessionId: sessionStorage.getItem("Id"),
         certifiedNo: inputNum,
       },
     })
@@ -210,7 +210,7 @@ export function ForResetPwPost(password, setRegisterError) {
     await axios
       // 백에 userId와 userPw를 전송한다.
       .post("http://localhost:8080/api/updatePw", {
-        userId: sessionStorage.getItem("Id"),
+        sessionId: sessionStorage.getItem("Id"),
         userPw: password,
       })
       // 백에서 반응(response)가 정상적으로 오면 성공메세지와 함께 로그인 페이지로 이동

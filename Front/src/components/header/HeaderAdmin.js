@@ -30,7 +30,7 @@ export default function HeaderAdmin() {
     await axios
       // 백에 userId 세션을 보내서 확인되면 로그아웃 진행 오류는 경고창
       .post("http://localhost:8080/api/logout", {
-        userId: sessionStorage.getItem("sessionId"),
+        sessionId: sessionStorage.getItem("sessionId"),
       })
 
       .then((response) => {
