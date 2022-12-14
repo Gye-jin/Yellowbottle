@@ -13,9 +13,9 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import "../App.css";
-import Header from "../components/Header";
-import ForPostLoginData from "../Api/LoginData";
+import "../../App.css";
+import Header from "../../components/header/Header";
+import { ForPostLoginData } from "../../Api/LogData";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -59,7 +59,7 @@ const Login = () => {
     // 아이디 유효성 체크
     const idRegex = /^[a-z]+[a-z0-9]{4,19}$/g;
     if (!idRegex.test(userId)) {
-      setIdError("아이디는 영문자 또는 숫자 5~20자리로 입력해주세요");
+      setIdError("잘못된 아이디입니다! 다시 입력해주세요");
     }
 
     // 비밀번호 유효성 체크
@@ -67,9 +67,7 @@ const Login = () => {
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
     if (!passwordRegex.test(userPw)) {
       // test()는 문자열 일치를 확인해준다. 또한 여기 있는 password는 위에 data.get("password")이다.
-      setPasswordError(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
+      setPasswordError("잘못된 비밀번호입니다! 다시 입력해주세요!");
     } else {
       setPasswordError("");
     }
@@ -144,6 +142,8 @@ const Login = () => {
               >
                 로그인
               </Button>
+              {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
+              <FormHelperTexts>{registerError}</FormHelperTexts>
             </FormControl>
             {/* 아이디찾기 버튼을 누를경우 해당 페이지로 이동한다. */}
             <Button
@@ -167,8 +167,8 @@ const Login = () => {
             >
               회원가입
             </Button>
-            {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
-            <FormHelperTexts>{registerError}</FormHelperTexts>
+            {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다.
+            <FormHelperTexts>{registerError}</FormHelperTexts> */}
           </Boxs>
         </Box>
       </Container>

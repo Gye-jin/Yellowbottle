@@ -1,34 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { BoardFetchData } from "../Api/BoardData";
-import axios from "axios";
+import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
 import { useNavigate } from "react-router-dom";
 
-const Boards = () => {
+const FeedBoard = () => {
   //백에서 보낸 10개씩 게시물을 담는 공간
-  const [boards, setBoards] = useState([]);
+  const [FeedBoard, setFeedBoard] = useState([]);
   //페이지 하나당 10개의 게시물(spring참고)
   const [pageNo, setPageNo] = useState(1);
-  // 추가 boards를 로드할지 안할지를 담기위한 state
+  // 추가 FeedBoard를 로드할지 안할지를 담기위한 state
   const [fetching, setFetching] = useState(false);
   // navigate 함수
   const navigate = useNavigate();
-  // // 페이지 넘버 변경해주는 함수
-  const fetchMoreBoards = async () => {
-    // fetching을 true값으로 바꿔 fetching 값이 바뀌기 전까지 리렌더링 되는걸 방지
-    setFetching(true);
-    await axios
-      // 백으로부터 기존pageNo + 1에 해당하는 페이지의 게시물(10개 묶음)을 가져온다.
-      .get(`http://localhost:8080/api/Allboard?pageNo=${pageNo + 1}`)
-      .then((response) => {
-        console.log(response.data);
-        setBoards(boards.concat(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("비상 오류 발생!");
-      });
-    setFetching(false);
-  };
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
@@ -46,7 +28,7 @@ const Boards = () => {
       if (fetching === false) {
         console.log("되는데?");
         setPageNo(pageNo + 1);
-        fetchMoreBoards();
+        fetchMoreFeedBoard(setFetching, pageNo, setFeedBoard, FeedBoard);
       }
     }
   };
@@ -62,20 +44,20 @@ const Boards = () => {
   // 초기 렌더링시 실천내용 화면에 게시물 10개 출력!
   useEffect(() => {
     // response는 해당페이지(게시물 10개 들어있음)
-    const response = BoardFetchData(pageNo);
-    response.then((data) => setBoards(data));
+    const response = boardFetchData(pageNo);
+    response.then((data) => setFeedBoard(data));
   }, []);
-  // console.log(boards);
-  console.log(fetching);
-  console.log("현재 pageNo ::", pageNo); //추후 스크롤로 올려줄 예정
+  // console.log(FeedBoard);
+  // console.log(fetching);
+  // console.log("현재 pageNo ::", pageNo); //추후 스크롤로 올려줄 예정
   return (
     <>
       <div className="outer">
         <div className="inner">
           <ul>
-            {/* 삼항연산자로 boards가 있을때 게시물번호 순으로 출력함. */}
-            {boards ? (
-              boards.map((board) => (
+            {/* 삼항연산자로 FeedBoard가 있을때 게시물번호 순으로 출력함. */}
+            {FeedBoard ? (
+              FeedBoard.map((board) => (
                 <div key={board.boardNo} className="board">
                   <div href={"http://localhost:3000/board/" + board.boardNo}>
                     <div className="board_Header">
@@ -83,14 +65,14 @@ const Boards = () => {
                       {/* 이미지 출력 */}
                       {/* React는 렌더링이 화면에 커밋된 후에 모든 효과를 실행한다. 즉, 데이터가 들어오기 전에 board.fileDTO.map을 실행시키며 이 데이터는 undefined로 나온다. */}
                       {/* 따라서 true && expression을 설정해서 앞에 값들이 들어오면 그때 expression을 실행시키게 하면된다! */}
-                      {board.fileDTOs &&
-                        board.fileDTOs.map((fileDTO) => (
+                      {board.files &&
+                        board.files.map((file) => (
                           <img
                             // React 라이브러리는 컴포넌트와 DOM요소 간의 관계를 이용해 리렌더링 여부를 결정한다. 따라서 불필요한 리렌더링을 방지하기 위해 각 자식 컴포넌트마다 독립적인 Key값을 넣어줘야한다.
-                            key={fileDTO}
+                            key={file}
                             className="board_Image"
                             // 두개 이상의 자식을 붙여서 사용할때는 ${}를 따로 두개 쓰는 것이 아니라 ${} 하나에 + 를 사용해서 넣자!
-                            src={`${fileDTO.filePath + fileDTO.fileName}`}
+                            src={`${file.filePath + file.fileName}`}
                             alt="boardimage"
                             onClick={() =>
                               navigate(`/DetailBoard/${board.boardNo}`)
@@ -115,4 +97,4 @@ const Boards = () => {
   );
 };
 
-export default Boards;
+export default FeedBoard;

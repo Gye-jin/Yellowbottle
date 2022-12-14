@@ -13,8 +13,8 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import Header from "../components/Header";
-import ForPostFindIdData from "../Api/FindIdData";
+import Header from "../../components/header/Header";
+import { ForPostFindIdData } from "../../Api/LogData";
 
 // mui의 내장 css
 const FormHelperTexts = styled(FormHelperText)`

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
-import { DetailBoardFetchData } from "../Api/DetailBoardData";
+import Header from "../../components/header/Header";
+import { DetailBoardFetchData } from "../../Api/BoardData";
 import { useNavigate, useParams } from "react-router-dom";
 
 const DetailBoard = () => {
@@ -44,11 +44,7 @@ const DetailBoard = () => {
 
                 <div>
                   <h3>
-                    <span>
-                      {board.likeCount}
-                      <button>👍</button>
-                      {board.viewCount}
-                    </span>
+                    <span>조회수 : {board.viewCount}</span>
                   </h3>
                 </div>
               </div>

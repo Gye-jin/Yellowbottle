@@ -1,4 +1,4 @@
-import Header from "../components/Header";
+import Header from "../../components/header/Header";
 import React, { useState } from "react";
 import {
   Button,
@@ -12,7 +12,7 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import { ForSendCertiNum, passResetPw } from "../Api/FindPwData";
+import { ForSendCertiNum, passResetPw } from "../../Api/LogData";
 
 //mui 템플릿 사용
 const Boxs = styled(Box)`
