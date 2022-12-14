@@ -13,11 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
-import com.spring.back.dto.MypageDTO;
+import com.spring.back.dto.PersonpageDTO;
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.entity.Board;
+import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
 import com.spring.back.repository.CommentRepository;
+import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 import com.spring.back.repository.mapping.BoardMapping;
 
@@ -35,6 +38,9 @@ public class BoardServiceImpl implements BoardService {
 	UserRepository userRepo;
 	@Autowired
 	CommentRepository commentRepo;
+	@Autowired
+	SessionRepository sessionRepo;
+	
 	
 	// [Service]
 	@Autowired
@@ -48,10 +54,13 @@ public class BoardServiceImpl implements BoardService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 작성]
 	@Override
-	public Long insertBoard(BoardDTO boardDTO) {
+	public Long insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO) {
+		Session session = sessionRepo.findBySessionId(sessionDTO.getUserId());
 		Board board = BoardDTO.boardDtotoEntity(boardDTO);
+
 		// board에 user 직접 삽입하기
-		User user = userRepo.findByUserId(boardDTO.getUserId());
+		User user = userRepo.findByUserId(session.getUser().getUserId());
+
 		board.updateUser(user);
 		return boardRepo.save(board).getBoardNo();
 	}
@@ -71,11 +80,32 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	@Transactional
-	public BoardDTO getBoardByBoardNo(Long boardNo) {
+	public BoardDTO getBoardByBoardNo(String sessionId, Long boardNo) {
+		Session session = sessionRepo.findBySessionId(sessionId);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
-		board.updateViewCount(board.getViewCount()+1);
+		board.updateViewCount(board.getViewCount() + 1);
+	
+		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
+			BoardDTO boardDTO = Board.StatusboardEntityToDTO(board);
+			return boardDTO;
+		} else {
+			BoardDTO boardDTO = Board.boardEntityToDTO(board);
+			return boardDTO;
+		}
+		
+	
+	}
+	/* [수정하기 위한 게시글 불러오기
+	 */
+	@Override
+	@Transactional
+	public BoardDTO findBoardByBoardNo(Long boardNo) {
+		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		BoardDTO boardDTO = Board.boardEntityToDTO(board);
-		return boardDTO;
+	
+			return boardDTO;
+			
+		
 	}
 	
 	/* [추천게시글 가져오기]
@@ -92,15 +122,22 @@ public class BoardServiceImpl implements BoardService {
 	// [개인 페이지 게시글 불러오기]
 	@Override
 	@Transactional
-	public MypageDTO getBoardByUserId(String userId) {
-		ArrayList<BoardMapping> boardMappings = null;
+	public PersonpageDTO getBoardByUserId(String userId) {
 		User user = userRepo.findByUserId(userId);
-		boardMappings = boardRepo.findByUser(user);
+		ArrayList<BoardMapping> boardMappings = boardRepo.findByUser(user);
 		Long countBoard = boardRepo.countByUser(user);
 		Long countComment = commentRepo.countByUser(user);
-		MypageDTO mypageDTO = MypageDTO.builder().countBoard(countBoard).countComment(countComment)
-				.boardDTOs(boardMappings).build();
-		return mypageDTO;
+		System.out.println(boardMappings);
+		if (sessionRepo.findByUser(user) != null) {
+			PersonpageDTO mypageDTO = PersonpageDTO.builder().Editor(true).countBoard(countBoard).countComment(countComment)
+					.boards(boardMappings).build();
+			return mypageDTO;
+		} else {
+			PersonpageDTO mypageDTO = PersonpageDTO.builder().Editor(false).countBoard(countBoard).countComment(countComment)
+					.boards(boardMappings).build();
+			return mypageDTO;
+		}
+
 	}
 
 	// Update

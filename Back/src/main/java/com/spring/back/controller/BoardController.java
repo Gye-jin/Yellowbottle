@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
-import com.spring.back.dto.MypageDTO;
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.service.BoardServiceImpl;
 import com.spring.back.service.FileServiceImpl;
 
@@ -39,9 +39,9 @@ public class BoardController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 작성]
 	@PostMapping("/board")
-	public Long createBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
+	public Long createBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
 		// 게시글 삽입 후 게시글 번호 가져오기
-		Long boardNo = boardService.insertBoard(boardDTO);
+		Long boardNo = boardService.insertBoard(sessionDTO, boardDTO);
 		// 해당하는 게시글 번호에 맞춰 파일과 태그 DB에 삽입
 		fileService.uploadFile(boardNo, files);
 		return boardNo;
@@ -53,8 +53,8 @@ public class BoardController {
 	 * 설명1 : boardNo에 해당하는 board 가져오기
 	 */
 	@GetMapping("/board/{boardNo}")
-	public BoardDTO findBoard(@PathVariable Long boardNo) {
-		return boardService.getBoardByBoardNo(boardNo);
+	public BoardDTO findBoard(@RequestParam String SessionId, @PathVariable Long boardNo) {
+		return boardService.getBoardByBoardNo(SessionId,boardNo);
 	}
 	
 	/* [(세부 게시글 확인 전용)특정 게시글 불러오기]
@@ -68,13 +68,6 @@ public class BoardController {
 		return boardService.findRecoBoard(boardNo);
 	}
 
-	// [개인 페이지 게시글 불러오기]
-	// 설명 : userId에 해당하는 page 가져오기
-	// click : 마이페이지 혹은 다른 사람의 페이지에 접속
-	@GetMapping("/mypage/{userId}")
-	public MypageDTO getBoards(@PathVariable String userId) {
-		return boardService.getBoardByUserId(userId);
-	}
 
 	// [전체 게시글]
 	// 설명 : 최신 순으로 10개씩 게시글 불러오기(필요)
@@ -92,7 +85,7 @@ public class BoardController {
 	// click : 게시글 수정하기
 	@GetMapping("/boardUpdate/{boardNo}")
 	public BoardDTO getUpdateBoard(@PathVariable Long boardNo) {
-		BoardDTO boardDTO = boardService.getBoardByBoardNo(boardNo);
+		BoardDTO boardDTO = boardService.findBoardByBoardNo(boardNo);
 		return boardDTO;
 	}
 
@@ -100,9 +93,8 @@ public class BoardController {
 	// 설명 : 수정한 게시글 내용으로 게시글 업데이트
 	// click : 게시글 수정 완료
 	@PostMapping(value = "/boardupdate")
-	public BoardDTO updateBoard(@RequestParam String userSession, @ModelAttribute BoardDTO boardDTO,
-			@RequestParam("files") List<MultipartFile> files) {
-		BoardDTO newBoardDTO = boardService.updateBoard(boardDTO,files);
+	public BoardDTO updateBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
+		BoardDTO newBoardDTO = boardService.updateBoard(boardDTO, files);
 		return newBoardDTO;
 	}
 	

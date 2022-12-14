@@ -13,13 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class MypageDTO {
+public class PersonpageDTO {
+	
+	// 마이페이지 여부
+	private boolean Editor;
 	// 댓글 수
 	private Long countComment;
 	// 게시글 수
 	private Long countBoard;
 	// boardList
-	ArrayList<BoardMapping> boardDTOs;
+	ArrayList<BoardMapping> boards;
 	
 	
 }
