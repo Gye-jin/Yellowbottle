@@ -6,8 +6,6 @@ import { Navigate, useParams } from "react-router-dom";
 
 const DetailBoard = () => {
   const [board, setBoard] = useState([]);
-  //좋아요 갯수
-  //   const [like, setLike] = useState(0);
   const boardNo = useParams().boardNo;
 
   useEffect(() => {
