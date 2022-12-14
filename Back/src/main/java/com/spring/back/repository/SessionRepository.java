@@ -11,4 +11,6 @@ public interface SessionRepository extends JpaRepository<Session, String>{
 	public Session findByUser(User user);
 	
 	public void deleteBySessionId(String sessionId);
+	
+	public Session findBySessionId(String sessionId);
 }

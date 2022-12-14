@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -68,12 +67,12 @@ public class Board {
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
 //	추후 : @BatchSize 전략 사용
-	List<File> files = new ArrayList<File>();
+	private List<File> files = new ArrayList<File>();
 	
 	// [Comment Join]
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
-	List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
 	
 
 	
