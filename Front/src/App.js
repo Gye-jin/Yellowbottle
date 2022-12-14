@@ -31,7 +31,7 @@ function App() {
         {/* boardPage : 실천내용 전체, 게시글 작성, 싱세게시물 */}
         <Route path="/feed" element={<Feed />} />
         <Route path="/boardWrite" element={<BoardWrite />} />
-        <Route path="/DetailBoard/:boardNo" element={<DetailBoard />} />
+        <Route path="/detailBoard/:boardNo" element={<DetailBoard />} />
         {/* userPage : 마이페이지, 타유저페이지 */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/anotherUserPage" element={<AnotherUserPage />} />

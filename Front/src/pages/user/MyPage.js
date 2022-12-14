@@ -23,8 +23,8 @@ function MyPage() {
     response.then((data) => setMyPageData(data));
   }, [myUserId]);
 
-  // console.log("myUserId ::", myUserId);
-  // console.log("myPageData ::", myPageData);
+  console.log("myUserId ::", myUserId);
+  console.log("myPageData ::", myPageData);
   return (
     <>
       <Header />
