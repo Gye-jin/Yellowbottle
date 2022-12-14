@@ -81,20 +81,41 @@ public class Board {
 	// DtoToEntity
 	public static BoardDTO boardEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
+									.Editor(false)
 									.boardNo(board.getBoardNo())
 									.userId(board.getUser().getUserId())
 									.boardContent(board.getBoardContent())
 									.likeCount(board.getLikeCount())
 									.createDate(board.getWrittenDate())
 									.viewCount(board.getViewCount())
-									.fileDTOs(board.getFiles().stream()
+									.files(board.getFiles().stream()
 											  .map(file -> File.entotyToDTO(file))
 										      .collect(Collectors.toList()))
-									.commentDTOs(board.getComments().stream()
+									.comments(board.getComments().stream()
 											  .map(comment -> Comment.commentEntityToDTO(comment))
 											  .collect(Collectors.toList()))
 									.modifiedDate(board.getModifiedDate())
 									.build();
+		return boardDTO;
+	}
+	
+	public static BoardDTO StatusboardEntityToDTO (Board board) {
+		BoardDTO boardDTO = BoardDTO.builder()
+				.Editor(true)
+				.boardNo(board.getBoardNo())
+				.userId(board.getUser().getUserId())
+				.boardContent(board.getBoardContent())
+				.likeCount(board.getLikeCount())
+				.createDate(board.getWrittenDate())
+				.viewCount(board.getViewCount())
+				.files(board.getFiles().stream()
+						.map(file -> File.entotyToDTO(file))
+						.collect(Collectors.toList()))
+				.comments(board.getComments().stream()
+						.map(comment -> Comment.commentEntityToDTO(comment))
+						.collect(Collectors.toList()))
+				.modifiedDate(board.getModifiedDate())
+				.build();
 		return boardDTO;
 	}
 	

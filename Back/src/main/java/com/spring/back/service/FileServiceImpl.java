@@ -43,7 +43,6 @@ public class FileServiceImpl implements FileService {
 	// [File 생성]
 	// 설명 : boardNo의 게시글에 File 삽입
 	@Override
-	@SuppressWarnings("deprecation")
 	public void uploadFile(Long boardNo, List<MultipartFile> files) {
 		// files객체 분해 후 DB 삽입
 		for (MultipartFile file : files) {

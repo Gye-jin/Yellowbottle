@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 public class BoardDTO {
 	// Column
 	// --------------------------------------------------------------------------------------------------------------------------------
+	private boolean Editor;
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
@@ -35,11 +36,11 @@ public class BoardDTO {
 	// [File Join]
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<FileDTO> fileDTOs = new ArrayList<FileDTO>();
+	private List<FileDTO> files = new ArrayList<FileDTO>();
 	
 	// [Comment Join]
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<CommentDTO> commentDTOs = new ArrayList<CommentDTO>();
+	private List<CommentDTO> comments = new ArrayList<CommentDTO>();
 
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -54,4 +55,5 @@ public class BoardDTO {
 						   .build();
 		return board;
 	}
+	
 }

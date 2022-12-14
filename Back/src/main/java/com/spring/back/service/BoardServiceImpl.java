@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
-import com.spring.back.dto.BoardstatusDTO;
 import com.spring.back.dto.PersonpageDTO;
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.entity.Board;
@@ -81,23 +80,22 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	@Transactional
-	public BoardstatusDTO getBoardByBoardNo(String sessionId, Long boardNo) {
+	public BoardDTO getBoardByBoardNo(String sessionId, Long boardNo) {
 		Session session = sessionRepo.findBySessionId(sessionId);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateViewCount(board.getViewCount() + 1);
-		BoardDTO boardDTO = Board.boardEntityToDTO(board);
+	
 		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
-			BoardstatusDTO boardstatusDTO = BoardstatusDTO.builder().Editor(true).boardDTO(boardDTO).build();
-			return boardstatusDTO;
+			BoardDTO boardDTO = Board.StatusboardEntityToDTO(board);
+			return boardDTO;
 		} else {
-			BoardstatusDTO boardstatusDTO = BoardstatusDTO.builder().Editor(false).boardDTO(boardDTO).build();
-			return boardstatusDTO;
+			BoardDTO boardDTO = Board.boardEntityToDTO(board);
+			return boardDTO;
 		}
 		
 	
 	}
-	/* [수정하기 위한 게시글 불러오기]
-	 * 설명 : 해당 함수가 실행될 때마다 조회수 +1
+	/* [수정하기 위한 게시글 불러오기
 	 */
 	@Override
 	@Transactional
@@ -129,13 +127,14 @@ public class BoardServiceImpl implements BoardService {
 		ArrayList<BoardMapping> boardMappings = boardRepo.findByUser(user);
 		Long countBoard = boardRepo.countByUser(user);
 		Long countComment = commentRepo.countByUser(user);
+		System.out.println(boardMappings);
 		if (sessionRepo.findByUser(user) != null) {
 			PersonpageDTO mypageDTO = PersonpageDTO.builder().Editor(true).countBoard(countBoard).countComment(countComment)
-					.boardDTOs(boardMappings).build();
+					.boards(boardMappings).build();
 			return mypageDTO;
 		} else {
 			PersonpageDTO mypageDTO = PersonpageDTO.builder().Editor(false).countBoard(countBoard).countComment(countComment)
-					.boardDTOs(boardMappings).build();
+					.boards(boardMappings).build();
 			return mypageDTO;
 		}
 

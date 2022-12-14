@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
-import com.spring.back.dto.BoardstatusDTO;
 import com.spring.back.dto.PersonpageDTO;
 import com.spring.back.dto.SessionDTO;
 
@@ -19,7 +18,7 @@ public interface BoardService {
 	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest);
 
 	// [특정 게시글 불러오기]
-	public BoardstatusDTO getBoardByBoardNo(String sessionId, Long boardNo);
+	public BoardDTO getBoardByBoardNo(String sessionId, Long boardNo);
 	
 	// [수정 전 게시글 불러오기]
 	public BoardDTO findBoardByBoardNo(Long boardNo);

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
-import com.spring.back.dto.BoardstatusDTO;
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.service.BoardServiceImpl;
 import com.spring.back.service.FileServiceImpl;
@@ -54,7 +53,7 @@ public class BoardController {
 	 * 설명1 : boardNo에 해당하는 board 가져오기
 	 */
 	@GetMapping("/board/{boardNo}")
-	public BoardstatusDTO findBoard(@RequestParam String SessionId, @PathVariable Long boardNo) {
+	public BoardDTO findBoard(@RequestParam String SessionId, @PathVariable Long boardNo) {
 		return boardService.getBoardByBoardNo(SessionId,boardNo);
 	}
 	

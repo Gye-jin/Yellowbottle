@@ -15,11 +15,6 @@ import com.spring.back.repository.mapping.BoardMapping;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 	
-	/* [Board 저장]
-	 * 출력 : board entity 객체
-	 */
-	public Board save(Board board);
-	
 	// [user에 해당하는 BoardMapping 가져오기]
 	public ArrayList<BoardMapping> findByUser(User user);
 	

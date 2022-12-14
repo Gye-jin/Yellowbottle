@@ -11,8 +11,6 @@ import com.spring.back.content.ContentCategory;
 import com.spring.back.entity.Content;
 
 public interface ContentRepository extends JpaRepository<Content, Long>{
-	// Content객체를 저장 후 반환
-	public Content save(Content content);
 	
 	public Content findByContentNo(Long contentNo);
 	
