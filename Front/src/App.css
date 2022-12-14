@@ -185,6 +185,7 @@
 }
 /* board 전체 틀 */
 .board {
+  min-width: 700px;
   background-color: white;
   max-width: 700px;
   border: 1px solid lightgray;

@@ -109,7 +109,7 @@ export const SendCertiNumAPI = async (email, userId, birth, setCertiNum) => {
     })
     // 백에서 해당 유저가 있다는 확인을 한다면 인증번호를 백에서 설정한다.
     .then((response) => {
-      returnCertiNum = response.data;
+      const returnCertiNum = response.data;
       setCertiNum(returnCertiNum);
     })
     // 에러가 있다면 리턴값을 0으로 설정한다.
@@ -135,7 +135,7 @@ export function ForSendCertiNum(userId, email, birth, setCertiNum) {
         sessionStorage.clear();
         //  만약 반응이 0이 아니라면 인증번호, 세션 발급
         alert("인증번호가 발송되었습니다.");
-        sessionStorage.setItem("Id", userId);
+        sessionStorage.setItem("userId", userId);
         sessionStorage.setItem("birth", birth);
         sessionStorage.setItem("email", email);
       } else {
@@ -155,7 +155,7 @@ export const passResetPw = async (inputNum) => {
     // 백에 입력한 인증번호와 userSession을 request한다.
     .get("http://localhost:8080/api/checkCertifiedNo", {
       params: {
-        sessionId: sessionStorage.getItem("Id"),
+        userId: sessionStorage.getItem("userId"),
         certifiedNo: inputNum,
       },
     })
@@ -163,7 +163,6 @@ export const passResetPw = async (inputNum) => {
     .then((response) => {
       console.log(response, "인증번호 인증 성공!");
       // 인증번호 인증에 성공하면 이메일 발송시 발급받은 세션값 전체 삭제!
-      sessionStorage.clear();
       alert("비밀번호변경 페이지로 이동합니다.😚");
       window.location.href = "/resetPw";
     })
@@ -210,7 +209,7 @@ export function ForResetPwPost(password, setRegisterError) {
     await axios
       // 백에 userId와 userPw를 전송한다.
       .post("http://localhost:8080/api/updatePw", {
-        sessionId: sessionStorage.getItem("Id"),
+        userId: sessionStorage.getItem("userId"),
         userPw: password,
       })
       // 백에서 반응(response)가 정상적으로 오면 성공메세지와 함께 로그인 페이지로 이동
@@ -218,6 +217,7 @@ export function ForResetPwPost(password, setRegisterError) {
         // 비밀번호가 정상적으로 변경되면 세션이 clear된다.
         // sessionStorage.clear();
         console.log(response, "비밀번호 변경 성공");
+        sessionStorage.clear();
         alert("비밀번호 변경에 성공하셨습니다!😁");
         window.location.href = "/login";
       })

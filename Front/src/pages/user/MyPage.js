@@ -1,32 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/header/Header";
-import { myPageFetchData } from "../../Api/UserData";
+import { myAllData, myPageFetchData } from "../../Api/UserData";
+import { useNavigate } from "react-router-dom";
 
 function MyPage() {
-  // 백에서 보내준 데이터를 담아둘 공간 : 해당 유저가 올린 게시물, 댓글수 ...
-  const [myBoard, setMyBoard] = useState([]);
+  // 백에서 보내준 유저의 useId를 저장할 공간
+  const [myUserId, setMyUserId] = useState("");
+  // 해당 userId가 올린 댓글,게시글,에디터 관련 정보를 저장할 공간
+  const [myPageData, setMyPageData] = useState([]);
   // 사용자의 세션값
   const userSession = sessionStorage.getItem("sessionId");
-  // 사용자 세션값에 따라 마이페이지 변경
-  // const userId = useParams().userSession;
+  // 이동시켜주는 함수
   const navigate = useNavigate();
 
-  // userId의 세션값에 따른 user의 마이페이지 데이터를 백에서 받아오는 함수
+  // 첫 렌더링시 userId의 세션값에 따른 user의 userId를 받아오는 함수
   useEffect(() => {
-    const response = myPageFetchData(userSession);
-    response.then((data) => setMyBoard(data));
+    myPageFetchData(userSession, setMyUserId);
   }, []);
-  console.log(myBoard);
+  // myUserId가 바뀔때마다 해당 userId가 올린 게시물과 댓글 정보를 불러오는 함수
+  useEffect(() => {
+    const response = myAllData(myUserId);
+    response.then((data) => setMyPageData(data));
+  }, [myUserId]);
+
+  // console.log("myUserId ::", myUserId);
+  // console.log("myPageData ::", myPageData);
   return (
     <>
       <Header />
       <div>
-        <ul>
-          <h3>댓글수 :{myBoard.countComment}</h3>
-          <h4>게시글 수 :{myBoard.countBoard}</h4>
-          {/* {myBoard.fileDTOs} */}
-        </ul>
+        <h1>{myUserId}</h1>
+        <div>댓글수 :{myPageData.countComment}</div>
+        <div>게시글 수 :{myPageData.countBoard}</div>
+        <button>회원정보수정</button>
+        {/* 해당유저가 올린 게시물사진 모두 보여주는 함수 */}
+        {myPageData.boards &&
+          myPageData.boards.map((board) => (
+            <img
+              key={board.boardNo}
+              className="myPage_Image"
+              src={`${board.filePath + board.fileName}`}
+              alt="myPageImage"
+              // 이미지 클릭시 해당 게시물의 상세보기로 넘어감
+              onClick={() => navigate(`/DetailBoard/${board.boardNo}`)}
+            />
+          ))}
       </div>
     </>
   );
