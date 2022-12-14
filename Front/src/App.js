@@ -15,6 +15,7 @@ import AdminLogPage from "./pages/AdminLogPage";
 import Boards from "./components/Board";
 import DetailBoard from "./pages/DetailBoard";
 import AdminMailPage from "./pages/AdminMailPage";
+import RecommendBoard from "./pages/RecommendBoard";
 
 function App() {
   return (
@@ -23,17 +24,17 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
-        <Route path="/feed" element={<Feed />} />
-        <Route path="/DetailBoard/:boardNo" element={<DetailBoard />} />
         <Route path="/findId" element={<FindId />} />
         <Route path="/findPw" element={<FindPw />} />
         <Route path="/resetPw" element={<ResetPw />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/DetailBoard/:boardNo" element={<DetailBoard />} />
+        <Route path="/recommendBoard/:boardNo" element={<RecommendBoard />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/boardWrite" element={<BoardWrite />} />
         <Route path="/adminLogPage" element={<AdminLogPage />} />
         <Route path="/adminMailPage" element={<AdminMailPage />} />
-        <Route path="/boards" element={<Boards />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

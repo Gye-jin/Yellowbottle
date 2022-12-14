@@ -1,34 +1,53 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-import { DetailBoardFetchData } from "../Api/DetailBoardData";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate, useParams } from "react-router-dom";
+import { recommendBoardFetchData } from "../Api/BoardData";
 
-const DetailBoard = () => {
-  const [board, setBoard] = useState([]);
+const RecommendBoard = () => {
+  // 파라미터를 활용하여 boardNo 받기
   const boardNo = useParams().boardNo;
+
+  // 추천 게시글
+  const [boards, setBoards] = useState([]);
+  const [viewBoard, setViewBoard] = useState([]);
+  const [recommendNo, setRecommendNo] = useState(0);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const response = DetailBoardFetchData(boardNo);
-    response.then((data) => setBoard(data));
+    const response = recommendBoardFetchData(boardNo);
+    response.then((data) => {
+      setBoards(data);
+      setViewBoard(data[recommendNo]);
+    });
   }, []);
-  console.log(board);
+
+  function plusRecommendNo(changeRecommendNo) {
+    if (changeRecommendNo >= 0 && changeRecommendNo <= 2) {
+      setRecommendNo(changeRecommendNo);
+      setViewBoard(boards[changeRecommendNo]);
+    } else if (changeRecommendNo < 0) {
+      navigate(`/DetailBoard/${boardNo}`);
+    }
+  }
+
   return (
     <>
       <Header />
       <div>
         <ul>
           {/* 삼항연산자로 board가 있을때 출력되도록 함. */}
-          {board ? (
-            <div key={board.boardNo}>
+          {viewBoard ? (
+            <div key={viewBoard.boardNo}>
               <div className="board">
-                <h3>{board.userId}</h3>
+                <h3>{viewBoard.userId}</h3>
                 {/* 이미지 출력 */}
                 {/* React는 렌더링이 화면에 커밋된 후에 모든 효과를 실행한다. 
                     즉, 데이터가 들어오기 전에 board.fileDTO.map을 실행시키며 이 데이터는 undefined로 나온다. */}
                 {/* 따라서 true && expression(false면 null)을 설정해서 앞에 값들이 들어오면 그때 expression을 실행시키게 하면된다! */}
-                {board.fileDTOs &&
-                  board.fileDTOs.map((fileDTO) => (
+                {viewBoard.fileDTOs &&
+                  viewBoard.fileDTOs.map((fileDTO) => (
                     <img
                       // React 라이브러리는 컴포넌트와 DOM요소 간의 관계를 이용해 리렌더링 여부를 결정한다.
                       //따라서 불필요한 리렌더링을 방지하기 위해 각 자식 컴포넌트마다 독립적인 Key값을 넣어줘야한다.
@@ -45,24 +64,31 @@ const DetailBoard = () => {
                 <div>
                   <h3>
                     <span>
-                      {board.likeCount}
+                      {viewBoard.likeCount}
                       <button>👍</button>
-                      {board.viewCount}
+                      {viewBoard.viewCount}
                     </span>
                   </h3>
                 </div>
               </div>
-              <div>{board.boardContent}</div>
-              <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
-                →
+              <div>{viewBoard.boardContent}</div>
+              <button onClick={() => plusRecommendNo(recommendNo - 1)}>
+                ←
               </button>
+              {recommendNo < 2 ? (
+                <button onClick={() => plusRecommendNo(recommendNo + 1)}>
+                  →
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
           ) : (
-            <></>
+            <h1>관련된 추천 게시글이 없습니다</h1>
           )}
         </ul>
       </div>
     </>
   );
 };
-export default DetailBoard;
+export default RecommendBoard;
