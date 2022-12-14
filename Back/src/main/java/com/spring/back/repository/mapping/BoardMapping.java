@@ -1,27 +1,31 @@
 package com.spring.back.repository.mapping;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public interface BoardMapping {
 	
+
 	// Element
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [BoardNo]
 	Long getboardNo();
-	
-	// [UserId]
-	List<UserId> getUser();
-
 	// [FileName]
-	List<FileName> getFiles();
+	@JsonIgnore
+	String getFilesFileName();
+	// [FilePath]
+	@JsonIgnore
+	String getFilesFilePath();
 	
-	// Interface
-	// --------------------------------------------------------------------------------------------------------------------------------
-	interface FileName {
-		String getFileName();
-	}
+    default String getFileName() { 
+        return getFilesFileName();
+        
+    }
+    default String getFilePath() {
+    	return getFilesFilePath();
+    	
+    }
 	
-	interface UserId {
-		String getUserId();
-	}
+
+
+    
 }

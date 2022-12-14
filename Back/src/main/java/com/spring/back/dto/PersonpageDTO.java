@@ -22,7 +22,7 @@ public class PersonpageDTO {
 	// 게시글 수
 	private Long countBoard;
 	// boardList
-	ArrayList<BoardMapping> boardDTOs;
+	ArrayList<BoardMapping> boards;
 	
 	
 }
