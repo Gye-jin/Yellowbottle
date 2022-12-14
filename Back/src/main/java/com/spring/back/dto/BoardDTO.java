@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.back.entity.Board;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 public class BoardDTO {
 	// Column
 	// --------------------------------------------------------------------------------------------------------------------------------
+	private boolean Editor;
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
@@ -32,12 +34,13 @@ public class BoardDTO {
 	// Join
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [File Join]
+
 	@OneToMany(fetch = FetchType.LAZY)
-	List<FileDTO> fileDTOs = new ArrayList<FileDTO>();
+	private List<FileDTO> files = new ArrayList<FileDTO>();
 	
 	// [Comment Join]
 	@OneToMany(fetch = FetchType.LAZY)
-	List<CommentDTO> commentDTOs = new ArrayList<CommentDTO>();
+	private List<CommentDTO> comments = new ArrayList<CommentDTO>();
 
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -52,4 +55,5 @@ public class BoardDTO {
 						   .build();
 		return board;
 	}
+	
 }

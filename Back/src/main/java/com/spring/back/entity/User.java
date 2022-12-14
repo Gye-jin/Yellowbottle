@@ -66,5 +66,9 @@ public class User {
 	public void updatePw(UserDTO userDTO) {
 		this.userPw = userDTO.getUserPw();
 	}
-
+	
+	// [updateId 변경()->세션에서 가져온 값]
+	public void updateId(String userId) {
+		this.userId = userId;
+	}
 }

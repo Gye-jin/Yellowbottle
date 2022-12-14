@@ -30,12 +30,12 @@ export default function HeaderLogin() {
     await axios
       // 백에 userId 세션을 보내서 확인되면 로그아웃 진행 오류는 경고창
       .post("http://localhost:8080/api/logout", {
-        userId: sessionStorage.getItem("userId"),
+        sessionId: sessionStorage.getItem("sessionId"),
       })
       .then((response) => {
         response.data
           ? // 백에서 정상적으로 처리되면 로그아웃 성공! 후 메인페이지로 이동
-            sessionStorage.removeItem("userId")((window.location.href = "/"))
+            sessionStorage.removeItem("sessionId")((window.location.href = "/"))
           : // 백에서 정상적으로 처리 실패시 로그아웃 실패!
             alert("🤘🏿😝😜🤘🏿" + " " + "로그아웃실패");
       });

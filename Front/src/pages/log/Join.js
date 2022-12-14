@@ -15,9 +15,9 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import Header from "../components/Header";
-import { duplicationCheck } from "../Api/JoinData";
-import ForPostJoinData from "../Api/JoinData";
+import Header from "../../components/header/Header";
+import { duplicationCheck } from "../../Api/LogData";
+import { ForPostJoinData } from "../../Api/LogData";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`

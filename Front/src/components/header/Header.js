@@ -29,7 +29,7 @@ export default function Header() {
   // session을 확인해 userId의 값에따라 Header부분을 변경함
   useEffect(() => {
     // userId 키를 이용해 세션을 찾음
-    const whoSession = sessionStorage.getItem("userId");
+    const whoSession = sessionStorage.getItem("sessionId");
     // 세션값이 없으면 비회원
     if (whoSession === null) {
       console.log("비회원입니당");

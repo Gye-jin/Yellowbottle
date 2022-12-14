@@ -11,9 +11,9 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import "../App.css";
-import Header from "../components/Header";
-import ForResetPwPost from "../Api/ResetPwData";
+import "../../App.css";
+import Header from "../../components/header/Header";
+import { ForResetPwPost } from "../../Api/LogData";
 
 // mui 기본 css 적용
 const FormHelperTexts = styled(FormHelperText)`
