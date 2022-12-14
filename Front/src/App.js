@@ -4,17 +4,18 @@ import { Route, Routes } from "react-router-dom";
 import Main from "./pages/main/Main.js";
 import Login from "./pages/log/Login.js";
 import Join from "./pages/log/Join.js";
-import Feed from "./pages/board/Feed.js";
-import NotFound from "./pages/etc/NotFound.js";
 import FindPw from "./pages/log/FindPw";
 import FindId from "./pages/log/FindId";
 import ResetPw from "./pages/log/ResetPw";
 import MyPage from "./pages/user/MyPage";
-import BoardWrite from "./pages/board/BoardWrite";
-import AdminLogPage from "./pages/admin/AdminLogPage";
-import DetailBoard from "./pages/board/DetailBoard";
-import AdminMailPage from "./pages/admin/AdminMailPage";
 import AnotherUserPage from "./pages/user/AnotherUserPage";
+import Feed from "./pages/board/Feed.js";
+import BoardWrite from "./pages/board/BoardWrite";
+import DetailBoard from "./pages/board/DetailBoard";
+import RecommendBoard from "./pages/board/RecommendBoard";
+import AdminLogPage from "./pages/admin/AdminLogPage";
+import AdminMailPage from "./pages/admin/AdminMailPage";
+import NotFound from "./pages/etc/NotFound.js";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/feed" element={<Feed />} />
         <Route path="/boardWrite" element={<BoardWrite />} />
         <Route path="/DetailBoard/:boardNo" element={<DetailBoard />} />
+        <Route path="/recommendBoard/:boardNo" element={<RecommendBoard />} />
         {/* userPage : 마이페이지, 타유저페이지 */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/anotherUserPage" element={<AnotherUserPage />} />

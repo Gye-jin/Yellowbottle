@@ -10,12 +10,14 @@ export const boardFetchData = async (pageNo) => {
   return response.data;
 };
 
-// 게시물 10개씩 피드에 가져오는 함수
+// 추천게시물 3개 가져오는 함수
 export const recommendBoardFetchData = async (boardNo) => {
   // boardNo에 해당하는 recommendBoard 3개 가져오기
   const response = await axios.get(
     `http://localhost:8080/api/recomendBoard/${boardNo}`
   );
+  return response.data;
+};
 // 페이지 넘버 변경해주는 함수
 export const fetchMoreFeedBoard = async (
   setFetching,
@@ -71,8 +73,9 @@ export function ForPostBoardWrite(boardWriteData) {
 // 특정 게시글 데이터 불러오는 함수
 export const DetailBoardFetchData = async (boardNo) => {
   // 전체 게시물(ID)보기 _피드게시물넘버에 맞게 가져오기.
+  const sessionId = sessionStorage.getItem("sessionId");
   const response = await axios.get(
-    `http://localhost:8080/api/board/${boardNo}`
+    `http://localhost:8080/api/board/${boardNo}?SessionId=${sessionId}`
   );
 
   return response.data;
