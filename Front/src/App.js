@@ -7,8 +7,7 @@ import Join from "./pages/log/Join.js";
 import FindPw from "./pages/log/FindPw";
 import FindId from "./pages/log/FindId";
 import ResetPw from "./pages/log/ResetPw";
-import MyPage from "./pages/user/MyPage";
-import AnotherUserPage from "./pages/user/AnotherUserPage";
+import PersonPage from "./pages/user/PersonPage";
 import Feed from "./pages/board/Feed.js";
 import BoardWrite from "./pages/board/BoardWrite";
 import DetailBoard from "./pages/board/DetailBoard";
@@ -37,8 +36,7 @@ function App() {
         <Route path="/recommendBoard/:boardNo" element={<RecommendBoard />} />
         <Route path="/updateBoard/:boardNo" element={<UpdateBoard />} />
         {/* userPage : 마이페이지, 타유저페이지 */}
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/anotherUserPage" element={<AnotherUserPage />} />
+        <Route path="/personPage/:userId" element={<PersonPage />} />
         {/* adminPage : 관리자로그페이지, 관리자메신저페이지 */}
         <Route path="/adminLogPage" element={<AdminLogPage />} />
         <Route path="/adminMailPage" element={<AdminMailPage />} />

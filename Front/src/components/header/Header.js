@@ -70,17 +70,17 @@ export default function Header() {
               />
             </IconButton>
             <Typography
-              onClick={() => navigate("/Feed")}
+              onClick={() => navigate("/feed")}
               variant="h6"
               component="div"
               sx={{ flexGrow: 1 }}
             >
               실천내용
             </Typography>
-            <Button color="inherit" onClick={() => navigate("/Login")}>
+            <Button color="inherit" onClick={() => navigate("/login")}>
               로그인
             </Button>
-            <Button color="inherit" onClick={() => navigate("/Join")}>
+            <Button color="inherit" onClick={() => navigate("/join")}>
               회원가입
             </Button>
           </Toolbar>

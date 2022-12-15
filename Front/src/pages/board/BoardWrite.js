@@ -58,7 +58,7 @@ function BoardWrite() {
     boardWriteData.append("image", selectImage);
     // 입력된 값들을 boardWriteData에 넣는다.
     console.log("boardWriteData :: ", boardWriteData);
-    ForPostBoardWrite(boardWriteData, setClusterData);
+    ForPostBoardWrite(boardWriteData, setClusterData, clusterData);
   };
 
   // useEffect 설정 :: 백에서 보드를 보내준다. 이중 boardNo와 boardContent를 장고에 (카톡에 있는 URL값으로) 포스트해서 보내준다. 이에 대한 키값은 한번 더 살펴보자!

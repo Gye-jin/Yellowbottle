@@ -25,14 +25,10 @@ const DetailBoard = () => {
         {board ? (
           <div key={board.boardNo}>
             <div className="board">
-              <div>
-                <span>{board.userId}</span>
-                {board.editor ? (
-                  <button onClick={updateBoard}>수정하기</button>
-                ) : (
-                  <></>
-                )}
-              </div>
+              {/* userId 클릭시 해당 유저의 마이페이지로 이동 */}
+              <h3 onClick={() => navigate(`/personPage/${board.userId}`)}>
+                {board.userId}
+              </h3>
               {board.files &&
                 board.files.map((file) => (
                   <img
@@ -54,10 +50,21 @@ const DetailBoard = () => {
             {board.comments &&
               board.comments.map((comment) => (
                 <div>
-                  <span>{comment.userId} - </span>
+                  <span
+                    onClick={() => navigate(`/personPage/${comment.userId}`)}
+                  >
+                    {comment.userId} -{" "}
+                  </span>
                   <span>{comment.commentContent}</span>
+                  {/* 게시글 작성자이면 댓글마다 삭제하기 버튼이 보임 */}
+                  {board.editor ? <button>삭제</button> : ""}
                 </div>
               ))}
+            {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
+            {board.editor ? <button>수정하기</button> : ""}
+            {board.editor ? <button>삭제하기</button> : ""}
+            <br />
+            {/* 버튼을 누르면 추천게시물이 나온다. */}
             <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
               →
             </button>

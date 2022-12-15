@@ -148,14 +148,14 @@ const Login = () => {
             {/* 아이디찾기 버튼을 누를경우 해당 페이지로 이동한다. */}
             <Button
               className="loginPage-findId"
-              onClick={() => navigate("/FindId")}
+              onClick={() => navigate("/findId")}
             >
               아이디찾기
             </Button>
             {/* 비밀번호찾기 버튼을 누를경우 해당 페이지로 이동한다. */}
             <Button
               className="loginPage-findPw"
-              onClick={() => navigate("/FindPw")}
+              onClick={() => navigate("/findPw")}
             >
               비밀번호찾기
             </Button>
@@ -163,7 +163,7 @@ const Login = () => {
             {/* 회원가입 버튼을 누를경우 해당 페이지로 이동한다. */}
             <Button
               className="loginPage-join"
-              onClick={() => navigate("/Join")}
+              onClick={() => navigate("/join")}
             >
               회원가입
             </Button>
