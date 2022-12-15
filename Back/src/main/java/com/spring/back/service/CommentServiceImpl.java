@@ -6,14 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.back.dto.CommentDTO;
-import com.spring.back.dto.SessionDTO;
 import com.spring.back.entity.Board;
 import com.spring.back.entity.Comment;
-import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
 import com.spring.back.repository.CommentRepository;
-import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -30,25 +27,18 @@ public class CommentServiceImpl implements CommentService {
 	BoardRepository boardRepo;
 	@Autowired
 	UserRepository userRepo;
-	@Autowired
-	SessionRepository sessionRepo;
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [댓글 작성]
 	@Override
-	public CommentDTO insertComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
-		// DTO to Entity
+	public CommentDTO insertComment(CommentDTO commentDTO) {
 		Comment comment = CommentDTO.commentDtoToEntity(commentDTO);
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		
-		// userId 가져오기
-		String userId = session.getUser().getUserId();
-		
+
 		// 빌더에서 빠져있는 board채우기
 		comment.boardInComment(boardRepo.findById(commentDTO.getBoardNo()).orElseThrow(NoSuchElementException::new));
 		// 빌더에서 빠져있는 user채우기
-		comment.userInComment(userRepo.findById(userId).orElseThrow(NoSuchElementException::new));
+		comment.userInComment(userRepo.findById(commentDTO.getUserId()).orElseThrow(NoSuchElementException::new));
 
 		Long commentNo = commentRepo.save(comment).getCommentNo();
 

@@ -27,6 +27,7 @@ import com.spring.back.service.FileServiceImpl;
 @RequestMapping(value = "/api", produces = "application/json")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class BoardController {
+	private static final String SessionId = null;
 	// Connection
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [Service]
@@ -39,7 +40,7 @@ public class BoardController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 작성]
 	@PostMapping("/board")
-	public Long createBoard(@ModelAttribute SessionDTO sessionDTO, BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
+	public Long createBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("image") List<MultipartFile> files) {
 		// 게시글 삽입 후 게시글 번호 가져오기
 		Long boardNo = boardService.insertBoard(sessionDTO, boardDTO);
 		// 해당하는 게시글 번호에 맞춰 파일과 태그 DB에 삽입

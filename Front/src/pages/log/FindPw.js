@@ -19,19 +19,26 @@ const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
 
+// 비밀번호 찾기 페이지
 const FindPw = () => {
   // mui 테마
   const theme = createTheme();
-  // 아이디
+  // 아이디, 생년월일, 이메일
   const [userId, setUserId] = useState("");
-  // 생년월일
   const [birth, setBirth] = useState("");
-  // 이메일
   const [email, setEmail] = useState("");
-  // 입력된 인증 번호
+  // 인증 번호
   const [inputNum, setinputNum] = useState("");
   // 백에서 받은 인증번호
   const [certiNum, setCertiNum] = useState("");
+  // 오류메세지(아이디, 생년월일, 이메일)
+  const [userIdMessage, setUserIdMessage] = useState("");
+  const [birthMessage, setBirthMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  // 유효성검사(아이디, 생년월일, 이메일)
+  const [userIdError, setUserIdError] = useState("");
+  const [birthError, setBirthError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   // userId input값 바뀔 때마다 변하게 하는 함수
   const userIdHandler = (e) => {
@@ -134,6 +141,9 @@ const FindPw = () => {
                 </Grid>
               </Grid>
               {/* 비밀번호 변경 버튼을 누르면  */}
+              {/* click은 데이터를 클릭하는 것에서 그치지만, submit은 데이터를 통으로 보낸다.
+                또한, submit은 데이터를 받는 대상이 있어야만 제대로 작동한다.
+                따라서 방금처럼 데이터를 받는 대상 없을 때는 submit을 쓸 수 없다. */}
               <Button
                 type="button"
                 fullWidth

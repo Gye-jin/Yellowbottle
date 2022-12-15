@@ -22,7 +22,7 @@ export default function HeaderLogin() {
   // navigate(이동)하는 함수
   const navigate = useNavigate();
 
-  const isLogin = props.isLogin;
+  // const isLogin = props.isLogin;
 
   // 로그아웃 함수
   const onLogout = async () => {

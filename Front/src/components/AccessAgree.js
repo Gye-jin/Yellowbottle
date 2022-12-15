@@ -1,5 +1,3 @@
-import React from "react";
-
 // 게시글 작성 버튼을 눌렀을때 작동하는 함수: 회원은 게시글 작성페이지로, 비회원은 로그인 페이지로 이동
 export const AccessAgreeBoardWrite = () => {
   sessionStorage.getItem("sessionId") !== null

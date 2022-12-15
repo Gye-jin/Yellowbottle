@@ -15,7 +15,7 @@ const slides = [
 export default function ScrollMain() {
   const [imagesNavSlider, setImagesNavSlider] = useState(null);
   return (
-    <div className="Scroll">
+    <div className="ScrollMain">
       <section className="slider">
         <div className="slider__flex">
           <div className="slider__images">
