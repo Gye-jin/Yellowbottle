@@ -17,7 +17,7 @@ import com.spring.back.service.MailServiceImpl;
 
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api", produces = "application/json")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class ContentController {
 	
@@ -33,7 +33,9 @@ public class ContentController {
 		
 		return mailservice.sendMail(FirstcontentNo,SecondcontentNo,ThirdcontentNo);
 	}
-	// 카테고리 불러오기
+
+	
+	// 카테고리 불러오기(10개씩)
 	// --------------------------------------------------------------------------------------------------------------------------------
 	@PostMapping(value = "/readCategory")
 	public List<ContentDTO> getByCategory(@RequestBody ContentDTO contentDTO) {

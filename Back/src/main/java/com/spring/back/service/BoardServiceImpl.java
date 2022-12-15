@@ -57,14 +57,20 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDTO insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO) {
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
 		Board board = BoardDTO.boardDtotoEntity(boardDTO);
-
 		// board에 user 직접 삽입하기
-		board.updateUser(userRepo.findByUserId(session.getUser().getUserId()));
+		board.updateUser(session.getUser());
+		System.out.println("업데이트");
 		
 		boardRepo.save(board);
-	
-		return  Board.TrueboardEntityToDTO(board);
-	}
+		
+		
+		
+		
+		return  BoardDTO.builder()
+				.boardContent(board.getBoardContent())
+				.boardNo(board.getBoardNo())
+				.build();
+}
 
 	// Read
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -72,7 +78,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest) {
 		return boardRepo.findAll(pageRequest).stream()
-				.map(board -> Board.FalseEntityToDTO(board))
+				.map(board -> Board.yourEntityToDTO(board))
 				.collect(Collectors.toList());
 	}
 
@@ -85,12 +91,13 @@ public class BoardServiceImpl implements BoardService {
 		Session session = sessionRepo.findBySessionId(sessionId);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateViewCount(board.getViewCount() + 1);
-	
+		System.out.println(board);
+		System.out.println(session);
 		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
-			BoardDTO boardDTO = Board.TrueboardEntityToDTO(board);
+			BoardDTO boardDTO = Board.myboardEntityToDTO(board);
 			return boardDTO;
 		} else {
-			BoardDTO boardDTO = Board.FalseEntityToDTO(board);
+			BoardDTO boardDTO = Board.yourEntityToDTO(board);
 			return boardDTO;
 		}
 		
@@ -102,7 +109,7 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public BoardDTO findBoardByBoardNo(Long boardNo) {
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
-		BoardDTO boardDTO = Board.FalseEntityToDTO(board);
+		BoardDTO boardDTO = Board.yourEntityToDTO(board);
 	
 			return boardDTO;
 			
@@ -116,7 +123,7 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDTO> findRecoBoard(Long boardNo) {
 		// 추천 게시글 불러오기
 		List<Board> recoBoard = boardRepo.findRecommendedBoardByBoardNo(boardNo);
-		List<BoardDTO> boardDTOs = recoBoard.stream().map(board -> Board.FalseEntityToDTO(board)).collect(Collectors.toList());
+		List<BoardDTO> boardDTOs = recoBoard.stream().map(board -> Board.yourEntityToDTO(board)).collect(Collectors.toList());
 		return boardDTOs;
 	}
 	
@@ -130,11 +137,11 @@ public class BoardServiceImpl implements BoardService {
 		Long countComment = commentRepo.countByUser(user);
 		System.out.println(boardMappings);
 		if (sessionRepo.findByUser(user) != null) {
-			PersonpageDTO mypageDTO = PersonpageDTO.builder().Editor(true).countBoard(countBoard).countComment(countComment)
+			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(true).countBoard(countBoard).countComment(countComment)
 					.boards(boardMappings).build();
 			return mypageDTO;
 		} else {
-			PersonpageDTO mypageDTO = PersonpageDTO.builder().Editor(false).countBoard(countBoard).countComment(countComment)
+			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(false).countBoard(countBoard).countComment(countComment)
 					.boards(boardMappings).build();
 			return mypageDTO;
 		}
@@ -151,7 +158,7 @@ public class BoardServiceImpl implements BoardService {
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
 		if(board.getUser().equals(session.getUser())) {
 			board.updateBoard(newboardDTO);
-			BoardDTO boardDTO = Board.FalseEntityToDTO(board);
+			BoardDTO boardDTO = Board.yourEntityToDTO(board);
 			// 기존 File 삭제
 			fileService.deleteFileBoardNo(boardDTO.getBoardNo());
 			// 새로운 File 추가
@@ -167,7 +174,7 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDTO updateLikeCount(Long boardNo) {
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateLikeCount(board.getLikeCount()+1);
-		BoardDTO boardDTO = Board.FalseEntityToDTO(board);
+		BoardDTO boardDTO = Board.yourEntityToDTO(board);
 		return boardDTO;
 	}
 

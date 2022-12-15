@@ -19,7 +19,7 @@ import com.spring.back.service.CertifiedServiceImpl;
 import com.spring.back.service.UserServiceImpl;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api", produces = "application/json")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class UserController {
 	// Connection

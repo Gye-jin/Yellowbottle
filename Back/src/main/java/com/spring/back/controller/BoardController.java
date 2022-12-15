@@ -39,11 +39,12 @@ public class BoardController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 작성]
 	@PostMapping("/board")
-	public BoardDTO createBoard(@ModelAttribute SessionDTO sessionDTO, @ModelAttribute BoardDTO boardDTO, @RequestParam("images") List<MultipartFile> images) {
+	public BoardDTO createBoard(@ModelAttribute SessionDTO sessionDTO, @ModelAttribute BoardDTO boardDTO, @RequestParam("image") List<MultipartFile> images) {
 		// 게시글 삽입 후 게시글 번호 가져오기
 		BoardDTO board=boardService.insertBoard(sessionDTO, boardDTO);
 		// 해당하는 게시글 번호에 맞춰 파일과 태그 DB에 삽입
 		fileService.uploadFile(board.getBoardNo(), images);
+	
 		return board;
 	}
 
@@ -53,8 +54,9 @@ public class BoardController {
 	 * 설명1 : boardNo에 해당하는 board 가져오기
 	 */
 	@GetMapping("/board/{boardNo}")
-	public BoardDTO findBoard(@RequestParam String SessionId, @PathVariable Long boardNo) {
-		return boardService.getBoardByBoardNo(SessionId,boardNo);
+	public BoardDTO findBoard(@RequestParam String sessionId, @PathVariable Long boardNo) {
+		System.out.println(sessionId);
+		return boardService.getBoardByBoardNo(sessionId,boardNo);
 	}
 	
 	/* [(세부 게시글 확인 전용)특정 게시글 불러오기]
@@ -93,9 +95,9 @@ public class BoardController {
 	// 설명 : 수정한 게시글 내용으로 게시글 업데이트
 	// click : 게시글 수정 완료
 	@PostMapping(value = "/boardupdate")
-	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
+	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("images") List<MultipartFile> images) {
 	
-		return boardService.updateBoard(sessionDTO,boardDTO, files);
+		return boardService.updateBoard(sessionDTO,boardDTO, images);
 	}
 	
 	// [추천]
