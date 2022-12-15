@@ -27,12 +27,19 @@ public class CommentController {
 	public CommentDTO insertComment(@RequestBody CommentDTO commentDTO) {
 		return commentService.insertComment(commentDTO);
 	}
-	
+	// Update
+	// --------------------------------------------------------------------------------------------------------------------------------
+//	// [수정할 댓글 불러오기]
+//	@PostMapping(value = "/getUpdateComment")
+//	public CommentDTO getUpdateComment(@RequestBody CommentDTO commentDTO) {
+//		return commentService.getOldComment(commentDTO);
+//	}
+//	
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [수정할 댓글 불러오기]
 	@PostMapping(value = "/getUpdateComment")
-	public CommentDTO getUpdateComment(@RequestBody CommentDTO commentDTO) {
+	public CommentDTO findComment(@RequestBody CommentDTO commentDTO) {
 		return commentService.getOldComment(commentDTO);
 	}
 	

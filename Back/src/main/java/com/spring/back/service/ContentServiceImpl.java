@@ -1,10 +1,13 @@
 package com.spring.back.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.content.ContentCategory;
 import com.spring.back.dto.ContentDTO;
 import com.spring.back.entity.Content;
 import com.spring.back.repository.ContentRepository;
@@ -36,18 +39,32 @@ public class ContentServiceImpl implements ContentService {
 		return newContentDTO;
 	}
 
+	// Read Category
+	// --------------------------------------------------------------------------------------------------------------------------------
+	// [카테고리 가져오기]
+	@Override
+	public List<ContentDTO> getByCategory(ContentDTO contentDTO) {
+		ContentCategory contentCategory = contentDTO.getContentCategory();
+
+		List<Content> contents = contentRepo.findByContentCategory(contentCategory);
+
+		List<ContentDTO> contentDTOs = contents.stream().map(content -> Content.contentEntityToDTO(content)).collect(Collectors.toList());
+		return contentDTOs;
+
+	}
+	
 	// Read
 	// --------------------------------------------------------------------------------------------------------------------------------
-	// [(수정용)컨텐츠 가져오기]
+	// [컨텐츠 가져오기]
 	@Override
-	public ContentDTO getOldContent(ContentDTO contentDTO) {
+	public ContentDTO getContent(ContentDTO contentDTO) {
 		Long contentNo = contentDTO.getContentNo();
-
+		
 		Content content = contentRepo.findById(contentNo).orElseThrow(NoSuchElementException::new);
-
+		
 		ContentDTO oldContentDTO = Content.contentEntityToDTO(content);
 		return oldContentDTO;
-
+		
 	}
 
 	// Update

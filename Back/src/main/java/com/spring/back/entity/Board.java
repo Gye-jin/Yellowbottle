@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -68,12 +67,12 @@ public class Board {
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
 //	추후 : @BatchSize 전략 사용
-	List<File> files = new ArrayList<File>();
+	private List<File> files = new ArrayList<File>();
 	
 	// [Comment Join]
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
-	List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
 	
 
 	
@@ -82,20 +81,41 @@ public class Board {
 	// DtoToEntity
 	public static BoardDTO boardEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
+									.Editor(false)
 									.boardNo(board.getBoardNo())
 									.userId(board.getUser().getUserId())
 									.boardContent(board.getBoardContent())
 									.likeCount(board.getLikeCount())
 									.createDate(board.getWrittenDate())
 									.viewCount(board.getViewCount())
-									.fileDTOs(board.getFiles().stream()
+									.files(board.getFiles().stream()
 											  .map(file -> File.entotyToDTO(file))
 										      .collect(Collectors.toList()))
-									.commentDTOs(board.getComments().stream()
+									.comments(board.getComments().stream()
 											  .map(comment -> Comment.commentEntityToDTO(comment))
 											  .collect(Collectors.toList()))
 									.modifiedDate(board.getModifiedDate())
 									.build();
+		return boardDTO;
+	}
+	
+	public static BoardDTO StatusboardEntityToDTO (Board board) {
+		BoardDTO boardDTO = BoardDTO.builder()
+				.Editor(true)
+				.boardNo(board.getBoardNo())
+				.userId(board.getUser().getUserId())
+				.boardContent(board.getBoardContent())
+				.likeCount(board.getLikeCount())
+				.createDate(board.getWrittenDate())
+				.viewCount(board.getViewCount())
+				.files(board.getFiles().stream()
+						.map(file -> File.entotyToDTO(file))
+						.collect(Collectors.toList()))
+				.comments(board.getComments().stream()
+						.map(comment -> Comment.commentEntityToDTO(comment))
+						.collect(Collectors.toList()))
+				.modifiedDate(board.getModifiedDate())
+				.build();
 		return boardDTO;
 	}
 	

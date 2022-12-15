@@ -1,5 +1,6 @@
 package com.spring.back.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SessionDTO {
+public class BoardstatusDTO {
+	// 내 게시글 여부
+	private boolean Editor;
 	
-	private String sessionId;
-	
-	private String userId;
+	// board
+	private BoardDTO board;
 }

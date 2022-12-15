@@ -34,4 +34,10 @@ public class SessionServiceImpl implements SessionService{
 	public Session findByUser(User user) {
 		return sessionRepo.findByUser(user);
 	}
+	
+	@Override
+	public String findBySessionId(String sessionId) {
+		Session session=sessionRepo.findBySessionId(sessionId);
+		return session.getUser().getUserId();
+	}
 }

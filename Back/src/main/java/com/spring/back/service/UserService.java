@@ -2,6 +2,7 @@ package com.spring.back.service;
 
 import javax.servlet.http.HttpSession;
 
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
 
 public interface UserService {
@@ -28,7 +29,7 @@ public interface UserService {
 	public boolean updatePw(UserDTO userDTO);
 
 	// [회원정보 수정]
-	public UserDTO updateUserInfo(UserDTO newUserDTO);
+	public UserDTO updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO);
 	
 	// [회원 탈퇴]
 	public boolean deleteUser(String userId, String userPw);
