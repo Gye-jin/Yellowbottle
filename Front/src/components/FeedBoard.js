@@ -75,7 +75,7 @@ const FeedBoard = () => {
                             src={`${file.filePath + file.fileName}`}
                             alt="boardimage"
                             onClick={() =>
-                              navigate(`/DetailBoard/${board.boardNo}`)
+                              navigate(`/detailBoard/${board.boardNo}`)
                             }
                           />
                         ))}
