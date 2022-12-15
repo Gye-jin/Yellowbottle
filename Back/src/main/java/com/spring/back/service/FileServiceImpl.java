@@ -46,7 +46,7 @@ public class FileServiceImpl implements FileService {
 	public void uploadFile(Long boardNo, List<MultipartFile> files) {
 		// files객체 분해 후 DB 삽입
 		for (MultipartFile file : files) {
-
+			System.out.println("---");
 			try {
 				// bloInfo라는 객체를 통해서 
 				BlobInfo blobInfo = storage.create(

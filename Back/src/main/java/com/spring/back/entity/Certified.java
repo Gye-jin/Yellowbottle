@@ -34,8 +34,8 @@ public class Certified {
 	
 	// certifiedDTO
 	public static CertifiedDTO certifiedEntityToDTO(Certified certified) {
-		CertifiedDTO certifiedDTO = CertifiedDTO.builder().CertifiedNo(certified.getCertifiedNo())
-				.UserId(certified.getUser().getUserId()).build();
+		CertifiedDTO certifiedDTO = CertifiedDTO.builder().certifiedNo(certified.getCertifiedNo())
+				.userId(certified.getUser().getUserId()).build();
 		return certifiedDTO;
 	}
 }

@@ -18,6 +18,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class CommentDTO {
+	private boolean editor;
 	private Long commentNo;
 	private Long boardNo;
 	private String userId;

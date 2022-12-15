@@ -12,7 +12,12 @@ const DetailBoard = () => {
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
   }, []);
-  console.log(board);
+  console.log(board.editor);
+
+  const updateBoard = () => {
+    navigate(`/updateBoard/${boardNo}`);
+  };
+
   return (
     <>
       <Header />
@@ -20,7 +25,14 @@ const DetailBoard = () => {
         {board ? (
           <div key={board.boardNo}>
             <div className="board">
-              <h3>{board.userId}</h3>
+              <div>
+                <span>{board.userId}</span>
+                {board.editor ? (
+                  <button onClick={updateBoard}>수정하기</button>
+                ) : (
+                  <></>
+                )}
+              </div>
               {board.files &&
                 board.files.map((file) => (
                   <img
@@ -39,7 +51,6 @@ const DetailBoard = () => {
                 <div>{board.boardContent}</div>
               </div>
             </div>
-            {/* {console.log(board.comments)} */}
             {board.comments &&
               board.comments.map((comment) => (
                 <div>
