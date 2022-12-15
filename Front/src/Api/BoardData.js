@@ -44,7 +44,7 @@ export const recommendBoardFetchData = async (boardNo) => {
 
 // BoardWriteData
 // 게시글작성페이지에서 작성한 이미지파일, 게시글내용, 유저세션을 백에 보내는 함수
-export function ForPostBoardWrite(boardWriteData) {
+export function ForPostBoardWrite(boardWriteData, setClusterData) {
   const postBoardWrite = async (boardWriteData) => {
     // post
     await axios
@@ -58,8 +58,9 @@ export function ForPostBoardWrite(boardWriteData) {
         // 백에서 반응(response)이 정상적으로 온다면 성공
         console.log(response, "성공");
         alert("😍게시글 작성 성공😍");
-        // 로그인 성공시 메인화면으로 이동한다.
-        window.location.href = "/feed";
+        setClusterData(response.data);
+        // // 로그인 성공시 메인화면으로 이동한다.
+        // window.location.href = "/feed";
       })
       .catch(function (err) {
         // 백에서 오류(err)가 온다면 게시글 작성 실패
@@ -69,6 +70,22 @@ export function ForPostBoardWrite(boardWriteData) {
   };
   postBoardWrite(boardWriteData);
 }
+// 장고에 군집번호 추가하기위해 게시글번호와 게시글내용 보내는 함수
+export const addClusterNo = async (clusterData) => {
+  await axios
+    .post("http://43.200.193.64:8000/predict/", {
+      boardNo: clusterData.boardNo,
+      boardContent: clusterData.boardContent,
+    })
+    .then((res) => {
+      console.log("장고에 보내기 성공!!🦄", res);
+      // 로그인 성공시 메인화면으로 이동한다.
+      window.location.href = "/feed";
+    })
+    .catch((err) => {
+      console.log(err, "장고에 보낼 때 에러 발생!!👅");
+    });
+};
 
 // DetailBoardData
 // 특정 게시글 데이터 불러오는 함수
