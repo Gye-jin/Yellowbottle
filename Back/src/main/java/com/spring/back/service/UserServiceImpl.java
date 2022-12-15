@@ -151,8 +151,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public boolean deleteUser(String sessionId, String userPw) {
-//		System.out.println(userId + " - " + userPw);
-//		userRepo.deleteByUserIdAndUserPw(userId, userPw);
 		User userSession = sessionRepo.findBySessionId(sessionId).getUser();
 
 		if (userSession.getUserPw().equals(userPw)) {

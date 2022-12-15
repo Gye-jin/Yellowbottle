@@ -1,7 +1,6 @@
 package com.spring.back.entity;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -16,7 +15,6 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.CommentDTO;
 
 import lombok.AllArgsConstructor;

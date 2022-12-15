@@ -54,14 +54,16 @@ public class BoardServiceImpl implements BoardService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 작성]
 	@Override
-	public Long insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO) {
-		Session session = sessionRepo.findBySessionId(sessionDTO.getUserId());
+	public BoardDTO insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO) {
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
 		Board board = BoardDTO.boardDtotoEntity(boardDTO);
 
 		// board에 user 직접 삽입하기
 		board.updateUser(userRepo.findByUserId(session.getUser().getUserId()));
 		
-		return boardRepo.save(board).getBoardNo();
+		boardRepo.save(board);
+	
+		return  Board.TrueboardEntityToDTO(board);
 	}
 
 	// Read

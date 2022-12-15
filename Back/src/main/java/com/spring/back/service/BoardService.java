@@ -12,7 +12,7 @@ import com.spring.back.dto.SessionDTO;
 public interface BoardService {
 	
 	// [게시글 작성]
-	public Long insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO);
+	public BoardDTO insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO);
 
 	// [전체 게시글 불러오기]
 	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest);
