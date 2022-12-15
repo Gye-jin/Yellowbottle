@@ -2,12 +2,14 @@ package com.spring.back.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.back.dto.CommentDTO;
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.service.CommentServiceImpl;
 
 @RestController
@@ -24,8 +26,8 @@ public class CommentController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [댓글달기]
 	@PostMapping(value = "/insertComment")
-	public CommentDTO insertComment(@RequestBody CommentDTO commentDTO) {
-		return commentService.insertComment(commentDTO);
+	public CommentDTO insertComment(@ModelAttribute SessionDTO sessionDTO, @ModelAttribute CommentDTO commentDTO) {
+		return commentService.insertComment(sessionDTO, commentDTO);
 	}
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------

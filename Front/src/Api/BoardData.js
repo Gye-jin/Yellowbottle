@@ -10,14 +10,6 @@ export const boardFetchData = async (pageNo) => {
   return response.data;
 };
 
-// 추천게시물 3개 가져오는 함수
-export const recommendBoardFetchData = async (boardNo) => {
-  // boardNo에 해당하는 recommendBoard 3개 가져오기
-  const response = await axios.get(
-    `http://localhost:8080/api/recomendBoard/${boardNo}`
-  );
-  return response.data;
-};
 // 페이지 넘버 변경해주는 함수
 export const fetchMoreFeedBoard = async (
   setFetching,
@@ -39,6 +31,15 @@ export const fetchMoreFeedBoard = async (
       alert("비상 오류 발생!");
     });
   setFetching(false);
+};
+
+// 추천게시물 3개 가져오는 함수
+export const recommendBoardFetchData = async (boardNo) => {
+  // boardNo에 해당하는 recommendBoard 3개 가져오기
+  const response = await axios.get(
+    `http://localhost:8080/api/recomendBoard/${boardNo}`
+  );
+  return response.data;
 };
 
 // BoardWriteData
@@ -75,7 +76,7 @@ export const DetailBoardFetchData = async (boardNo) => {
   // 전체 게시물(ID)보기 _피드게시물넘버에 맞게 가져오기.
   const sessionId = sessionStorage.getItem("sessionId");
   const response = await axios.get(
-    `http://localhost:8080/api/board/${boardNo}?SessionId=${sessionId}`
+    `http://localhost:8080/api/board/${boardNo}?sessionId=${sessionId}`
   );
 
   return response.data;

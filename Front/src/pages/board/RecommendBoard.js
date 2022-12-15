@@ -27,8 +27,12 @@ const RecommendBoard = () => {
       setRecommendNo(changeRecommendNo);
       setViewBoard(boards[changeRecommendNo]);
     } else if (changeRecommendNo < 0) {
-      navigate(`/DetailBoard/${boardNo}`);
+      navigate(`/detailBoard/${boardNo}`);
     }
+  }
+
+  function backDetailBoard() {
+    navigate(`/detailBoard/${boardNo}`);
   }
 
   return (
@@ -83,7 +87,10 @@ const RecommendBoard = () => {
               )}
             </div>
           ) : (
-            <h1>관련된 추천 게시글이 없습니다</h1>
+            <>
+              <h1>관련된 추천 게시글이 없습니다</h1>
+              <button onClick={backDetailBoard}>돌아가기</button>
+            </>
           )}
         </ul>
       </div>

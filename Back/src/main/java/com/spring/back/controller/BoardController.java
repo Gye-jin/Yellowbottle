@@ -39,7 +39,7 @@ public class BoardController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 작성]
 	@PostMapping("/board")
-	public Long createBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
+	public Long createBoard(@ModelAttribute SessionDTO sessionDTO, BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
 		// 게시글 삽입 후 게시글 번호 가져오기
 		Long boardNo = boardService.insertBoard(sessionDTO, boardDTO);
 		// 해당하는 게시글 번호에 맞춰 파일과 태그 DB에 삽입
@@ -53,8 +53,8 @@ public class BoardController {
 	 * 설명1 : boardNo에 해당하는 board 가져오기
 	 */
 	@GetMapping("/board/{boardNo}")
-	public BoardDTO findBoard(@RequestParam String SessionId, @PathVariable Long boardNo) {
-		return boardService.getBoardByBoardNo(SessionId,boardNo);
+	public BoardDTO findBoard(@RequestParam String sessionId, @PathVariable Long boardNo) {
+		return boardService.getBoardByBoardNo(sessionId, boardNo);
 	}
 	
 	/* [(세부 게시글 확인 전용)특정 게시글 불러오기]
