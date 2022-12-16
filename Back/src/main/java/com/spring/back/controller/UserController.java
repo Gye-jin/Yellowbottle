@@ -80,6 +80,12 @@ public class UserController {
 		return userIds;
 	}
 	
+	// [회원정보 가져오기]
+	@PostMapping(value = "/readUserData")
+	public UserDTO findUserData(@RequestBody SessionDTO sessionDTO) {
+		return userService.findUserData(sessionDTO);
+	}
+	
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [비밀번호 변경]
