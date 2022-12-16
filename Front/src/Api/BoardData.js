@@ -104,7 +104,7 @@ export const DetailBoardFetchData = async (boardNo) => {
 };
 
 // 작성한 댓글 데이터 보내는 함수
-export const postComment = async (commentWriteData, boardNo) => {
+export const postComment = async (commentWriteData) => {
   await axios
     .post("http://localhost:8080/api/insertComment", commentWriteData)
     .then((response) => {

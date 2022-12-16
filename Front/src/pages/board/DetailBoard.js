@@ -27,7 +27,8 @@ const DetailBoard = () => {
     commentWriteData.append("sessionId", sessionId);
     commentWriteData.append("boardNo", boardNo);
     commentWriteData.append("commentContent", commentContent);
-    postComment(commentWriteData, boardNo);
+    postComment(commentWriteData);
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -51,6 +52,9 @@ const DetailBoard = () => {
               <h3 onClick={() => navigate(`/personPage/${board.userId}`)}>
                 {board.userId}
               </h3>
+              {board.editor ? <button>수정하기</button> : ""}
+              {board.editor ? <button>삭제하기</button> : ""}
+              <br />
               {board.files &&
                 board.files.map((file) => (
                   <img
@@ -93,9 +97,6 @@ const DetailBoard = () => {
             />
             <button onClick={createCommentData}>댓글작성</button>
             {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
-            {board.editor ? <button>수정하기</button> : ""}
-            {board.editor ? <button>삭제하기</button> : ""}
-            <br />
             {/* 버튼을 누르면 추천게시물이 나온다. */}
             <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
               →
