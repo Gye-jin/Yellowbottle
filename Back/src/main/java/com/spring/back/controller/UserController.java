@@ -6,8 +6,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,10 +94,18 @@ public class UserController {
 	public boolean updatePw(@RequestBody UserDTO userDTO) {
 		return userService.updatePw(userDTO);
 	}
-
+	
+	// [회원정보가져오기]
+	@PostMapping(value = "/readUserData")
+	public UserDTO findUser(@RequestBody SessionDTO sessionDTO) {
+		UserDTO userDTO = userService.findUserData(sessionDTO);
+		return userDTO;
+	}
+	
+	
 	// [회원정보 수정]
-	@PutMapping(value = "/updateUser")
-	public UserDTO updateUserInfo(@RequestBody SessionDTO sessionDTO, UserDTO userDTO) {
+	@PostMapping(value = "/updateUser")
+	public boolean updateUserInfo(@ModelAttribute SessionDTO sessionDTO, UserDTO userDTO) {
 		return userService.updateUserInfo(sessionDTO,userDTO);
 	}
 
@@ -105,7 +113,7 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [회원 탈퇴]
 	@PostMapping(value = "/deleteUser")
-	public boolean deleteUser(@RequestParam String sessionId, @RequestParam String userPw) {
-		return userService.deleteUser(sessionId, userPw);
+	public boolean deleteUser(@ModelAttribute SessionDTO sessionDTO,UserDTO userDTO) {
+		return userService.deleteUser(sessionDTO.getSessionId(), userDTO.getUserPw());
 	}
 }

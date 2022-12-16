@@ -27,6 +27,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 	 */
 	@Query(value = "SELECT * FROM board b\r\n" + 
 			"WHERE b.cluster_no = (SELECT bb.cluster_no FROM board bb WHERE bb.board_no= :no)\r\n" + 
-			"ORDER BY b.view_count DESC, b.like_count DESC LIMIT 3", nativeQuery = true)
+			"ORDER BY b.view_count DESC LIMIT 3", nativeQuery = true)
 	public List<Board> findRecommendedBoardByBoardNo(@Param("no") Long boardNo);
+	
+	public void deleteByUser(User user);
+	
 }

@@ -11,10 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
+import com.spring.back.entity.Board;
 import com.spring.back.entity.Certified;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
+import com.spring.back.repository.BoardRepository;
 import com.spring.back.repository.CertifiedRepository;
+import com.spring.back.repository.CommentRepository;
+import com.spring.back.repository.FileRepository;
 import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 
@@ -29,6 +33,13 @@ public class UserServiceImpl implements UserService {
 	SessionRepository sessionRepo;
 	@Autowired
 	CertifiedRepository certifiedRepo;
+	@Autowired
+	FileRepository fileRepo;
+	@Autowired
+	BoardRepository boardRepo;
+	@Autowired
+	CommentRepository commentRepo;
+	
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -85,7 +96,7 @@ public class UserServiceImpl implements UserService {
 				String sessionId = httpsession.getId();
 				Session session = Session.builder().sessionId(sessionId).user(user).build();
 				sessionRepo.save(session);
-				return usersession.getSessionId();
+				return sessionId;
 			}
 		}
 		return null;
@@ -93,9 +104,8 @@ public class UserServiceImpl implements UserService {
 	// [로그아웃]
 	@Override
 	public boolean logout(String sessionId) {
-		sessionRepo.deleteBySessionId(sessionId);
+		sessionRepo.deleteById(sessionId);
 			return true;
-	
 	}
 	
 	// [아이디 중복 확인]
@@ -130,14 +140,21 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+	// [회원정보 불러오기]
+	@Override
+	public UserDTO findUserData(SessionDTO sessionDTO) {
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+	
+		return User.userEntityToDTO(session.getUser());
+	}
 	// [회원정보 수정]
 	@Override
-	public UserDTO updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
-		User NewUser = UserDTO.userDTOToEntity(newUserDTO);
+	@Transactional
+	public boolean updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		NewUser.updateId(session.getUser().getUserId());
-		userRepo.save(NewUser);
-		return User.userEntityToDTO(NewUser);
+		session.getUser().updateUser(newUserDTO);
+		
+		return true;
 	}
 
 	// Delete
@@ -149,6 +166,14 @@ public class UserServiceImpl implements UserService {
 		User userSession = sessionRepo.findBySessionId(sessionId).getUser();
 
 		if (userSession.getUserPw().equals(userPw)) {
+			commentRepo.deleteByUser(userSession);
+			for(Board board : userSession.getBoards()) {
+				commentRepo.deleteByboardNo(board.getBoardNo());
+				fileRepo.deleteByBoard(board);
+			}
+			boardRepo.deleteByUser(userSession);
+			sessionRepo.deleteBySessionId(sessionId);
+			certifiedRepo.deleteByUser(userSession);
 			userRepo.deleteById(userSession.getUserId());
 			return true;
 		}

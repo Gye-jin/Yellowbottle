@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.back.dto.FileDTO;
 import com.spring.back.entity.Board;
 import com.spring.back.entity.File;
+import com.spring.back.entity.User;
 
 
 @Repository
@@ -31,4 +32,5 @@ public interface FileRepository extends JpaRepository<File, Long>{
 //	@Query("SELECT f FROM File f WHERE f.board.boardNo = :no")
 //	public List<File> findFileByBoardNo(@Param("no") Long boardNo);
 	
+	public void deleteByBoard(Board board);
 }
