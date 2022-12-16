@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.back.entity.Board;
+
 public interface FileService {
 
 	
 	// [File 삭제]
-	public void deleteFileBoardNo(Long boardNo);
+	public void deleteFileBoard(Board board);
 	// [File 생성]
 	public void uploadFile(Long boardNo, List<MultipartFile> files);
+	
+
 }

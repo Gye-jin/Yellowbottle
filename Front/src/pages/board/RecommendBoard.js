@@ -7,9 +7,9 @@ const RecommendBoard = () => {
   // 파라미터를 활용하여 boardNo 받기
   const boardNo = useParams().boardNo;
 
-  // 해당 게시물과 관련된 추천게시물 3개 저장하는 곳
+  // 해당 게시물과 관련된 추천게시물 3개 저장하는 객체
   const [boards, setBoards] = useState([]);
-  // 추천게시물 각각 저장하는 곳
+  // 보여주는 추천게시물 저장해놓는 객체
   const [viewBoard, setViewBoard] = useState([]);
   // 추천게시물 번호
   const [recommendNo, setRecommendNo] = useState(0);

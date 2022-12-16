@@ -3,12 +3,10 @@ package com.spring.back.service;
 import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.PersonpageDTO;
 import com.spring.back.dto.SessionDTO;
-import com.spring.back.entity.Board;
 
 public interface BoardService {
 	
@@ -31,10 +29,7 @@ public interface BoardService {
 	public PersonpageDTO getBoardByUserId(String userId);
 
 	// [게시글 수정]
-	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO, List<MultipartFile> files);
-	
-	// [추천 +1]
-	public BoardDTO updateLikeCount(Long boardDTONo);
+	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO);
 	
 	// [게시글 삭제]
 	public boolean deleteBoard(SessionDTO sessionDTO, BoardDTO boardDTO);

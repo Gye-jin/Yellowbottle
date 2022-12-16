@@ -30,12 +30,6 @@ public class Session {
 	// [User Join]
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id")
-	private User user;
-	
-	// [sessionId 변경]
-	public void updateSession(String sessionId) {
-		this.sessionId = sessionId;
-	}
-	
+	private User user;	
 	
 }

@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
 import com.spring.back.service.CertifiedServiceImpl;
+import com.spring.back.service.MailServiceImpl;
 import com.spring.back.service.UserServiceImpl;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api", produces = "application/json")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class UserController {
 	// Connection
@@ -31,6 +32,10 @@ public class UserController {
 
 	@Autowired
 	CertifiedServiceImpl certifiedService;
+	
+	// [Service]
+	@Autowired
+	MailServiceImpl mailService;
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [회원가입]
@@ -42,7 +47,9 @@ public class UserController {
 	// [(비밀번호 찾기용)인증번호 발송]
 	@PostMapping(value = "/findPw")
 	public int findPwByEmailAndBirthAndUserId(@RequestBody UserDTO userDTO) {
-		return userService.findPwByEmailAndBirthAndUserId(userDTO.getEmail(), userDTO.getBirth(), userDTO.getUserId());
+		int checkNum = userService.findPwByEmailAndBirthAndUserId(userDTO.getEmail(), userDTO.getBirth(), userDTO.getUserId());
+		mailService.checkEmail(checkNum, userDTO.getEmail());
+		return checkNum;
 	}
 	
 	// [인증번호 검증]
@@ -79,12 +86,6 @@ public class UserController {
 	public String[] findUserIdByEmailAndBirth(@RequestBody UserDTO userDTO) {
 		String[] userIds = userService.findUserIdByEmailAndBirth(userDTO.getEmail(), userDTO.getBirth());
 		return userIds;
-	}
-	
-	// [회원정보 가져오기]
-	@PostMapping(value = "/readUserData")
-	public UserDTO findUserData(@RequestBody SessionDTO sessionDTO) {
-		return userService.findUserData(sessionDTO);
 	}
 	
 	// Update

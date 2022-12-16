@@ -46,7 +46,7 @@ public class ContentServiceImpl implements ContentService {
 	public List<ContentDTO> getByCategory(ContentDTO contentDTO) {
 		ContentCategory contentCategory = contentDTO.getContentCategory();
 
-		List<Content> contents = contentRepo.findByContentCategory(contentCategory);
+		List<Content> contents = contentRepo.findTop10ByContentCategoryOrderByContentNoDesc(contentCategory);
 
 		List<ContentDTO> contentDTOs = contents.stream().map(content -> Content.contentEntityToDTO(content)).collect(Collectors.toList());
 		return contentDTOs;
@@ -58,12 +58,13 @@ public class ContentServiceImpl implements ContentService {
 	// [컨텐츠 가져오기]
 	@Override
 	public ContentDTO getContent(ContentDTO contentDTO) {
+		
 		Long contentNo = contentDTO.getContentNo();
 		
 		Content content = contentRepo.findById(contentNo).orElseThrow(NoSuchElementException::new);
 		
-		ContentDTO oldContentDTO = Content.contentEntityToDTO(content);
-		return oldContentDTO;
+		ContentDTO ContentDTO = Content.contentEntityToDTO(content);
+		return ContentDTO;
 		
 	}
 
