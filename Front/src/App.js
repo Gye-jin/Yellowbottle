@@ -15,8 +15,7 @@ import RecommendBoard from "./pages/board/RecommendBoard";
 import AdminLogPage from "./pages/admin/AdminLogPage";
 import AdminMailPage from "./pages/admin/AdminMailPage";
 import NotFound from "./pages/etc/NotFound.js";
-import UpdateUser from "./pages/log/UpdateUser";
-import DeleteUser from "./pages/log/DeleteUser";
+import UpdateBoard from "./pages/board/UpdateBoard";
 
 function App() {
   return (
@@ -24,19 +23,18 @@ function App() {
       <Routes>
         {/* 메인페이지 */}
         <Route path="/" element={<Main />} />
-        {/* logPage : 회원가입, 로그인, 아이디/비밀번호 찾기, 비밀번호 변경, 회원정보수정, 회원탈퇴 */}
+        {/* logPage : 회원가입, 로그인, 아이디/비밀번호 찾기, 비밀번호 변경 */}
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/findId" element={<FindId />} />
         <Route path="/findPw" element={<FindPw />} />
         <Route path="/resetPw" element={<ResetPw />} />
-        <Route path="/updateUser" element={<UpdateUser />} />
-        <Route path="/deleteUser" element={<DeleteUser />} />
         {/* boardPage : 실천내용 전체, 게시글 작성, 싱세게시물 */}
         <Route path="/feed" element={<Feed />} />
         <Route path="/boardWrite" element={<BoardWrite />} />
         <Route path="/detailBoard/:boardNo" element={<DetailBoard />} />
         <Route path="/recommendBoard/:boardNo" element={<RecommendBoard />} />
+        <Route path="/updateBoard/:boardNo" element={<UpdateBoard />} />
         {/* userPage : 마이페이지, 타유저페이지 */}
         <Route path="/personPage/:userId" element={<PersonPage />} />
         {/* adminPage : 관리자로그페이지, 관리자메신저페이지 */}

@@ -32,8 +32,6 @@ const ResetPw = () => {
   const theme = createTheme();
   // 비밀번호 오류
   const [passwordError, setPasswordError] = useState("");
-  // 재입력비밀번호 오류
-  const [rePasswordError, setRePasswordError] = useState("");
   // 비밀번호 변경실패 오류
   const [registerError, setRegisterError] = useState("");
 
@@ -62,9 +60,9 @@ const ResetPw = () => {
 
     // 비밀번호 같은지 체크
     if (password !== rePassword) {
-      setRePasswordError("비밀번호가 일치하지 않습니다.");
+      setPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
-      setRePasswordError("");
+      setPasswordError("");
     }
 
     // 위에서 설정한 유효성검사를 모두 통과하면 ForResetPwPost함수 실행
@@ -119,7 +117,7 @@ const ResetPw = () => {
                     id="rePassword"
                     name="rePassword"
                     label="비밀번호 재입력"
-                    error={rePasswordError !== "" || false}
+                    error={passwordError !== "" || false}
                   />
                 </Grid>
                 {/* rePassword 입력 오류 */}
