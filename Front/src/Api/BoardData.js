@@ -110,10 +110,39 @@ export const postComment = async (commentWriteData) => {
     .then((response) => {
       console.log(response.data, "댓글 백으로 전송 성공!");
       alert("댓글이 작성되었습니다.");
-      // window.location.href = `/detailBoard/${boardNo}`;
     })
     .catch(function (err) {
       console.log(err);
       alert("댓글이 작성되지않습니다. 잠시후 다시 시도해주세요");
     });
+};
+
+// 댓글 수정하기 요청
+export const repostComment = async (newCommentData) => {
+  await axios
+    .post("http://localhost:8080/api/updateComment", newCommentData)
+    .then(
+      ((response) => {
+        console.log(response.data);
+        alert("댓글을 수정하였습니다.");
+      }).catch(function (err) {
+        console.log(err);
+        alert("댓글 수정에 실패하였습니다. 잠시후 다시 시도해주세요");
+      })
+    );
+};
+
+// 댓글 삭제 요청
+export const deleteComment = async (deleteCommentData) => {
+  await axios
+    .post("http://localhost:8080/api/deleteComment", deleteCommentData)
+    .then(
+      ((response) => {
+        console.log(response.data);
+        alert("댓글을 삭제하였습니다.");
+      }).catch(function (err) {
+        console.log(err);
+        alert("댓글 삭제를 실패하였습니다. 잠시후 다시 시도해주세요.");
+      })
+    );
 };

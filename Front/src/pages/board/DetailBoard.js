@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DetailBoardFetchData, postComment } from "../../Api/BoardData";
+import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
 
 //게시글 상세보기
@@ -23,7 +24,6 @@ const DetailBoard = () => {
   const createCommentData = () => {
     let commentWriteData = new FormData();
     const sessionId = sessionStorage.getItem("sessionId");
-    // console.log(sessionId);
     commentWriteData.append("sessionId", sessionId);
     commentWriteData.append("boardNo", boardNo);
     commentWriteData.append("commentContent", commentContent);
@@ -35,11 +35,6 @@ const DetailBoard = () => {
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
   }, []);
-  console.log(board.editor);
-
-  const updateBoard = () => {
-    navigate(`/updateBoard/${boardNo}`);
-  };
 
   return (
     <>
@@ -76,18 +71,7 @@ const DetailBoard = () => {
             </div>
             {/* 댓글 불러오기 */}
             {board.comments &&
-              board.comments.map((comment) => (
-                <div>
-                  <span
-                    onClick={() => navigate(`/personPage/${comment.userId}`)}
-                  >
-                    {comment.userId} -{" "}
-                  </span>
-                  <span>{comment.commentContent}</span>
-                  {/* 게시글 작성자이면 댓글마다 삭제하기 버튼이 보임 */}
-                  {board.editor ? <button>삭제</button> : ""}
-                </div>
-              ))}
+              board.comments.map((comment) => <Comment comment={comment} />)}
             {/* 댓글 입력창 */}
             <input
               onChange={changeComment}
@@ -98,6 +82,7 @@ const DetailBoard = () => {
             <button onClick={createCommentData}>댓글작성</button>
             {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
             {/* 버튼을 누르면 추천게시물이 나온다. */}
+            <br />
             <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
               →
             </button>
