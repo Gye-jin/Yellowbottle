@@ -7,13 +7,15 @@ const RecommendBoard = () => {
   // 파라미터를 활용하여 boardNo 받기
   const boardNo = useParams().boardNo;
 
-  // 추천 게시글
+  // 해당 게시물과 관련된 추천게시물 3개 저장하는 곳
   const [boards, setBoards] = useState([]);
+  // 추천게시물 각각 저장하는 곳
   const [viewBoard, setViewBoard] = useState([]);
+  // 추천게시물 번호
   const [recommendNo, setRecommendNo] = useState(0);
-
+  // 이동하는 함수
   const navigate = useNavigate();
-
+  // 게시물상세페이지에서 -> 버튼 누르면 추천게시물 백에서 받아오게하는 함수
   useEffect(() => {
     const response = recommendBoardFetchData(boardNo);
     response.then((data) => {
@@ -21,7 +23,7 @@ const RecommendBoard = () => {
       setViewBoard(data[recommendNo]);
     });
   }, []);
-
+  // 추천게시물 페이지에서 오른쪽 화살표를 눌렀을때 다음 추천게시물 보이게 해주는 함수
   function plusRecommendNo(changeRecommendNo) {
     if (changeRecommendNo >= 0 && changeRecommendNo <= 2) {
       setRecommendNo(changeRecommendNo);
@@ -30,7 +32,7 @@ const RecommendBoard = () => {
       navigate(`/detailBoard/${boardNo}`);
     }
   }
-
+  // 추천게시물 페이지에서 왼쪽 화살표를 눌렀을때 이전 추천게시물 보이게 해주는 함수
   function backDetailBoard() {
     navigate(`/detailBoard/${boardNo}`);
   }
@@ -67,8 +69,7 @@ const RecommendBoard = () => {
                 <div>
                   <h3>
                     <span>
-                      {viewBoard.likeCount}
-                      <button>👍</button>
+                      조회수
                       {viewBoard.viewCount}
                     </span>
                   </h3>

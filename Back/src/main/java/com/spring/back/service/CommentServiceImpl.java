@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.back.dto.CommentDTO;
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.entity.Board;
 import com.spring.back.entity.Comment;
+import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
 import com.spring.back.repository.CommentRepository;
+import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,37 +30,57 @@ public class CommentServiceImpl implements CommentService {
 	BoardRepository boardRepo;
 	@Autowired
 	UserRepository userRepo;
+	@Autowired
+	SessionRepository sessionRepo;
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [댓글 작성]
 	@Override
-	public CommentDTO insertComment(CommentDTO commentDTO) {
+	public CommentDTO insertComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		
 		Comment comment = CommentDTO.commentDtoToEntity(commentDTO);
-
+		
 		// 빌더에서 빠져있는 board채우기
 		comment.boardInComment(boardRepo.findById(commentDTO.getBoardNo()).orElseThrow(NoSuchElementException::new));
 		// 빌더에서 빠져있는 user채우기
-		comment.userInComment(userRepo.findById(commentDTO.getUserId()).orElseThrow(NoSuchElementException::new));
+		comment.userInComment(userRepo.findById(session.getUser().getUserId()).orElseThrow(NoSuchElementException::new));
 
 		Long commentNo = commentRepo.save(comment).getCommentNo();
 
 		Comment newComment = commentRepo.findById(commentNo).orElseThrow(NoSuchElementException::new);
-		CommentDTO newCommentDTO = Comment.commentEntityToDTO(newComment);
+		CommentDTO newCommentDTO = Comment.trueEntityToDTO(newComment);
 		return newCommentDTO;
 	}
 
 	// Read
 	// --------------------------------------------------------------------------------------------------------------------------------
+	// [댓글 가져오기]
+	@Override
+	public CommentDTO getComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
+		
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		Comment comment = commentRepo.findById(commentDTO.getCommentNo()).orElseThrow(NoSuchElementException::new);
+
+		if (session.getUser().equals(comment.getUser())) {
+			CommentDTO commentDT = Comment.trueEntityToDTO(comment);
+			return commentDT;
+		}else {
+			CommentDTO commentDT = Comment.falseEntityToDTO(comment);
+			return commentDT;
+		}
+		
+	}
 	// [(수정용)댓글 가져오기]
 	@Override
 	public CommentDTO getOldComment(CommentDTO commentDTO) {
 		Long commentNo = commentDTO.getCommentNo();
-
+		
 		Comment comment = commentRepo.findById(commentNo).orElseThrow(NoSuchElementException::new);
-
+		
 		if (commentDTO.getUserId().equals(comment.getUser().getUserId())) {
-			CommentDTO oldCommentDTO = Comment.commentEntityToDTO(comment);
+			CommentDTO oldCommentDTO = Comment.falseEntityToDTO(comment);
 			return oldCommentDTO;
 		}
 		return null;

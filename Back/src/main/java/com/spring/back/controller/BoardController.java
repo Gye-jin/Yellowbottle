@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.SessionDTO;
+import com.spring.back.entity.Board;
 import com.spring.back.service.BoardServiceImpl;
 import com.spring.back.service.FileServiceImpl;
 
@@ -27,7 +28,6 @@ import com.spring.back.service.FileServiceImpl;
 @RequestMapping(value = "/api", produces = "application/json")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class BoardController {
-	private static final String SessionId = null;
 	// Connection
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [Service]
@@ -40,12 +40,11 @@ public class BoardController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 작성]
 	@PostMapping("/board")
-	public Long createBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("image") List<MultipartFile> files) {
+	public BoardDTO createBoard(@ModelAttribute SessionDTO sessionDTO, @ModelAttribute BoardDTO boardDTO, @RequestParam("image") List<MultipartFile> images) {
 		// 게시글 삽입 후 게시글 번호 가져오기
-		Long boardNo = boardService.insertBoard(sessionDTO, boardDTO);
-		// 해당하는 게시글 번호에 맞춰 파일과 태그 DB에 삽입
-		fileService.uploadFile(boardNo, files);
-		return boardNo;
+		BoardDTO board=boardService.insertBoard(sessionDTO, boardDTO);
+		fileService.uploadFile(board.getBoardNo(), images);
+		return board;
 	}
 
 	// Read
@@ -55,7 +54,9 @@ public class BoardController {
 	 */
 	@GetMapping("/board/{boardNo}")
 	public BoardDTO findBoard(@RequestParam String sessionId, @PathVariable Long boardNo) {
-		return boardService.getBoardByBoardNo(sessionId, boardNo);
+		System.out.println(sessionId);
+		System.out.println(boardNo);
+		return boardService.getBoardByBoardNo(sessionId,boardNo);
 	}
 	
 	/* [(세부 게시글 확인 전용)특정 게시글 불러오기]
@@ -64,7 +65,7 @@ public class BoardController {
 	 * click : 특정 게시글 클릭시 조회수 +1
 	 * 출력 : List[불러올 게시글, 추천게시글1, 추천게시글2, 추천게시글3]
 	 */
-	@GetMapping("/recomendBoard/{boardNo}")
+	@GetMapping("/RecomentBoard/{boardNo}")
 	public List<BoardDTO> findRecommendBoard(@PathVariable Long boardNo) {
 		return boardService.findRecoBoard(boardNo);
 	}
@@ -94,9 +95,9 @@ public class BoardController {
 	// 설명 : 수정한 게시글 내용으로 게시글 업데이트
 	// click : 게시글 수정 완료
 	@PostMapping(value = "/boardupdate")
-	public BoardDTO updateBoard(@ModelAttribute BoardDTO boardDTO, @RequestParam("files") List<MultipartFile> files) {
-		BoardDTO newBoardDTO = boardService.updateBoard(boardDTO, files);
-		return newBoardDTO;
+	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("images") List<MultipartFile> images) {
+	
+		return boardService.updateBoard(sessionDTO,boardDTO, images);
 	}
 	
 	// [추천]
@@ -113,7 +114,7 @@ public class BoardController {
 	// [게시글 삭제]
 	// 설명 : 본인 게시글 지우기
 	@DeleteMapping("/boarddelete")
-	public boolean deleteBoard(@RequestBody BoardDTO boardDTO) {
-		return boardService.deleteBoard(boardDTO);
+	public boolean deleteBoard(@RequestBody SessionDTO sessionDTO,BoardDTO boardDTO) {
+		return boardService.deleteBoard(sessionDTO,boardDTO);
 	}
 }

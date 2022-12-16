@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import { addClusterNo, ForPostBoardWrite } from "../../Api/BoardData";
+import { useParams } from "react-router-dom";
 
-function BoardWrite() {
-  // 게시글
-  const [boardContent, setBoardContent] = useState("");
-  // 사진파일: 여러개 올릴 경우를 대비해 "" 이 아닌 []로 설정했다. 사용자가 미리 보기하기 위한 state
-  const [fileImage, setFileImage] = useState([]);
-  // 게시글 작성 페이지는 로그인된 회원만 들어올 수 있음
-  // 따라서 세션에 저장되어있는 userId의 value값을 이용해 백에다 누가 글을 썼는지 확인시킬 수 있음
+function UpdateBoard() {
+  // [변수 설정]
+  // ----------------------------------------------------------------------------------------------------------------------------------------------
+  // (boardNo) ------------------------------------------------------------------------------------------------------------------------------------
+  const boardNo = useParams();
+  // (board data) ---------------------------------------------------------------------------------------------------------------------------------
+  // 회원 ID
   const userSession = sessionStorage.getItem("sessionId");
-  // 게시글작성 성공시 백에서 보내주는 board정보를 담을 공간
+  // 게시글 내용
+  const [boardContent, setBoardContent] = useState("");
+  // 사진파일
+  const [fileImage, setFileImage] = useState([]);
+  // (clusterData)---------------------------------------------------------------------------------------------------------------------------------
   const [clusterData, setClusterData] = useState([]);
+
+  // [페이지 설정]
+  // ----------------------------------------------------------------------------------------------------------------------------------------------
   // 게시글 작성하면 그 value를 인식하게 해주는 함수
   const changeBoardContent = (e) => {
-    // e.preventDefault();
     setBoardContent(e.target.value);
   };
+
+  // [실행 함수]
+  // ---------------------------------------------------------------------------------------------------------------------------------------------
+  // (파일 추가 및 미리보기) -----------------------------------------------------------------------------------------------------------------------
   // 선택된 이미지
   const [selectImage, setSelectImage] = useState([]);
-
-  // 파일 선택하기 버튼을 누르면 사진을 추가할 수 있고 화면에 미리보기 할 수 있게 해주는 함수
   const addImage = (e) => {
     e.preventDefault();
     // 선택된 파일을 selectImage로 선언
@@ -47,10 +56,6 @@ function BoardWrite() {
   const createBoardWriteData = (e) => {
     // 실행시 화면새로고침 방지
     e.preventDefault();
-    console.log(boardContent);
-    console.log(userSession);
-    console.log(fileImage);
-    console.log(selectImage);
     //  FormData를 통해 각각의 입력값들이 변화되면 바뀐 value값 확인 가능!
     let boardWriteData = new FormData();
     boardWriteData.append("sessionId", userSession);
@@ -58,10 +63,16 @@ function BoardWrite() {
     boardWriteData.append("image", selectImage);
     // 입력된 값들을 boardWriteData에 넣는다.
     console.log("boardWriteData :: ", boardWriteData);
-    ForPostBoardWrite(boardWriteData, setClusterData, clusterData);
+    ForPostBoardWrite(boardWriteData, setClusterData);
   };
 
-  // useEffect 설정 :: 백에서 보드를 보내준다. 이중 boardNo와 boardContent를 장고에 (카톡에 있는 URL값으로) 포스트해서 보내준다. 이에 대한 키값은 한번 더 살펴보자!
+  // [useEffect] ----------------------------------------------------------------------------------------------------------------------------------
+  // 기존 board의 data들을 입력란에 채우기
+  useEffect(() => {
+    console.log("success");
+  }, []);
+
+  // 백에서 보드를 보내준다. 이중 boardNo와 boardContent를 장고에 (카톡에 있는 URL값으로) 포스트해서 보내준다. 이에 대한 키값은 한번 더 살펴보자!
   useEffect(() => {
     addClusterNo(clusterData);
   }, [clusterData]);
@@ -84,7 +95,7 @@ function BoardWrite() {
             type="file"
             name="file"
             accept="image/*"
-            required // 반듯 ㅣ파일이 선택되어야 하는지 여부를 지정하는 속성
+            required // 반드시 파일이 선택되어야 하는지 여부를 지정하는 속성
             // multiple="multiple" // 여러개 선택 가능하게 -> 현재는 한개만 올릴 수 있도록 했기 떄문에 주석처리
             onChange={addImage}
           />
@@ -109,7 +120,7 @@ function BoardWrite() {
           <textarea
             onChange={changeBoardContent}
             className="BoardWrite-boardContent"
-            placeholder="내용을 입력하세요"
+            placeholder={boardContent}
             id="boardContent"
           />
           <br />
@@ -121,4 +132,4 @@ function BoardWrite() {
   );
 }
 
-export default BoardWrite;
+export default UpdateBoard;

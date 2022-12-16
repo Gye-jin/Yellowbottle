@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class PersonpageDTO {
 	
 	// 마이페이지 여부
-	private boolean Editor;
+	private boolean editor;
 	// 댓글 수
 	private Long countComment;
 	// 게시글 수

@@ -20,9 +20,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class BoardDTO {
+	
+	// 게시글이 내가 작성한 글인지 확인
+	private boolean editor;
 	// Column
 	// --------------------------------------------------------------------------------------------------------------------------------
-	private boolean Editor;
+
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
