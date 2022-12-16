@@ -27,9 +27,12 @@ public interface UserService {
 
 	// [비밀번호 변경]
 	public boolean updatePw(UserDTO userDTO);
+	
+	// [회원정보 가져오기]
+	public UserDTO findUserData(SessionDTO sessionDTO);
 
 	// [회원정보 수정]
-	public UserDTO updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO);
+	public boolean updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO);
 	
 	// [회원 탈퇴]
 	public boolean deleteUser(String userId, String userPw);

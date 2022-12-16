@@ -130,14 +130,21 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+	// [회원정보 불러오기]
+	@Override
+	public UserDTO findUserData(SessionDTO sessionDTO) {
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+	
+		return User.userEntityToDTO(session.getUser());
+	}
 	// [회원정보 수정]
 	@Override
-	public UserDTO updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
-		User NewUser = UserDTO.userDTOToEntity(newUserDTO);
+	@Transactional
+	public boolean updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		NewUser.updateId(session.getUser().getUserId());
-		userRepo.save(NewUser);
-		return User.userEntityToDTO(NewUser);
+		session.getUser().updateUser(newUserDTO);
+		
+		return true;
 	}
 
 	// Delete

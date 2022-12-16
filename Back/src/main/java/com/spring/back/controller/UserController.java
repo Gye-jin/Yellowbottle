@@ -96,15 +96,23 @@ public class UserController {
 	public boolean updatePw(@RequestBody UserDTO userDTO) {
 		return userService.updatePw(userDTO);
 	}
-
+	
+	// [회원정보가져오기]
+	@PostMapping(value = "/readUserData")
+	public UserDTO findUser(@RequestBody SessionDTO sessionDTO) {
+		UserDTO userDTO = userService.findUserData(sessionDTO);
+		return userDTO;
+	}
+	
+	
 	// [회원정보 수정]
 	@PostMapping(value = "/updateUser")
-	public UserDTO updateUserInfo(@ModelAttribute SessionDTO sessionDTO, UserDTO userDTO) {
+	public boolean updateUserInfo(@ModelAttribute SessionDTO sessionDTO, UserDTO userDTO) {
 		return userService.updateUserInfo(sessionDTO,userDTO);
-		
+
 //		System.out.println(sessionDTO);
 //		System.out.println(userDTO);
-		
+//		return null;
 	}
 
 	// Delete

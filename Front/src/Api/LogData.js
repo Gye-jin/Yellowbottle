@@ -232,3 +232,42 @@ export function ForResetPwPost(password, setRegisterError) {
   // 이 코드를 통해 비밀번호 변경 버튼을 눌렀을 때 resetPwPost 함수가 실행된다.
   resetPwPost(password);
 }
+
+// 회원정보수정 페이지에서 쓰일 기존 회원정보 불러오는 함수
+export const passUpdateUser = async (userSession) => {
+  const response = await axios.post("http://localhost:8080/api/readUserData", {
+    sessionId: userSession,
+  });
+  return response.data;
+};
+
+// 입력된 updateData값들을 백에 보내는 함수
+export function ForPostUpdateData(updateData, setRegisterError) {
+  for (let key of updateData.keys()) {
+    console.log("폼데이터 key값", key);
+  }
+
+  // FormData의 value 확인
+  for (let value of updateData.values()) {
+    console.log("폼데이터 value값", value);
+  }
+  console.log(updateData, "백으로 보내기 전 콘솔!");
+  const postUpdateData = async (updateData) => {
+    // post
+    await axios
+      // 입력된 joinData를 백에 보낸다.
+      .post("http://localhost:8080/api/updateUser", updateData)
+      .then((response) => {
+        console.log(response);
+        alert("회원정보수정성공!")((window.location.href = "/"));
+      })
+      // 로그인 틀렸을때 경고창 나오도록 설정
+      .catch((err) => {
+        // 백에서 오류(err)가 온다면 회원가입 실패
+        console.log(err);
+        setRegisterError("🦄");
+      });
+  };
+  // 위에서 만든 postLoginData가 로그인 페이지에서 실행되면 실행.
+  postUpdateData(updateData);
+}

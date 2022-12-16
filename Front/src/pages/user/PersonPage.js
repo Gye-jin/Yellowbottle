@@ -18,15 +18,11 @@ function PersonPage() {
   useEffect(() => {
     const response = myAllData(personId);
     response.then((data) => setMyPageData(data));
-    // sessionStorage.removeItem("userId");
-    // console.log("myPageData ::", myPageData);
   }, [personId]);
   // 접속한 유저 세션으로 얻은 userId와 useParams로 얻은 userId를 비교해 같으면 편집 권한 부여! 다르면 편집 권한 미부여
   useEffect(() => {
     myPageFetchData(userSession, setSessionUserId);
   }, []);
-  // console.log("myUserId ::", myUserId);
-  // console.log("myPageData ::", myPageData);
   return (
     <>
       <Header />
@@ -35,7 +31,11 @@ function PersonPage() {
         <div>댓글수 :{myPageData.countComment}</div>
         <div>게시글 수 :{myPageData.countBoard}</div>
         {/* 만약 해당페이지가 본인 마이페이지라면 회원정보수정 버튼 존재 and 타인페이지라면 회원정보수정 버튼 미존재 */}
-        {personId === sessionUserId ? <button>회원정보수정</button> : <br />}
+        {personId === sessionUserId ? (
+          <button onClick={() => navigate("/updateUser")}>회원정보수정</button>
+        ) : (
+          <br />
+        )}
         {/* 해당유저가 올린 게시물사진 모두 보여주는 함수 */}
         {myPageData.boards &&
           myPageData.boards.map((board) => (
