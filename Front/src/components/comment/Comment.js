@@ -39,6 +39,7 @@ const Comment = ({ comment }) => {
           commentNo={comment.commentNo}
           boardNo={comment.boardNo}
           userId={comment.userId}
+          commentContent={comment.commentContent}
         />
       )}
 
