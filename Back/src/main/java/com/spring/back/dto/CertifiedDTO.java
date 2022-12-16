@@ -15,7 +15,7 @@ import lombok.ToString;
 @Builder
 public class CertifiedDTO {
 	
-	private int CertifiedNo;
+	private int certifiedNo;
 	
-	private String UserId;
+	private String userId;
 }
