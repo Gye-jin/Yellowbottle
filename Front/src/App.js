@@ -15,6 +15,7 @@ import RecommendBoard from "./pages/board/RecommendBoard";
 import AdminLogPage from "./pages/admin/AdminLogPage";
 import AdminMailPage from "./pages/admin/AdminMailPage";
 import NotFound from "./pages/etc/NotFound.js";
+import UpdateBoard from "./pages/board/UpdateBoard";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/boardWrite" element={<BoardWrite />} />
         <Route path="/detailBoard/:boardNo" element={<DetailBoard />} />
         <Route path="/recommendBoard/:boardNo" element={<RecommendBoard />} />
+        <Route path="/updateBoard/:boardNo" element={<UpdateBoard />} />
         {/* userPage : 마이페이지, 타유저페이지 */}
         <Route path="/personPage/:userId" element={<PersonPage />} />
         {/* adminPage : 관리자로그페이지, 관리자메신저페이지 */}

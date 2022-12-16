@@ -12,7 +12,12 @@ const DetailBoard = () => {
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
   }, []);
-  console.log(board);
+  console.log(board.editor);
+
+  const updateBoard = () => {
+    navigate(`/updateBoard/${boardNo}`);
+  };
+
   return (
     <>
       <Header />

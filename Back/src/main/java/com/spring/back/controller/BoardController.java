@@ -43,12 +43,7 @@ public class BoardController {
 	public BoardDTO createBoard(@ModelAttribute SessionDTO sessionDTO, @ModelAttribute BoardDTO boardDTO, @RequestParam("image") List<MultipartFile> images) {
 		// 게시글 삽입 후 게시글 번호 가져오기
 		BoardDTO board=boardService.insertBoard(sessionDTO, boardDTO);
-		System.out.println(board);
-		// 해당하는 게시글 번호에 맞춰 파일과 태그 DB에 삽입
 		fileService.uploadFile(board.getBoardNo(), images);
-		System.out.println("file업로드까지 완료");
-//		System.out.println(Board.boardEntityToDTO(board));
-	
 		return board;
 	}
 

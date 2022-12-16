@@ -122,6 +122,16 @@ public class UserServiceImpl implements UserService {
 		}
 		return userIds;
 	}
+	
+	// [회원정보 불러오기]
+	public UserDTO findUserData(SessionDTO sessionDTO) {
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		String userId = session.getUser().getUserId();
+		
+		User user = userRepo.findByUserId(userId);
+		UserDTO userDTO = User.userEntityToDTO(user);
+		return userDTO;
+	}
 
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------
