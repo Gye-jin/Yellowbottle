@@ -146,3 +146,6 @@ export const deleteComment = async (deleteCommentData) => {
       })
     );
 };
+
+// 게시글 삭제 함수
+export const postDeleteBoardData = async (deleteBoardData) => {};
