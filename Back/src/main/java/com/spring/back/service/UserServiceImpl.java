@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 				String sessionId = httpsession.getId();
 				Session session = Session.builder().sessionId(sessionId).user(user).build();
 				sessionRepo.save(session);
-				return usersession.getSessionId();
+				return sessionId;
 			}
 		}
 		return null;
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 	// [로그아웃]
 	@Override
 	public boolean logout(String sessionId) {
-		sessionRepo.deleteBySessionId(sessionId);
+		sessionRepo.deleteById(sessionId);
 			return true;
 	
 	}

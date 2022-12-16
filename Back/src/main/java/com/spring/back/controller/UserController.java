@@ -71,6 +71,7 @@ public class UserController {
 	// [로그아웃]
 	@PostMapping(value = "/logout")
 	public boolean logout(@RequestBody SessionDTO sessionDTO) {
+		System.out.println(sessionDTO);
 		return userService.logout(sessionDTO.getSessionId());
 		
 	}
@@ -98,13 +99,13 @@ public class UserController {
 
 	// [회원정보 수정]
 	@PostMapping(value = "/updateUser")
-//	public void updateUserInfo(@ModelAttribute SessionDTO sessionDTO, UserDTO userDTO) {
-//		return userService.updateUserInfo(sessionDTO,userDTO);
-//	@GetMapping(value = "/updateUser")
-	public void updateUserInfo(@RequestBody SessionDTO sessionDTO, @RequestBody UserDTO userDTO) {
-		System.out.println(sessionDTO);
-		System.out.println(userDTO);
-		}
+	public UserDTO updateUserInfo(@ModelAttribute SessionDTO sessionDTO, UserDTO userDTO) {
+		return userService.updateUserInfo(sessionDTO,userDTO);
+		
+//		System.out.println(sessionDTO);
+//		System.out.println(userDTO);
+		
+	}
 
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------

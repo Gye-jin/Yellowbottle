@@ -79,9 +79,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional
 	public BoardDTO getBoardByBoardNo(String sessionId, Long boardNo) {
+		System.out.println(sessionId);
 		Session session = sessionRepo.findBySessionId(sessionId);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateViewCount(board.getViewCount() + 1);
+		System.out.println("세션"+session);
+		System.out.println("보드"+board);
 		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
 			BoardDTO boardDTO = Board.myboardEntityToDTO(board);
 			for (CommentDTO comment : boardDTO.getComments()) {
