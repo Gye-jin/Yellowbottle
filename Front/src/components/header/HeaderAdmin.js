@@ -65,7 +65,7 @@ export default function HeaderAdmin() {
           </IconButton>
           {/* 실천내용 */}
           <Typography
-            onClick={() => navigate("/Feed")}
+            onClick={() => navigate("/feed")}
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}

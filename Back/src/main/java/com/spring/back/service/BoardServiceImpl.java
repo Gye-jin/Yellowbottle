@@ -160,7 +160,7 @@ public class BoardServiceImpl implements BoardService {
 			board.updateBoard(newboardDTO);
 			BoardDTO boardDTO = Board.yourEntityToDTO(board);
 			// 기존 File 삭제
-			fileService.deleteFileBoardNo(boardDTO.getBoardNo());
+			fileService.deleteFileBoard(board);
 			// 새로운 File 추가
 			fileService.uploadFile(boardDTO.getBoardNo(), files);
 			return true;
@@ -190,7 +190,7 @@ public class BoardServiceImpl implements BoardService {
 		if (deleteBoard.getUser().equals(session.getUser())) {
 			// file과 comment먼저 삭제 후 게시글 삭제 진행
 			commentService.deleteAllComment(boardDTO.getBoardNo());
-			fileService.deleteFileBoardNo(boardDTO.getBoardNo());
+			fileService.deleteFileBoard(BoardDTO.boardDtotoEntity(boardDTO));
 			boardRepo.deleteById(boardDTO.getBoardNo());
 			return true;
 		}

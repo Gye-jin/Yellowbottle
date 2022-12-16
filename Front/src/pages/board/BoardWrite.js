@@ -53,13 +53,12 @@ function BoardWrite() {
     console.log(selectImage);
     //  FormData를 통해 각각의 입력값들이 변화되면 바뀐 value값 확인 가능!
     let boardWriteData = new FormData();
-    boardWriteData.append("boardContent", boardContent);
-    // 현재는 백에서 각각 userSession에 대한 mapping이 진행되지 않았기에 임의로 "test2"라 씀
     boardWriteData.append("sessionId", userSession);
-    boardWriteData.append("files", selectImage);
+    boardWriteData.append("boardContent", boardContent);
+    boardWriteData.append("image", selectImage);
     // 입력된 값들을 boardWriteData에 넣는다.
     console.log("boardWriteData :: ", boardWriteData);
-    ForPostBoardWrite(boardWriteData, setClusterData);
+    ForPostBoardWrite(boardWriteData, setClusterData, clusterData);
   };
 
   // useEffect 설정 :: 백에서 보드를 보내준다. 이중 boardNo와 boardContent를 장고에 (카톡에 있는 URL값으로) 포스트해서 보내준다. 이에 대한 키값은 한번 더 살펴보자!
