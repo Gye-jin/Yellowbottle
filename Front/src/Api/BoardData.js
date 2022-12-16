@@ -148,4 +148,16 @@ export const deleteComment = async (deleteCommentData) => {
 };
 
 // 게시글 삭제 함수
-export const postDeleteBoardData = async (deleteBoardData) => {};
+export const postDeleteBoardData = async (deleteBoardData) => {
+  await axios
+    .delete("http://localhost:8080/api/boarddelete", deleteBoardData)
+    .then(
+      ((response) => {
+        console.log(response, "게시글 삭제 성공!");
+        alert("게시글 삭제 성공!🦄");
+      }).catch(function (err) {
+        console.log(err, "게시글 삭제 실패");
+        alert("게시글 삭제 실패 ㅠㅠ🦄🦄🦄");
+      })
+    );
+};
