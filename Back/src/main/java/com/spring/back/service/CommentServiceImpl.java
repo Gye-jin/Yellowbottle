@@ -90,13 +90,14 @@ public class CommentServiceImpl implements CommentService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [댓글 수정]
 	@Override
-	public boolean updateComment(CommentDTO commentDTO) {
+	public boolean updateComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
 		Comment comment = CommentDTO.commentDtoToEntity(commentDTO);
 
 		// entity로 넣지 못한 board와 user 삽입
 		Board board = boardRepo.findById(commentDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
 		comment.boardInComment(board);
-		User user = userRepo.findById(commentDTO.getUserId()).orElseThrow(NoSuchElementException::new);
+		User user = userRepo.findById(session.getUser().getUserId()).orElseThrow(NoSuchElementException::new);
 		comment.userInComment(user);
 
 		commentRepo.save(comment);

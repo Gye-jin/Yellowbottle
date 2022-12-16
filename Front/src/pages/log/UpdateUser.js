@@ -85,23 +85,12 @@ const UpdateUser = () => {
     setEmail(`${userDTO.email}`);
     setSubStatus(`${userDTO.subStatus}`);
   }, [userDTO]);
-  // subStatus값 백에 보낼떄 1또는 0으로 보내기 위해 바꾸는 함수
-  // useEffect(() => {
-  // if (subStatus === false) {
-  //   setSubStatus(0);
-  // } else {
-  //   setSubStatus(1);
-  // }
-  // }, [subStatus]);
-  //   console.log(userDTO.email);
+
   // 수정 버튼 누를때 실행되는 함수: updateData(입력된 값)를 유효성 검사를 통해 LogData.js에 있는 ForPostUpdateData 함수에 보내준다.
   const createUpdateData = (e) => {
     // 실행시 화면새로고침 방지
     e.preventDefault();
 
-    console.log("-----");
-    console.log(document.querySelector("input[name='subStatus']:checked"));
-    console.log("-----");
     const emailCheckBtn = document.querySelector(
       "input[name='subStatus']:checked"
     );

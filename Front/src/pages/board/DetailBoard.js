@@ -1,7 +1,12 @@
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { DetailBoardFetchData, postComment } from "../../Api/BoardData";
+import {
+  DetailBoardFetchData,
+  postComment,
+  postDeleteBoardData,
+} from "../../Api/BoardData";
+import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
 
 //게시글 상세보기
@@ -14,6 +19,8 @@ const DetailBoard = () => {
   const [commentContent, setCommentContent] = useState("");
   //이동함수(추천게시물 이동에 사용)
   const navigate = useNavigate();
+  const [commentContent, setCommentContent] = useState("");
+  const sessionId = sessionStorage.getItem("sessionId");
 
   //댓글창 내용입력 시 이벤트발생
   const changeComment = (e) => {
@@ -31,8 +38,6 @@ const DetailBoard = () => {
   // 댓글입력버튼 클릭or엔터 시 - 댓글내용폼데이터 형태로 백에 보냄
   const createCommentData = () => {
     let commentWriteData = new FormData();
-    const sessionId = sessionStorage.getItem("sessionId");
-    // console.log(sessionId);
     commentWriteData.append("sessionId", sessionId);
     commentWriteData.append("boardNo", boardNo);
     commentWriteData.append("commentContent", commentContent);
@@ -40,7 +45,25 @@ const DetailBoard = () => {
     window.location.reload();
   };
 
-  //이전에 클릭한 게시물 불러오는 함수
+  // 게시글 삭제 버튼 클릭 시 = 게시글내용폼데이터 형태로 백에 보냄
+  const createDeleteBoardData = () => {
+    let deleteBoardData = new FormData();
+    deleteBoardData.append("sessionId", sessionId);
+    deleteBoardData.append("boardNo", boardNo);
+
+    // FormData의 key 확인
+    for (let key of deleteBoardData.keys()) {
+      console.log("폼데이터 key값", key);
+    }
+
+    // FormData의 value 확인
+    for (let value of deleteBoardData.values()) {
+      console.log("폼데이터 value값", value);
+    }
+    // 폼데이터로 모은 deleteBoardData를 백에 보내주는 함수
+    postDeleteBoardData(deleteBoardData);
+  };
+
   useEffect(() => {
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
@@ -112,6 +135,21 @@ const DetailBoard = () => {
               <button onClick={createCommentData}>댓글작성</button>
             </box>
 
+            <input
+              onChange={changeComment}
+              className="Comment-write"
+              placeholder="댓글을 입력해주세요!"
+              id="commentinput"
+            />
+            <button onClick={createCommentData}>댓글작성</button>
+            {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
+            {board.editor ? <button>수정하기</button> : ""}
+            {board.editor ? (
+              <button onClick={() => createDeleteBoardData()}>삭제하기</button>
+            ) : (
+              ""
+            )}
+            <br />
             {/* 버튼을 누르면 추천게시물이 나온다. */}
             <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
               →

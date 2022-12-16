@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { repostComment } from "../../Api/BoardData";
-const InputComment = ({ setCommentState, commentNo, boardNo, userId }) => {
+const InputComment = ({
+  setCommentState,
+  commentNo,
+  boardNo,
+  userId,
+  commentContent,
+}) => {
   // 댓글 내용
   const [newCommentContent, setNewCommentContent] = useState("");
 
@@ -37,6 +43,7 @@ const InputComment = ({ setCommentState, commentNo, boardNo, userId }) => {
         onChange={newComment}
         className="Comment-write"
         placeholder="댓글을 입력해주세요!"
+        defaultValue={commentContent}
         id="commentinput"
       />
       <button onClick={() => updateComment()}>수정하기</button>
