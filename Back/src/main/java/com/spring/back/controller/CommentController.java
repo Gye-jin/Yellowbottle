@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.back.dto.CommentDTO;
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.service.CommentServiceImpl;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api", produces = "application/json")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class CommentController {
 	// Connection
@@ -24,17 +25,17 @@ public class CommentController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [댓글달기]
 	@PostMapping(value = "/insertComment")
-	public CommentDTO insertComment(@RequestBody CommentDTO commentDTO) {
-		return commentService.insertComment(commentDTO);
+	public CommentDTO insertComment(@RequestBody SessionDTO sessionDTO, CommentDTO commentDTO) {
+		return commentService.insertComment(sessionDTO,commentDTO);
 	}
-	// Update
+	// Read
 	// --------------------------------------------------------------------------------------------------------------------------------
-//	// [수정할 댓글 불러오기]
-//	@PostMapping(value = "/getUpdateComment")
-//	public CommentDTO getUpdateComment(@RequestBody CommentDTO commentDTO) {
-//		return commentService.getOldComment(commentDTO);
-//	}
-//	
+//	// [댓글 불러오기]
+	@PostMapping(value = "/getComment")
+	public CommentDTO getComment(@RequestBody SessionDTO sessionDTO, @RequestBody CommentDTO commentDTO) {
+		return commentService.getComment(sessionDTO,commentDTO);
+	}
+	
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [수정할 댓글 불러오기]

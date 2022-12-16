@@ -8,6 +8,8 @@ import IconButton from "@mui/material/IconButton";
 import { createTheme } from "@material-ui/core/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { anotherUserPageData } from "../../Api/UserData";
 
 // 회원용 헤더
 export default function HeaderLogin() {
@@ -40,6 +42,20 @@ export default function HeaderLogin() {
             alert("🤘🏿😝😜🤘🏿" + " " + "로그아웃실패");
       });
   };
+  //  해당유저의 세션정보
+  const userSession = sessionStorage.getItem("sessionId");
+  // 세션정보를 통해 불러들일 유저의 아이디
+  const [userId, setUserId] = useState(null);
+
+  const moveToMyPage = () => {
+    anotherUserPageData(userSession, setUserId);
+    console.log(userId);
+    if (userId === null) {
+      alert("제가 부족해서 오류가 있네요 ㅠㅠ 2초 뒤에 다시 눌러주세요😹");
+    } else if (userId !== null) {
+      navigate(`/personPage/${userId}`);
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }} className="header-Header">
@@ -62,7 +78,7 @@ export default function HeaderLogin() {
             />
           </IconButton>
           <Typography
-            onClick={() => navigate("/Feed")}
+            onClick={() => navigate("/feed")}
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}
@@ -72,7 +88,7 @@ export default function HeaderLogin() {
           <Button color="inherit" onClick={onLogout}>
             로그아웃
           </Button>
-          <Button color="inherit" onClick={() => navigate("/Mypage")}>
+          <Button color="inherit" onClick={() => moveToMyPage()}>
             마이페이지
           </Button>
         </Toolbar>

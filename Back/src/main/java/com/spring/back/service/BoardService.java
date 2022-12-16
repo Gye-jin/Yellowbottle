@@ -12,7 +12,7 @@ import com.spring.back.dto.SessionDTO;
 public interface BoardService {
 	
 	// [게시글 작성]
-	public Long insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO);
+	public BoardDTO insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO);
 
 	// [전체 게시글 불러오기]
 	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest);
@@ -30,12 +30,12 @@ public interface BoardService {
 	public PersonpageDTO getBoardByUserId(String userId);
 
 	// [게시글 수정]
-	public BoardDTO updateBoard(BoardDTO newboardDTO, List<MultipartFile> files);
+	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO, List<MultipartFile> files);
 	
 	// [추천 +1]
 	public BoardDTO updateLikeCount(Long boardDTONo);
 	
 	// [게시글 삭제]
-	public boolean deleteBoard(BoardDTO boardDTO);
+	public boolean deleteBoard(SessionDTO sessionDTO, BoardDTO boardDTO);
 
 }

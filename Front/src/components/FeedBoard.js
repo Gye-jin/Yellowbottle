@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
 import { useNavigate } from "react-router-dom";
+import { anotherUserPageData } from "../Api/UserData";
 
 const FeedBoard = () => {
   //백에서 보낸 10개씩 게시물을 담는 공간
@@ -11,6 +12,10 @@ const FeedBoard = () => {
   const [fetching, setFetching] = useState(false);
   // navigate 함수
   const navigate = useNavigate();
+  //  해당유저의 세션정보
+  const userSession = sessionStorage.getItem("sessionId");
+  // 세션정보를 통해 불러들일 유저의 아이디
+  const [userId, setUserId] = useState();
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
@@ -61,7 +66,12 @@ const FeedBoard = () => {
                 <div key={board.boardNo} className="board">
                   <div href={"http://localhost:3000/board/" + board.boardNo}>
                     <div className="board_Header">
-                      <h3 className="board_UserId">{board.userId}</h3>
+                      <h3
+                        className="board_UserId"
+                        onClick={() => navigate(`/personPage/${board.userId}`)}
+                      >
+                        {board.userId}
+                      </h3>
                       {/* 이미지 출력 */}
                       {/* React는 렌더링이 화면에 커밋된 후에 모든 효과를 실행한다. 즉, 데이터가 들어오기 전에 board.fileDTO.map을 실행시키며 이 데이터는 undefined로 나온다. */}
                       {/* 따라서 true && expression을 설정해서 앞에 값들이 들어오면 그때 expression을 실행시키게 하면된다! */}
