@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,6 +71,7 @@ public class UserController {
 	// [로그아웃]
 	@PostMapping(value = "/logout")
 	public boolean logout(@RequestBody SessionDTO sessionDTO) {
+		System.out.println(sessionDTO);
 		return userService.logout(sessionDTO.getSessionId());
 		
 	}
@@ -96,9 +98,13 @@ public class UserController {
 	}
 
 	// [회원정보 수정]
-	@PutMapping(value = "/updateUser")
-	public UserDTO updateUserInfo(@RequestBody SessionDTO sessionDTO, UserDTO userDTO) {
+	@PostMapping(value = "/updateUser")
+	public UserDTO updateUserInfo(@ModelAttribute SessionDTO sessionDTO, UserDTO userDTO) {
 		return userService.updateUserInfo(sessionDTO,userDTO);
+		
+//		System.out.println(sessionDTO);
+//		System.out.println(userDTO);
+		
 	}
 
 	// Delete
