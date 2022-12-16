@@ -65,7 +65,7 @@ public class BoardController {
 	 * click : 특정 게시글 클릭시 조회수 +1
 	 * 출력 : List[불러올 게시글, 추천게시글1, 추천게시글2, 추천게시글3]
 	 */
-	@GetMapping("/RecomentBoard/{boardNo}")
+	@GetMapping("/recomendBoard/{boardNo}")
 	public List<BoardDTO> findRecommendBoard(@PathVariable Long boardNo) {
 		return boardService.findRecoBoard(boardNo);
 	}
