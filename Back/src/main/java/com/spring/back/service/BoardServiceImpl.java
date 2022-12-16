@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
+import com.spring.back.dto.CommentDTO;
 import com.spring.back.dto.PersonpageDTO;
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.entity.Board;
+import com.spring.back.entity.Comment;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
@@ -66,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		
 		
-		return  boardDTO.builder()
+		return  BoardDTO.builder()
 				.boardContent(board.getBoardContent())
 				.boardNo(board.getBoardNo())
 				.build();
@@ -91,12 +93,29 @@ public class BoardServiceImpl implements BoardService {
 		Session session = sessionRepo.findBySessionId(sessionId);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateViewCount(board.getViewCount() + 1);
-	
+		System.out.println(board);
+		System.out.println(session);
 		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
 			BoardDTO boardDTO = Board.myboardEntityToDTO(board);
+			for (CommentDTO comment : boardDTO.getComments()) {
+				if (comment.getUserId().equals(session.getUser().getUserId())) {
+					comment.setEditor(true);
+
+				} else {
+					comment.setEditor(false);
+				}
+			}
 			return boardDTO;
 		} else {
 			BoardDTO boardDTO = Board.yourEntityToDTO(board);
+			for (CommentDTO comment : boardDTO.getComments()) {
+				if (comment.getUserId().equals(session.getUser().getUserId())) {
+					comment.setEditor(true);
+
+				} else {
+					comment.setEditor(false);
+				}
+			}
 			return boardDTO;
 		}
 		
@@ -159,7 +178,7 @@ public class BoardServiceImpl implements BoardService {
 			board.updateBoard(newboardDTO);
 			BoardDTO boardDTO = Board.yourEntityToDTO(board);
 			// 기존 File 삭제
-			fileService.deleteFileBoardNo(boardDTO.getBoardNo());
+			fileService.deleteFileBoard(board);
 			// 새로운 File 추가
 			fileService.uploadFile(boardDTO.getBoardNo(), files);
 			return true;
@@ -189,7 +208,7 @@ public class BoardServiceImpl implements BoardService {
 		if (deleteBoard.getUser().equals(session.getUser())) {
 			// file과 comment먼저 삭제 후 게시글 삭제 진행
 			commentService.deleteAllComment(boardDTO.getBoardNo());
-			fileService.deleteFileBoardNo(boardDTO.getBoardNo());
+			fileService.deleteFileBoard(BoardDTO.boardDtotoEntity(boardDTO));
 			boardRepo.deleteById(boardDTO.getBoardNo());
 			return true;
 		}

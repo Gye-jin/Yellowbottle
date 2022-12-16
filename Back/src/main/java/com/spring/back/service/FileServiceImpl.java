@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.Storage.BlobTargetOption;
@@ -46,7 +45,6 @@ public class FileServiceImpl implements FileService {
 	public void uploadFile(Long boardNo, List<MultipartFile> files) {
 		// files객체 분해 후 DB 삽입
 		for (MultipartFile file : files) {
-			System.out.println("---");
 			try {
 				// bloInfo라는 객체를 통해서 
 				BlobInfo blobInfo = storage.create(
@@ -85,8 +83,12 @@ public class FileServiceImpl implements FileService {
 	// 설명 : boardNo의 게시글의 모든 File 삭제
 	@Override
 	@Transactional
-	public void deleteFileBoardNo(Long boardNo) {
-		fileRepo.deleteByBoardNo(boardNo);
+	public void deleteFileBoard(Board board)  {
+		
+		List <File> files = fileRepo.findByBoard(board);
+		
+		
+		fileRepo.deleteByBoardNo(files.get(0).getBoard().getBoardNo());
 	}
 	
 	

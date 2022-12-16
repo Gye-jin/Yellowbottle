@@ -43,7 +43,9 @@ public class BoardController {
 	public BoardDTO createBoard(@ModelAttribute SessionDTO sessionDTO, @ModelAttribute BoardDTO boardDTO, @RequestParam("image") List<MultipartFile> images) {
 		// 게시글 삽입 후 게시글 번호 가져오기
 		BoardDTO board=boardService.insertBoard(sessionDTO, boardDTO);
+		// 해당하는 게시글 번호에 맞춰 파일과 태그 DB에 삽입
 		fileService.uploadFile(board.getBoardNo(), images);
+	
 		return board;
 	}
 
@@ -54,9 +56,8 @@ public class BoardController {
 	 */
 	@GetMapping("/board/{boardNo}")
 	public BoardDTO findBoard(@RequestParam String sessionId, @PathVariable Long boardNo) {
-		System.out.println(sessionId);
-		System.out.println(boardNo);
-		return boardService.getBoardByBoardNo(sessionId,boardNo);
+		BoardDTO boardDTO =  boardService.getBoardByBoardNo(sessionId,boardNo);
+		return boardDTO;
 	}
 	
 	/* [(세부 게시글 확인 전용)특정 게시글 불러오기]
@@ -65,7 +66,7 @@ public class BoardController {
 	 * click : 특정 게시글 클릭시 조회수 +1
 	 * 출력 : List[불러올 게시글, 추천게시글1, 추천게시글2, 추천게시글3]
 	 */
-	@GetMapping("/recomendBoard/{boardNo}")
+	@GetMapping("/RecomentBoard/{boardNo}")
 	public List<BoardDTO> findRecommendBoard(@PathVariable Long boardNo) {
 		return boardService.findRecoBoard(boardNo);
 	}
@@ -88,6 +89,7 @@ public class BoardController {
 	@GetMapping("/boardUpdate/{boardNo}")
 	public BoardDTO getUpdateBoard(@PathVariable Long boardNo) {
 		BoardDTO boardDTO = boardService.findBoardByBoardNo(boardNo);
+		
 		return boardDTO;
 	}
 

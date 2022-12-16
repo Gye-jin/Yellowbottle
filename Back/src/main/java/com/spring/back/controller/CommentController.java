@@ -12,7 +12,7 @@ import com.spring.back.dto.SessionDTO;
 import com.spring.back.service.CommentServiceImpl;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api", produces = "application/json")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class CommentController {
 	// Connection
