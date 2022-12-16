@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   CssBaseline,
   TextField,
   FormControl,
   FormHelperText,
+  FormControlLabel,
+  Checkbox,
   Grid,
   Box,
   Typography,
@@ -14,7 +16,7 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
-import { passUpdateUser, ForPostUpdateData } from "../../Api/LogData";
+import { ForPostDeleteData } from "../../Api/LogData";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -28,29 +30,24 @@ const Boxs = styled(Box)`
 `;
 
 // 회원가입 페이지
-const UpdateUser = () => {
+const DeleteUser = () => {
   // mui 테마
   const theme = createTheme();
-  // 이메일 입력오류
-  const [emailError, setEmailError] = useState("");
+
   // 비밀번호
   const [password, setPassword] = useState();
-  // 이메일
-  const [email, setEmail] = useState();
-  // 이메일수신확인
-  const [subStatus, setSubStatus] = useState();
   // 재입력 비밀번호
   const [rePassword, setRePassword] = useState("");
   // 비밀번호 입력오류
   const [passwordError, setPasswordError] = useState("");
   // 재입력 비밀번호 입력오류
   const [rePasswordError, setRePasswordError] = useState("");
-  // 회원가입버튼 눌렀을 때 오류
+  // 회원탈퇴 체크박스 체크여부확인
+  const [CheckedPersonal, setCheckedPersonal] = useState(false);
+  // 회원탈퇴버튼 눌렀을 때 오류
   const [registerError, setRegisterError] = useState("");
   // 해당유저 세션아이디 선언
   const userSession = sessionStorage.getItem("sessionId");
-  // 해당 userDTO를 담아둘 공간
-  const [userDTO, setUserDTO] = useState([]);
   // rePassword 입력할때마다 인식해주는 함수
   const rePasswordHandler = (e) => {
     setRePassword(e.target.value);
@@ -59,80 +56,31 @@ const UpdateUser = () => {
   const passwordHandler = (e) => {
     setPassword(e.target.value);
   };
-  // email 입력할때마다 인식해주는 함수
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
+  // 회원탈퇴동의 체크박스 여부 함수
+  const handlePersonalAgree = (event) => {
+    setCheckedPersonal(event.target.checked);
   };
-  // 이메일 수신 변경 인식해주는 함수
-  const subStatusHandler = (e) => {
-    setSubStatus(e.target.value);
-  };
-  // 회원정보수정 페이지 접속시 기존 회원이메일 출력해줌
-  useEffect(() => {
-    const response = passUpdateUser(userSession);
-    response.then((data) => {
-      const agreeBtn = document.getElementById("email-agreement");
-      const disagreeBtn = document.getElementById("email-disagreement");
-      data.subStatus
-        ? agreeBtn.setAttribute("checked", "checked")
-        : disagreeBtn.setAttribute("checked", "checked");
-      setUserDTO(data);
-    });
-  }, []);
-  // userDTO가 불러와지면 그때 기본적인 선언
-  useEffect(() => {
-    setPassword(`${userDTO.userPw}`);
-    setEmail(`${userDTO.email}`);
-    setSubStatus(`${userDTO.subStatus}`);
-  }, [userDTO]);
-  // subStatus값 백에 보낼떄 1또는 0으로 보내기 위해 바꾸는 함수
-  // useEffect(() => {
-  // if (subStatus === false) {
-  //   setSubStatus(0);
-  // } else {
-  //   setSubStatus(1);
-  // }
-  // }, [subStatus]);
-  //   console.log(userDTO.email);
-  // 수정 버튼 누를때 실행되는 함수: updateData(입력된 값)를 유효성 검사를 통해 LogData.js에 있는 ForPostUpdateData 함수에 보내준다.
-  const createUpdateData = (e) => {
+
+  // 회원탈퇴 버튼 누를때 실행되는 함수: updateData(입력된 값)를 유효성 검사를 통해 LogData.js에 있는 ForPostUpdateData 함수에 보내준다.
+  const createDeleteData = (e) => {
     // 실행시 화면새로고침 방지
     e.preventDefault();
+    const deleteData = new FormData();
+    deleteData.append("sessionId", userSession);
+    deleteData.append("userPw", password);
 
-    console.log("-----");
-    console.log(document.querySelector("input[name='subStatus']:checked"));
-    console.log("-----");
-    const emailCheckBtn = document.querySelector(
-      "input[name='subStatus']:checked"
-    );
-    const updateData = new FormData();
-    updateData.append("sessionId", userSession);
-    updateData.append("userPw", password);
-    updateData.append("email", email);
-    updateData.append("subStatus", emailCheckBtn.value);
-    console.log(updateData);
+    console.log(deleteData);
     // FormData의 key 확인
-    for (let key of updateData.keys()) {
+    for (let key of deleteData.keys()) {
       console.log("폼데이터 key값", key);
     }
 
     // FormData의 value 확인
-    for (let value of updateData.values()) {
+    for (let value of deleteData.values()) {
       console.log("폼데이터 value값", value);
     }
 
-    // updateData에 넣은 각각의 값들은 유효성 검사를 거친다.
-
-    // 이메일 유효성 체크
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (email !== "") {
-      if (!emailRegex.test(email))
-        setEmailError("올바른 이메일 형식이 아닙니다.");
-      else setEmailError("");
-    } else {
-      setEmailError("");
-    }
+    // deleteData에 넣은 각각의 값들은 유효성 검사를 거친다.
 
     // 비밀번호 유효성 체크
     const passwordRegex =
@@ -149,10 +97,12 @@ const UpdateUser = () => {
     } else {
       setRePasswordError("");
     }
+    // 회원가입 동의 체크
+    if (!CheckedPersonal) alert("회원탈퇴 동의란에 체크해주세요.");
 
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
-    if (passwordRegex.test(password)) {
-      ForPostUpdateData(updateData, setRegisterError);
+    if (passwordRegex.test(password) && CheckedPersonal) {
+      ForPostDeleteData(deleteData, setRegisterError);
     }
   };
 
@@ -170,13 +120,13 @@ const UpdateUser = () => {
           }}
         >
           <Typography component="h1" variant="h5">
-            회원정보수정
+            회원탈퇴
           </Typography>
 
           <Boxs
             component="form"
             noValidate
-            onSubmit={createUpdateData}
+            onSubmit={createDeleteData}
             sx={{ mt: 3 }}
           >
             <FormControl component="fieldset" variant="standard">
@@ -211,45 +161,17 @@ const UpdateUser = () => {
                 </Grid>
                 {/* 유효성 검사를 통해 rePassword가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
                 <FormHelperTexts>{rePasswordError}</FormHelperTexts>
-                {/* 이메일 입력칸 */}
-                <Grid item xs={12}>
-                  이메일 변경을 원하시면 입력해주세요
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="email"
-                    id="email"
-                    name="email"
-                    label={`기존이메일: ${userDTO.email}`}
-                    onChange={emailHandler}
-                    error={emailError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 이메일이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{emailError}</FormHelperTexts>
-                {/* <h3>기존이메일수신동의</h3> */}
-                <div className="join-genderRadio">
-                  <span>이메일 수신 동의 </span>
-                  <input
-                    type="radio"
-                    id="email-agreement"
-                    name="subStatus"
-                    value="1"
-                  />
-                  동의
-                  <input
-                    type="radio"
-                    id="email-disagreement"
-                    name="subStatus"
-                    value="0"
-                  />
-                  비동의
-                </div>
               </Grid>
-              {/* 수정 버튼을 누르면 위 입력한 데이터(updateData)를 백에 보낸다. */}
+              {/* 개인정보 동의칸 */}
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox onChange={handlePersonalAgree} color="primary" />
+                  }
+                  label="귀하는 C-ZERO 회원탈퇴에 동의합니다."
+                />
+              </Grid>
+              {/* 회원탈퇴 버튼을 누르면 위 입력한 데이터(deleteData)를 백에 보낸다. */}
               <Button
                 type="submit"
                 fullWidth
@@ -257,7 +179,7 @@ const UpdateUser = () => {
                 sx={{ mt: 3, mb: 2 }}
                 size="large"
               >
-                회원정보수정
+                탈퇴
               </Button>
             </FormControl>
             {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
@@ -269,4 +191,4 @@ const UpdateUser = () => {
   );
 };
 
-export default UpdateUser;
+export default DeleteUser;

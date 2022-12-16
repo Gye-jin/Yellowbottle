@@ -36,6 +36,11 @@ function PersonPage() {
         ) : (
           <br />
         )}
+        {personId === sessionUserId ? (
+          <button onClick={() => navigate("/deleteUser")}>회원탈퇴</button>
+        ) : (
+          <br />
+        )}
         {/* 해당유저가 올린 게시물사진 모두 보여주는 함수 */}
         {myPageData.boards &&
           myPageData.boards.map((board) => (

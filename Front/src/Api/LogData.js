@@ -243,14 +243,6 @@ export const passUpdateUser = async (userSession) => {
 
 // 입력된 updateData값들을 백에 보내는 함수
 export function ForPostUpdateData(updateData, setRegisterError) {
-  for (let key of updateData.keys()) {
-    console.log("폼데이터 key값", key);
-  }
-
-  // FormData의 value 확인
-  for (let value of updateData.values()) {
-    console.log("폼데이터 value값", value);
-  }
   console.log(updateData, "백으로 보내기 전 콘솔!");
   const postUpdateData = async (updateData) => {
     // post
@@ -270,4 +262,23 @@ export function ForPostUpdateData(updateData, setRegisterError) {
   };
   // 위에서 만든 postLoginData가 로그인 페이지에서 실행되면 실행.
   postUpdateData(updateData);
+}
+
+// DeleteUser
+// 회원탈퇴함수
+export function ForPostDeleteData(deleteData, setRegisterError) {
+  const postDeleteData = async (deleteData) => {
+    await axios
+      .post("http://localhost:8080/api/deleteUser", deleteData)
+      .then((response) => {
+        console.log(response, "회원탈퇴성공 ㅠㅠ");
+        alert("🤬회원탈퇴한 당신은 환경파괴자 ㅡ.ㅡ🤬");
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        console.log(err, "회원탈퇴실패");
+        alert("회원탈퇴실패");
+      });
+  };
+  postDeleteData(deleteData);
 }
