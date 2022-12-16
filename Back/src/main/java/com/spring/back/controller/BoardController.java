@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.SessionDTO;
-import com.spring.back.entity.Board;
 import com.spring.back.service.BoardServiceImpl;
 import com.spring.back.service.FileServiceImpl;
 
@@ -99,16 +98,11 @@ public class BoardController {
 	@PostMapping(value = "/boardupdate")
 	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("images") List<MultipartFile> images) {
 	
-		return boardService.updateBoard(sessionDTO,boardDTO, images);
-	}
-	
-	// [추천]
-	// 설명 : 좋아요 누를 경우 게시글 반영
-	// click : 좋아요 +1
-	@PostMapping(value = "/likeupdate")
-	public BoardDTO updateLike(@RequestBody BoardDTO boardDTO) {
-		BoardDTO newBoardDTO = boardService.updateLikeCount(boardDTO.getBoardNo());
-		return newBoardDTO;
+		boolean result = boardService.updateBoard(sessionDTO,boardDTO);
+		
+		// 새로운 File 추가
+		fileService.uploadFile(boardDTO.getBoardNo(), images);
+		return result;
 	}
 
 	// Delete

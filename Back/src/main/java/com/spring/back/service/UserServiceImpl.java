@@ -14,6 +14,7 @@ import com.spring.back.dto.UserDTO;
 import com.spring.back.entity.Certified;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
+import com.spring.back.repository.CertifiedRepository;
 import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 
@@ -26,16 +27,8 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepo;
 	@Autowired
 	SessionRepository sessionRepo;
-
-	// [Service]
 	@Autowired
-	MailServiceImpl mailService;
-	
-	@Autowired
-	SessionServiceImpl sessionService;
-	
-	@Autowired
-	CertifiedServiceImpl certifiedService;
+	CertifiedRepository certifiedRepo;
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -52,19 +45,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int findPwByEmailAndBirthAndUserId(String email, String birth, String userId) {
 		User user = userRepo.findByEmailAndBirthAndUserId(email, birth, userId);
-		Certified certification = certifiedService.findByUser(user);
+		Certified certification = certifiedRepo.findByUser(user);
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
 		Certified certified = Certified.builder().certifiedNo(checkNum).user(user).build();
 		if (user != null) {
 			if (certification == null) {
-				certifiedService.insertCertified(certified);
-				mailService.checkEmail(checkNum, email);
+				certifiedRepo.save(certified);
 				return checkNum;
 			} else {
-				certifiedService.deleteCertified(user);
-				certifiedService.insertCertified(certified);
-				mailService.checkEmail(checkNum, email);
+				certifiedRepo.deleteByUser(user);
+				certifiedRepo.save(certified);
 				return checkNum;
 			}
 
@@ -76,20 +67,24 @@ public class UserServiceImpl implements UserService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [로그인]
 	@Override
+	@Transactional
 	public String login(String userId, String userPw, HttpSession httpsession) {
 		User user = userRepo.findByUserId(userId);
-		Session usersession = sessionService.findByUser(user);
+		Session usersession = sessionRepo.findByUser(user);
 		if (userPw.equals(user.getUserPw())) {
 			if (usersession == null) {
-
 				httpsession.setAttribute("userId", user.getUserId());
 				String sessionId = httpsession.getId();
 				Session session = Session.builder().sessionId(sessionId).user(user).build();
-				sessionService.insertSession(session);
+				sessionRepo.save(session);
 				return sessionId;
 			}
 			else {
-				System.out.println(usersession.getSessionId());
+				sessionRepo.deleteBySessionId(usersession.getSessionId());
+				httpsession.setAttribute("userId", user.getUserId());
+				String sessionId = httpsession.getId();
+				Session session = Session.builder().sessionId(sessionId).user(user).build();
+				sessionRepo.save(session);
 				return usersession.getSessionId();
 			}
 		}
@@ -98,7 +93,7 @@ public class UserServiceImpl implements UserService {
 	// [로그아웃]
 	@Override
 	public boolean logout(String sessionId) {
-		sessionService.deleteSession(sessionId);
+		sessionRepo.deleteBySessionId(sessionId);
 			return true;
 	
 	}
@@ -122,16 +117,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return userIds;
 	}
-	
-	// [회원정보 불러오기]
-	public UserDTO findUserData(SessionDTO sessionDTO) {
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		String userId = session.getUser().getUserId();
-		
-		User user = userRepo.findByUserId(userId);
-		UserDTO userDTO = User.userEntityToDTO(user);
-		return userDTO;
-	}
 
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -140,7 +125,7 @@ public class UserServiceImpl implements UserService {
 	public boolean updatePw(UserDTO userDTO) {
 		User user = userRepo.findByUserId(userDTO.getUserId());
 		user.updatePw(userDTO);
-		certifiedService.deleteCertified(user);
+		certifiedRepo.deleteByUser(user);
 		userRepo.save(user);
 		return true;
 	}

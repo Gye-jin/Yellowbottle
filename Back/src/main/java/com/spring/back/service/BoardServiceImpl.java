@@ -10,18 +10,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.CommentDTO;
 import com.spring.back.dto.PersonpageDTO;
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.entity.Board;
-import com.spring.back.entity.Comment;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
 import com.spring.back.repository.CommentRepository;
+import com.spring.back.repository.FileRepository;
 import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 import com.spring.back.repository.mapping.BoardMapping;
@@ -42,15 +41,8 @@ public class BoardServiceImpl implements BoardService {
 	CommentRepository commentRepo;
 	@Autowired
 	SessionRepository sessionRepo;
-	
-	
-	// [Service]
 	@Autowired
-	UserServiceImpl userService;
-	@Autowired
-	FileServiceImpl fileService;
-	@Autowired
-	CommentServiceImpl commentService;
+	FileRepository fileRepo;
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -61,11 +53,8 @@ public class BoardServiceImpl implements BoardService {
 		Board board = BoardDTO.boardDtotoEntity(boardDTO);
 		// board에 user 직접 삽입하기
 		board.updateUser(session.getUser());
-		System.out.println("업데이트");
 		
 		boardRepo.save(board);
-		
-		
 		
 		
 		return  BoardDTO.builder()
@@ -93,14 +82,11 @@ public class BoardServiceImpl implements BoardService {
 		Session session = sessionRepo.findBySessionId(sessionId);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateViewCount(board.getViewCount() + 1);
-		System.out.println(board);
-		System.out.println(session);
 		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
 			BoardDTO boardDTO = Board.myboardEntityToDTO(board);
 			for (CommentDTO comment : boardDTO.getComments()) {
 				if (comment.getUserId().equals(session.getUser().getUserId())) {
 					comment.setEditor(true);
-
 				} else {
 					comment.setEditor(false);
 				}
@@ -111,15 +97,12 @@ public class BoardServiceImpl implements BoardService {
 			for (CommentDTO comment : boardDTO.getComments()) {
 				if (comment.getUserId().equals(session.getUser().getUserId())) {
 					comment.setEditor(true);
-
 				} else {
 					comment.setEditor(false);
 				}
 			}
 			return boardDTO;
 		}
-		
-	
 	}
 	/* [수정하기 위한 게시글 불러오기
 	 */
@@ -153,7 +136,6 @@ public class BoardServiceImpl implements BoardService {
 		ArrayList<BoardMapping> boardMappings = boardRepo.findByUser(user);
 		Long countBoard = boardRepo.countByUser(user);
 		Long countComment = commentRepo.countByUser(user);
-		System.out.println(boardMappings);
 		if (sessionRepo.findByUser(user) != null) {
 			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(true).countBoard(countBoard).countComment(countComment)
 					.boards(boardMappings).build();
@@ -171,29 +153,17 @@ public class BoardServiceImpl implements BoardService {
 	// [게시글 수정]
 	@Override
 	@Transactional
-	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO, List<MultipartFile> files) {
+	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO) {
 		Board board = boardRepo.findById(newboardDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		if(board.getUser().equals(session.getUser())) {
+		if(session.getUser().getBoards().equals(session.getUser())) {
 			board.updateBoard(newboardDTO);
-			BoardDTO boardDTO = Board.yourEntityToDTO(board);
 			// 기존 File 삭제
-			fileService.deleteFileBoard(board);
-			// 새로운 File 추가
-			fileService.uploadFile(boardDTO.getBoardNo(), files);
+			fileRepo.deleteByBoardNo(board.getBoardNo());
+
 			return true;
 		}
 		return false;
-	}
-	
-	// [좋아요 수 +1]
-	@Override
-	@Transactional
-	public BoardDTO updateLikeCount(Long boardNo) {
-		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
-		board.updateLikeCount(board.getLikeCount()+1);
-		BoardDTO boardDTO = Board.yourEntityToDTO(board);
-		return boardDTO;
 	}
 
 	// Delete
@@ -207,8 +177,8 @@ public class BoardServiceImpl implements BoardService {
 		// 삭제 요청한 userId와 요청한 게시글의 userId가 같을 경우에만 삭제 진행
 		if (deleteBoard.getUser().equals(session.getUser())) {
 			// file과 comment먼저 삭제 후 게시글 삭제 진행
-			commentService.deleteAllComment(boardDTO.getBoardNo());
-			fileService.deleteFileBoard(BoardDTO.boardDtotoEntity(boardDTO));
+			commentRepo.deleteByboardNo(boardDTO.getBoardNo());
+			fileRepo.deleteByBoardNo(boardDTO.getBoardNo());
 			boardRepo.deleteById(boardDTO.getBoardNo());
 			return true;
 		}
