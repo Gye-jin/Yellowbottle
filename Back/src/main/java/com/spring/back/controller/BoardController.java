@@ -55,8 +55,8 @@ public class BoardController {
 	 */
 	@GetMapping("/board/{boardNo}")
 	public BoardDTO findBoard(@RequestParam String sessionId, @PathVariable Long boardNo) {
-		System.out.println(sessionId);
-		return boardService.getBoardByBoardNo(sessionId,boardNo);
+		BoardDTO boardDTO =  boardService.getBoardByBoardNo(sessionId,boardNo);
+		return boardDTO;
 	}
 	
 	/* [(세부 게시글 확인 전용)특정 게시글 불러오기]
@@ -88,6 +88,7 @@ public class BoardController {
 	@GetMapping("/boardUpdate/{boardNo}")
 	public BoardDTO getUpdateBoard(@PathVariable Long boardNo) {
 		BoardDTO boardDTO = boardService.findBoardByBoardNo(boardNo);
+		
 		return boardDTO;
 	}
 

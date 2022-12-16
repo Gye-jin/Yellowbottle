@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.back.dto.BoardDTO;
+import com.spring.back.dto.CommentDTO;
 import com.spring.back.dto.PersonpageDTO;
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.entity.Board;
+import com.spring.back.entity.Comment;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
@@ -95,9 +97,25 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println(session);
 		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
 			BoardDTO boardDTO = Board.myboardEntityToDTO(board);
+			for (CommentDTO comment : boardDTO.getComments()) {
+				if (comment.getUserId().equals(session.getUser().getUserId())) {
+					comment.setEditor(true);
+
+				} else {
+					comment.setEditor(false);
+				}
+			}
 			return boardDTO;
 		} else {
 			BoardDTO boardDTO = Board.yourEntityToDTO(board);
+			for (CommentDTO comment : boardDTO.getComments()) {
+				if (comment.getUserId().equals(session.getUser().getUserId())) {
+					comment.setEditor(true);
+
+				} else {
+					comment.setEditor(false);
+				}
+			}
 			return boardDTO;
 		}
 		
