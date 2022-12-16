@@ -30,4 +30,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 			"ORDER BY b.view_count DESC LIMIT 3", nativeQuery = true)
 	public List<Board> findRecommendedBoardByBoardNo(@Param("no") Long boardNo);
 	
+	public void deleteByUser(User user);
+	
 }

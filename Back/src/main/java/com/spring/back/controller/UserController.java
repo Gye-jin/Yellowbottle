@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,7 +70,6 @@ public class UserController {
 	// [로그아웃]
 	@PostMapping(value = "/logout")
 	public boolean logout(@RequestBody SessionDTO sessionDTO) {
-		System.out.println(sessionDTO);
 		return userService.logout(sessionDTO.getSessionId());
 		
 	}
@@ -109,17 +107,13 @@ public class UserController {
 	@PostMapping(value = "/updateUser")
 	public boolean updateUserInfo(@ModelAttribute SessionDTO sessionDTO, UserDTO userDTO) {
 		return userService.updateUserInfo(sessionDTO,userDTO);
-
-//		System.out.println(sessionDTO);
-//		System.out.println(userDTO);
-//		return null;
 	}
 
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [회원 탈퇴]
 	@PostMapping(value = "/deleteUser")
-	public boolean deleteUser(@RequestParam String sessionId, @RequestParam String userPw) {
-		return userService.deleteUser(sessionId, userPw);
+	public boolean deleteUser(@ModelAttribute SessionDTO sessionDTO,UserDTO userDTO) {
+		return userService.deleteUser(sessionDTO.getSessionId(), userDTO.getUserPw());
 	}
 }

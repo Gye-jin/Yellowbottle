@@ -11,10 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
+import com.spring.back.entity.Board;
 import com.spring.back.entity.Certified;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
+import com.spring.back.repository.BoardRepository;
 import com.spring.back.repository.CertifiedRepository;
+import com.spring.back.repository.CommentRepository;
+import com.spring.back.repository.FileRepository;
 import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 
@@ -29,6 +33,13 @@ public class UserServiceImpl implements UserService {
 	SessionRepository sessionRepo;
 	@Autowired
 	CertifiedRepository certifiedRepo;
+	@Autowired
+	FileRepository fileRepo;
+	@Autowired
+	BoardRepository boardRepo;
+	@Autowired
+	CommentRepository commentRepo;
+	
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -95,7 +106,6 @@ public class UserServiceImpl implements UserService {
 	public boolean logout(String sessionId) {
 		sessionRepo.deleteById(sessionId);
 			return true;
-	
 	}
 	
 	// [아이디 중복 확인]
@@ -156,6 +166,14 @@ public class UserServiceImpl implements UserService {
 		User userSession = sessionRepo.findBySessionId(sessionId).getUser();
 
 		if (userSession.getUserPw().equals(userPw)) {
+			commentRepo.deleteByUser(userSession);
+			for(Board board : userSession.getBoards()) {
+				commentRepo.deleteByboardNo(board.getBoardNo());
+				fileRepo.deleteByBoard(board);
+			}
+			boardRepo.deleteByUser(userSession);
+			sessionRepo.deleteBySessionId(sessionId);
+			certifiedRepo.deleteByUser(userSession);
 			userRepo.deleteById(userSession.getUserId());
 			return true;
 		}
