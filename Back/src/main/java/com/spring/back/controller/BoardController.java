@@ -96,11 +96,12 @@ public class BoardController {
 	// click : 게시글 수정 완료
 	@PostMapping(value = "/boardupdate")
 	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam(value ="images", required = false) List<MultipartFile> images) {
-	
+		
 		boolean result = boardService.updateBoard(sessionDTO,boardDTO);
 		
-		// 새로운 File 추가
-		fileService.uploadFile(boardDTO.getBoardNo(), images);
+			// 새로운 File 추가
+			fileService.updateFile(boardDTO.getBoardNo(), images);	
+		
 		return result;
 	}
 
@@ -108,7 +109,7 @@ public class BoardController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 삭제]
 	// 설명 : 본인 게시글 지우기
-	@DeleteMapping("/boarddelete")
+	@PostMapping("/boarddelete")
 	public boolean deleteBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO) {
 
 		return boardService.deleteBoard(sessionDTO,boardDTO);

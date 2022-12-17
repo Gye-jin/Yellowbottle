@@ -61,7 +61,7 @@ export function ForPostBoardWrite(boardWriteData, setClusterData, clusterData) {
         setClusterData(response.data);
         // // 로그인 성공시 메인화면으로 이동한다.
         console.log(clusterData);
-        addClusterNo(clusterData);
+        // addClusterNo(clusterData);
       })
       .catch(function (err) {
         // 백에서 오류(err)가 온다면 게시글 작성 실패
@@ -150,14 +150,71 @@ export const deleteComment = async (deleteCommentData) => {
 // 게시글 삭제 함수
 export const postDeleteBoardData = async (deleteBoardData) => {
   await axios
-    .delete("http://localhost:8080/api/boarddelete", deleteBoardData)
-    .then(
-      ((response) => {
-        console.log(response, "게시글 삭제 성공!");
-        alert("게시글 삭제 성공!🦄");
-      }).catch(function (err) {
-        console.log(err, "게시글 삭제 실패");
-        alert("게시글 삭제 실패 ㅠㅠ🦄🦄🦄");
+    .post("http://localhost:8080/api/boarddelete", deleteBoardData)
+    .then((response) => {
+      response.data
+        ? alert("🌍게시글 삭제 성공!🌍")((window.location.href = "/feed"))
+        : alert("🌍🌍게시글 삭제 실패🌍🌍");
+    });
+};
+
+// BoardUpdate
+// 게시글수정페이지에서 수정한 이미지파일, 게시글내용, 유저세션을 백에 보내는 함수
+export function ForPostUpdateBoard(
+  updateBoardData,
+  setClusterData,
+  clusterData
+) {
+  // FormData의 key 확인
+  for (let key of updateBoardData.keys()) {
+    console.log("폼데이터 key값", key);
+  }
+
+  // FormData의 value 확인
+  for (let value of updateBoardData.values()) {
+    console.log("폼데이터 value값", value);
+  }
+
+  const postBoardUpdate = async (updateBoardData) => {
+    // post
+    await axios
+      // 입력된 데이터를 백에 보낸다.
+      .post("http://localhost:8080/api/boardupdate", updateBoardData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
-    );
+      .then((response) => {
+        // 백에서 반응(response)이 정상적으로 온다면 성공
+        console.log(response, "성공");
+        alert("😍게시글 수정 성공😍");
+        setClusterData(response.data);
+      })
+      .catch(function (err) {
+        // 백에서 오류(err)가 온다면 게시글 작성 실패
+        console.log(err);
+        alert("게시글 수정에 실패하셨습니다.😅");
+      });
+  };
+  postBoardUpdate(updateBoardData);
+}
+// 장고에 군집번호 추가하기위해 게시글번호와 게시글내용 보내는 함수
+export const addClusterNoInUpdateBoard = async (clusterData) => {
+  await axios
+    .post("http://43.200.193.64:8000/predict/", {
+      boardNo: clusterData.boardNo,
+      boardContent: clusterData.boardContent,
+    })
+    .then((res) => {
+      console.log("장고에 보내기 성공!!🦄", res);
+      // 로그인 성공시 메인화면으로 이동한다.
+      window.location.href = "/feed";
+    })
+    .catch((err) => {
+      console.log(clusterData);
+      console.log(clusterData.boardNo);
+      console.log(clusterData.boardContent);
+      console.log(err, "장고에 보낼 때 에러 발생!!👅");
+      window.location.href = "/feed";
+    });
 };

@@ -78,6 +78,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
+	@Transactional
 	public void updateFile(Long boardNo, List<MultipartFile> files) {
 		if (files != null) {
 			// 기존 File 삭제
