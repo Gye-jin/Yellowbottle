@@ -108,7 +108,7 @@ public class BoardController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 삭제]
 	// 설명 : 본인 게시글 지우기
-	@DeleteMapping("/boarddelete")
+	@PostMapping("/boarddelete")
 	public boolean deleteBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO) {
 
 		return boardService.deleteBoard(sessionDTO,boardDTO);
