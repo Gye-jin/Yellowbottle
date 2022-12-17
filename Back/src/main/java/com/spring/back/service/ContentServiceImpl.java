@@ -46,11 +46,22 @@ public class ContentServiceImpl implements ContentService {
 	public List<ContentDTO> getByCategory(ContentDTO contentDTO) {
 		ContentCategory contentCategory = contentDTO.getContentCategory();
 
-		List<Content> contents = contentRepo.findTop10ByContentCategoryOrderByContentNoDesc(contentCategory);
+		List<Content> contents = contentRepo.findTop10ByContentCategoryAndSendDateIsNullOrderByContentNoDesc(contentCategory);
 
 		List<ContentDTO> contentDTOs = contents.stream().map(content -> Content.contentEntityToDTO(content)).collect(Collectors.toList());
 		return contentDTOs;
 
+	}
+	// [보낸 메일 확인(카테고리 별로)]
+	@Override
+	public List<ContentDTO> getBySendMail(ContentDTO contentDTO) {
+		ContentCategory contentCategory = contentDTO.getContentCategory();
+		
+		List<Content> contents = contentRepo.findByContentCategoryAndSendDateIsNotNullOrderBySendDateDesc(contentCategory);
+		
+		List<ContentDTO> contentDTOs = contents.stream().map(content -> Content.contentEntityToDTO(content)).collect(Collectors.toList());
+		return contentDTOs;
+		
 	}
 	
 	// Read
