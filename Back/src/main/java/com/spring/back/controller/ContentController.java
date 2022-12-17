@@ -42,6 +42,13 @@ public class ContentController {
 		return contentService.getByCategory(contentDTO);
 	}
 	
+	// 전체 보낸 메일 확인
+	// --------------------------------------------------------------------------------------------------------------------------------
+	@PostMapping(value = "/readsendmail")
+	public List<ContentDTO> getSendMail(@RequestBody ContentDTO contentDTO) {
+		return contentService.getBySendMail(contentDTO);
+	}
+	
 	// Read
 	// --------------------------------------------------------------------------------------------------------------------------------
 	@PostMapping(value = "/readContent")
