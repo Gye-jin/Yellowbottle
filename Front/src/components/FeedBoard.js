@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
 import { useNavigate } from "react-router-dom";
-import { anotherUserPageData } from "../Api/UserData";
+import { AccessAgreeUserPage, AccessAgreeBoardDetail } from "./AccessAgree";
 
 const FeedBoard = () => {
   //백에서 보낸 10개씩 게시물을 담는 공간
@@ -14,8 +14,6 @@ const FeedBoard = () => {
   const navigate = useNavigate();
   //  해당유저의 세션정보
   const userSession = sessionStorage.getItem("sessionId");
-  // 세션정보를 통해 불러들일 유저의 아이디
-  const [userId, setUserId] = useState();
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
@@ -52,9 +50,7 @@ const FeedBoard = () => {
     const response = boardFetchData(pageNo);
     response.then((data) => setFeedBoard(data));
   }, []);
-  // console.log(FeedBoard);
-  // console.log(fetching);
-  // console.log("현재 pageNo ::", pageNo); //추후 스크롤로 올려줄 예정
+
   return (
     <>
       <div className="outer">
@@ -68,7 +64,7 @@ const FeedBoard = () => {
                     <div className="board_Header">
                       <h3
                         className="board_UserId"
-                        onClick={() => navigate(`/personPage/${board.userId}`)}
+                        onClick={() => AccessAgreeUserPage(board.userId)}
                       >
                         {board.userId}
                       </h3>
@@ -85,7 +81,7 @@ const FeedBoard = () => {
                             src={`${file.filePath + file.fileName}`}
                             alt="boardimage"
                             onClick={() =>
-                              navigate(`/detailBoard/${board.boardNo}`)
+                              AccessAgreeBoardDetail(board.boardNo)
                             }
                           />
                         ))}

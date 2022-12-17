@@ -15,11 +15,11 @@ const DetailBoard = () => {
   const [board, setBoard] = useState([]);
   //게시글 번호 가져오기
   const boardNo = useParams().boardNo;
-  //댓글 내용
-  const [commentContent, setCommentContent] = useState("");
   //이동함수(추천게시물 이동에 사용)
   const navigate = useNavigate();
+  //댓글 내용
   const [commentContent, setCommentContent] = useState("");
+  //세션아이디 가져오기
   const sessionId = sessionStorage.getItem("sessionId");
 
   //댓글창 내용입력 시 이벤트발생
@@ -64,12 +64,14 @@ const DetailBoard = () => {
     postDeleteBoardData(deleteBoardData);
   };
 
+  //1.게시물 세부내용 가져오기 -api사용
   useEffect(() => {
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
   }, []);
   console.log(board.editor);
 
+  // 게시물수정으로 이동
   const updateBoard = () => {
     navigate(`/updateBoard/${boardNo}`);
   };
@@ -83,6 +85,7 @@ const DetailBoard = () => {
             <div className="board">
               {/* userId 클릭시 해당 유저의 마이페이지로 이동 */}
               <h3 onClick={() => navigate(`/personPage/${board.userId}`)}>
+                {/* <h3 onClick={() => navigate(`/personPage/${board.userId}`)}> */}
                 {board.userId}
               </h3>
               {/* 게시글 작성자이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
