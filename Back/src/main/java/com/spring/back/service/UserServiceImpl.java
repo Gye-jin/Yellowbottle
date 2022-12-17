@@ -11,9 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
+import com.spring.back.entity.Board;
 import com.spring.back.entity.Certified;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
+import com.spring.back.repository.BoardRepository;
+import com.spring.back.repository.CertifiedRepository;
+import com.spring.back.repository.CommentRepository;
+import com.spring.back.repository.FileRepository;
 import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
 
@@ -26,16 +31,15 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepo;
 	@Autowired
 	SessionRepository sessionRepo;
-
-	// [Service]
 	@Autowired
-	MailServiceImpl mailService;
+	CertifiedRepository certifiedRepo;
+	@Autowired
+	FileRepository fileRepo;
+	@Autowired
+	BoardRepository boardRepo;
+	@Autowired
+	CommentRepository commentRepo;
 	
-	@Autowired
-	SessionServiceImpl sessionService;
-	
-	@Autowired
-	CertifiedServiceImpl certifiedService;
 
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -52,19 +56,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int findPwByEmailAndBirthAndUserId(String email, String birth, String userId) {
 		User user = userRepo.findByEmailAndBirthAndUserId(email, birth, userId);
-		Certified certification = certifiedService.findByUser(user);
+		Certified certification = certifiedRepo.findByUser(user);
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
 		Certified certified = Certified.builder().certifiedNo(checkNum).user(user).build();
 		if (user != null) {
 			if (certification == null) {
-				certifiedService.insertCertified(certified);
-				mailService.checkEmail(checkNum, email);
+				certifiedRepo.save(certified);
 				return checkNum;
 			} else {
-				certifiedService.deleteCertified(user);
-				certifiedService.insertCertified(certified);
-				mailService.checkEmail(checkNum, email);
+				certifiedRepo.deleteByUser(user);
+				certifiedRepo.save(certified);
 				return checkNum;
 			}
 
@@ -76,21 +78,25 @@ public class UserServiceImpl implements UserService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [로그인]
 	@Override
+	@Transactional
 	public String login(String userId, String userPw, HttpSession httpsession) {
 		User user = userRepo.findByUserId(userId);
-		Session usersession = sessionService.findByUser(user);
+		Session usersession = sessionRepo.findByUser(user);
 		if (userPw.equals(user.getUserPw())) {
 			if (usersession == null) {
-
 				httpsession.setAttribute("userId", user.getUserId());
 				String sessionId = httpsession.getId();
 				Session session = Session.builder().sessionId(sessionId).user(user).build();
-				sessionService.insertSession(session);
+				sessionRepo.save(session);
 				return sessionId;
 			}
 			else {
-				System.out.println(usersession.getSessionId());
-				return usersession.getSessionId();
+				sessionRepo.deleteBySessionId(usersession.getSessionId());
+				httpsession.setAttribute("userId", user.getUserId());
+				String sessionId = httpsession.getId();
+				Session session = Session.builder().sessionId(sessionId).user(user).build();
+				sessionRepo.save(session);
+				return sessionId;
 			}
 		}
 		return null;
@@ -98,9 +104,8 @@ public class UserServiceImpl implements UserService {
 	// [로그아웃]
 	@Override
 	public boolean logout(String sessionId) {
-		sessionService.deleteSession(sessionId);
+		sessionRepo.deleteById(sessionId);
 			return true;
-	
 	}
 	
 	// [아이디 중복 확인]
@@ -130,19 +135,26 @@ public class UserServiceImpl implements UserService {
 	public boolean updatePw(UserDTO userDTO) {
 		User user = userRepo.findByUserId(userDTO.getUserId());
 		user.updatePw(userDTO);
-		certifiedService.deleteCertified(user);
+		certifiedRepo.deleteByUser(user);
 		userRepo.save(user);
 		return true;
 	}
 
+	// [회원정보 불러오기]
+	@Override
+	public UserDTO findUserData(SessionDTO sessionDTO) {
+		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+	
+		return User.userEntityToDTO(session.getUser());
+	}
 	// [회원정보 수정]
 	@Override
-	public UserDTO updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
-		User NewUser = UserDTO.userDTOToEntity(newUserDTO);
+	@Transactional
+	public boolean updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		NewUser.updateId(session.getUser().getUserId());
-		userRepo.save(NewUser);
-		return User.userEntityToDTO(NewUser);
+		session.getUser().updateUser(newUserDTO);
+		
+		return true;
 	}
 
 	// Delete
@@ -154,6 +166,14 @@ public class UserServiceImpl implements UserService {
 		User userSession = sessionRepo.findBySessionId(sessionId).getUser();
 
 		if (userSession.getUserPw().equals(userPw)) {
+			commentRepo.deleteByUser(userSession);
+			for(Board board : userSession.getBoards()) {
+				commentRepo.deleteByboardNo(board.getBoardNo());
+				fileRepo.deleteByBoard(board);
+			}
+			boardRepo.deleteByUser(userSession);
+			sessionRepo.deleteBySessionId(sessionId);
+			certifiedRepo.deleteByUser(userSession);
 			userRepo.deleteById(userSession.getUserId());
 			return true;
 		}

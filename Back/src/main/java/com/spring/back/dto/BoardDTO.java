@@ -23,13 +23,13 @@ public class BoardDTO {
 	
 	// 게시글이 내가 작성한 글인지 확인
 	private boolean editor;
+	private Long countComment;
 	// Column
 	// --------------------------------------------------------------------------------------------------------------------------------
 
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
-	private Long likeCount;
 	private LocalDateTime createDate;
 	private LocalDateTime modifiedDate;	
 	private Long viewCount;
@@ -53,7 +53,6 @@ public class BoardDTO {
 		Board board = Board.builder()
 						   .boardNo(boardDTO.getBoardNo())
 						   .boardContent(boardDTO.getBoardContent())
-						   .likeCount(0L)
 						   .viewCount(0L)
 						   .build();
 		return board;

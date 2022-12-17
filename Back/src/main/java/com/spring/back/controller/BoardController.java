@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,8 +54,8 @@ public class BoardController {
 	 */
 	@GetMapping("/board/{boardNo}")
 	public BoardDTO findBoard(@RequestParam String sessionId, @PathVariable Long boardNo) {
-		System.out.println(sessionId);
-		return boardService.getBoardByBoardNo(sessionId,boardNo);
+		BoardDTO boardDTO =  boardService.getBoardByBoardNo(sessionId,boardNo);
+		return boardDTO;
 	}
 	
 	/* [(세부 게시글 확인 전용)특정 게시글 불러오기]
@@ -65,7 +64,7 @@ public class BoardController {
 	 * click : 특정 게시글 클릭시 조회수 +1
 	 * 출력 : List[불러올 게시글, 추천게시글1, 추천게시글2, 추천게시글3]
 	 */
-	@GetMapping("/RecomentBoard/{boardNo}")
+	@GetMapping("/recomendBoard/{boardNo}")
 	public List<BoardDTO> findRecommendBoard(@PathVariable Long boardNo) {
 		return boardService.findRecoBoard(boardNo);
 	}
@@ -88,6 +87,7 @@ public class BoardController {
 	@GetMapping("/boardUpdate/{boardNo}")
 	public BoardDTO getUpdateBoard(@PathVariable Long boardNo) {
 		BoardDTO boardDTO = boardService.findBoardByBoardNo(boardNo);
+		
 		return boardDTO;
 	}
 
@@ -97,16 +97,11 @@ public class BoardController {
 	@PostMapping(value = "/boardupdate")
 	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("images") List<MultipartFile> images) {
 	
-		return boardService.updateBoard(sessionDTO,boardDTO, images);
-	}
-	
-	// [추천]
-	// 설명 : 좋아요 누를 경우 게시글 반영
-	// click : 좋아요 +1
-	@PostMapping(value = "/likeupdate")
-	public BoardDTO updateLike(@RequestBody BoardDTO boardDTO) {
-		BoardDTO newBoardDTO = boardService.updateLikeCount(boardDTO.getBoardNo());
-		return newBoardDTO;
+		boolean result = boardService.updateBoard(sessionDTO,boardDTO);
+		
+		// 새로운 File 추가
+		fileService.uploadFile(boardDTO.getBoardNo(), images);
+		return result;
 	}
 
 	// Delete
@@ -114,7 +109,8 @@ public class BoardController {
 	// [게시글 삭제]
 	// 설명 : 본인 게시글 지우기
 	@DeleteMapping("/boarddelete")
-	public boolean deleteBoard(@RequestBody SessionDTO sessionDTO,BoardDTO boardDTO) {
+	public boolean deleteBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO) {
+
 		return boardService.deleteBoard(sessionDTO,boardDTO);
 	}
 }

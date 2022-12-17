@@ -47,7 +47,6 @@ public class Board {
 	
 	private String boardContent;
 	private Long viewCount;
-	private Long likeCount;
 	
 	@CreatedDate
 	@Column(updatable = false)
@@ -85,7 +84,6 @@ public class Board {
 									.boardNo(board.getBoardNo())
 									.userId(board.getUser().getUserId())
 									.boardContent(board.getBoardContent())
-									.likeCount(board.getLikeCount())
 									.createDate(board.getWrittenDate())
 									.viewCount(board.getViewCount())
 									.files(board.getFiles().stream()
@@ -105,25 +103,6 @@ public class Board {
 				.boardNo(board.getBoardNo())
 				.userId(board.getUser().getUserId())
 				.boardContent(board.getBoardContent())
-				.likeCount(board.getLikeCount())
-				.createDate(board.getWrittenDate())
-				.viewCount(board.getViewCount())
-				.files(board.getFiles().stream()
-						.map(file -> File.entotyToDTO(file))
-						.collect(Collectors.toList()))
-				.comments(board.getComments().stream()
-						.map(comment -> Comment.trueEntityToDTO(comment))
-						.collect(Collectors.toList()))
-				.modifiedDate(board.getModifiedDate())
-				.build();
-		return boardDTO;
-	}
-	public static BoardDTO boardEntityToDTO (Board board) {
-		BoardDTO boardDTO = BoardDTO.builder()
-				.boardNo(board.getBoardNo())
-				.userId(board.getUser().getUserId())
-				.boardContent(board.getBoardContent())
-				.likeCount(board.getLikeCount())
 				.createDate(board.getWrittenDate())
 				.viewCount(board.getViewCount())
 				.files(board.getFiles().stream()
@@ -151,9 +130,5 @@ public class Board {
 	// [ViewCountupdate]
 	public void updateViewCount(Long viewCount) {
 		this.viewCount = viewCount;
-	}
-	// [LikeCountupdate]
-	public void updateLikeCount(Long likeCount) {
-		this.likeCount = likeCount;
 	}
 }

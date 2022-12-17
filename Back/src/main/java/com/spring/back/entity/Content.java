@@ -15,7 +15,6 @@ import org.springframework.data.annotation.CreatedDate;
 
 import com.spring.back.content.ContentCategory;
 import com.spring.back.dto.ContentDTO;
-import com.spring.back.dto.UserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

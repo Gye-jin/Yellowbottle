@@ -1,18 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { DetailBoardFetchData } from "../../Api/BoardData";
+import {
+  DetailBoardFetchData,
+  postComment,
+  postDeleteBoardData,
+} from "../../Api/BoardData";
+import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
 
 const DetailBoard = () => {
   const [board, setBoard] = useState([]);
   const boardNo = useParams().boardNo;
   const navigate = useNavigate();
+  const [commentContent, setCommentContent] = useState("");
+  const sessionId = sessionStorage.getItem("sessionId");
+
+  // 댓글내용 입력시 이벤트발생 ----수정고려중
+  const changeComment = (e) => {
+    setCommentContent(e.target.value);
+  };
+
+  // 댓글입력버튼 클릭 시 - 댓글내용폼데이터 형태로 백에 보냄
+  const createCommentData = () => {
+    let commentWriteData = new FormData();
+    commentWriteData.append("sessionId", sessionId);
+    commentWriteData.append("boardNo", boardNo);
+    commentWriteData.append("commentContent", commentContent);
+    postComment(commentWriteData);
+    window.location.reload();
+  };
+
+  // 게시글 삭제 버튼 클릭 시 = 게시글내용폼데이터 형태로 백에 보냄
+  const createDeleteBoardData = () => {
+    let deleteBoardData = new FormData();
+    deleteBoardData.append("sessionId", sessionId);
+    deleteBoardData.append("boardNo", boardNo);
+
+    // FormData의 key 확인
+    for (let key of deleteBoardData.keys()) {
+      console.log("폼데이터 key값", key);
+    }
+
+    // FormData의 value 확인
+    for (let value of deleteBoardData.values()) {
+      console.log("폼데이터 value값", value);
+    }
+    // 폼데이터로 모은 deleteBoardData를 백에 보내주는 함수
+    postDeleteBoardData(deleteBoardData);
+  };
 
   useEffect(() => {
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
   }, []);
-  console.log(board);
+
+  // console.log(board);
   return (
     <>
       <Header />
@@ -43,23 +85,25 @@ const DetailBoard = () => {
               </div>
             </div>
             {board.comments &&
-              board.comments.map((comment) => (
-                <div>
-                  <span
-                    onClick={() => navigate(`/personPage/${comment.userId}`)}
-                  >
-                    {comment.userId} -{" "}
-                  </span>
-                  <span>{comment.commentContent}</span>
-                  {/* 게시글 작성자이면 댓글마다 삭제하기 버튼이 보임 */}
-                  {board.editor ? <button>삭제</button> : ""}
-                </div>
-              ))}
+              board.comments.map((comment) => <Comment comment={comment} />)}
+            {/* 댓글 입력창 */}
+            <input
+              onChange={changeComment}
+              className="Comment-write"
+              placeholder="댓글을 입력해주세요!"
+              id="commentinput"
+            />
+            <button onClick={createCommentData}>댓글작성</button>
             {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
             {board.editor ? <button>수정하기</button> : ""}
-            {board.editor ? <button>삭제하기</button> : ""}
+            {board.editor ? (
+              <button onClick={() => createDeleteBoardData()}>삭제하기</button>
+            ) : (
+              ""
+            )}
             <br />
             {/* 버튼을 누르면 추천게시물이 나온다. */}
+            <br />
             <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
               →
             </button>

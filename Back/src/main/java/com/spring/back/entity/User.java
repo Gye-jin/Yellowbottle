@@ -68,7 +68,9 @@ public class User {
 	}
 	
 	// [updateId 변경()->세션에서 가져온 값]
-	public void updateId(String userId) {
-		this.userId = userId;
+	public void updateUser(UserDTO userDTO) {
+		this.userPw = userDTO.getUserPw();
+		this.email = userDTO.getEmail();
+		this.subStatus = userDTO.isSubStatus();
 	}
 }
