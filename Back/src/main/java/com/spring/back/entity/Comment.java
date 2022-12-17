@@ -12,10 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.Modifying;
 
 import com.spring.back.dto.CommentDTO;
 
@@ -60,8 +58,22 @@ public class Comment {
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
-	public static CommentDTO commentEntityToDTO(Comment comment) {
+	public static CommentDTO falseEntityToDTO(Comment comment) {
 		CommentDTO commentDTO = CommentDTO.builder()
+									  .editor(false)
+									  .commentNo(comment.getCommentNo())
+									  .userId(comment.getUser().getUserId())
+									  .boardNo(comment.getBoard().getBoardNo())
+									  .commentContent(comment.getCommentContent())
+									  .commentDate(comment.getCommentDate())
+									  .build();
+		return commentDTO;
+	}
+	
+	
+	public static CommentDTO trueEntityToDTO(Comment comment) {
+		CommentDTO commentDTO = CommentDTO.builder()
+									  .editor(true)
 									  .commentNo(comment.getCommentNo())
 									  .userId(comment.getUser().getUserId())
 									  .boardNo(comment.getBoard().getBoardNo())
@@ -73,6 +85,7 @@ public class Comment {
 	
 	// Entity Element Update
 	// --------------------------------------------------------------------------------------------------------------------------------
+	
 	// [Board 채워주기]
 	public void boardInComment(Board board) {
 		this.board = board;

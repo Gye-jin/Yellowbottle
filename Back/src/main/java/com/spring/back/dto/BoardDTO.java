@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.back.entity.Board;
 
 import lombok.AllArgsConstructor;
@@ -19,12 +20,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class BoardDTO {
+	
+	// 게시글이 내가 작성한 글인지 확인
+	private boolean editor;
+	private Long countComment;
 	// Column
 	// --------------------------------------------------------------------------------------------------------------------------------
+
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
-	private Long likeCount;
 	private LocalDateTime createDate;
 	private LocalDateTime modifiedDate;	
 	private Long viewCount;
@@ -32,12 +37,13 @@ public class BoardDTO {
 	// Join
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [File Join]
+
 	@OneToMany(fetch = FetchType.LAZY)
-	List<FileDTO> fileDTOs = new ArrayList<FileDTO>();
+	private List<FileDTO> files = new ArrayList<FileDTO>();
 	
 	// [Comment Join]
 	@OneToMany(fetch = FetchType.LAZY)
-	List<CommentDTO> commentDTOs = new ArrayList<CommentDTO>();
+	private List<CommentDTO> comments = new ArrayList<CommentDTO>();
 
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -47,9 +53,9 @@ public class BoardDTO {
 		Board board = Board.builder()
 						   .boardNo(boardDTO.getBoardNo())
 						   .boardContent(boardDTO.getBoardContent())
-						   .likeCount(0L)
 						   .viewCount(0L)
 						   .build();
 		return board;
 	}
+	
 }

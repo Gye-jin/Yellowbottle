@@ -46,13 +46,11 @@ public class Board {
 	private Long boardNo;
 	
 	private String boardContent;
-	private Long likeCount;
+	private Long viewCount;
 	
 	@CreatedDate
 	@Column(updatable = false)
 	private LocalDateTime writtenDate;
-	
-	private Long viewCount;
 	
 	@LastModifiedDate
 	private LocalDateTime modifiedDate;
@@ -68,32 +66,53 @@ public class Board {
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
 //	추후 : @BatchSize 전략 사용
-	List<File> files = new ArrayList<File>();
+	private List<File> files = new ArrayList<File>();
 	
 	// [Comment Join]
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
-	List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
+	
+
 	
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
-	public static BoardDTO boardEntitytoDTO (Board board) {
+	public static BoardDTO yourEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
+									.editor(false)
 									.boardNo(board.getBoardNo())
 									.userId(board.getUser().getUserId())
 									.boardContent(board.getBoardContent())
-									.likeCount(board.getLikeCount())
 									.createDate(board.getWrittenDate())
 									.viewCount(board.getViewCount())
-									.fileDTOs(board.getFiles().stream()
+									.files(board.getFiles().stream()
 											  .map(file -> File.entotyToDTO(file))
 										      .collect(Collectors.toList()))
-									.commentDTOs(board.getComments().stream()
-											  .map(comment -> Comment.commentEntityToDTO(comment))
+									.comments(board.getComments().stream()
+											  .map(comment -> Comment.falseEntityToDTO(comment))
 											  .collect(Collectors.toList()))
 									.modifiedDate(board.getModifiedDate())
 									.build();
+		return boardDTO;
+	}
+	
+	public static BoardDTO myboardEntityToDTO (Board board) {
+		BoardDTO boardDTO = BoardDTO.builder()
+				.editor(true)
+				.boardNo(board.getBoardNo())
+				.userId(board.getUser().getUserId())
+				.boardContent(board.getBoardContent())
+				.createDate(board.getWrittenDate())
+				.viewCount(board.getViewCount())
+				.files(board.getFiles().stream()
+						.map(file -> File.entotyToDTO(file))
+						.collect(Collectors.toList()))
+				.comments(board.getComments().stream()
+						.map(comment -> Comment.trueEntityToDTO(comment))
+						.collect(Collectors.toList()))
+				.modifiedDate(board.getModifiedDate())
+				.build();
 		return boardDTO;
 	}
 	
@@ -111,9 +130,5 @@ public class Board {
 	// [ViewCountupdate]
 	public void updateViewCount(Long viewCount) {
 		this.viewCount = viewCount;
-	}
-	// [LikeCountupdate]
-	public void updateLikeCount(Long likeCount) {
-		this.likeCount = likeCount;
 	}
 }

@@ -88,6 +88,17 @@
     width: 32px;
   }
 }
+/* 헤더 */
+/* 기본헤더 */
+/* .header-Header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 75px;
+  display: flex;
+  justify-content: space-between;
+} */
 
 /* 회원가입 페이지 */
 .join-genderRadio {
@@ -149,16 +160,79 @@
   /* min-height: 100vh; */
 }
 
+/* 실천내용 페이지 */
+/* 실천내용 작성하기 버튼 */
+.writeBoard {
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+  z-index: 1;
+  padding: 10px;
+  background-color: rgb(23, 122, 117);
+  border-radius: 6px;
+  /* color : 글자색깔 */
+  color: #fff;
+  border: 1px solid rgb(23, 122, 117);
+  /* text-align: left; */
+}
+/* 상단으로 이동하기 버튼 */
+.goToTop {
+  color: #fff;
+  background-color: rgb(23, 122, 117);
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+}
+/* board 전체 틀 */
+.board {
+  min-width: 700px;
+  background-color: white;
+  max-width: 700px;
+  border: 1px solid lightgray;
+  margin-bottom: 45px;
+}
+/* 게시글 전체 가운데 정렬 */
+.outer {
+  text-align: center;
+}
+.inner {
+  display: inline-block;
+}
+/* board_Image */
+.board_Image {
+  width: 100%;
+  object-fit: contain;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+/* board_BoardContent */
+.board_BoardContent {
+  text-align: left;
+  font-weight: flex;
+  padding: 20px;
+}
+/* boader_Header */
+.boader_Header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+/* board-UserId */
+.board_UserId {
+  text-align: left;
+  padding-left: 20px;
+}
+
 /* BoardWrite : 게시글 작성화면 css */
 /* 게시글 쓰는 부분 css */
 .BoardWrite-rightBox {
-  background-color: blue;
+  background-color: beige;
   float: right;
   width: 50%;
 }
 /* 사진 선택하는 부분 css */
 .BoardWrite-leftBox {
-  background-color: red;
+  background-color: beige;
   float: left;
   width: 50%;
 }

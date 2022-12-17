@@ -2,7 +2,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs, Mousewheel } from "swiper";
 import "../App.css";
 import "swiper/css";
-// import "swiper/css/navigation";
 import { useState } from "react";
 
 const slides = [

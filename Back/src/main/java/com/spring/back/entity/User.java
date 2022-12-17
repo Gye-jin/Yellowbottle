@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.back.dto.UserDTO;
@@ -50,7 +49,8 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Comment> comments = new ArrayList<Comment>();
-
+	
+	
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
@@ -65,5 +65,12 @@ public class User {
 	// [userPw 변경]
 	public void updatePw(UserDTO userDTO) {
 		this.userPw = userDTO.getUserPw();
+	}
+	
+	// [updateId 변경()->세션에서 가져온 값]
+	public void updateUser(UserDTO userDTO) {
+		this.userPw = userDTO.getUserPw();
+		this.email = userDTO.getEmail();
+		this.subStatus = userDTO.isSubStatus();
 	}
 }

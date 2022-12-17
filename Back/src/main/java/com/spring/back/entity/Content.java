@@ -1,5 +1,6 @@
 package com.spring.back.entity;
 
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -11,10 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import com.spring.back.content.ContentCategory;
-import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.ContentDTO;
 
 import lombok.AllArgsConstructor;
@@ -43,6 +42,12 @@ public class Content {
 	@Enumerated(EnumType.STRING)
 	private ContentCategory contentCategory;
 	
+	@CreatedDate
+	@Column(updatable = false)
+	private LocalDateTime date;
+	
+	private LocalDateTime sendDate;
+	
 	
 	// DtoToEntity
 	public static ContentDTO contentEntityToDTO(Content content) {
@@ -52,6 +57,8 @@ public class Content {
 									  .contentContent(content.getContentContent())
 									  .contentUrl(content.getContentUrl())
 									  .contentCategory(content.getContentCategory())
+									  .date(content.getDate())
+									  .sendDate(content.getSendDate())
 									  .build();
 		return contentDTO;
 	}
@@ -62,6 +69,8 @@ public class Content {
 	}
 	
 	
-
+	public void updateSendDate() {
+		this.sendDate = LocalDateTime.now();
+	}
 
 }

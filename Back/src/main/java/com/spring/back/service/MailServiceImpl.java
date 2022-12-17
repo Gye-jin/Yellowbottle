@@ -1,11 +1,12 @@
 package com.spring.back.service;
 
-import java.util.HashMap;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -43,12 +44,16 @@ public class MailServiceImpl implements MailService {
 	// 설명 : 해당 컨텐츠 고객 상태가 true인 고객을 대상으로 메일 발송
 	// 특이사항 : 아직 컨텐츠 내용이 없어서 추후 메소드 수정 수정 후 확인 필요
 	@Override
+	@Transactional
 	public boolean sendMail(Long first,Long second, Long third) {
 
 		List<User> users = userRepo.findBySubStatus(true);
 		Content content1=contentRepo.findByContentNo(first);
+		content1.updateSendDate();
 		Content content2=contentRepo.findByContentNo(second);
+		content2.updateSendDate();
 		Content content3=contentRepo.findByContentNo(third);
+		content3.updateSendDate();
 		List<String> toUserList = null;
 
 		toUserList = users.stream().map(user -> user.getEmail()).collect(Collectors.toList());
@@ -60,16 +65,9 @@ public class MailServiceImpl implements MailService {
 			helper.setFrom(setFrom);
 			helper.setTo((String[]) toUserList.toArray(new String[toUserList.size()]));
 			// 제목
-			helper.setSubject("TEST");
+			helper.setSubject("[C-Zero] "+LocalDate.now()+" 뉴스레터 입니다.");
 			// 내용
 			helper.setText(ContentTemplate.contentTemplate(content1,content2,content3), true);
-			
-			// -----------------------------------------------------------------------------
-			//템플릿에 전달할 데이터 설정
-	        HashMap<String, String> emailValues = new HashMap<>();
-			
-			
-			// -----------------------------------------------------------------------------
 
 			javaMailSender.send(message);
 		} catch (MessagingException e) {
