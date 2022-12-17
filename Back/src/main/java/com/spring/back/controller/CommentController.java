@@ -47,8 +47,8 @@ public class CommentController {
 	
 	// [변경한 내용으로 댓글에 적용]
 	@PostMapping(value = "/updateComment")
-	public boolean updateComment(@ModelAttribute SessionDTO sessionDTO, CommentDTO commentDTO) {
-		return commentService.updateComment(sessionDTO, commentDTO);
+	public boolean updateComment(@RequestBody CommentDTO commentDTO) {
+		return commentService.updateComment(commentDTO);
 	}
 	
 	// Delete
