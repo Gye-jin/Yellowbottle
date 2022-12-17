@@ -64,7 +64,7 @@ export default function Header() {
               {/* 로고 */}
               <img
                 className="logo"
-                src="img/czero_Logo.jpg"
+                src="/img/czero_Logo.jpg"
                 width="120"
                 height="70"
               />

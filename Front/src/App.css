@@ -46,8 +46,8 @@
   outline: none;
 }
 .slider__images {
-  height: 700px;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
 }
 .slider__images .slider__image img {
   transition: 3s;
@@ -235,4 +235,62 @@
   background-color: beige;
   float: left;
   width: 50%;
+}
+
+/* BoardUpdate */
+/* 사진 선택 */
+.BoardUpdate-leftBox {
+  background-color: beige;
+  float: left;
+  width: 50%;
+}
+/* 게시글 입력 */
+.BoardUpdate-rightBox {
+  background-color: beige;
+  float: right;
+  width: 50%;
+}
+
+/* PersonPage */
+/* PersonPage 전체 틀 css */
+.PersonPage-Outer {
+  text-align: center;
+  background-color: rgb(179, 207, 175);
+}
+.PersonPage-Inner {
+  display: inline-block;
+  width: 80%;
+  background-color: white;
+}
+/* 유저가 올린 사진 3개씩 출력되게하는 css */
+.PersonPage-image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 5px solid rgb(179, 207, 175);
+}
+.PersonPage-image-grid {
+  width: 100%;
+}
+.PersonPage-image-grid img {
+  margin-top: 10px;
+  width: 100%;
+  height: auto;
+}
+/* 유저 기본 정보 보여주는 css */
+.PersonPage-Information {
+  margin-top: 5%;
+  margin-left: 20%;
+  display: flex;
+}
+.PersonPage-Information-Log {
+  display: inline-block;
+  width: 30%;
+}
+.PersonPage-Information-Grade {
+  display: inline-block;
+  width: 30%;
+}
+.PersonPage-Information-Board {
+  display: inline-block;
+  width: 30%;
 }

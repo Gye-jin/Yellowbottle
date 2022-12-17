@@ -146,7 +146,13 @@ const DetailBoard = () => {
             />
             <button onClick={createCommentData}>댓글작성</button>
             {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
-            {board.editor ? <button>수정하기</button> : ""}
+            {board.editor ? (
+              <button onClick={() => navigate(`/boardUpdate/${boardNo}`)}>
+                수정하기
+              </button>
+            ) : (
+              ""
+            )}
             {board.editor ? (
               <button onClick={() => createDeleteBoardData()}>삭제하기</button>
             ) : (

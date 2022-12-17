@@ -38,8 +38,16 @@ export default function HeaderLogin() {
         response.data
           ? // 백에서 정상적으로 처리되면 로그아웃 성공! 후 메인페이지로 이동
             sessionStorage.removeItem("sessionId")((window.location.href = "/"))
-          : // 백에서 정상적으로 처리 실패시 로그아웃 실패!
-            alert("🤘🏿😝😜🤘🏿" + " " + "로그아웃실패");
+          : // 백에서 정상적으로 처리 실패해도 로그아웃 성공!
+            sessionStorage.removeItem("sessionId")(
+              (window.location.href = "/")
+            );
+      })
+      // 오류가 발생해도 로그아웃
+      .catch((err) => {
+        console.log(err);
+        alert("🔥로그아웃 성공! but 오류발생🔥");
+        sessionStorage.removeItem("sessionId");
       });
   };
   //  해당유저의 세션정보
@@ -76,7 +84,7 @@ export default function HeaderLogin() {
             {/* 로고 */}
             <img
               className="logo"
-              src="img/czero_Logo.jpg"
+              src="/img/czero_Logo.jpg"
               width="120"
               height="70"
             />

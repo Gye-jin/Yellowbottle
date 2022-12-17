@@ -13,7 +13,7 @@ const FeedBoard = () => {
   // navigate 함수
   const navigate = useNavigate();
   //  해당유저의 세션정보
-  const userSession = sessionStorage.getItem("sessionId");
+  // const userSession = sessionStorage.getItem("sessionId");
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
