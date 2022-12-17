@@ -11,8 +11,8 @@ public interface ContentRepository extends JpaRepository<Content, Long>{
 	
 	public Content findByContentNo(Long contentNo);
 		
-	public List<Content> findTop10ByContentCategoryOrderByContentNoDesc(ContentCategory contentCategory);
+	public List<Content> findTop10ByContentCategoryAndSendDateIsNullOrderByContentNoDesc(ContentCategory contentCategory);
 	
-	
+	public List<Content> findByContentCategoryAndSendDateIsNotNullOrderBySendDateDesc(ContentCategory contentCategory);
 	
 }

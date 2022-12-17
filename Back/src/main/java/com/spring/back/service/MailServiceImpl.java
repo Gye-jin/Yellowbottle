@@ -1,5 +1,6 @@
 package com.spring.back.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,7 +65,7 @@ public class MailServiceImpl implements MailService {
 			helper.setFrom(setFrom);
 			helper.setTo((String[]) toUserList.toArray(new String[toUserList.size()]));
 			// 제목
-			helper.setSubject("TEST");
+			helper.setSubject("[C-Zero] "+LocalDate.now()+" 뉴스레터 입니다.");
 			// 내용
 			helper.setText(ContentTemplate.contentTemplate(content1,content2,content3), true);
 

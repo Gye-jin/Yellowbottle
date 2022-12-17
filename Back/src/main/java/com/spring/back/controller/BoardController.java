@@ -95,7 +95,7 @@ public class BoardController {
 	// 설명 : 수정한 게시글 내용으로 게시글 업데이트
 	// click : 게시글 수정 완료
 	@PostMapping(value = "/boardupdate")
-	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("images") List<MultipartFile> images) {
+	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam(value ="images", required = false) List<MultipartFile> images) {
 	
 		boolean result = boardService.updateBoard(sessionDTO,boardDTO);
 		
@@ -108,7 +108,7 @@ public class BoardController {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 삭제]
 	// 설명 : 본인 게시글 지우기
-	@DeleteMapping("/boarddelete")
+	@PostMapping("/boarddelete")
 	public boolean deleteBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO) {
 
 		return boardService.deleteBoard(sessionDTO,boardDTO);
