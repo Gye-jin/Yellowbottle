@@ -39,16 +39,10 @@ public class CommentController {
 	
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------
-	// [수정할 댓글 불러오기]
-	@PostMapping(value = "/getUpdateComment")
-	public CommentDTO findComment(@RequestBody CommentDTO commentDTO) {
-		return commentService.getOldComment(commentDTO);
-	}
-	
 	// [변경한 내용으로 댓글에 적용]
 	@PostMapping(value = "/updateComment")
-	public boolean updateComment(@RequestBody CommentDTO commentDTO) {
-		return commentService.updateComment(commentDTO);
+	public boolean updateComment(@ModelAttribute SessionDTO sessionDTO, CommentDTO commentDTO) {
+		return commentService.updateComment(sessionDTO, commentDTO);
 	}
 	
 	// Delete
