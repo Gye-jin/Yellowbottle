@@ -69,7 +69,6 @@ const FindPw = () => {
           <Typography component="h1" variant="h5">
             비밀번호 찾기
           </Typography>
-
           <Boxs component="form" noValidate sx={{ mt: 3 }}>
             <FormControl component="fieldset" variant="standard">
               <div className="join-inputId">

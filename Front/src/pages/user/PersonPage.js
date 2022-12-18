@@ -77,7 +77,7 @@ function PersonPage() {
                 <div className="PersonPage-image-grid-item">
                   <img
                     key={board.boardNo}
-                    className="myPage_Image"
+                    className="PersonPage-image-grid-itme-img"
                     src={`${board.filePath + board.fileName}`}
                     alt="myPageImage"
                     // 이미지 클릭시 해당 게시물의 상세보기로 넘어감

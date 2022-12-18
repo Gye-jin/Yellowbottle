@@ -260,10 +260,11 @@
 .PersonPage-image-grid {
   width: 100%;
 }
-.PersonPage-image-grid-item img {
+.PersonPage-image-grid img {
   margin-top: 10px;
-  width: 33%;
-  height: auto;
+  /* width: 33%;
+  height: auto; */
+  flex: 0 0 33.33%;
 }
 /* 유저 기본 정보 보여주는 css */
 .PersonPage-Information {

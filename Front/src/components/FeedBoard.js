@@ -84,9 +84,12 @@ const FeedBoard = () => {
                             }
                           />
                         ))}
-                      <div></div>
+                      {/* <div></div> */}
                       <div className="board_BoardContent">
-                        {board.boardContent}
+                        <div>조회수 : {board.viewCount}</div>
+                        <div className="board-BoardContent">
+                          {board.boardContent}
+                        </div>
                       </div>
                     </div>
                   </div>
