@@ -15,6 +15,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { passUpdateUser, ForPostUpdateData } from "../../Api/LogData";
+import {
+  EmailRegexTest,
+  PasswordRegexTest,
+  RePasswordRegexTest,
+} from "../../components/Regex";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -34,7 +39,7 @@ const UpdateUser = () => {
   // 이메일 입력오류
   const [emailError, setEmailError] = useState("");
   // 비밀번호
-  const [password, setPassword] = useState();
+  const [userPw, setUserPw] = useState();
   // 이메일
   const [email, setEmail] = useState();
   // 이메일수신확인
@@ -57,7 +62,7 @@ const UpdateUser = () => {
   };
   // password 입력할떄마다 인식해주는 함수
   const passwordHandler = (e) => {
-    setPassword(e.target.value);
+    setUserPw(e.target.value);
   };
   // email 입력할때마다 인식해주는 함수
   const emailHandler = (e) => {
@@ -81,7 +86,7 @@ const UpdateUser = () => {
   }, []);
   // userDTO가 불러와지면 그때 기본적인 선언
   useEffect(() => {
-    setPassword(`${userDTO.userPw}`);
+    setUserPw(`${userDTO.userPw}`);
     setEmail(`${userDTO.email}`);
     setSubStatus(`${userDTO.subStatus}`);
   }, [userDTO]);
@@ -96,51 +101,18 @@ const UpdateUser = () => {
     );
     const updateData = new FormData();
     updateData.append("sessionId", userSession);
-    updateData.append("userPw", password);
+    updateData.append("userPw", userPw);
     updateData.append("email", email);
     updateData.append("subStatus", emailCheckBtn.value);
     console.log(updateData);
-    // FormData의 key 확인
-    for (let key of updateData.keys()) {
-      console.log("폼데이터 key값", key);
-    }
-
-    // FormData의 value 확인
-    for (let value of updateData.values()) {
-      console.log("폼데이터 value값", value);
-    }
 
     // updateData에 넣은 각각의 값들은 유효성 검사를 거친다.
-
-    // 이메일 유효성 체크
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (email !== "") {
-      if (!emailRegex.test(email))
-        setEmailError("올바른 이메일 형식이 아닙니다.");
-      else setEmailError("");
-    } else {
-      setEmailError("");
-    }
-
-    // 비밀번호 유효성 체크
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password))
-      setPasswordError(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
-    else setPasswordError("");
-
-    // 비밀번호 같은지 체크
-    if (password !== rePassword) {
-      setRePasswordError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setRePasswordError("");
-    }
+    EmailRegexTest(email, setEmailError);
+    PasswordRegexTest(userPw, setPasswordError);
+    RePasswordRegexTest(userPw, rePassword, setRePassword);
 
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
-    if (passwordRegex.test(password)) {
+    if (emailError === "" && passwordError === "" && rePasswordError === "") {
       ForPostUpdateData(updateData, setRegisterError);
     }
   };
@@ -176,8 +148,8 @@ const UpdateUser = () => {
                     required
                     fullWidth
                     type="password"
-                    id="password"
-                    name="password"
+                    id="userPw"
+                    name="userPw"
                     label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
                     error={passwordError !== "" || false}
                     onChange={passwordHandler}

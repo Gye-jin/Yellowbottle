@@ -14,6 +14,7 @@ import styled from "styled-components";
 import "../../App.css";
 import Header from "../../components/header/Header";
 import { ForResetPwPost } from "../../Api/LogData";
+import { PasswordRegexTest, RePasswordRegexTest } from "../../components/Regex";
 
 // mui 기본 css 적용
 const FormHelperTexts = styled(FormHelperText)`
@@ -44,33 +45,17 @@ const ResetPw = () => {
     // FormData를 이용해 변화되는 입력값들을 설정
     const data = new FormData(e.currentTarget);
     const postResetPwData = {
-      password: data.get("password"),
+      userPw: data.get("password"),
       rePassword: data.get("rePassword"),
     };
-    const { password, rePassword } = postResetPwData;
-
-    // 비밀번호 유효성 체크
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password)) {
-      setPasswordError(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
-    } else {
-      setPasswordError("");
-    }
-
-    // 비밀번호 같은지 체크
-    if (password !== rePassword) {
-      setRePasswordError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setRePasswordError("");
-    }
+    const { userPw, rePassword } = postResetPwData;
+    // 유효성 체크
+    PasswordRegexTest(userPw, setPasswordError);
+    RePasswordRegexTest(userPw, rePassword, setRePasswordError);
 
     // 위에서 설정한 유효성검사를 모두 통과하면 ForResetPwPost함수 실행
-    if (passwordRegex.test(password) && password === rePassword) {
-      console.log(sessionStorage.getItem("Id"));
-      ForResetPwPost(password, setRegisterError);
+    if (passwordError === "" && rePasswordError === "") {
+      ForResetPwPost(userPw, setRegisterError);
     }
   };
 

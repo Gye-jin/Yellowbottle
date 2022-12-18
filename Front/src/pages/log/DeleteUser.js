@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { ForPostDeleteData } from "../../Api/LogData";
+import { PasswordRegexTest, RePasswordRegexTest } from "../../components/Regex";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -33,9 +34,8 @@ const Boxs = styled(Box)`
 const DeleteUser = () => {
   // mui 테마
   const theme = createTheme();
-
   // 비밀번호
-  const [password, setPassword] = useState();
+  const [userPw, setUserPw] = useState();
   // 재입력 비밀번호
   const [rePassword, setRePassword] = useState("");
   // 비밀번호 입력오류
@@ -54,7 +54,7 @@ const DeleteUser = () => {
   };
   // password 입력할떄마다 인식해주는 함수
   const passwordHandler = (e) => {
-    setPassword(e.target.value);
+    setUserPw(e.target.value);
   };
   // 회원탈퇴동의 체크박스 여부 함수
   const handlePersonalAgree = (event) => {
@@ -67,42 +67,20 @@ const DeleteUser = () => {
     e.preventDefault();
     const deleteData = new FormData();
     deleteData.append("sessionId", userSession);
-    deleteData.append("userPw", password);
-
-    console.log(deleteData);
-    // FormData의 key 확인
-    for (let key of deleteData.keys()) {
-      console.log("폼데이터 key값", key);
-    }
-
-    // FormData의 value 확인
-    for (let value of deleteData.values()) {
-      console.log("폼데이터 value값", value);
-    }
-
-    // deleteData에 넣은 각각의 값들은 유효성 검사를 거친다.
-
-    // 비밀번호 유효성 체크
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password))
-      setPasswordError(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
-    else setPasswordError("");
-
-    // 비밀번호 같은지 체크
-    if (password !== rePassword) {
-      setRePasswordError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setRePasswordError("");
-    }
+    deleteData.append("userPw", userPw);
+    // deleteData 유효성 체크
+    PasswordRegexTest(userPw, setPasswordError);
+    RePasswordRegexTest(userPw, rePassword, setRePasswordError);
     // 회원가입 동의 체크
-    if (!CheckedPersonal) alert("회원탈퇴 동의란에 체크해주세요.");
+    if (!CheckedPersonal) {
+      alert("회원탈퇴 동의란에 체크해주세요.");
+    }
 
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
-    if (passwordRegex.test(password) && CheckedPersonal) {
-      ForPostDeleteData(deleteData, setRegisterError);
+    if (passwordError === "" && rePasswordError === "" && CheckedPersonal) {
+      ForPostDeleteData(deleteData);
+    } else {
+      setRegisterError("🌍환경지킴이 포기하실건가요?🌍");
     }
   };
 
@@ -151,7 +129,7 @@ const DeleteUser = () => {
                   <TextField
                     required
                     fullWidth
-                    type="rePassword"
+                    type="password"
                     id="rePassword"
                     name="rePassword"
                     label="비밀번호 재입력"
