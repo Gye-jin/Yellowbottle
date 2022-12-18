@@ -7,6 +7,7 @@ import {
 } from "../../Api/BoardData";
 import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
+import ModalForRecommend from "./ModalForRecommend";
 
 const DetailBoard = () => {
   const [board, setBoard] = useState([]);
@@ -66,6 +67,18 @@ const DetailBoard = () => {
               <h3 onClick={() => navigate(`/personPage/${board.userId}`)}>
                 {board.userId}
               </h3>
+              {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
+              <span>
+                {board.editor ? <button>수정하기</button> : ""}
+                {board.editor ? (
+                  <button onClick={() => createDeleteBoardData()}>
+                    삭제하기
+                  </button>
+                ) : (
+                  ""
+                )}
+                <br />
+              </span>
               {board.files &&
                 board.files.map((file) => (
                   <img
@@ -80,6 +93,8 @@ const DetailBoard = () => {
               <div>
                 <h3>
                   <span>조회수 : {board.viewCount}</span>
+                  <br />
+                  <span>댓글수 : {board.countComment}</span>
                 </h3>
                 <div>{board.boardContent}</div>
               </div>
@@ -87,32 +102,21 @@ const DetailBoard = () => {
             {board.comments &&
               board.comments.map((comment) => <Comment comment={comment} />)}
             {/* 댓글 입력창 */}
-            <input
-              onChange={changeComment}
-              className="Comment-write"
-              placeholder="댓글을 입력해주세요!"
-              id="commentinput"
-            />
-            <button onClick={createCommentData}>댓글작성</button>
-            {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
-            {board.editor ? (
-              <button onClick={() => navigate(`/boardUpdate/${boardNo}`)}>
-                수정하기
-              </button>
-            ) : (
-              ""
-            )}
-            {board.editor ? (
-              <button onClick={() => createDeleteBoardData()}>삭제하기</button>
-            ) : (
-              ""
-            )}
-            <br />
+            <div>
+              <input
+                onChange={changeComment}
+                className="Comment-write"
+                placeholder="댓글을 입력해주세요!"
+                id="commentinput"
+              />
+              <button onClick={createCommentData}>댓글작성</button>
+            </div>
             {/* 버튼을 누르면 추천게시물이 나온다. */}
             <br />
-            <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
-              →
-            </button>
+            <ModalForRecommend boardNo={board.boardNo} />
+            {/* <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
+              추천 게시글 보기
+            </button> */}
           </div>
         ) : (
           <></>

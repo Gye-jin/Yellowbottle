@@ -106,12 +106,13 @@ public class CommentServiceImpl implements CommentService {
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [특정 댓글 삭제]
-	public boolean deleteComment(CommentDTO commentDTO) {
+	public boolean deleteComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
 		Long commentNo = commentDTO.getCommentNo();
+		String userId = sessionRepo.findBySessionId(sessionDTO.getSessionId()).getUser().getUserId();
 
 		Comment comment = commentRepo.findById(commentNo).orElseThrow(NoSuchElementException::new);
 
-		if (commentDTO.getUserId().equals(comment.getUser().getUserId())) {
+		if (userId.equals(comment.getUser().getUserId())) {
 			commentRepo.deleteById(comment.getCommentNo());
 			return true;
 		}
