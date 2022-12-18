@@ -99,7 +99,6 @@ export const DetailBoardFetchData = async (boardNo) => {
   const response = await axios.get(
     `http://localhost:8080/api/board/${boardNo}?sessionId=${sessionId}`
   );
-
   return response.data;
 };
 

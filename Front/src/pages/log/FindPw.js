@@ -37,14 +37,10 @@ const FindPw = () => {
   const [inputNum, setinputNum] = useState("");
   // 백에서 받은 인증번호
   const [certiNum, setCertiNum] = useState("");
-  // // 오류메세지(아이디, 생년월일, 이메일)
-  // const [userIdMessage, setUserIdMessage] = useState("");
-  // const [birthMessage, setBirthMessage] = useState("");
-  // const [emailMessage, setEmailMessage] = useState("");
-  // // 유효성검사(아이디, 생년월일, 이메일)
-  // const [userIdError, setUserIdError] = useState("");
-  // const [birthError, setBirthError] = useState("");
-  // const [emailError, setEmailError] = useState("");
+  // 유효성검사(아이디, 생년월일, 이메일)
+  const [userIdError, setUserIdError] = useState("");
+  const [birthError, setBirthError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   // userId input값 바뀔 때마다 변하게 하는 함수
   const userIdHandler = (e) => {

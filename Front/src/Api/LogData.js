@@ -266,12 +266,13 @@ export function ForPostUpdateData(updateData, setRegisterError) {
 
 // DeleteUser
 // 회원탈퇴함수
-export function ForPostDeleteData(deleteData, setRegisterError) {
+export function ForPostDeleteData(deleteData) {
   const postDeleteData = async (deleteData) => {
     await axios
       .post("http://localhost:8080/api/deleteUser", deleteData)
       .then((response) => {
         console.log(response, "회원탈퇴성공 ㅠㅠ");
+        sessionStorage.removeItem("sessionId");
         alert("🤬회원탈퇴한 당신은 환경파괴자 ㅡ.ㅡ🤬");
         window.location.href = "/";
       })
