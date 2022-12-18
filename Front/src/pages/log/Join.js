@@ -81,7 +81,6 @@ const Join = () => {
     };
     // 입력된 값들을 joinData에 넣는다.
     const { userId, email, name, userPw, birth, sex, subStatus } = joinData;
-
     // 입력한 값 유효성체크
     IdRegexTest(userId, setIdError);
     EmailRegexTest(email, setEmailError);
@@ -93,16 +92,18 @@ const Join = () => {
     if (!CheckedPersonal) {
       alert("회원가입 약관에 동의해주세요.");
     }
-
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
     if (
       passwordError === "" &&
       nameError === "" &&
       emailError === "" &&
       idError === "" &&
-      CheckedPersonal
+      CheckedPersonal &&
+      usableId === true
     ) {
       ForPostJoinData(joinData, setRegisterError);
+    } else {
+      setRegisterError("🌍다시 확인해주세요🌍");
     }
   };
 

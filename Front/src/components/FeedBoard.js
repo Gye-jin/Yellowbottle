@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
 import { useNavigate } from "react-router-dom";
-import { anotherUserPageData } from "../Api/UserData";
 
 const FeedBoard = () => {
   //백에서 보낸 10개씩 게시물을 담는 공간

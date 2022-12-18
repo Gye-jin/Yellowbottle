@@ -78,6 +78,7 @@ const UpdateUser = () => {
     response.then((data) => {
       const agreeBtn = document.getElementById("email-agreement");
       const disagreeBtn = document.getElementById("email-disagreement");
+      // 기존 회원의 이메일 수신여부를 default 값으로 회원정보 수신페이지에 보여줌
       data.subStatus
         ? agreeBtn.setAttribute("checked", "checked")
         : disagreeBtn.setAttribute("checked", "checked");
@@ -95,7 +96,6 @@ const UpdateUser = () => {
   const createUpdateData = (e) => {
     // 실행시 화면새로고침 방지
     e.preventDefault();
-
     const emailCheckBtn = document.querySelector(
       "input[name='subStatus']:checked"
     );
@@ -104,8 +104,6 @@ const UpdateUser = () => {
     updateData.append("userPw", userPw);
     updateData.append("email", email);
     updateData.append("subStatus", emailCheckBtn.value);
-    console.log(updateData);
-
     // updateData에 넣은 각각의 값들은 유효성 검사를 거친다.
     EmailRegexTest(email, setEmailError);
     PasswordRegexTest(userPw, setPasswordError);

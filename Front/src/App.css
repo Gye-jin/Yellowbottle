@@ -88,17 +88,6 @@
     width: 32px;
   }
 }
-/* 헤더 */
-/* 기본헤더 */
-/* .header-Header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 75px;
-  display: flex;
-  justify-content: space-between;
-} */
 
 /* 회원가입 페이지 */
 .join-genderRadio {
@@ -271,9 +260,9 @@
 .PersonPage-image-grid {
   width: 100%;
 }
-.PersonPage-image-grid img {
+.PersonPage-image-grid-item img {
   margin-top: 10px;
-  width: 100%;
+  width: 33%;
   height: auto;
 }
 /* 유저 기본 정보 보여주는 css */
