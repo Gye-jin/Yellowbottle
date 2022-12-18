@@ -19,7 +19,7 @@ import UpdateUser from "./pages/log/UpdateUser";
 import DeleteUser from "./pages/log/DeleteUser";
 import BoardUpdate from "./pages/board/BoardUpdate";
 import MyPage from "./pages/user/MyPage";
-
+import AdminMailCheck from "./pages/admin/AdminMailCheck";
 function App() {
   return (
     <div>
@@ -46,6 +46,7 @@ function App() {
         {/* adminPage : 관리자로그페이지, 관리자메신저페이지 */}
         <Route path="/adminLogPage" element={<AdminLogPage />} />
         <Route path="/adminMailPage" element={<AdminMailPage />} />
+        <Route path="/adminMailCheck" element={<AdminMailCheck />} />
         {/* 기타페이지 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
