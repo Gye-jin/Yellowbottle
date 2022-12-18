@@ -225,6 +225,19 @@
   float: left;
   width: 50%;
 }
+/* 게시글 쓰는 부분 */
+.BoardWrite-boardContent {
+  width: 500px;
+  height: 180px;
+}
+.BoardWrite-selectImg {
+  display: none;
+}
+.BoardWrite-selectImgBtn {
+  /* background-color: aqua; */
+  border: 1px solid black;
+  padding: 1.5px;
+}
 
 /* BoardUpdate */
 /* 사진 선택 */
@@ -261,10 +274,15 @@
   width: 100%;
 }
 .PersonPage-image-grid img {
-  margin-top: 10px;
+  /* margin-top: 10px; */
+  margin: 7px 7px 7px 7px;
   /* width: 33%;
   height: auto; */
   flex: 0 0 33.33%;
+  height: 170px;
+  width: 300px;
+  border: 2px solid lightgray;
+  border-radius: 18%;
 }
 /* 유저 기본 정보 보여주는 css */
 .PersonPage-Information {

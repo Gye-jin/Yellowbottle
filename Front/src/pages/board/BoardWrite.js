@@ -76,25 +76,12 @@ function BoardWrite() {
         // onSubmit={createBoardWriteData}
       >
         <div className="BoardWrite-leftBox">
-          <h2>파일 업로드</h2>
-          {/* <div> */}
-          {/* type = "file" accept image/*을 통해  형식의 파일만 올릴 수 있도록 한다. */}
-          <input
-            id="file"
-            type="file"
-            name="file"
-            accept="image/*"
-            required // 반듯 ㅣ파일이 선택되어야 하는지 여부를 지정하는 속성
-            // multiple="multiple" // 여러개 선택 가능하게 -> 현재는 한개만 올릴 수 있도록 했기 떄문에 주석처리
-            onChange={addImage}
-          />
-          {/* </div> */}
-          <h2>미리보기 이미지</h2>
+          {/* <h2>미리보기 이미지</h2> */}
           <div>
             {/* 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}
             {fileImage && (
               <img
-                alt="sample"
+                alt="미리보기 이미지"
                 src={fileImage}
                 style={{ margin: "auto" }}
                 width="350"
@@ -105,7 +92,21 @@ function BoardWrite() {
         </div>
         {/* 오른쪽 : 게시글 업로드 부분 */}
         <div className="BoardWrite-rightBox">
-          <h2>게시글 작성</h2>
+          {/* type = "file" accept image/*을 통해  형식의 파일만 올릴 수 있도록 한다. */}
+          <input
+            id="fileImg"
+            type="file"
+            name="file"
+            accept="image/*"
+            required // 반드시 파일이 선택되어야 하는지 여부를 지정하는 속성
+            // multiple="multiple" // 여러개 선택 가능하게 -> 현재는 한개만 올릴 수 있도록 했기 떄문에 주석처리
+            onChange={addImage}
+            className="BoardWrite-selectImg"
+          />
+          <label for="fileImg" className="BoardWrite-selectImgBtn">
+            Click
+          </label>
+          <br />
           <textarea
             onChange={changeBoardContent}
             className="BoardWrite-boardContent"
@@ -113,9 +114,9 @@ function BoardWrite() {
             id="boardContent"
           />
           <br />
+          {/* 버튼을 누를시 선택한 파일과 작성된 게시글 데이터를 boardWriteData에 담아 이를 백에 전달한다. */}
+          <button onClick={createBoardWriteData}>게시글 작성</button>
         </div>
-        {/* 버튼을 누를시 선택한 파일과 작성된 게시글 데이터를 boardWriteData에 담아 이를 백에 전달한다. */}
-        <button onClick={createBoardWriteData}>게시글 작성</button>
       </form>
     </>
   );

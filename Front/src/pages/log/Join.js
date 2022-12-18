@@ -123,7 +123,6 @@ const Join = () => {
           <Typography component="h1" variant="h5">
             회원가입
           </Typography>
-
           <Boxs
             component="form"
             noValidate
