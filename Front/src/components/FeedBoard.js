@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
 import { useNavigate } from "react-router-dom";
+import { anotherUserPageData } from "../Api/UserData";
 import { AccessAgreeUserPage, AccessAgreeBoardDetail } from "./AccessAgree";
 
 const FeedBoard = () => {

@@ -137,11 +137,12 @@ const Join = () => {
 
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
     if (
-      PasswordRegexTest(userPw, setPasswordError) &&
-      NameRegexTest(name, setNameError) &&
-      EmailRegexTest(email, setEmailError) &&
+      passwordError === "" &&
+      nameError === "" &&
+      emailError === "" &&
       CheckedPersonal
     ) {
+      console.log(joinData);
       ForPostJoinData(joinData, setRegisterError);
     }
   };

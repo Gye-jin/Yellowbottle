@@ -21,8 +21,6 @@ function PersonPage() {
   useEffect(() => {
     const response = myAllData(personId);
     response.then((data) => setMyPageData(data));
-    // sessionStorage.removeItem("userId");
-    // console.log("myPageData ::", myPageData);
   }, [personId]);
   // 접속한 유저 세션으로 얻은 userId와 useParams로 얻은 userId를 비교해 같으면 편집 권한 부여! 다르면 편집 권한 미부여
   useEffect(() => {

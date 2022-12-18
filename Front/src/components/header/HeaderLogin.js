@@ -58,15 +58,11 @@ export default function HeaderLogin() {
   const moveToMyPage = () => {
     anotherUserPageData(userSession, setUserId);
     console.log(userId);
-    if (userId !== null) {
+    if (userId === null) {
+      alert("제가 부족해서 오류가 있네요 ㅠㅠ 2초 뒤에 다시 눌러주세요😹");
+    } else if (userId !== null) {
       navigate(`/personPage/${userId}`);
     }
-
-    // if (userId === null) {
-    //   alert("제가 부족해서 오류가 있네요 ㅠㅠ 2초 뒤에 다시 눌러주세요😹");
-    // } else if (userId !== null) {
-    //   navigate(`/personPage/${userId}`);
-    // }
   };
 
   return (

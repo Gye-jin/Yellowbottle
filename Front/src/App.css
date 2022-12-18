@@ -294,3 +294,15 @@
   display: inline-block;
   width: 30%;
 }
+
+/* 비밀번호 찾기 */
+.findpw-idCheck {
+  width: 35%;
+  background-color: dodgerblue;
+  color: white;
+  height: 20px;
+  border: 0;
+  margin-bottom: 10px;
+  margin-left: 63px;
+  padding-left: 10px;
+}

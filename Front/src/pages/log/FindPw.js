@@ -5,6 +5,7 @@ import {
   CssBaseline,
   TextField,
   FormControl,
+  FormHelperText,
   Grid,
   Box,
   Typography,
@@ -14,7 +15,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import { ForSendCertiNum, passResetPw } from "../../Api/LogData";
 
-//mui 템플릿 사용
+// mui의 내장 css
+const FormHelperTexts = styled(FormHelperText)`
+  width: 100%;
+  padding-left: 10px;
+  font-weight: 700 !important;
+`;
 const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
@@ -31,14 +37,14 @@ const FindPw = () => {
   const [inputNum, setinputNum] = useState("");
   // 백에서 받은 인증번호
   const [certiNum, setCertiNum] = useState("");
-  // 오류메세지(아이디, 생년월일, 이메일)
-  const [userIdMessage, setUserIdMessage] = useState("");
-  const [birthMessage, setBirthMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  // 유효성검사(아이디, 생년월일, 이메일)
-  const [userIdError, setUserIdError] = useState("");
-  const [birthError, setBirthError] = useState("");
-  const [emailError, setEmailError] = useState("");
+  // // 오류메세지(아이디, 생년월일, 이메일)
+  // const [userIdMessage, setUserIdMessage] = useState("");
+  // const [birthMessage, setBirthMessage] = useState("");
+  // const [emailMessage, setEmailMessage] = useState("");
+  // // 유효성검사(아이디, 생년월일, 이메일)
+  // const [userIdError, setUserIdError] = useState("");
+  // const [birthError, setBirthError] = useState("");
+  // const [emailError, setEmailError] = useState("");
 
   // userId input값 바뀔 때마다 변하게 하는 함수
   const userIdHandler = (e) => {
@@ -76,7 +82,7 @@ const FindPw = () => {
 
           <Boxs component="form" noValidate sx={{ mt: 3 }}>
             <FormControl component="fieldset" variant="standard">
-              <div className="join-inputId">
+              <div className="findpw-inputId">
                 {/* 아이디 입력칸 */}
                 <Grid item xs={12}>
                   <TextField
@@ -116,16 +122,18 @@ const FindPw = () => {
                   />
                 </Grid>
               </div>
-              {/*  인증번호 발송 버튼을 누르면 입력된 값을 백에 존재하는 값들과 비교해서 
+              <div className="confirm-button">
+                {/*  인증번호 발송 버튼을 누르면 입력된 값을 백에 존재하는 값들과 비교해서 
               존재여부를 파악하고 있다면 인증번호를 해당 이메일로 발송한다. */}
-              <a
-                className="join-idCheck"
-                onClick={() =>
-                  ForSendCertiNum(userId, email, birth, setCertiNum)
-                }
-              >
-                인증번호 발송
-              </a>
+                <a
+                  className="findpw-idCheck"
+                  onClick={() =>
+                    ForSendCertiNum(userId, email, birth, setCertiNum)
+                  }
+                >
+                  인증번호 발송
+                </a>
+              </div>
               <Grid container spacing={1.5}>
                 {/* 인증번호 입력칸 */}
                 <Grid item xs={12}>

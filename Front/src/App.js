@@ -25,12 +25,14 @@ function App() {
       <Routes>
         {/* 메인페이지 */}
         <Route path="/" element={<Main />} />
-        {/* logPage : 회원가입, 로그인, 아이디/비밀번호 찾기, 비밀번호 변경 */}
+        {/* logPage : 회원가입, 로그인, 아이디/비밀번호 찾기, 비밀번호 변경, 회원정보수정, 회원탈퇴 */}
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/findId" element={<FindId />} />
         <Route path="/findPw" element={<FindPw />} />
         <Route path="/resetPw" element={<ResetPw />} />
+        <Route path="/updateUser" element={<UpdateUser />} />
+        <Route path="/deleteUser" element={<DeleteUser />} />
         {/* boardPage : 실천내용 전체, 게시글 작성, 싱세게시물 */}
         <Route path="/feed" element={<Feed />} />
         <Route path="/boardWrite" element={<BoardWrite />} />
