@@ -18,6 +18,6 @@ public interface CommentService {
 	public boolean updateComment(SessionDTO sessionDTO, CommentDTO commentDTO);
 
 	// [특정 댓글 삭제]
-	public boolean deleteComment(CommentDTO commentDTO);
+	public boolean deleteComment(SessionDTO sessionDTO, CommentDTO commentDTO);
 
 }

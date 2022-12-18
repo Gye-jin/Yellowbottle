@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "cosmic-bonfire-371101",
+  "private_key_id": "9a2678125a27ecb5088e6e6d29efd120fbd5abf9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDGbKMqGGbLAdC0\nERrRnShu/d03sBdnQCHS5b714+e/ay3N+sZCmAeLcOYzr5Bvg9RlL4tnW4Pd18H2\nHA3oFliuXz96GiT1oMBVMuwjP8AmZkpqhqc8KEc9cDfYZQm/gm10qr9X/325fP57\neuC/cKU0WhrIwe/UAadKL57+jdH91awy7tXykJ4NzlCRSYOlEDKYs9pksioFzuno\nWCPywb0Lt6hRAm01uLOXveHf1yWm4Z7uWmzPiS39PWs389NaDS5K5HHnuhyiJnIq\njTV/nu+vtvi2jSE7vzXxx8a9RAmaz/9qayrRLVeSQe2KBwnJ+pm837gNL9dCng75\nNykgEb/VAgMBAAECggEAE3AI+9KwHyrqWvlh+y6+C0FrLk1dvYuWxKYk8smEpkfF\nkOwEB/oEozBIHMASEhqD7/WcXl+kp1K/eXB+HEI0JcDG4xs0i6tXrAD1CO7xz9Et\ncQoHz+jSMb6Qee5L6irItikT3Xb1xfnspAQBiD9sr5g0D36QE+CllqrblGwoKglc\nLwJEiQ7OKrGpR5HLsbVt9N9X7pwD58Sb79Q5ZQfge5zCUnkr6AYsWioDlvVbQf0D\nZr8EkA0HH5VX3qqHdfGRl8MuxMSizmuweKKyQGkHlKbsiPyewKFRX/b9rGvVtyoN\nAfVm6Oyay/V/vW4la8aDVBvpAt3JRuzhIJAlCSjrcQKBgQDzflEaduaAt7eyP+se\nTEJFzMfXJHPdofFEV+8uCI8NA4bMJMNEwJqYXVqYR0OUj8gkmEsL35hwP6nGheXN\nfu/Ta00wTp4g81EDb2FE2ESjeAyd4JI8m3cgZPP7MfyLCDxX7zd8IlTynZoiSTG3\n8gv0dL35avZYkZdxocYH2lv+XwKBgQDQnbWs/s0TjAG5iyUqCDYXxSvH/3zh2gkz\n0m/uDJmBelguBxpgtr/TcF1Q5PCglofMK4lD8fNTfPXCM/Pwdr9EfXdqHQp0dpbz\nvhNr0xW2YOBg5oWreYUX5Dg3OyY7ny/MpQ4BXx0mkW8F/hYfhhxMfo1dEUkezX2Z\nxmd/AdgGSwKBgGeuR9ae/nOcxwmNkg4qpqWWFxoTGYssI9HYJ65QUqlV8RYIKWWj\nJbDvP15MKgieWLjMaFg782sIkMBJz5p7DJ/Xttx0/XxGXx65VI++DywUODsZnutT\nv5v5oLI7jK+e6CMBZ3ziGY3dcf5bcGJFHLYQ57vGwfLgu73VBr/dSQK9AoGAN1lg\nlmGUL5d57ayJU7mSAISDtTCIBbQ/tMwkflhBciTvuGaSDQ7vnj21xHy5iyHlLbpv\nVOOg14nT+o6mLiqTXKydPj4uQ/Ai5NCNfpImtJjHb246EODQ+yHF+IFtB2yY1gcE\nzEBcD5uOhVyAqiR+5Zy+DO9FIzMKG/6T/xKSKjkCgYACZJeu7osduIgi4ww5cHeJ\nqN6fUFwCOHi7iJeTYQiJ8b8MRhxcYmdTQSM2P3gaBOd15thumFfn27P7na4IB+sQ\nOQzo8CPSh0y/i/G5WI/cD/EICbnk9EmcbLv3zKlSGIlw87VNP6RLs//1XbQh65ki\n/oJONYgh942QaKxP3Psu5w==\n-----END PRIVATE KEY-----\n",
+  "client_email": "czerostorageaccess@cosmic-bonfire-371101.iam.gserviceaccount.com",
+  "client_id": "113120856918931870949",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/czerostorageaccess%40cosmic-bonfire-371101.iam.gserviceaccount.com"
+}
