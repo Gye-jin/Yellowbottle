@@ -13,6 +13,6 @@ public interface FileService {
 	public void deleteFileBoard(Board board);
 	// [File 생성]
 	public void uploadFile(Long boardNo, List<MultipartFile> files);
-	
-
+	// [File 업데이트]
+	public void updateFile(Long boardNo, List<MultipartFile> files);
 }

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.spring.back.dto.FileDTO;
 import com.spring.back.entity.Board;
 import com.spring.back.entity.File;
-import com.spring.back.entity.User;
 
 
 @Repository

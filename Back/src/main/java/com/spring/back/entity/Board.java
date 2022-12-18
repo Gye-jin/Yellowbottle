@@ -119,8 +119,8 @@ public class Board {
 	// Entity Element Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [BoardContent 변경]
-	public void updateBoard(BoardDTO boardDTO) {
-		 this.boardContent = boardDTO.getBoardContent();
+	public void updateBoard(String boardContent) {
+		 this.boardContent = boardContent;
 	}
 	
 	// [User 채워주기]

@@ -83,15 +83,17 @@ public class UserServiceImpl implements UserService {
 		User user = userRepo.findByUserId(userId);
 		Session usersession = sessionRepo.findByUser(user);
 		if (userPw.equals(user.getUserPw())) {
-			if (usersession == null) {
-				httpsession.setAttribute("userId", user.getUserId());
-				String sessionId = httpsession.getId();
+			if (usersession != null) {
+				return usersession.getSessionId();
+			}
+			else if (user.getUserId().equals("admin")) {
+				String sessionId = "관리자";
 				Session session = Session.builder().sessionId(sessionId).user(user).build();
 				sessionRepo.save(session);
 				return sessionId;
+			
 			}
 			else {
-				sessionRepo.deleteBySessionId(usersession.getSessionId());
 				httpsession.setAttribute("userId", user.getUserId());
 				String sessionId = httpsession.getId();
 				Session session = Session.builder().sessionId(sessionId).user(user).build();

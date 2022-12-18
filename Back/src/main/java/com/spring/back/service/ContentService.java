@@ -20,6 +20,7 @@ public interface ContentService {
 	
 	// [카테고리에 해당하는 컨텐츠들 불러오기]
 	public List<ContentDTO> getByCategory(ContentDTO contentDTO);
-
-
+	
+	// [보낸 메일 확인 (카테고리 별로)]
+	public List<ContentDTO> getBySendMail(ContentDTO contentDTO);
 }

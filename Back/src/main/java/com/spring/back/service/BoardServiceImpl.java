@@ -83,10 +83,10 @@ public class BoardServiceImpl implements BoardService {
 		Session session = sessionRepo.findBySessionId(sessionId);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateViewCount(board.getViewCount() + 1);
-		System.out.println("세션"+session);
-		System.out.println("보드"+board);
+		Long Countcomment = commentRepo.countByBoard(board);
 		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
 			BoardDTO boardDTO = Board.myboardEntityToDTO(board);
+			boardDTO.setCountComment(Countcomment);
 			for (CommentDTO comment : boardDTO.getComments()) {
 				if (comment.getUserId().equals(session.getUser().getUserId())) {
 					comment.setEditor(true);
@@ -97,6 +97,7 @@ public class BoardServiceImpl implements BoardService {
 			return boardDTO;
 		} else {
 			BoardDTO boardDTO = Board.yourEntityToDTO(board);
+			boardDTO.setCountComment(Countcomment);
 			for (CommentDTO comment : boardDTO.getComments()) {
 				if (comment.getUserId().equals(session.getUser().getUserId())) {
 					comment.setEditor(true);
@@ -126,8 +127,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDTO> findRecoBoard(Long boardNo) {
 		// 추천 게시글 불러오기
-		List<Board> recoBoard = boardRepo.findRecommendedBoardByBoardNo(boardNo);
+		List<Board> recoBoard = boardRepo.findRecommendedBoardByBoardNo(boardNo);		
 		List<BoardDTO> boardDTOs = recoBoard.stream().map(board -> Board.yourEntityToDTO(board)).collect(Collectors.toList());
+		for(BoardDTO boardDTO : boardDTOs) {
+			Long CountComment = commentRepo.countByBoard(BoardDTO.boardDtotoEntity(boardDTO));
+			boardDTO.setCountComment(CountComment);
+		}
 		return boardDTOs;
 	}
 	
@@ -159,11 +164,8 @@ public class BoardServiceImpl implements BoardService {
 	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO) {
 		Board board = boardRepo.findById(newboardDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		if(session.getUser().getBoards().equals(session.getUser())) {
-			board.updateBoard(newboardDTO);
-			// 기존 File 삭제
-			fileRepo.deleteByBoardNo(board.getBoardNo());
-
+		if(session.getUser().equals(session.getUser())) {
+			board.updateBoard(newboardDTO.getBoardContent());
 			return true;
 		}
 		return false;

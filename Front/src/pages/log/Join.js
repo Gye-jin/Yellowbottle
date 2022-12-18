@@ -18,6 +18,14 @@ import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { duplicationCheck } from "../../Api/LogData";
 import { ForPostJoinData } from "../../Api/LogData";
+import {
+  BirthRegexTest,
+  EmailRegexTest,
+  GenderRegexTest,
+  IdRegexTest,
+  NameRegexTest,
+  PasswordRegexTest,
+} from "../../components/Regex";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -73,57 +81,25 @@ const Join = () => {
     };
     // 입력된 값들을 joinData에 넣는다.
     const { userId, email, name, userPw, birth, sex, subStatus } = joinData;
-    console.log(joinData);
 
-    // joinData에 넣은 각각의 값들은 유효성 검사를 거친다.
-    // 아이디 유효성 체크
-    const idRegex = /^[a-z]+[a-z0-9]{4,19}$/g;
-    if (!idRegex.test(userId)) {
-      setIdError("아이디는 영문자 또는 숫자 5~20자리로 입력해주세요");
-    }
-
-    // 이메일 유효성 체크
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!emailRegex.test(email))
-      setEmailError("올바른 이메일 형식이 아닙니다.");
-    else setEmailError("");
-
-    // 비밀번호 유효성 체크
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(userPw))
-      setPasswordError(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
-    else setPasswordError("");
-
-    // 생년월일 유효성 체크
-    const birthRegex =
-      /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-    if (!birthRegex.test(birth))
-      setBirthError(
-        "형식이 일치하지 않습니다. 1999-08-20과 같이 입력해주세요!"
-      );
-    else setBirthError("");
-
-    // 이름 유효성 검사
-    const nameRegex = /^[가-힣a-zA-Z]+$/;
-    if (!nameRegex.test(name) || name.length < 1)
-      setNameError("올바른 이름을 입력해주세요.");
-    else setNameError("");
-
-    // 성별 체크 검사
-    if (sex == null) alert("성별을 체크해주세요.");
-
+    // 입력한 값 유효성체크
+    IdRegexTest(userId, setIdError);
+    EmailRegexTest(email, setEmailError);
+    PasswordRegexTest(userPw, setPasswordError);
+    BirthRegexTest(birth, setBirthError);
+    NameRegexTest(name, setNameError);
+    GenderRegexTest(sex);
     // 회원가입 동의 체크
-    if (!CheckedPersonal) alert("회원가입 약관에 동의해주세요.");
+    if (!CheckedPersonal) {
+      alert("회원가입 약관에 동의해주세요.");
+    }
 
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
     if (
-      passwordRegex.test(userPw) &&
-      nameRegex.test(name) &&
-      emailRegex.test(email) &&
+      passwordError === "" &&
+      nameError === "" &&
+      emailError === "" &&
+      idError === "" &&
       CheckedPersonal
     ) {
       ForPostJoinData(joinData, setRegisterError);
