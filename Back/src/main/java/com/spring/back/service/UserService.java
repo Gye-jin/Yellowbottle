@@ -36,5 +36,7 @@ public interface UserService {
 	
 	// [회원 탈퇴]
 	public boolean deleteUser(String userId, String userPw);
-
+	
+	// [회원 등급 업데이트]
+	public void updateUserRank();
 }

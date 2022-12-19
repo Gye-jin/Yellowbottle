@@ -1,59 +1,26 @@
-import React, { useState } from "react";
-import { deleteComment } from "../../Api/BoardData";
-import UpdateComment from "./UpdateComment";
-import ReadComment from "./ReadComment";
+import React from "react";
+import { useNavigate } from "react-router-dom/dist";
+import ModalForComment from "./ModalForComment";
 
 const Comment = ({ comment }) => {
-  /* [comment 상태]
-   *  true => Read
-   *  false => Update
-   */
-  const [commentState, setCommentState] = useState(true);
-
+  const navigate = useNavigate();
   // [실행함수]
-  // 게시글 삭제
-  const commentDeleteButton = () => {
-    // 확인창 실행
-    const deleteConfirmCheck = window.confirm("정말 댓글을 삭제하겠습니까?");
-    // 삭제할 경우
-    if (deleteConfirmCheck) {
-      let deleteCommentData = new FormData();
-      const sessionId = sessionStorage.getItem("sessionId");
-      deleteCommentData.append("sessionId", sessionId);
-      deleteCommentData.append("commentNo", comment.commentNo);
-      deleteComment(deleteCommentData);
-      window.location.reload();
-    }
-  };
 
   return (
     <div>
-      {commentState ? (
-        <ReadComment
-          userId={comment.userId}
-          commentContent={comment.commentContent}
-        />
-      ) : (
-        <UpdateComment
-          setCommentState={setCommentState}
-          commentNo={comment.commentNo}
-          boardNo={comment.boardNo}
-          userId={comment.userId}
-          commentContent={comment.commentContent}
-        />
-      )}
+      {/* 설명: 댓글 작성자의 Id와 댓글 내용을 출력
+          이벤트 : userId 클릭 시 해당 유저의 개인 페이지로 이동 */}
+      <span>
+        <strong onClick={() => navigate(`/personPage/${comment.userId}`)}>
+          {comment.userId}
+        </strong>
+        <span>{comment.commentContent}</span>
+      </span>
 
-      {/* [수정 and 삭제 버튼]
-        1. 내가 작성한 댓글일 경우 보임
-        2. 내가 작성하지 않았거나 수정중일 경우 보이지 않음 */}
-      {comment.editor && commentState ? (
-        <span>
-          <button onClick={() => setCommentState(false)}>수정</button>
-          <button onClick={() => commentDeleteButton()}>삭제</button>
-        </span>
-      ) : (
-        <></>
-      )}
+      {/* [댓글 수정]
+          설명: 댓글 작성자에게만 보이는 버튼
+          이벤트: 댓글 수정 및 삭제가 가능한 팝업 생성 */}
+      {comment.editor ? <ModalForComment comment={comment} /> : <></>}
     </div>
   );
 };

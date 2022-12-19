@@ -1,6 +1,7 @@
 package com.spring.back.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
 import com.spring.back.entity.Board;
 import com.spring.back.entity.Certified;
+import com.spring.back.entity.Comment;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
@@ -21,6 +23,7 @@ import com.spring.back.repository.CommentRepository;
 import com.spring.back.repository.FileRepository;
 import com.spring.back.repository.SessionRepository;
 import com.spring.back.repository.UserRepository;
+import com.spring.back.user.UserGrade;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,6 +49,7 @@ public class UserServiceImpl implements UserService {
 	// [회원가입]
 	@Override
 	public boolean insertUser(UserDTO userDTO) {
+		userDTO.setGrade(UserGrade.새싹);
 		User user = UserDTO.userDTOToEntity(userDTO);
 		userRepo.save(user);
 		return true;
@@ -83,15 +87,17 @@ public class UserServiceImpl implements UserService {
 		User user = userRepo.findByUserId(userId);
 		Session usersession = sessionRepo.findByUser(user);
 		if (userPw.equals(user.getUserPw())) {
-			if (usersession == null) {
-				httpsession.setAttribute("userId", user.getUserId());
-				String sessionId = httpsession.getId();
+			if (usersession != null) {
+				return usersession.getSessionId();
+			}
+			else if (user.getUserId().equals("admin")) {
+				String sessionId = "관리자";
 				Session session = Session.builder().sessionId(sessionId).user(user).build();
 				sessionRepo.save(session);
 				return sessionId;
+			
 			}
 			else {
-				sessionRepo.deleteBySessionId(usersession.getSessionId());
 				httpsession.setAttribute("userId", user.getUserId());
 				String sessionId = httpsession.getId();
 				Session session = Session.builder().sessionId(sessionId).user(user).build();
@@ -155,6 +161,26 @@ public class UserServiceImpl implements UserService {
 		session.getUser().updateUser(newUserDTO);
 		
 		return true;
+	}
+	@Override
+	@Transactional
+	public void updateUserRank() {
+		List<User> users = userRepo.findAll();
+		for (User user : users) {
+			int commentsize = user.getComments().size();
+			int boardsize = user.getBoards().size();
+			if (user.getUserId().equals("admin")) {
+				user.updateRank(UserGrade.관리자);
+			} else if (commentsize > 5 && boardsize > 5) {
+				user.updateRank(UserGrade.잔디);
+			} else if (commentsize > 20 && boardsize > 20) {
+				user.updateRank(UserGrade.나무);
+			} else if (commentsize > 30 && boardsize > 30) {
+				user.updateRank(UserGrade.숲);
+			}
+
+		}
+
 	}
 
 	// Delete

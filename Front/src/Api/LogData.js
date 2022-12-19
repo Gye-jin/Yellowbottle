@@ -57,18 +57,14 @@ export const duplicationCheck = (setUsableId) => {
   const userId = document.getElementById("id").value;
   // duplicationCheckAPI(userId)를 통해 아이디 중복여부 반응을 받는다.
   duplicationCheckAPI(userId).then((response) => {
-    console.log(response);
     if (response === false) {
       // 백에서 받은 반응(response)의 상태값이 변하지 않았다면 사용가능한 아이디
       alert("사용 가능한 아이디입니다");
-      setUsableId(response);
+      setUsableId(true);
     } else {
       // 백에서 받은 반응(response)의 상태값이 false에서 다른 값으로 변했다면 중복된 아이디
       alert("중복된 아이디입니다.");
-      setUsableId(response);
     }
-    // 중복확인이 잘 작동되는지 확인하는 console.log
-    console.log("중복체크");
   });
 };
 
@@ -266,12 +262,13 @@ export function ForPostUpdateData(updateData, setRegisterError) {
 
 // DeleteUser
 // 회원탈퇴함수
-export function ForPostDeleteData(deleteData, setRegisterError) {
+export function ForPostDeleteData(deleteData) {
   const postDeleteData = async (deleteData) => {
     await axios
       .post("http://localhost:8080/api/deleteUser", deleteData)
       .then((response) => {
         console.log(response, "회원탈퇴성공 ㅠㅠ");
+        sessionStorage.removeItem("sessionId");
         alert("🤬회원탈퇴한 당신은 환경파괴자 ㅡ.ㅡ🤬");
         window.location.href = "/";
       })

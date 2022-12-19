@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.back.dto.UserDTO;
+import com.spring.back.user.UserGrade;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +37,9 @@ public class User {
 	private String email;
 	private String birth;
 	private String sex;
-	private int grade;
+	
+	@Enumerated(EnumType.STRING)
+	private UserGrade grade;
 	private boolean subStatus;
 
 	// Join
@@ -65,6 +70,10 @@ public class User {
 	// [userPw 변경]
 	public void updatePw(UserDTO userDTO) {
 		this.userPw = userDTO.getUserPw();
+	}
+	// [rank 변경]
+	public void updateRank(UserGrade usergrade) {
+		this.grade = usergrade;
 	}
 	
 	// [updateId 변경()->세션에서 가져온 값]

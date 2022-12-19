@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,20 +94,21 @@ public class BoardController {
 	// 설명 : 수정한 게시글 내용으로 게시글 업데이트
 	// click : 게시글 수정 완료
 	@PostMapping(value = "/boardupdate")
-	public boolean updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam("images") List<MultipartFile> images) {
-	
-		boolean result = boardService.updateBoard(sessionDTO,boardDTO);
+	public BoardDTO updateBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO, @RequestParam(value ="images", required = false) List<MultipartFile> images) {
 		
-		// 새로운 File 추가
-		fileService.uploadFile(boardDTO.getBoardNo(), images);
-		return result;
+		BoardDTO result = boardService.updateBoard(sessionDTO,boardDTO);
+		
+			// 새로운 File 추가
+	fileService.updateFile(boardDTO.getBoardNo(), images);	
+		
+	return result;
 	}
 
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [게시글 삭제]
 	// 설명 : 본인 게시글 지우기
-	@DeleteMapping("/boarddelete")
+	@PostMapping("/boarddelete")
 	public boolean deleteBoard(@ModelAttribute SessionDTO sessionDTO,BoardDTO boardDTO) {
 
 		return boardService.deleteBoard(sessionDTO,boardDTO);

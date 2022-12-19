@@ -77,6 +77,46 @@ public class FileServiceImpl implements FileService {
 		}
 	}
 
+	@Override
+	@Transactional
+	public void updateFile(Long boardNo, List<MultipartFile> files) {
+		if (files != null) {
+			// 기존 File 삭제
+			fileRepo.deleteByBoardNo(boardNo);
+			for (MultipartFile file : files) {
+				try {
+					// bloInfo라는 객체를 통해서
+					BlobInfo blobInfo = storage.create(
+							// 저장 bucket 이름과 저장할 이름 설정
+							BlobInfo.newBuilder("czero-storage", UUID.randomUUID() + "_" + file.getOriginalFilename())
+									.build(),
+							// 저장 파일로 변경
+							file.getBytes(),
+							// 파일 전송 허용
+							BlobTargetOption.predefinedAcl(PredefinedAcl.PUBLIC_READ));
+
+					// 파일 저장후 DTO타입으로 변경 후 파일
+					FileDTO fileDTO = FileDTO.builder().originalFileNAME(file.getOriginalFilename())
+							.fileName(blobInfo.getName()).filePath("https://storage.googleapis.com/czero-storage/")
+							.build();
+					// 생성한 DTO를 entity로 변경
+					File fileEntity = FileDTO.dtoToEntity(fileDTO);
+					// 파라미터로 전달받은 boardId를 활용하여 board entity 받기
+					Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
+					// 받아온 board를 file entity에 채워서 file객체 완성
+					fileEntity.updateBoard(board);
+					// 완성한 entity DB에 삽입
+					fileRepo.save(fileEntity);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
+
+	}
+
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [File 삭제]

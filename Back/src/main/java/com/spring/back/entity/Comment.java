@@ -95,4 +95,9 @@ public class Comment {
 	public void userInComment(User user) {
 		this.user = user;
 	}
+	
+	// [댓글 내용 수정하기]
+	public void updateCommentContentInEntity(String commentContent) {
+		this.commentContent = commentContent;
+	}
 }

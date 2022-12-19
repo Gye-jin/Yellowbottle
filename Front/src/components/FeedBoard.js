@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
 import { useNavigate } from "react-router-dom";
-import { anotherUserPageData } from "../Api/UserData";
 
 const FeedBoard = () => {
   //백에서 보낸 10개씩 게시물을 담는 공간
@@ -12,10 +11,6 @@ const FeedBoard = () => {
   const [fetching, setFetching] = useState(false);
   // navigate 함수
   const navigate = useNavigate();
-  //  해당유저의 세션정보
-  const userSession = sessionStorage.getItem("sessionId");
-  // 세션정보를 통해 불러들일 유저의 아이디
-  const [userId, setUserId] = useState();
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
@@ -52,9 +47,7 @@ const FeedBoard = () => {
     const response = boardFetchData(pageNo);
     response.then((data) => setFeedBoard(data));
   }, []);
-  // console.log(FeedBoard);
-  // console.log(fetching);
-  // console.log("현재 pageNo ::", pageNo); //추후 스크롤로 올려줄 예정
+
   return (
     <>
       <div className="outer">
@@ -89,9 +82,13 @@ const FeedBoard = () => {
                             }
                           />
                         ))}
-                      <div></div>
+                      {/* <div></div> */}
                       <div className="board_BoardContent">
-                        {board.boardContent}
+                        <div>조회수 : {board.viewCount}</div>
+                        <div className="board-BoardContent">
+                          {board.boardContent}
+                        </div>
+                        <div>{/* {board.createDate} */}</div>
                       </div>
                     </div>
                   </div>
