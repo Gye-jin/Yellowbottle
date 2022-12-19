@@ -52,17 +52,14 @@ const Login = () => {
     };
     // 입력된 값들을 loginData에 넣는다.
     const { userId, userPw } = loginData;
-
     // loginData에 넣은 각각의 값들은 유효성 검사를 거친다.
     IdRegexTest(userId, setIdError);
     PasswordRegexTest(userPw, setPasswordError);
-
     // 만약 위 유효성 검사를 모두 통과하면 ForPostLoginData를 실행한다.
     if (idError === "" && passwordError === "") {
       ForPostLoginData(loginData, setRegisterError);
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Header />

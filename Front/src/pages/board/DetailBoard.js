@@ -82,7 +82,15 @@ const DetailBoard = () => {
               </h3>
               {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
               <span>
-                {board.editor ? <button>수정하기</button> : ""}
+                {board.editor ? (
+                  <button
+                    onClick={() => navigate(`/boardUpdate/${board.boardNo}`)}
+                  >
+                    수정하기
+                  </button>
+                ) : (
+                  ""
+                )}
                 {board.editor ? (
                   <button onClick={() => createDeleteBoardData()}>
                     삭제하기

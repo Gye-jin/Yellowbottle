@@ -18,7 +18,8 @@ import NotFound from "./pages/etc/NotFound.js";
 import UpdateUser from "./pages/log/UpdateUser";
 import DeleteUser from "./pages/log/DeleteUser";
 import BoardUpdate from "./pages/board/BoardUpdate";
-
+import MyPage from "./pages/user/MyPage";
+import AdminMailCheck from "./pages/admin/AdminMailCheck";
 function App() {
   return (
     <div>
@@ -41,9 +42,11 @@ function App() {
         <Route path="/boardUpdate/:boardNo" element={<BoardUpdate />} />
         {/* userPage : 마이페이지, 타유저페이지 */}
         <Route path="/personPage/:userId" element={<PersonPage />} />
+        <Route path="/myPage" element={<MyPage />} />
         {/* adminPage : 관리자로그페이지, 관리자메신저페이지 */}
         <Route path="/adminLogPage" element={<AdminLogPage />} />
         <Route path="/adminMailPage" element={<AdminMailPage />} />
+        <Route path="/adminMailCheck" element={<AdminMailCheck />} />
         {/* 기타페이지 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
