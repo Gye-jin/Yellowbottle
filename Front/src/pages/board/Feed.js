@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../../components/header/Header";
-import { AccessAgreeBoardWrite } from "../../components/AccessAgree";
 import FeedBoard from "../../components/FeedBoard";
 import ModalForwrite from "./modal/ModalForWrite";
 

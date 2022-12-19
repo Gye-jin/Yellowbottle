@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../../components/header/Header";
 import { ForPostBoardWrite } from "../../Api/BoardData";
 
@@ -57,8 +57,9 @@ function BoardWrite() {
     boardWriteData.append("boardContent", boardContent);
     boardWriteData.append("image", selectImage);
     // 입력된 값들을 boardWriteData에 넣는다.
-    console.log("boardWriteData :: ", boardWriteData);
+    console.log("boardWriteData: ", boardWriteData);
     ForPostBoardWrite(boardWriteData);
+    window.location.reload();
   };
 
   return (

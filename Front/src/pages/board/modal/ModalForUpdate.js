@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { AccessAgreeBoardWrite } from "../../../components/AccessAgree";
 import BoardUpdate from "../BoardUpdate";
-import BoardWrite from "../BoardWrite";
 
-const ModalForUpdate = () => {
+const ModalForUpdate = ({ boardNo }) => {
   // [변수지정]
   // 팝업창 열고 닫기
   const [updateBoardModal, setUpdateBoardModal] = useState(false);
@@ -22,7 +20,7 @@ const ModalForUpdate = () => {
           </div>
           <br />
           {/* 컴퍼넌트 들어가는 자리 */}
-          <BoardUpdate />
+          <BoardUpdate boardNo={boardNo} />
         </Modal>
       </div>
     </>

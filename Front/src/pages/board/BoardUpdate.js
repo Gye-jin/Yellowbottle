@@ -1,13 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { DetailBoardFetchData } from "../../Api/BoardData";
-import Header from "../../components/header/Header";
 import { ForPostUpdateBoard } from "../../Api/BoardData";
 
-function BoardUpdate() {
-  //  boardNo를 통해 게시글 내용 불러옴
-  const boardNo = useParams().boardNo;
+function BoardUpdate({ boardNo }) {
   //  불러온 게시글 정보를 저장할 공간
   const [board, setBoard] = useState([]);
   //   해당유저의 세션아이디
@@ -71,11 +67,11 @@ function BoardUpdate() {
     updateBoardData.append("boardNo", boardNo);
     updateBoardData.append("boardContent", newBoardContent);
     ForPostUpdateBoard(updateBoardData);
+    window.location.reload();
   };
 
   return (
     <>
-      <Header />
       <br />
       <form encType="multipart/form-data">
         <div className="BoardUpdate-outerBox">
