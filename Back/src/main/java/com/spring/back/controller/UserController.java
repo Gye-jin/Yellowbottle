@@ -109,10 +109,10 @@ public class UserController {
 		return userService.updateUserInfo(sessionDTO,userDTO);
 	}
 //	// [회원등급 업데이트]
-//	@PostMapping(value = "/updaterank")
-//	public boolean updateUserRank() {
-//		return userService.updateUserInfo(sessionDTO,userDTO);
-//	}
+	@PostMapping(value = "/updaterank")
+	public void updateUserRank() {
+		userService.updateUserRank();
+	}
 
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------

@@ -145,11 +145,11 @@ public class BoardServiceImpl implements BoardService {
 		Long countBoard = boardRepo.countByUser(user);
 		Long countComment = commentRepo.countByUser(user);
 		if (sessionRepo.findByUser(user) != null) {
-			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(true).countBoard(countBoard).countComment(countComment)
+			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(true).grade(user.getGrade()).countBoard(countBoard).countComment(countComment)
 					.boards(boardMappings).build();
 			return mypageDTO;
 		} else {
-			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(false).countBoard(countBoard).countComment(countComment)
+			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(false).grade(user.getGrade()).countBoard(countBoard).countComment(countComment)
 					.boards(boardMappings).build();
 			return mypageDTO;
 		}

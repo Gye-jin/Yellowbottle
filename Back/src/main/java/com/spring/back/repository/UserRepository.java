@@ -1,11 +1,14 @@
 package com.spring.back.repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.spring.back.entity.Board;
+import com.spring.back.entity.Comment;
 import com.spring.back.entity.User;
 
 @Repository
@@ -24,4 +27,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 	// 입력한 email과 생년월일,아이디에 해당하는 User출력
 	public User findByEmailAndBirthAndUserId(String email, String birth, String UserId);
+	
+	
+	
+	
 }
