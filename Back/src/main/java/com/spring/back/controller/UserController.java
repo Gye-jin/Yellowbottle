@@ -4,6 +4,7 @@ package com.spring.back.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -109,6 +110,7 @@ public class UserController {
 		return userService.updateUserInfo(sessionDTO,userDTO);
 	}
 //	// [회원등급 업데이트]
+	@Scheduled(cron = "10 * * * * *")
 	@PostMapping(value = "/updaterank")
 	public void updateUserRank() {
 		userService.updateUserRank();

@@ -103,6 +103,7 @@
   margin-bottom: 10px;
   margin-left: 130px;
   padding-left: 10px;
+  border: 1px solid blue;
 }
 .join-inputId {
   width: 100%;
@@ -149,6 +150,20 @@
   /* min-height: 100vh; */
 }
 
+/* FindPw */
+.FindPw-sendCertiNum {
+  width: 35%;
+  background-color: dodgerblue;
+  color: white;
+  height: 20px;
+  border: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 130px;
+  text-align: center;
+  border-radius: 4%;
+}
+
 /* 실천내용 페이지 */
 /* 실천내용 작성하기 버튼 */
 .writeBoard {
@@ -190,6 +205,8 @@
 /* board_Image */
 .board_Image {
   width: 100%;
+  /* max-width: 700px; */
+  max-height: 500px;
   object-fit: contain;
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
@@ -204,7 +221,7 @@
 .boader_Header {
   display: flex;
   align-items: center;
-  padding: 20px;
+  /* padding: 20px; */
 }
 /* board-UserId */
 .board_UserId {
@@ -213,51 +230,131 @@
 }
 
 /* BoardWrite : 게시글 작성화면 css */
+.BoardWrite-box {
+  min-width: 1000px;
+  background-color: white;
+  max-width: 1000px;
+  height: 500px;
+  border: 1px solid lightgray;
+  margin-bottom: 45px;
+}
+.BoardWrite-outerBox {
+  text-align: center;
+}
+.BoardWrite-innerBox {
+  display: inline-block;
+}
+.BoardWrite-header {
+  display: flex;
+  align-items: center;
+  /* padding: 20px; */
+}
 /* 게시글 쓰는 부분 css */
 .BoardWrite-rightBox {
-  background-color: beige;
+  /* border: 2px solid black; */
+  /* background-color: beige; */
+  border-left: 2px solid lightgray;
   float: right;
   width: 50%;
+  height: 500px;
 }
 /* 사진 선택하는 부분 css */
 .BoardWrite-leftBox {
-  background-color: beige;
+  /* border: 2px solid black; */
+  /* background-color: beige; */
   float: left;
   width: 50%;
 }
 /* 게시글 쓰는 부분 */
 .BoardWrite-boardContent {
-  width: 500px;
-  height: 180px;
+  margin-top: 80px;
+  width: 350px;
+  height: 300px;
 }
+/* 파일 선택하는 버튼 css */
 .BoardWrite-selectImg {
   display: none;
 }
-.BoardWrite-selectImgBtn {
-  /* background-color: aqua; */
-  border: 1px solid black;
-  padding: 1.5px;
+.BoardWrite-defaultImg {
+  width: 300px;
+  height: 300px;
+}
+.BoardWrite-prevImg {
+  margin: auto;
+  width: 350;
+  height: 350px;
 }
 
 /* BoardUpdate */
 /* 사진 선택 */
 .BoardUpdate-leftBox {
-  background-color: beige;
   float: left;
-  width: 50%;
+  width: 65%;
+  max-height: 500px;
+  display: flex;
+  align-items: flex-start;
+  margin: 30px 0;
 }
 /* 게시글 입력 */
 .BoardUpdate-rightBox {
-  background-color: beige;
+  border-left: 2px solid lightgray;
   float: right;
+  width: 35%;
+  height: 500px;
+}
+.BoardUpdate-box {
+  min-width: 1000px;
+  background-color: white;
+  max-width: 1000px;
+  height: 500px;
+  border: 1px solid lightgray;
+  margin-bottom: 45px;
+}
+.BoardUpdate-outerBox {
+  text-align: center;
+}
+.BoardUpdate-innerBox {
+  display: inline-block;
+}
+.BoardUpdate-header {
+  display: flex;
+  align-items: center;
+  /* padding: 20px; */
+}
+.BoardUpdate-boardContent {
+  margin-top: 80px;
+  width: 300px;
+  height: 300px;
+}
+.BoardUpdate-selectImg {
+  display: none;
+}
+.BoardUpdate-prevImg {
+  width: 300px;
+  height: 300px;
+}
+.BoardUpdate-defaultImg {
+  /* margin: px; */
+  margin-left: 20px;
+  margin-right: 10px;
   width: 50%;
+  height: 350px;
+  width: 300px;
+  height: 300px;
+  /* display: none; */
+}
+.BoardUpdate-selectedImg {
+  width: 300px;
+  height: 300px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 /* PersonPage */
 /* PersonPage 전체 틀 css */
 .PersonPage-Outer {
   text-align: center;
-  background-color: rgb(179, 207, 175);
+  background-color: rgb(218 239 234);
 }
 .PersonPage-Inner {
   display: inline-block;
@@ -268,7 +365,7 @@
 .PersonPage-image-grid {
   display: flex;
   flex-wrap: wrap;
-  border-top: 5px solid rgb(179, 207, 175);
+  border-top: 5px solid #2bb400;
 }
 .PersonPage-image-grid {
   width: 100%;
