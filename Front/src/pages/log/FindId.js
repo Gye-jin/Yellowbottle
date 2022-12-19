@@ -43,7 +43,6 @@ const FindId = () => {
   const [registerError, setRegisterError] = useState("");
   //페이지 이동 함수
   const navigate = useNavigate();
-
   // 아이디찾기 버튼누를시 실행 함수: 입력된 값-백엔드로 전송(request)
   const createFindIdData = (e) => {
     //실행시 창 새로고침 방지
@@ -56,13 +55,14 @@ const FindId = () => {
     };
     // 입력된 값들을 findIdData에 넣음.
     const { email, birth } = findIdData;
-
     //findIdData의 각각의 입력값들은 유효성검사를 거침
     EmailRegexTest(email, setEmailError);
     BirthRegexTest(birth, setBirthError);
     // 모두 통과하면 ForPostFindIdData를 실행함.
-    if (setEmailError === "" && setBirthError === "") {
+    if (emailError === "" && birthError === "") {
       ForPostFindIdData(findIdData, setUserId, setRegisterError);
+    } else {
+      setRegisterError("🌍잘못된 정보입니다🌍");
     }
   };
 
@@ -131,6 +131,8 @@ const FindId = () => {
               >
                 아이디 찾기
               </Button>
+              {/* 입력된 값이 정상적으로 post 되지 않으면 아래 빨간글씨 오류 띄우기 */}
+              <FormHelperTexts>{registerError}</FormHelperTexts>
             </FormControl>
             {/* 백에서 response로 받은 userId의 값이 0글자이상(db에 존재하는 id)이고
             생년월일, 이메일 입력형식 오류가 없다면 <h3>태그로 아이디를 보여줌. */}
@@ -141,13 +143,11 @@ const FindId = () => {
                 <></>
               )}
             </div>
-            <div className="butom">
+            <div className="find-id">
               <p onClick={() => navigate("/login")}>로그인 이동</p>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <p onClick={() => navigate("/findPw")}>비밀번호찾기</p>
             </div>
-            {/* 입력된 값이 정상적으로 post 되지 않으면 아래 빨간글씨 오류 띄우기 */}
-            <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
         </Box>
       </Container>

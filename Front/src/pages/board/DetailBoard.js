@@ -29,7 +29,7 @@ const DetailBoard = () => {
     }
   };
 
-  // 댓글입력버튼 클릭 시 - 댓글내용폼데이터 형태로 백에 보냄
+  // 댓글입력버튼 클릭or엔터 시 - 댓글내용폼데이터 형태로 백에 보냄
   const createCommentData = () => {
     let commentWriteData = new FormData();
     commentWriteData.append("sessionId", sessionId);
@@ -58,12 +58,17 @@ const DetailBoard = () => {
     postDeleteBoardData(deleteBoardData);
   };
 
+  //1.게시물 세부내용 가져오기 -api사용
   useEffect(() => {
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
   }, []);
 
-  // console.log(board);
+  // 게시물수정으로 이동
+  const updateBoard = () => {
+    navigate(`/updateBoard/${boardNo}`);
+  };
+
   return (
     <>
       <Header />
@@ -77,7 +82,15 @@ const DetailBoard = () => {
               </h3>
               {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
               <span>
-                {board.editor ? <button>수정하기</button> : ""}
+                {board.editor ? (
+                  <button
+                    onClick={() => navigate(`/boardUpdate/${board.boardNo}`)}
+                  >
+                    수정하기
+                  </button>
+                ) : (
+                  ""
+                )}
                 {board.editor ? (
                   <button onClick={() => createDeleteBoardData()}>
                     삭제하기
@@ -85,6 +98,7 @@ const DetailBoard = () => {
                 ) : (
                   ""
                 )}
+
                 <br />
               </span>
               {board.files &&
@@ -119,6 +133,7 @@ const DetailBoard = () => {
               />
               <button onClick={createCommentData}>댓글작성</button>
             </div>
+
             {/* 버튼을 누르면 추천게시물이 나온다. */}
             <br />
             <ModalForRecommend boardNo={board.boardNo} />

@@ -88,17 +88,6 @@
     width: 32px;
   }
 }
-/* 헤더 */
-/* 기본헤더 */
-/* .header-Header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 75px;
-  display: flex;
-  justify-content: space-between;
-} */
 
 /* 회원가입 페이지 */
 .join-genderRadio {
@@ -153,10 +142,11 @@
   margin-left: 130px;
   padding-left: 10px;
 }
-.butom {
+.find-id {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: dodgerblue;
   /* min-height: 100vh; */
 }
 
@@ -236,6 +226,19 @@
   float: left;
   width: 50%;
 }
+/* 게시글 쓰는 부분 */
+.BoardWrite-boardContent {
+  width: 500px;
+  height: 180px;
+}
+.BoardWrite-selectImg {
+  display: none;
+}
+.BoardWrite-selectImgBtn {
+  /* background-color: aqua; */
+  border: 1px solid black;
+  padding: 1.5px;
+}
 
 /* BoardUpdate */
 /* 사진 선택 */
@@ -272,9 +275,15 @@
   width: 100%;
 }
 .PersonPage-image-grid img {
-  margin-top: 10px;
-  width: 100%;
-  height: auto;
+  /* margin-top: 10px; */
+  margin: 7px 7px 7px 7px;
+  /* width: 33%;
+  height: auto; */
+  flex: 0 0 33.33%;
+  height: 170px;
+  width: 300px;
+  border: 2px solid lightgray;
+  border-radius: 18%;
 }
 /* 유저 기본 정보 보여주는 css */
 .PersonPage-Information {
@@ -303,6 +312,6 @@
   height: 20px;
   border: 0;
   margin-bottom: 10px;
-  margin-left: 63px;
+  margin-left: 60px;
   padding-left: 10px;
 }
