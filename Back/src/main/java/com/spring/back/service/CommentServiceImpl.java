@@ -39,13 +39,14 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public CommentDTO insertComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		
+
 		Comment comment = CommentDTO.commentDtoToEntity(commentDTO);
-		
+
 		// 빌더에서 빠져있는 board채우기
 		comment.boardInComment(boardRepo.findById(commentDTO.getBoardNo()).orElseThrow(NoSuchElementException::new));
 		// 빌더에서 빠져있는 user채우기
-		comment.userInComment(userRepo.findById(session.getUser().getUserId()).orElseThrow(NoSuchElementException::new));
+		comment.userInComment(
+				userRepo.findById(session.getUser().getUserId()).orElseThrow(NoSuchElementException::new));
 
 		Long commentNo = commentRepo.save(comment).getCommentNo();
 
@@ -59,26 +60,27 @@ public class CommentServiceImpl implements CommentService {
 	// [댓글 가져오기]
 	@Override
 	public CommentDTO getComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
-		
+
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
 		Comment comment = commentRepo.findById(commentDTO.getCommentNo()).orElseThrow(NoSuchElementException::new);
 
 		if (session.getUser().equals(comment.getUser())) {
 			CommentDTO commentDT = Comment.trueEntityToDTO(comment);
 			return commentDT;
-		}else {
+		} else {
 			CommentDTO commentDT = Comment.falseEntityToDTO(comment);
 			return commentDT;
 		}
-		
+
 	}
+
 	// [(수정용)댓글 가져오기]
 	@Override
 	public CommentDTO getOldComment(CommentDTO commentDTO) {
 		Long commentNo = commentDTO.getCommentNo();
-		
+
 		Comment comment = commentRepo.findById(commentNo).orElseThrow(NoSuchElementException::new);
-		
+
 		if (commentDTO.getUserId().equals(comment.getUser().getUserId())) {
 			CommentDTO oldCommentDTO = Comment.falseEntityToDTO(comment);
 			return oldCommentDTO;
@@ -90,17 +92,18 @@ public class CommentServiceImpl implements CommentService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [댓글 수정]
 	@Override
-	public boolean updateComment(CommentDTO commentDTO) {
-		Comment comment = CommentDTO.commentDtoToEntity(commentDTO);
-
-		// entity로 넣지 못한 board와 user 삽입
-		Board board = boardRepo.findById(commentDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
-		comment.boardInComment(board);
-		User user = userRepo.findById(commentDTO.getUserId()).orElseThrow(NoSuchElementException::new);
-		comment.userInComment(user);
-
-		commentRepo.save(comment);
-		return true;
+	public boolean updateComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
+		// userId 가져오기
+		String userId = sessionRepo.findBySessionId(sessionDTO.getSessionId()).getUser().getUserId();
+		// commentNo를 활용하여 Comment Entity 가져오기
+		Comment comment = commentRepo.findById(commentDTO.getCommentNo()).orElseThrow(NoSuchElementException::new);
+		String newCommentContent = commentDTO.getCommentContent();
+		if (userId.equals(comment.getUser().getUserId())) {
+			comment.updateCommentContentInEntity(newCommentContent);
+			commentRepo.save(comment);
+			return true;
+		}
+		return false;
 	}
 
 	// Delete
