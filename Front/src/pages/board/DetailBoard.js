@@ -21,6 +21,14 @@ const DetailBoard = () => {
     setCommentContent(e.target.value);
   };
 
+  //Enter로도 댓글달기 가능하게 하는 함수
+  const handleEnter = (e) => {
+    if (e.key == "Enter") {
+      createCommentData();
+      console.log(commentContent);
+    }
+  };
+
   // 댓글입력버튼 클릭 시 - 댓글내용폼데이터 형태로 백에 보냄
   const createCommentData = () => {
     let commentWriteData = new FormData();
@@ -102,21 +110,18 @@ const DetailBoard = () => {
             {board.comments &&
               board.comments.map((comment) => <Comment comment={comment} />)}
             {/* 댓글 입력창 */}
-            <div>
+            <div onSubmit={changeComment}>
               <input
-                onChange={changeComment}
                 className="Comment-write"
                 placeholder="댓글을 입력해주세요!"
                 id="commentinput"
+                onKeyDown={handleEnter}
               />
               <button onClick={createCommentData}>댓글작성</button>
             </div>
             {/* 버튼을 누르면 추천게시물이 나온다. */}
             <br />
             <ModalForRecommend boardNo={board.boardNo} />
-            {/* <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
-              추천 게시글 보기
-            </button> */}
           </div>
         ) : (
           <></>

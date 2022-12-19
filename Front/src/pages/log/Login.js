@@ -58,7 +58,7 @@ const Login = () => {
     PasswordRegexTest(userPw, setPasswordError);
 
     // 만약 위 유효성 검사를 모두 통과하면 ForPostLoginData를 실행한다.
-    if (setIdError === "" && setPasswordError === "") {
+    if (idError === "" && passwordError === "") {
       ForPostLoginData(loginData, setRegisterError);
     }
   };
