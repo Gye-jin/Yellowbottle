@@ -29,7 +29,7 @@ public interface BoardService {
 	public PersonpageDTO getBoardByUserId(String userId);
 
 	// [게시글 수정]
-	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO);
+	public BoardDTO updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO);
 	
 	// [게시글 삭제]
 	public boolean deleteBoard(SessionDTO sessionDTO, BoardDTO boardDTO);

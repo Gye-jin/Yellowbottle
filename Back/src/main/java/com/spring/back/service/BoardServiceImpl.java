@@ -161,14 +161,14 @@ public class BoardServiceImpl implements BoardService {
 	// [게시글 수정]
 	@Override
 	@Transactional
-	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO) {
+	public BoardDTO updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO) {
 		Board board = boardRepo.findById(newboardDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
 		if(session.getUser().equals(session.getUser())) {
 			board.updateBoard(newboardDTO.getBoardContent());
-			return true;
+			return newboardDTO;
 		}
-		return false;
+		return null;
 	}
 
 	// Delete
