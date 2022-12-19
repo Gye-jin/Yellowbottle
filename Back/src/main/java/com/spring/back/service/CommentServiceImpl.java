@@ -90,14 +90,13 @@ public class CommentServiceImpl implements CommentService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [댓글 수정]
 	@Override
-	public boolean updateComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+	public boolean updateComment(CommentDTO commentDTO) {
 		Comment comment = CommentDTO.commentDtoToEntity(commentDTO);
 
 		// entity로 넣지 못한 board와 user 삽입
 		Board board = boardRepo.findById(commentDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
 		comment.boardInComment(board);
-		User user = userRepo.findById(session.getUser().getUserId()).orElseThrow(NoSuchElementException::new);
+		User user = userRepo.findById(commentDTO.getUserId()).orElseThrow(NoSuchElementException::new);
 		comment.userInComment(user);
 
 		commentRepo.save(comment);
@@ -107,12 +106,13 @@ public class CommentServiceImpl implements CommentService {
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [특정 댓글 삭제]
-	public boolean deleteComment(CommentDTO commentDTO) {
+	public boolean deleteComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
 		Long commentNo = commentDTO.getCommentNo();
+		String userId = sessionRepo.findBySessionId(sessionDTO.getSessionId()).getUser().getUserId();
 
 		Comment comment = commentRepo.findById(commentNo).orElseThrow(NoSuchElementException::new);
 
-		if (commentDTO.getUserId().equals(comment.getUser().getUserId())) {
+		if (userId.equals(comment.getUser().getUserId())) {
 			commentRepo.deleteById(comment.getCommentNo());
 			return true;
 		}

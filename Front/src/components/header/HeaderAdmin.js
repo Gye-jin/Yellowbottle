@@ -58,7 +58,7 @@ export default function HeaderAdmin() {
             <img
               alt="로고"
               className="logo"
-              src="img/czero_Logo.jpg"
+              src="/img/czero_Logo.jpg"
               width="120"
               height="70"
             />

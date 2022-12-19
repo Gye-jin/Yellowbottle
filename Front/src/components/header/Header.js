@@ -32,7 +32,7 @@ export default function Header() {
     const whoSession = sessionStorage.getItem("sessionId");
     // 세션값이 없으면 비회원
     if (whoSession === null) {
-      console.log("비회원입니당");
+      console.log("비회원입니당 :: 콘솔확인용");
     }
     // 세션값이 백에서 지정한 관리자 값이면 isLogin값을 admin으로 수정
     else if (whoSession === "관리자") {
@@ -49,7 +49,6 @@ export default function Header() {
   // 만약 isLogin값이 기본값 false이면 비회원용 헤더를 보여준다.
   if (isLogin === false) {
     return (
-      // <div className="header-Header">
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" theme={theme}>
           <Toolbar>
@@ -64,7 +63,7 @@ export default function Header() {
               {/* 로고 */}
               <img
                 className="logo"
-                src="img/czero_Logo.jpg"
+                src="/img/czero_Logo.jpg"
                 width="120"
                 height="70"
               />
@@ -86,7 +85,6 @@ export default function Header() {
           </Toolbar>
         </AppBar>
       </Box>
-      // </div>
     );
   }
   // 만약 isLogin 값이 admin이라면 관리자용 헤더를 보여준다.

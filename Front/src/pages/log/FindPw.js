@@ -5,6 +5,7 @@ import {
   CssBaseline,
   TextField,
   FormControl,
+  FormHelperText,
   Grid,
   Box,
   Typography,
@@ -15,6 +16,12 @@ import styled from "styled-components";
 import { ForSendCertiNum, passResetPw } from "../../Api/LogData";
 
 //mui 템플릿 사용
+const FormHelperTexts = styled(FormHelperText)`
+  width: 100%;
+  padding-left: 16px;
+  font-weight: 700 !important;
+  color: #d32f2f !important;
+`;
 const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
@@ -31,14 +38,11 @@ const FindPw = () => {
   const [inputNum, setinputNum] = useState("");
   // 백에서 받은 인증번호
   const [certiNum, setCertiNum] = useState("");
-  // 오류메세지(아이디, 생년월일, 이메일)
-  const [userIdMessage, setUserIdMessage] = useState("");
-  const [birthMessage, setBirthMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
   // 유효성검사(아이디, 생년월일, 이메일)
   const [userIdError, setUserIdError] = useState("");
   const [birthError, setBirthError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [registerError, setRegisterError] = useState("");
 
   // userId input값 바뀔 때마다 변하게 하는 함수
   const userIdHandler = (e) => {
@@ -73,47 +77,52 @@ const FindPw = () => {
           <Typography component="h1" variant="h5">
             비밀번호 찾기
           </Typography>
-
           <Boxs component="form" noValidate sx={{ mt: 3 }}>
             <FormControl component="fieldset" variant="standard">
-              <div className="join-inputId">
-                {/* 아이디 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="text"
-                    id="id"
-                    name="id"
-                    label="아이디"
-                    onChange={userIdHandler}
-                  />
-                </Grid>
-                {/* 이메일 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="email"
-                    id="email"
-                    name="email"
-                    label="이메일 주소"
-                    onChange={emailHandler}
-                  />
-                </Grid>
-                {/* 생년월일 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="birth"
-                    id="birth"
-                    name="birth"
-                    label="생년월일 입력(ex.1999-08-20)"
-                    onChange={birthHandler}
-                  />
+              <div>
+                <Grid container spacing={1.5}>
+                  {/* 아이디 입력칸 */}
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      autoFocus
+                      fullWidth
+                      type="text"
+                      id="id"
+                      name="id"
+                      label="아이디"
+                      error={userIdError !== "" || false}
+                      onChange={userIdHandler}
+                    />
+                  </Grid>
+                  <FormHelperTexts>{userIdError}</FormHelperTexts>
+                  {/* 이메일 입력칸 */}
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      autoFocus
+                      fullWidth
+                      type="email"
+                      id="email"
+                      name="email"
+                      label="이메일 주소"
+                      onChange={emailHandler}
+                    />
+                  </Grid>
+                  <FormHelperTexts>{emailError}</FormHelperTexts>
+                  {/* 생년월일 입력칸 */}
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      type="birth"
+                      id="birth"
+                      name="birth"
+                      label="생년월일 입력(ex.1999-08-20)"
+                      onChange={birthHandler}
+                    />
+                  </Grid>
+                  <FormHelperTexts>{birthError}</FormHelperTexts>
                 </Grid>
               </div>
               {/*  인증번호 발송 버튼을 누르면 입력된 값을 백에 존재하는 값들과 비교해서 
@@ -155,6 +164,7 @@ const FindPw = () => {
                 인증번호 확인
               </Button>
             </FormControl>
+            <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
         </Box>
       </Container>

@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class BoardDTO {
 	
+	// Column
+	// --------------------------------------------------------------------------------------------------------------------------------
 	// 게시글이 내가 작성한 글인지 확인
 	private boolean editor;
 	private Long countComment;
-	// Column
-	// --------------------------------------------------------------------------------------------------------------------------------
 
 	private Long boardNo;
 	private String userId;

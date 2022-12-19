@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { ForPostFindIdData } from "../../Api/LogData";
+import { BirthRegexTest, EmailRegexTest } from "../../components/Regex";
 
 // mui의 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -42,7 +43,6 @@ const FindId = () => {
   const [registerError, setRegisterError] = useState("");
   //페이지 이동 함수
   const navigate = useNavigate();
-
   // 아이디찾기 버튼누를시 실행 함수: 입력된 값-백엔드로 전송(request)
   const createFindIdData = (e) => {
     //실행시 창 새로고침 방지
@@ -55,27 +55,14 @@ const FindId = () => {
     };
     // 입력된 값들을 findIdData에 넣음.
     const { email, birth } = findIdData;
-    console.log(findIdData);
-
     //findIdData의 각각의 입력값들은 유효성검사를 거침
-    // 이메일 유효성 체크
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!emailRegex.test(email)) {
-      setEmailError("올바른 이메일 형식이 아닙니다.");
-    } else setEmailError("");
-
-    // 생년월일 유효성 체크
-    const birthRegex =
-      /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-    if (!birthRegex.test(birth)) {
-      setBirthError("형식이 일치하지 않습니다. 8자리 생년월일을 입력해주세요!");
-    } else setBirthError("");
-
+    EmailRegexTest(email, setEmailError);
+    BirthRegexTest(birth, setBirthError);
     // 모두 통과하면 ForPostFindIdData를 실행함.
-    const findIdRegex = emailRegex.test(email) && birthRegex.test(birth);
-    if (findIdRegex) {
+    if (emailError === "" && birthError === "") {
       ForPostFindIdData(findIdData, setUserId, setRegisterError);
+    } else {
+      setRegisterError("🌍잘못된 정보입니다🌍");
     }
   };
 
@@ -118,7 +105,6 @@ const FindId = () => {
                 </Grid>
                 {/* 유효성검사 맞지않으면 birthError로 빨간글씨 표시 */}
                 <FormHelperTexts>{birthError}</FormHelperTexts>
-
                 {/* 이메일 입력 */}
                 <Grid item xs={12}>
                   <TextField
@@ -145,6 +131,8 @@ const FindId = () => {
               >
                 아이디 찾기
               </Button>
+              {/* 입력된 값이 정상적으로 post 되지 않으면 아래 빨간글씨 오류 띄우기 */}
+              <FormHelperTexts>{registerError}</FormHelperTexts>
             </FormControl>
             {/* 백에서 response로 받은 userId의 값이 0글자이상(db에 존재하는 id)이고
             생년월일, 이메일 입력형식 오류가 없다면 <h3>태그로 아이디를 보여줌. */}
@@ -155,14 +143,11 @@ const FindId = () => {
                 <></>
               )}
             </div>
-
             <div className="butom">
               <p onClick={() => navigate("/login")}>로그인 이동</p>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <p onClick={() => navigate("/findPw")}>비밀번호찾기</p>
             </div>
-            {/* 입력된 값이 정상적으로 post 되지 않으면 아래 빨간글씨 오류 띄우기 */}
-            <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
         </Box>
       </Container>
