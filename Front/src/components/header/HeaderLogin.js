@@ -37,12 +37,6 @@ export default function HeaderLogin() {
             sessionStorage.removeItem("sessionId")(
               (window.location.href = "/")
             );
-      })
-      // 오류가 발생해도 로그아웃
-      .catch((err) => {
-        console.log(err);
-        alert("🔥로그아웃 성공! but 오류발생🔥");
-        sessionStorage.removeItem("sessionId");
       });
   };
 

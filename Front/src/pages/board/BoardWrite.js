@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
-import { addClusterNo, ForPostBoardWrite } from "../../Api/BoardData";
+import { ForPostBoardWrite } from "../../Api/BoardData";
 
 function BoardWrite() {
   // 게시글
@@ -16,6 +16,12 @@ function BoardWrite() {
   };
   // 선택된 이미지
   const [selectImage, setSelectImage] = useState([]);
+  // 기존이미지 <-> 선택한이미지
+  const [isVisible, setIsVisible] = useState(false);
+  // 클릭하면 이미지 바뀜
+  function handleClick() {
+    setIsVisible(!isVisible);
+  }
 
   // 파일 선택하기 버튼을 누르면 사진을 추가할 수 있고 화면에 미리보기 할 수 있게 해주는 함수
   const addImage = (e) => {
@@ -38,6 +44,7 @@ function BoardWrite() {
     setFileImage(fileImageCopy);
     // 선택된 이미지 파일을 selectImage에 넣어 백에 보낼 때 사용한다.
     setSelectImage(selectImage[0]);
+    setIsVisible(!isVisible);
   };
 
   // 게시글 작성 버튼을 누르면 이미지파일과 게시글을 백에 보내주는 함수
@@ -59,51 +66,62 @@ function BoardWrite() {
       <Header />
       <br />
       {/* 왼쪽 : 사진 업로드 부분 */}
-      <form
-        encType="multipart/form-data"
-        // onSubmit={createBoardWriteData}
-      >
-        <div className="BoardWrite-leftBox">
-          {/* <h2>미리보기 이미지</h2> */}
-          <div>
-            {/* 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}
-            {fileImage && (
-              <img
-                alt="미리보기 이미지"
-                src={fileImage}
-                style={{ margin: "auto" }}
-                width="350"
-                height="350"
-              />
-            )}
+      <form encType="multipart/form-data">
+        <div className="BoardWrite-outerBox">
+          <div className="BoardWrite-innerBox">
+            <div className="BoardWrite-box">
+              <div className="BoardWrite-header">
+                <div className="BoardWrite-leftBox">
+                  {/* <h2>미리보기 이미지</h2> */}
+                  {isVisible ? (
+                    <div>
+                      {/* 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}
+                      {fileImage && (
+                        <img
+                          alt="미리보기 이미지"
+                          src={fileImage}
+                          className="BoardWrite-prevImg"
+                          onClick={handleClick}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <label for="fileImg">
+                      <img
+                        className="BoardWrite-defaultImg"
+                        src="/img/BoardWriteDefaultImg.png"
+                        alt="imageAboutDefaultImg"
+                      />
+                    </label>
+                  )}
+                </div>
+                {/* 오른쪽 : 게시글 업로드 부분 */}
+                <div className="BoardWrite-rightBox">
+                  {/* type = "file" accept image/*을 통해  형식의 파일만 올릴 수 있도록 한다. */}
+                  <input
+                    id="fileImg"
+                    type="file"
+                    name="file"
+                    accept="image/*"
+                    required // 반드시 파일이 선택되어야 하는지 여부를 지정하는 속성
+                    // multiple="multiple" // 여러개 선택 가능하게 -> 현재는 한개만 올릴 수 있도록 했기 떄문에 주석처리
+                    onChange={addImage}
+                    className="BoardWrite-selectImg"
+                  />
+                  <br />
+                  <textarea
+                    onChange={changeBoardContent}
+                    className="BoardWrite-boardContent"
+                    placeholder="게시글 내용을 입력하세요"
+                    id="boardContent"
+                  />
+                  <br />
+                </div>
+              </div>
+            </div>
+            {/* 버튼을 누를시 선택한 파일과 작성된 게시글 데이터를 boardWriteData에 담아 이를 백에 전달한다. */}
+            <button onClick={createBoardWriteData}>게시글 작성</button>
           </div>
-        </div>
-        {/* 오른쪽 : 게시글 업로드 부분 */}
-        <div className="BoardWrite-rightBox">
-          {/* type = "file" accept image/*을 통해  형식의 파일만 올릴 수 있도록 한다. */}
-          <input
-            id="fileImg"
-            type="file"
-            name="file"
-            accept="image/*"
-            required // 반드시 파일이 선택되어야 하는지 여부를 지정하는 속성
-            // multiple="multiple" // 여러개 선택 가능하게 -> 현재는 한개만 올릴 수 있도록 했기 떄문에 주석처리
-            onChange={addImage}
-            className="BoardWrite-selectImg"
-          />
-          <label for="fileImg" className="BoardWrite-selectImgBtn">
-            Click
-          </label>
-          <br />
-          <textarea
-            onChange={changeBoardContent}
-            className="BoardWrite-boardContent"
-            placeholder="내용을 입력하세요"
-            id="boardContent"
-          />
-          <br />
-          {/* 버튼을 누를시 선택한 파일과 작성된 게시글 데이터를 boardWriteData에 담아 이를 백에 전달한다. */}
-          <button onClick={createBoardWriteData}>게시글 작성</button>
         </div>
       </form>
     </>

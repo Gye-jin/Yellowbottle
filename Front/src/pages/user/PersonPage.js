@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import { myAllData, myPageFetchData } from "../../Api/UserData";
 import { useNavigate, useParams } from "react-router-dom";
-// import
 
 function PersonPage() {
   // useParams.userId가 의미하는 것은 /mypage/:userId 중 userId의 변화하는 값을 의미하는 것이다.
@@ -28,11 +27,12 @@ function PersonPage() {
   }, []);
   //  회원 댓글수와 게시글 수에 따른 이미지 변화
   useEffect(() => {
-    const personCountComment = `${myPageData.countComment}`;
-    const personCountBoard = `${myPageData.countBoard}`;
-    if (personCountComment >= 30 && personCountBoard >= 30) {
+    const personGrade = `${myPageData.grade}`;
+    if (personGrade === "숲") {
       setGradeImage("/img/highPlant.png");
-    } else if (personCountComment >= 20 && personCountBoard >= 20) {
+    } else if (personGrade === "나무") {
+      setGradeImage("/img/middlePlant.png");
+    } else if (personGrade === "잔디") {
       setGradeImage("/img/middlePlant.png");
     }
   }, [myPageData]);
