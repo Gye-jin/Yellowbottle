@@ -1,10 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {
-  addClusterNoInUpdateBoard,
-  DetailBoardFetchData,
-} from "../../Api/BoardData";
+import { DetailBoardFetchData } from "../../Api/BoardData";
 import Header from "../../components/header/Header";
 import { ForPostUpdateBoard } from "../../Api/BoardData";
 
@@ -21,8 +18,6 @@ function BoardUpdate() {
   const [selectImage, setSelectImage] = useState([]);
   //  입력한 게시글
   const [newBoardContent, setNewBoardContent] = useState("");
-  // 게시글수정 성공시 백에서 보내주는 board정보를 담을 공간
-  const [clusterData, setClusterData] = useState([]);
   //  게시글 수정 페이지 접속 시 기존 게시글 정보를 백에서 받아와서 board에 넣어줌
   useEffect(() => {
     const response = DetailBoardFetchData(boardNo);
@@ -33,10 +28,6 @@ function BoardUpdate() {
     setNewBoardContent(`${board.boardContent}`);
     setSelectImage(null);
   }, [board]);
-  // useEffect 설정 :: 백에서 보드를 보내준다. 이중 boardNo와 boardContent를 장고에 (카톡에 있는 URL값으로) 포스트해서 보내준다. 이에 대한 키값은 한번 더 살펴보자!
-  useEffect(() => {
-    addClusterNoInUpdateBoard(clusterData);
-  }, [clusterData]);
   // 파일 선택하기 버튼을 누르면 사진을 추가할 수 있고 화면에 미리보기 할 수 있게 해주는 함수
   const addImage = (e) => {
     e.preventDefault();
@@ -72,7 +63,7 @@ function BoardUpdate() {
     updateBoardData.append("images", selectImage);
     updateBoardData.append("boardNo", boardNo);
     updateBoardData.append("boardContent", newBoardContent);
-    ForPostUpdateBoard(updateBoardData, setClusterData, clusterData);
+    ForPostUpdateBoard(updateBoardData);
   };
 
   return (
@@ -99,7 +90,6 @@ function BoardUpdate() {
             type="file"
             name="file"
             accept="image/*"
-            required // 반듯 ㅣ파일이 선택되어야 하는지 여부를 지정하는 속성
             // multiple="multiple" // 여러개 선택 가능하게 -> 현재는 한개만 올릴 수 있도록 했기 떄문에 주석처리
             onChange={addImage}
           />
@@ -109,7 +99,7 @@ function BoardUpdate() {
             {/* 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}
             {fileImage && (
               <img
-                alt="sample"
+                alt="미리보기 이미지"
                 src={fileImage}
                 style={{ margin: "auto" }}
                 width="350"

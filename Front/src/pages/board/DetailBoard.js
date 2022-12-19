@@ -7,7 +7,8 @@ import {
 } from "../../Api/BoardData";
 import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
-import ModalForRecommend from "./ModalForRecommend";
+import ModalForRecommend from "./modal/ModalForRecommend";
+import ModalForUpdate from "./modal/ModalForUpdate";
 
 const DetailBoard = () => {
   const [board, setBoard] = useState([]);
@@ -40,22 +41,16 @@ const DetailBoard = () => {
   };
 
   // 게시글 삭제 버튼 클릭 시 = 게시글내용폼데이터 형태로 백에 보냄
-  const createDeleteBoardData = () => {
-    let deleteBoardData = new FormData();
-    deleteBoardData.append("sessionId", sessionId);
-    deleteBoardData.append("boardNo", boardNo);
-
-    // FormData의 key 확인
-    for (let key of deleteBoardData.keys()) {
-      console.log("폼데이터 key값", key);
+  const deleteBoardData = () => {
+    // 확인창 실행
+    const deleteConfirmCheck = window.confirm("정말 댓글을 삭제하겠습니까?");
+    if (deleteConfirmCheck) {
+      let deleteBoardData = new FormData();
+      deleteBoardData.append("sessionId", sessionId);
+      deleteBoardData.append("boardNo", boardNo);
+      // 폼데이터로 모은 deleteBoardData를 백에 보내주는 함수
+      postDeleteBoardData(deleteBoardData);
     }
-
-    // FormData의 value 확인
-    for (let value of deleteBoardData.values()) {
-      console.log("폼데이터 value값", value);
-    }
-    // 폼데이터로 모은 deleteBoardData를 백에 보내주는 함수
-    postDeleteBoardData(deleteBoardData);
   };
 
   //1.게시물 세부내용 가져오기 -api사용
@@ -63,11 +58,6 @@ const DetailBoard = () => {
     const response = DetailBoardFetchData(boardNo);
     response.then((data) => setBoard(data));
   }, []);
-
-  // 게시물수정으로 이동
-  const updateBoard = () => {
-    navigate(`/updateBoard/${boardNo}`);
-  };
 
   return (
     <>
@@ -82,19 +72,9 @@ const DetailBoard = () => {
               </h3>
               {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
               <span>
+                {board.editor ? <ModalForUpdate /> : ""}
                 {board.editor ? (
-                  <button
-                    onClick={() => navigate(`/boardUpdate/${board.boardNo}`)}
-                  >
-                    수정하기
-                  </button>
-                ) : (
-                  ""
-                )}
-                {board.editor ? (
-                  <button onClick={() => createDeleteBoardData()}>
-                    삭제하기
-                  </button>
+                  <button onClick={() => deleteBoardData()}>삭제하기</button>
                 ) : (
                   ""
                 )}
@@ -124,12 +104,13 @@ const DetailBoard = () => {
             {board.comments &&
               board.comments.map((comment) => <Comment comment={comment} />)}
             {/* 댓글 입력창 */}
-            <div onSubmit={changeComment}>
+            <div onSubmit={createCommentData}>
               <input
                 className="Comment-write"
                 placeholder="댓글을 입력해주세요!"
                 id="commentinput"
                 onKeyDown={handleEnter}
+                onChange={changeComment}
               />
               <button onClick={createCommentData}>댓글작성</button>
             </div>

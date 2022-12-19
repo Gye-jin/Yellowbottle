@@ -9,8 +9,6 @@ const FeedBoard = () => {
   const [pageNo, setPageNo] = useState(1);
   // 추가 FeedBoard를 로드할지 안할지를 담기위한 state
   const [fetching, setFetching] = useState(false);
-  // navigate 함수
-  const navigate = useNavigate();
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {

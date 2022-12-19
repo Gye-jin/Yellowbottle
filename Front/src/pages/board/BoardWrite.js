@@ -10,11 +10,8 @@ function BoardWrite() {
   // 게시글 작성 페이지는 로그인된 회원만 들어올 수 있음
   // 따라서 세션에 저장되어있는 userId의 value값을 이용해 백에다 누가 글을 썼는지 확인시킬 수 있음
   const userSession = sessionStorage.getItem("sessionId");
-  // 게시글작성 성공시 백에서 보내주는 board정보를 담을 공간
-  const [clusterData, setClusterData] = useState([]);
   // 게시글 작성하면 그 value를 인식하게 해주는 함수
   const changeBoardContent = (e) => {
-    // e.preventDefault();
     setBoardContent(e.target.value);
   };
   // 선택된 이미지
@@ -47,10 +44,6 @@ function BoardWrite() {
   const createBoardWriteData = (e) => {
     // 실행시 화면새로고침 방지
     e.preventDefault();
-    console.log(boardContent);
-    console.log(userSession);
-    console.log(fileImage);
-    console.log(selectImage);
     //  FormData를 통해 각각의 입력값들이 변화되면 바뀐 value값 확인 가능!
     let boardWriteData = new FormData();
     boardWriteData.append("sessionId", userSession);
@@ -58,13 +51,8 @@ function BoardWrite() {
     boardWriteData.append("image", selectImage);
     // 입력된 값들을 boardWriteData에 넣는다.
     console.log("boardWriteData :: ", boardWriteData);
-    ForPostBoardWrite(boardWriteData, setClusterData, clusterData);
+    ForPostBoardWrite(boardWriteData);
   };
-
-  // useEffect 설정 :: 백에서 보드를 보내준다. 이중 boardNo와 boardContent를 장고에 (카톡에 있는 URL값으로) 포스트해서 보내준다. 이에 대한 키값은 한번 더 살펴보자!
-  useEffect(() => {
-    addClusterNo(clusterData);
-  }, [clusterData]);
 
   return (
     <>

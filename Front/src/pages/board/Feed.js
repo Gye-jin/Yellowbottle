@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/header/Header";
 import { AccessAgreeBoardWrite } from "../../components/AccessAgree";
 import FeedBoard from "../../components/FeedBoard";
+import ModalForwrite from "./modal/ModalForWrite";
 
 // 실천내용 전체 페이지
 function Feed() {
@@ -15,13 +16,8 @@ function Feed() {
       <body>
         <div className="container">
           <FeedBoard />
-          <button
-            className="writeBoard"
-            // 게시글 작성 버튼 눌렀을떄 회원은 게시글 작성페이지로, 비회원은 로그인 페이지로 이동!
-            onClick={() => AccessAgreeBoardWrite()}
-          >
-            실천내용 작성하기
-          </button>
+          {/* 모달 들어갈 자리 */}
+          <ModalForwrite />
           <button className="goToTop" onClick={goToTop}>
             상단이동
           </button>
