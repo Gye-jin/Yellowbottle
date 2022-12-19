@@ -1,6 +1,10 @@
 package com.spring.back.dto;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import com.spring.back.entity.User;
+import com.spring.back.user.UserGrade;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +22,9 @@ public class UserDTO {
 	private String email;
 	private String birth;
 	private String sex;
-	private int grade;
+	
+	@Enumerated(EnumType.STRING)
+	private UserGrade grade;
 	private boolean subStatus;
 	
 	// Build를 활용하여 DTO객체를 Entity객체로 변갱

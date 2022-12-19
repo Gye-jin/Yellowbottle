@@ -32,4 +32,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 	
 	public void deleteByUser(User user);
 	
+	public List<Board> getByUser(User user);
 }
