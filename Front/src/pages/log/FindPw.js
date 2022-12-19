@@ -18,7 +18,7 @@ import { ForSendCertiNum, passResetPw } from "../../Api/LogData";
 // mui의 내장 css
 const FormHelperTexts = styled(FormHelperText)`
   width: 100%;
-  padding-left: 10px;
+  padding-left: 9px;
   font-weight: 700 !important;
 `;
 const Boxs = styled(Box)`

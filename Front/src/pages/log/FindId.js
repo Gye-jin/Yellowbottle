@@ -141,7 +141,7 @@ const FindId = () => {
                 <></>
               )}
             </div>
-            <div className="butom">
+            <div className="find-id">
               <p onClick={() => navigate("/login")}>로그인 이동</p>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <p onClick={() => navigate("/findPw")}>비밀번호찾기</p>

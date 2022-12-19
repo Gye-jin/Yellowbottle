@@ -10,7 +10,7 @@ export const AccessAgreeBoardWrite = () => {
 };
 
 // 사용자가 회원아이디를 클릭할 경우 개인페이지 접속 허용 여부
-export const AccessAgreeUserPage = ({ userId }) => {
+export const AccessAgreeUserPage = (userId) => {
   sessionStorage.getItem("sessionId") !== null
     ? // 세션에 userId의 값이 null이 아니라면 그 사람은 상대방 개인페이지 접속 허용
       (window.location.href = `/personPage/${userId}`)
@@ -21,7 +21,7 @@ export const AccessAgreeUserPage = ({ userId }) => {
 };
 
 // 사용자가 상세보기 접속 허용 여부
-export const AccessAgreeBoardDetail = ({ boardNo }) => {
+export const AccessAgreeBoardDetail = (boardNo) => {
   sessionStorage.getItem("sessionId") !== null
     ? // 세션에 userId의 값이 null이 아니라면 게시물 상세페이지로 이동
       (window.location.href = `/detailBoard/${boardNo}`)
