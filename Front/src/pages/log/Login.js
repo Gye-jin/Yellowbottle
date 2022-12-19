@@ -16,6 +16,7 @@ import styled from "styled-components";
 import "../../App.css";
 import Header from "../../components/header/Header";
 import { ForPostLoginData } from "../../Api/LogData";
+import { IdRegexTest, PasswordRegexTest } from "../../components/Regex";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -40,10 +41,8 @@ const Login = () => {
   const [registerError, setRegisterError] = useState("");
   // 이동시키는 함수
   const navigate = useNavigate();
-
   // 로그인 버튼 누를때 실행되는 함수: loginData(입력된 값)을 유효성 검사를 통해 LoginData.js에 있는 ForPostLoginData에 보내준다.
   const createLoginData = (e) => {
-    // 실행시 화면새로고침 방지
     e.preventDefault();
     // FormData를 통해 각각의 입력값들이 변화되면 바뀐 value값 확인 가능!
     const data = new FormData(e.currentTarget);
@@ -53,31 +52,14 @@ const Login = () => {
     };
     // 입력된 값들을 loginData에 넣는다.
     const { userId, userPw } = loginData;
-    console.log(loginData);
-
     // loginData에 넣은 각각의 값들은 유효성 검사를 거친다.
-    // 아이디 유효성 체크
-    const idRegex = /^[a-z]+[a-z0-9]{4,19}$/g;
-    if (!idRegex.test(userId)) {
-      setIdError("잘못된 아이디입니다! 다시 입력해주세요");
-    }
-
-    // 비밀번호 유효성 체크
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(userPw)) {
-      // test()는 문자열 일치를 확인해준다. 또한 여기 있는 password는 위에 data.get("password")이다.
-      setPasswordError("잘못된 비밀번호입니다! 다시 입력해주세요!");
-    } else {
-      setPasswordError("");
-    }
-
+    IdRegexTest(userId, setIdError);
+    PasswordRegexTest(userPw, setPasswordError);
     // 만약 위 유효성 검사를 모두 통과하면 ForPostLoginData를 실행한다.
-    if (passwordRegex.test(userPw)) {
+    if (idError === "" && passwordError === "") {
       ForPostLoginData(loginData, setRegisterError);
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -167,8 +149,6 @@ const Login = () => {
             >
               회원가입
             </Button>
-            {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다.
-            <FormHelperTexts>{registerError}</FormHelperTexts> */}
           </Boxs>
         </Box>
       </Container>
