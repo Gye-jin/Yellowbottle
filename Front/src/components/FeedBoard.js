@@ -13,9 +13,7 @@ const FeedBoard = () => {
   // navigate 함수
   const navigate = useNavigate();
   //  해당유저의 세션정보
-  const userSession = sessionStorage.getItem("sessionId");
-  // 세션정보를 통해 불러들일 유저의 아이디
-  const [userId, setUserId] = useState();
+  // const userSession = sessionStorage.getItem("sessionId");
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
@@ -52,9 +50,7 @@ const FeedBoard = () => {
     const response = boardFetchData(pageNo);
     response.then((data) => setFeedBoard(data));
   }, []);
-  // console.log(FeedBoard);
-  // console.log(fetching);
-  // console.log("현재 pageNo ::", pageNo); //추후 스크롤로 올려줄 예정
+
   return (
     <>
       <div className="outer">

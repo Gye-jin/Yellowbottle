@@ -164,8 +164,8 @@ public class BoardServiceImpl implements BoardService {
 	public boolean updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO) {
 		Board board = boardRepo.findById(newboardDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		if(session.getUser().getBoards().equals(session.getUser())) {
-			board.updateBoard(newboardDTO);
+		if(session.getUser().equals(session.getUser())) {
+			board.updateBoard(newboardDTO.getBoardContent());
 			return true;
 		}
 		return false;
