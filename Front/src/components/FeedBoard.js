@@ -88,7 +88,7 @@ const FeedBoard = () => {
                         <div className="board-BoardContent">
                           {board.boardContent}
                         </div>
-                        <div>{/* {board.createDate} */}</div>
+                        <div>{board.createDate}</div>
                       </div>
                     </div>
                   </div>
