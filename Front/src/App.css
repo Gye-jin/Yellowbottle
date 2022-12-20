@@ -165,29 +165,6 @@
   border-radius: 5%;
 }
 
-/* 실천내용 페이지 */
-/* 실천내용 작성하기 버튼 */
-.writeBoard {
-  position: fixed;
-  bottom: 100px;
-  right: 100px;
-  z-index: 1;
-  padding: 10px;
-  background-color: rgb(23, 122, 117);
-  border-radius: 6px;
-  /* color : 글자색깔 */
-  color: #fff;
-  border: 1px solid rgb(23, 122, 117);
-  /* text-align: left; */
-}
-/* 상단으로 이동하기 버튼 */
-.goToTop {
-  color: #fff;
-  background-color: rgb(23, 122, 117);
-  position: fixed;
-  bottom: 10px;
-  left: 50%;
-}
 /* board 전체 틀 */
 .board {
   min-width: 700px;

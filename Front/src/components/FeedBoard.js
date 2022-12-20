@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
-import { useNavigate } from "react-router-dom";
 import { AccessAgreeUserPage, AccessAgreeBoardDetail } from "./AccessAgree";
 
 const FeedBoard = () => {
@@ -10,8 +9,6 @@ const FeedBoard = () => {
   const [pageNo, setPageNo] = useState(1);
   // 추가 FeedBoard를 로드할지 안할지를 담기위한 state
   const [fetching, setFetching] = useState(false);
-  // navigate 함수
-  const navigate = useNavigate();
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
@@ -25,9 +22,7 @@ const FeedBoard = () => {
     // console.log(scrollHeight + ":: 비교비교");
     // 페이지 끝에 도달하면 추가 데이터를 받아온다.
     if (scrollTop + clientHeight >= scrollHeight - 0.5) {
-      console.log("스크롤 최하단 도착!");
       if (fetching === false) {
-        console.log("되는데?");
         setPageNo(pageNo + 1);
         fetchMoreFeedBoard(setFetching, pageNo, setFeedBoard, FeedBoard);
       }

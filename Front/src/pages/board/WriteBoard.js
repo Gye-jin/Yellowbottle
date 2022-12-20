@@ -3,7 +3,8 @@ import Header from "../../components/header/Header";
 import { ForPostBoardWrite } from "../../Api/BoardData";
 
 function BoardWrite() {
-  // 게시글
+  // [변수 지정]
+  // 게시글 내용
   const [boardContent, setBoardContent] = useState("");
   // 사진파일: 여러개 올릴 경우를 대비해 "" 이 아닌 []로 설정했다. 사용자가 미리 보기하기 위한 state
   const [fileImage, setFileImage] = useState([]);
@@ -64,6 +65,8 @@ function BoardWrite() {
 
   return (
     <>
+      <Header />
+      <br />
       {/* 왼쪽 : 사진 업로드 부분 */}
       <form encType="multipart/form-data">
         <div className="BoardWrite-outerBox">
@@ -71,6 +74,7 @@ function BoardWrite() {
             <div className="BoardWrite-box">
               <div className="BoardWrite-header">
                 <div className="BoardWrite-leftBox">
+                  {/* <h2>미리보기 이미지</h2> */}
                   {isVisible ? (
                     <div>
                       {/* 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}

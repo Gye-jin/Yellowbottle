@@ -78,8 +78,8 @@ export const addClusterNo = async (clusterData) => {
     })
     .then((res) => {
       console.log("장고에 보내기 성공!!🦄", res);
-      // 로그인 성공시 메인화면으로 이동한다.
-      window.location.href = "/feed";
+      // 장고에 보냄으로써 게시글 작성이 완료되면 해당 게시글로 이동
+      window.location.href = `/detailBoard/${clusterData.boardNo}`;
     })
     .catch((err) => {
       console.log(err, "장고에 보낼 때 에러 발생!!👅");

@@ -43,7 +43,7 @@ export default function Header() {
     }
     // 세션값이 존재한다면 isLogin값을 true로 수정 --> 만약 setisLogin("admin")이 안된다면 isLogin의 초기값을 false가 아닌 ""로 설정하자
     else {
-      console.log("회원입니당");
+      // console.log("회원입니당");
       setIsLogin(true);
     }
   });
