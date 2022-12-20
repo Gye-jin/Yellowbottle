@@ -4,7 +4,7 @@ import "../App.css";
 import "swiper/css";
 import { useState } from "react";
 
-const slides = ["img/eco.png", "img/govegen.jpg"];
+const slides = ["img/eco.png", "img/title2.png", "img/title3.png"];
 
 export default function ScrollMain() {
   const [imagesNavSlider, setImagesNavSlider] = useState(null);

@@ -64,8 +64,6 @@ function BoardWrite() {
 
   return (
     <>
-      <Header />
-      <br />
       {/* 왼쪽 : 사진 업로드 부분 */}
       <form encType="multipart/form-data">
         <div className="BoardWrite-outerBox">
@@ -73,7 +71,6 @@ function BoardWrite() {
             <div className="BoardWrite-box">
               <div className="BoardWrite-header">
                 <div className="BoardWrite-leftBox">
-                  {/* <h2>미리보기 이미지</h2> */}
                   {isVisible ? (
                     <div>
                       {/* 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}
