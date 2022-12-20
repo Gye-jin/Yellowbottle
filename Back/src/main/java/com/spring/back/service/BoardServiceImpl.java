@@ -141,7 +141,7 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public PersonpageDTO getBoardByUserId(String userId) {
 		User user = userRepo.findByUserId(userId);
-		ArrayList<BoardMapping> boardMappings = boardRepo.findByUser(user);
+		ArrayList<BoardMapping> boardMappings = boardRepo.findByUserOrderByBoardNoDesc(user);
 		Long countBoard = boardRepo.countByUser(user);
 		Long countComment = commentRepo.countByUser(user);
 		if (sessionRepo.findByUser(user) != null) {
