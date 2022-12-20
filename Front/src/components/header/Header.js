@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import HeaderLogin from "./HeaderLogin";
 import HeaderAdmin from "./HeaderAdmin";
+import styled from "styled-components";
 
 // 상태값에 따른 헤더 부여 함수 및 비회원용 헤더
 export default function Header() {
@@ -20,6 +21,7 @@ export default function Header() {
       },
     },
   });
+  const Boxs = styled(Box)``;
 
   // navigate(이동)하는 함수
   const navigate = useNavigate();

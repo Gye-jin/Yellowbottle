@@ -25,6 +25,7 @@ import {
   IdRegexTest,
   NameRegexTest,
   PasswordRegexTest,
+  RePasswordRegexTest,
 } from "../../components/Regex";
 
 // mui의 기본 내장 css
@@ -58,10 +59,30 @@ const Join = () => {
   const [nameError, setNameError] = useState("");
   // 회원가입버튼 눌렀을 때 오류
   const [registerError, setRegisterError] = useState("");
+  // 재입력 비밀번호
+  const [rePassword, setRePassword] = useState("");
+  // 재입력 비밀번호 입력오류
+  const [rePasswordError, setRePasswordError] = useState("");
 
   // 개인정보동의 체크박스 여부 함수
   const handlePersonalAgree = (event) => {
     setCheckedPersonal(event.target.checked);
+  };
+  // rePassword 입력할때마다 인식해주는 함수
+  const rePasswordHandler = (e) => {
+    setRePassword(e.target.value);
+  };
+  // 아이디 중복검사 전 올바른 형식인지 확인
+  const createDuplicationData = () => {
+    // e.preventDefault();
+    const userId = document.getElementById("id").value;
+    // IdRegexTest(userId, setIdError);
+    const idRegex = /^[a-zA-Z0-9]{4,19}$/g;
+    if (!idRegex.test(userId)) {
+      setIdError("아이디는 영문자 또는 숫자 5~20자리로 입력해주세요");
+    } else {
+      duplicationCheck(setUsableId, userId, setIdError);
+    }
   };
 
   // 회원가입 버튼 누를때 실행되는 함수: joinData(입력된 값)를 유효성 검사를 통해 JoinData.js에 있는 ForPostJoinData 함수에 보내준다.
@@ -82,25 +103,77 @@ const Join = () => {
     // 입력된 값들을 joinData에 넣는다.
     const { userId, email, name, userPw, birth, sex, subStatus } = joinData;
     // 입력한 값 유효성체크
-    IdRegexTest(userId, setIdError);
-    EmailRegexTest(email, setEmailError);
-    PasswordRegexTest(userPw, setPasswordError);
-    BirthRegexTest(birth, setBirthError);
-    NameRegexTest(name, setNameError);
-    GenderRegexTest(sex);
+    // IdRegexTest(userId, setIdError);
+    // 아이디 유효성체크
+    const idRegex = /^[a-zA-Z0-9]{4,19}$/g;
+    if (!idRegex.test(userId)) {
+      setIdError("아이디는 영문자 또는 숫자 5~20자리로 입력해주세요");
+    } else if (idRegex.test(userId)) {
+      setIdError("");
+    }
+    // 이메일 유효성체크
+    // EmailRegexTest(email, setEmailError);
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("올바른 이메일 형식이 아닙니다.");
+    } else {
+      setEmailError("");
+    }
+    // 비밀번호체크
+    // PasswordRegexTest(userPw, setPasswordError);
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if (!passwordRegex.test(userPw))
+      setPasswordError(
+        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
+      );
+    else setPasswordError("");
+    // 재비밀번호체크
+    if (userPw !== rePassword) {
+      setRePasswordError("비밀번호가 일치하지 않습니다.");
+    } else {
+      setRePasswordError("");
+    }
+    // RePasswordRegexTest(userPw, rePassword, setRePasswordError);
+    // 생일체크
+    // BirthRegexTest(birth, setBirthError);
+    const birthRegex =
+      /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    if (!birthRegex.test(birth))
+      setBirthError(
+        "형식이 일치하지 않습니다. 1999-08-20과 같이 입력해주세요!"
+      );
+    else setBirthError("");
+
+    // 이름체크
+    // NameRegexTest(name, setNameError);
+    const nameRegex = /^[가-힣]{2,4}$/;
+    if (!nameRegex.test(name) || name.length < 1)
+      setNameError("올바른 이름을 입력해주세요.");
+    else setNameError("");
+
+    // 성별체크
+    if (sex == null) {
+      alert("성별을 체크해주세요.");
+    }
+    // GenderRegexTest(sex);
     // 회원가입 동의 체크
     if (!CheckedPersonal) {
       alert("회원가입 약관에 동의해주세요.");
     }
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
     if (
-      passwordError === "" &&
-      nameError === "" &&
-      emailError === "" &&
-      idError === "" &&
+      passwordRegex.test(userPw) &&
+      rePassword === userPw &&
+      nameRegex.test(name) &&
+      emailRegex.test(email) &&
+      idRegex.test(userId) &&
+      birthRegex.test(birth) &&
       CheckedPersonal &&
       usableId === true
     ) {
+      // console.log(joinData);
       ForPostJoinData(joinData, setRegisterError);
     } else {
       setRegisterError("🌍다시 확인해주세요🌍");
@@ -150,7 +223,7 @@ const Join = () => {
               {/* 아이디 중복검사 버튼을 누르면 입력된 아이디값을 백에 존재하는 아이디 값들과 비교해서 중복여부를 알려준다. */}
               <a
                 className="join-idCheck"
-                onClick={() => duplicationCheck(setUsableId)}
+                onClick={() => createDuplicationData()}
               >
                 아이디 중복검사
               </a>
@@ -169,6 +242,21 @@ const Join = () => {
                 </Grid>
                 {/* 유효성 검사를 통해 비밀번호가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
                 <FormHelperTexts>{passwordError}</FormHelperTexts>
+                {/* rePassword 입력칸 */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="password"
+                    id="rePassword"
+                    name="rePassword"
+                    label="비밀번호 재입력"
+                    onChange={rePasswordHandler}
+                    error={rePasswordError !== "" || false}
+                  />
+                </Grid>
+                {/* 유효성 검사를 통해 rePassword가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                <FormHelperTexts>{rePasswordError}</FormHelperTexts>
                 {/* 이름 입력칸 */}
                 <Grid item xs={12}>
                   <TextField

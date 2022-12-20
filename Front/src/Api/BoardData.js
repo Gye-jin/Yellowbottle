@@ -83,6 +83,7 @@ export const addClusterNo = async (clusterData) => {
     })
     .catch((err) => {
       console.log(err, "장고에 보낼 때 에러 발생!!👅");
+      window.location.href = "/feed";
     });
 };
 

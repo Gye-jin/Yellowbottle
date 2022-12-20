@@ -1,5 +1,6 @@
 package com.spring.back.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,8 @@ public class BoardDTO {
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
-	private LocalDateTime createDate;
-	private LocalDateTime modifiedDate;	
+	private LocalDate createDate;
+	private LocalDate modifiedDate;	
 	private Long viewCount;
 	
 	// Join
