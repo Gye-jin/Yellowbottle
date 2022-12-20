@@ -84,6 +84,7 @@ function BoardUpdate({ boardNo }) {
                     변경할 이미지
                   </span> */}
                   <br />
+                  {/* 기존 파일 이미지 띄우기 */}
                   {board.files &&
                     board.files.map((file) => (
                       <img
@@ -97,7 +98,7 @@ function BoardUpdate({ boardNo }) {
 
                   {isVisible ? (
                     <div>
-                      {/* 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}
+                      {/* ??? 파일이미지와 파일이미지의 주소가 같다면 선택한 이미지파일을 화면에 미리보여준다. */}
                       {fileImage && (
                         <img
                           alt="미리보기 이미지"

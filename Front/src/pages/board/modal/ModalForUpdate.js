@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import BoardUpdate from "../BoardUpdate";
+import UpdateBoard from "../UpdateBoard";
 
 const ModalForUpdate = ({ boardNo }) => {
   // [변수지정]
@@ -20,7 +20,7 @@ const ModalForUpdate = ({ boardNo }) => {
           </div>
           <br />
           {/* 컴퍼넌트 들어가는 자리 */}
-          <BoardUpdate boardNo={boardNo} />
+          <UpdateBoard boardNo={boardNo} />
         </Modal>
       </div>
     </>

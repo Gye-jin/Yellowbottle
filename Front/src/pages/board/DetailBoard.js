@@ -12,7 +12,7 @@ import ModalForUpdate from "./modal/ModalForUpdate";
 
 const DetailBoard = () => {
   const [board, setBoard] = useState([]);
-  const boardNo = useParams().boardNo;
+  const { boardNo } = useParams();
   const navigate = useNavigate();
   const [commentContent, setCommentContent] = useState("");
   const sessionId = sessionStorage.getItem("sessionId");
@@ -114,10 +114,9 @@ const DetailBoard = () => {
               />
               <button onClick={createCommentData}>댓글작성</button>
             </div>
-
             {/* 버튼을 누르면 추천게시물이 나온다. */}
             <br />
-            <ModalForRecommend boardNo={board.boardNo} />
+            <ModalForRecommend boardNo={boardNo} />
           </div>
         ) : (
           <></>
