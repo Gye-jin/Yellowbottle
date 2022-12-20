@@ -14,7 +14,6 @@ import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
 import com.spring.back.entity.Board;
 import com.spring.back.entity.Certified;
-import com.spring.back.entity.Comment;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
@@ -158,6 +157,9 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public boolean updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
 		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(session.getUser().getUserPw().equals(newUserDTO.getUserPw()) && session.getUser().getEmail().equals(newUserDTO.getEmail())){
+			return false;
+		}
 		session.getUser().updateUser(newUserDTO);
 		
 		return true;

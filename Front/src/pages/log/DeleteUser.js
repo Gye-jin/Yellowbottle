@@ -69,19 +69,31 @@ const DeleteUser = () => {
     deleteData.append("sessionId", userSession);
     deleteData.append("userPw", userPw);
     // deleteData 유효성 체크
-    PasswordRegexTest(userPw, setPasswordError);
-    RePasswordRegexTest(userPw, rePassword, setRePasswordError);
+    // PasswordRegexTest
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if (!passwordRegex.test(userPw)) setPasswordError("잘못된 비밀번호입니다.");
+    else setPasswordError("");
+    // RePasswordRegexTest
+    if (userPw !== rePassword) {
+      setRePasswordError("비밀번호가 일치하지 않습니다.");
+    } else {
+      setRePasswordError("");
+    }
     // 회원가입 동의 체크
     if (!CheckedPersonal) {
-      alert("회원탈퇴 동의란에 체크해주세요.");
+      alert("회원탈퇴 동의란에 체크해주세요");
     }
 
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
-    if (passwordError === "" && rePasswordError === "" && CheckedPersonal) {
-      ForPostDeleteData(deleteData);
-    } else {
-      setRegisterError("🌍환경지킴이 포기하실건가요?🌍");
-    }
+    // if (passwordError === "" && rePasswordError === "" && CheckedPersonal) {
+    //   ForPostDeleteData(deleteData);
+    // } else {
+    //   setRegisterError("🌍환경지킴이 포기하실건가요?🌍");
+    // }
+    passwordError === "" && rePasswordError === "" && CheckedPersonal
+      ? ForPostDeleteData(deleteData)
+      : setRegisterError("🌍환경지킴이 포기하실건가요?🌍");
   };
 
   return (

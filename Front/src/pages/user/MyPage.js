@@ -9,7 +9,7 @@ function MyPage() {
   // 해당 userId가 올린 댓글,게시글,에디터 관련 정보를 저장할 공간
   const [myPageData, setMyPageData] = useState([]);
   // 등급별 이미지 주소값
-  const [gradeImage, setGradeImage] = useState("/img/lowPlant.png");
+  const [gradeImage, setGradeImage] = useState("/img/firstGradeImg.png");
   // 사용자의 세션값
   const userSession = sessionStorage.getItem("sessionId");
   // 이동시켜주는 함수
@@ -27,11 +27,11 @@ function MyPage() {
   useEffect(() => {
     const personGrade = `${myPageData.grade}`;
     if (personGrade === "숲") {
-      setGradeImage("/img/highPlant.png");
+      setGradeImage("/img/finalGradeImg.jpg");
     } else if (personGrade === "나무") {
-      setGradeImage("/img/middlePlant.png");
+      setGradeImage("/img/thirdGradeImg.png.");
     } else if (personGrade === "잔디") {
-      setGradeImage("/img/middlePlant.png");
+      setGradeImage("/img/secondGradeImg.jpg");
     }
   }, [myPageData]);
   console.log(`${myPageData.grade}`);
@@ -46,19 +46,25 @@ function MyPage() {
               {/* 사용자 아이디 */}
               <h1>{sessionUserId}</h1>
               {/* 회원정보수정 버튼 */}
-              <button onClick={() => navigate("/updateUser")}>
-                회원정보수정
-              </button>
-              {/* 회원탈퇴 버튼 */}
-              <button onClick={() => navigate("/deleteUser")}>회원탈퇴</button>
+              <br />
+              <h4>작성한 댓글 수 :{myPageData.countComment}</h4>
+              <h4>게시물 수 :{myPageData.countBoard}</h4>
+              <div className="PersonPage-informationBtn">
+                <button onClick={() => navigate("/updateUser")}>
+                  회원정보수정
+                </button>
+                {/* 회원탈퇴 버튼 */}
+                <button onClick={() => navigate("/deleteUser")}>
+                  회원탈퇴
+                </button>
+              </div>
             </div>
             <div className="PersonPage-Information-Grade">
-              <img src={gradeImage} alt="imageAboutGrade" />
-            </div>
-            {/* 작성한 댓글과 게시글 수 */}
-            <div className="PersonPage-Information-Board">
-              <div>작성한 댓글 수 :{myPageData.countComment}</div>
-              <div>게시글 수 :{myPageData.countBoard}</div>
+              <img
+                src={gradeImage}
+                alt="imageAboutGrade"
+                className="PersonPage-Information-GradeImg"
+              />
             </div>
           </div>
           <br />
@@ -66,10 +72,10 @@ function MyPage() {
             {/* 해당유저가 올린 게시물사진 모두 보여주는 함수 */}
             {myPageData.boards &&
               myPageData.boards.map((board) => (
-                <div className="PersonPage-image-grid-item">
+                <div>
                   <img
                     key={board.boardNo}
-                    className="myPage_Image"
+                    className="PersonPage-image-grid-item"
                     src={`${board.filePath + board.fileName}`}
                     alt="myPageImage"
                     // 이미지 클릭시 해당 게시물의 상세보기로 넘어감

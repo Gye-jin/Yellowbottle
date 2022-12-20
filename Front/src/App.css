@@ -58,7 +58,7 @@
 .slider__image {
   width: 100%;
   height: 100%;
-  border-radius: 30px; /* 사진 모서리 둥글게 */
+  /* border-radius: 30px; 사진 모서리 둥글게 */
   overflow: hidden;
 }
 .slider__image img {
@@ -69,7 +69,7 @@
   object-fit: cover;
 }
 @media (max-width: 767.98px) {
-  .slider__flex {
+  /* .slider__flex {
     flex-direction: column-reverse;
   }
   .slider__col {
@@ -86,7 +86,7 @@
   .slider__next {
     height: auto;
     width: 32px;
-  }
+  } */
 }
 
 /* 회원가입 페이지 */
@@ -96,14 +96,16 @@
 }
 .join-idCheck {
   width: 35%;
-  background-color: dodgerblue;
+  background-color: rgb(25, 118, 210);
   color: white;
-  height: 20px;
+  height: 26px;
   border: 0;
+  margin-top: 5px;
   margin-bottom: 10px;
   margin-left: 130px;
   padding-left: 10px;
-  border: 1px solid blue;
+  border: 1px solid lightslategray;
+  border-radius: 5%;
 }
 .join-inputId {
   width: 100%;
@@ -130,12 +132,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-height: 100vh; */
+  min-height: 100vh;
 }
 
 .conf {
   width: 35%;
-  background-color: dodgerblue;
+  background-color: rgb(25, 118, 210);
   color: white;
   height: 20px;
   border: 0;
@@ -147,22 +149,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: dodgerblue;
-  /* min-height: 100vh; */
 }
 
 /* FindPw */
 .FindPw-sendCertiNum {
-  width: 35%;
-  background-color: dodgerblue;
+  width: 33%;
+  background-color: rgb(25, 118, 210);
   color: white;
-  height: 20px;
+  height: 22px;
   border: 0;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 130px;
   text-align: center;
-  border-radius: 4%;
+  border-radius: 5%;
 }
 
 /* 실천내용 페이지 */
@@ -196,6 +196,16 @@
   border: 1px solid lightgray;
   margin-bottom: 45px;
 }
+.FeedSideBar-Btn {
+  position: fixed;
+  bottom: 0;
+  border-radius: 20%;
+  width: 100px;
+  height: 200px;
+  background-color: white;
+  right: 5%;
+}
+
 /* 게시글 전체 가운데 정렬 */
 .outer {
   text-align: center;
@@ -222,12 +232,15 @@
 .boader_Header {
   display: flex;
   align-items: center;
-  /* padding: 20px; */
 }
 /* board-UserId */
 .board_UserId {
   text-align: left;
   padding-left: 20px;
+}
+.FeedBoard-createDate {
+  width: 600px;
+  text-align: right;
 }
 
 /* BoardWrite : 게시글 작성화면 css */
@@ -355,7 +368,8 @@
 /* PersonPage 전체 틀 css */
 .PersonPage-Outer {
   text-align: center;
-  background-color: rgb(218 239 234);
+  border-top: 5px solid lightgray;
+  /* background-color: rgb(218 239 234); */
 }
 .PersonPage-Inner {
   display: inline-block;
@@ -364,45 +378,51 @@
 }
 /* 유저가 올린 사진 3개씩 출력되게하는 css */
 .PersonPage-image-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  /* flex-wrap: wrap; */
   border-top: 5px solid #2bb400;
+  /* width: 90%; */
+  /* margin: 10px auto; */
+  grid-template-columns: repeat(3, 1fr);
 }
 .PersonPage-image-grid {
   width: 100%;
 }
 .PersonPage-image-grid img {
-  /* margin-top: 10px; */
-  margin: 7px 7px 7px 7px;
-  /* width: 33%;
-  height: auto; */
-  flex: 0 0 33.33%;
-  height: 170px;
-  width: 300px;
-  border: 2px solid lightgray;
+  margin: 10px;
+  min-height: 400px;
+  max-height: 400px;
+  width: 90%;
+  border: 1px solid lightgray;
   border-radius: 18%;
 }
 /* 유저 기본 정보 보여주는 css */
 .PersonPage-Information {
   margin-top: 5%;
-  margin-left: 20%;
   display: flex;
 }
 .PersonPage-Information-Log {
+  margin-top: 70px;
   display: inline-block;
-  width: 30%;
+  width: 50%;
 }
 .PersonPage-Information-Grade {
   display: inline-block;
-  width: 30%;
+  width: 50%;
 }
-.PersonPage-Information-Board {
+.PersonPage-Information-GradeImg {
+  width: 400px;
+  height: 400px;
+}
+.PersonPage-informationBtn {
+  margin-top: 40px;
+}
+/* .PersonPage-Information-Board {
+  margin-top: 100px;
   display: inline-block;
-  width: 30%;
-}
 
 /* 비밀번호 찾기 */
-.findpw-idCheck {
+/* .findpw-idCheck {
   width: 35%;
   background-color: dodgerblue;
   color: white;
@@ -411,4 +431,191 @@
   margin-bottom: 10px;
   margin-left: 60px;
   padding-left: 10px;
+} */
+
+/* 게시글 세부보기 */
+/* .detail-Outer {
+  display: flex;
+  justify-content: center;
+  background-color: #fbf5dc;
+} */
+
+.outer-detail {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.inner-detail {
+  margin-top: 50px;
+  display: flex;
+}
+.recommend-board {
+  display: flex;
+  /* text-align: center; */
+  margin: auto;
+}
+.recommand-btn {
+  width: 200px;
+  height: 40px;
+  /* margin-right: 400px; */
+  background-color: #c1b6ac;
+  border-radius: 5px;
+  border: solid 1px black;
+}
+
+.modalforrecommand {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+.modal-recommand-btn {
+  /* display: flex; */
+}
+
+.boardbtn-ud {
+  margin-left: 260px;
+}
+
+.detailboard-u {
+  margin-left: 170px;
+  background-color: #c1b6ac;
+  border: none;
+}
+.detailboard-d {
+  margin-left: 1px;
+  background-color: #c1b6ac;
+  border: none;
+}
+
+p {
+  display: inline;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.DetailBoard-comments {
+  height: 540px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.detail-board {
+  /* display: inline-block; */
+  flex-direction: left;
+  justify-content: center;
+  margin: auto;
+  height: 550px;
+  min-width: 600px;
+  background-color: white;
+  max-width: 600px;
+  border: 2px solid #c1b6ac;
+  border-right: none;
+  margin-bottom: 45px;
+  float: left;
+}
+
+.boardImage {
+  /* width: max-content; */
+  /* object-fit: fill; */
+  width: 550px;
+  height: 400px;
+}
+
+.detail-comment {
+  height: 525px;
+  width: 350px;
+  height: 550px;
+  background-color: white;
+  border: 2px solid #c1b6ac;
+  /* margin-left: 5px; */
+  /* border-left: none; */
+  /* float: left; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.semi-detail-comment {
+  margin-top: 10px;
+  margin-left: 12px;
+}
+
+.write-comment {
+  /* 자식 */
+  position: absolute;
+  bottom: 0;
+  border: 10px;
+}
+
+.Comment-write {
+  width: 272px;
+}
+
+.modalforrecommand {
+  text-align: center;
+}
+
+.modalforcomment-ucomment-btn {
+  background-color: #c1b6ac;
+  border: none;
+}
+
+.detailboard-wcomment-btn {
+  border: 1px solid;
+  background-color: #c1b6ac;
+}
+
+/* personPage */
+.PersonPage-Outer {
+  text-align: center;
+  border-top: 5px solid lightgray;
+  /* background-color: rgb(218 239 234); */
+}
+.PersonPage-Inner {
+  display: inline-block;
+  width: 80%;
+  background-color: white;
+}
+/* 유저가 올린 사진 3개씩 출력되게하는 css */
+.PersonPage-image-grid {
+  display: grid;
+  /* flex-wrap: wrap; */
+  border-top: 5px solid #2bb400;
+  /* width: 90%; */
+  /* margin: 10px auto; */
+  grid-template-columns: repeat(3, 1fr);
+}
+.PersonPage-image-grid {
+  width: 100%;
+}
+.PersonPage-image-grid img {
+  margin: 10px;
+  min-height: 400px;
+  max-height: 400px;
+  width: 90%;
+  border: 1px solid lightgray;
+  border-radius: 18%;
+}
+/* 유저 기본 정보 보여주는 css */
+.PersonPage-Information {
+  margin-top: 5%;
+  display: flex;
+}
+.PersonPage-Information-Log {
+  margin-top: 70px;
+  display: inline-block;
+  width: 50%;
+}
+.PersonPage-Information-Grade {
+  display: inline-block;
+  width: 50%;
+}
+.PersonPage-Information-GradeImg {
+  width: 400px;
+  height: 400px;
+}
+.PersonPage-informationBtn {
+  margin-top: 40px;
 }

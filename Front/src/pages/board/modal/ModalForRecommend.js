@@ -21,10 +21,15 @@ const ModalForRecommend = ({ boardNo }) => {
 
   return (
     <>
-      <div>
-        <button onClick={() => setRecommendBoardModal(true)}>
-          추천 게시글 보기
-        </button>
+      <div className="modalforrecommand">
+        <span className="modal-recommand-btn">
+          <button
+            className="recommand-btn"
+            onClick={() => setRecommendBoardModal(true)}
+          >
+            추천 게시글 보기
+          </button>
+        </span>
         <Modal
           isOpen={recommendBoardModal}
           onRequestClose={() => setRecommendBoardModal(false)}

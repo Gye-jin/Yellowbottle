@@ -129,7 +129,7 @@ const FindPw = () => {
                 {/*  인증번호 발송 버튼을 누르면 입력된 값을 백에 존재하는 값들과 비교해서 
               존재여부를 파악하고 있다면 인증번호를 해당 이메일로 발송한다. */}
                 <a
-                  className="findpw-idCheck"
+                  className="FindPw-sendCertiNum"
                   onClick={() =>
                     ForSendCertiNum(userId, email, birth, setCertiNum)
                   }
