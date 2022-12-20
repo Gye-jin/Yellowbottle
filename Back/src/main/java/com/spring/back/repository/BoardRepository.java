@@ -16,7 +16,7 @@ import com.spring.back.repository.mapping.BoardMapping;
 public interface BoardRepository extends JpaRepository<Board, Long> {
 	
 	// [user에 해당하는 BoardMapping 가져오기]
-	public ArrayList<BoardMapping> findByUser(User user);
+	public ArrayList<BoardMapping> findByUserOrderByBoardNoDesc(User user);
 	
 	// [user가 작성한 게시글 수 가져오기]
 	Long countByUser(User user);
