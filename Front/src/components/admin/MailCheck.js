@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ForSendMail } from "../../Api/MailData";
 import TableScrollbar from "react-table-scrollbar";
+
 const StyledTable1 = styled.table`
   display: inline-block;
-
   margin: 30px;
   text-align: center;
   border-collapse: collapse;

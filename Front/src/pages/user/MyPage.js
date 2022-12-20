@@ -72,7 +72,7 @@ function MyPage() {
             {/* 해당유저가 올린 게시물사진 모두 보여주는 함수 */}
             {myPageData.boards &&
               myPageData.boards.map((board) => (
-                <div className="PersonPage-image-grid-item">
+                <div>
                   <img
                     key={board.boardNo}
                     className="PersonPage-image-grid-item"

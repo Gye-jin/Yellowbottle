@@ -171,6 +171,7 @@ export function ForPostUpdateBoard(updateBoardData) {
         addClusterNo(response.data);
         alert("🌍게시글수정 성공!🌍");
       })
+
       .catch(function (err) {
         // 백에서 오류(err)가 온다면 게시글 작성 실패
         console.log(err);

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
 import { useNavigate } from "react-router-dom";
+import { anotherUserPageData } from "../Api/UserData";
+import { AccessAgreeUserPage, AccessAgreeBoardDetail } from "./AccessAgree";
 
 const FeedBoard = () => {
   //백에서 보낸 10개씩 게시물을 담는 공간
@@ -61,7 +63,7 @@ const FeedBoard = () => {
                     <div className="board_Header">
                       <h3
                         className="board_UserId"
-                        onClick={() => navigate(`/personPage/${board.userId}`)}
+                        onClick={() => AccessAgreeUserPage(board.userId)}
                       >
                         {board.userId}
                       </h3>
@@ -78,7 +80,7 @@ const FeedBoard = () => {
                             src={`${file.filePath + file.fileName}`}
                             alt="boardimage"
                             onClick={() =>
-                              navigate(`/detailBoard/${board.boardNo}`)
+                              AccessAgreeBoardDetail(board.boardNo)
                             }
                           />
                         ))}
