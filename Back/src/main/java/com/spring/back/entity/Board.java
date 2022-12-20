@@ -1,5 +1,6 @@
 package com.spring.back.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -48,14 +48,13 @@ public class Board {
 	
 	private String boardContent;
 	private Long viewCount;
-	private Long likeCount;
 	
 	@CreatedDate
 	@Column(updatable = false)
-	private LocalDateTime writtenDate;
+	private LocalDate writtenDate;
 	
 	@LastModifiedDate
-	private LocalDateTime modifiedDate;
+	private LocalDate modifiedDate;
 	
 	// Join
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -68,42 +67,61 @@ public class Board {
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
 //	추후 : @BatchSize 전략 사용
-	List<File> files = new ArrayList<File>();
+	private List<File> files = new ArrayList<File>();
 	
 	// [Comment Join]
 	@JsonIgnore
 	@OneToMany(mappedBy = "board")
-	List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
 	
 
 	
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
-	public static BoardDTO boardEntityToDTO (Board board) {
+	public static BoardDTO yourEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
+									.editor(false)
 									.boardNo(board.getBoardNo())
 									.userId(board.getUser().getUserId())
 									.boardContent(board.getBoardContent())
-									.likeCount(board.getLikeCount())
 									.createDate(board.getWrittenDate())
 									.viewCount(board.getViewCount())
-									.fileDTOs(board.getFiles().stream()
+									.files(board.getFiles().stream()
 											  .map(file -> File.entotyToDTO(file))
 										      .collect(Collectors.toList()))
-									.commentDTOs(board.getComments().stream()
-											  .map(comment -> Comment.commentEntityToDTO(comment))
+									.comments(board.getComments().stream()
+											  .map(comment -> Comment.falseEntityToDTO(comment))
 											  .collect(Collectors.toList()))
 									.modifiedDate(board.getModifiedDate())
 									.build();
 		return boardDTO;
 	}
 	
+	public static BoardDTO myboardEntityToDTO (Board board) {
+		BoardDTO boardDTO = BoardDTO.builder()
+				.editor(true)
+				.boardNo(board.getBoardNo())
+				.userId(board.getUser().getUserId())
+				.boardContent(board.getBoardContent())
+				.createDate(board.getWrittenDate())
+				.viewCount(board.getViewCount())
+				.files(board.getFiles().stream()
+						.map(file -> File.entotyToDTO(file))
+						.collect(Collectors.toList()))
+				.comments(board.getComments().stream()
+						.map(comment -> Comment.trueEntityToDTO(comment))
+						.collect(Collectors.toList()))
+				.modifiedDate(board.getModifiedDate())
+				.build();
+		return boardDTO;
+	}
+	
 	// Entity Element Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [BoardContent 변경]
-	public void updateBoard(BoardDTO boardDTO) {
-		 this.boardContent = boardDTO.getBoardContent();
+	public void updateBoard(String boardContent) {
+		 this.boardContent = boardContent;
 	}
 	
 	// [User 채워주기]
@@ -113,9 +131,5 @@ public class Board {
 	// [ViewCountupdate]
 	public void updateViewCount(Long viewCount) {
 		this.viewCount = viewCount;
-	}
-	// [LikeCountupdate]
-	public void updateLikeCount(Long likeCount) {
-		this.likeCount = likeCount;
 	}
 }

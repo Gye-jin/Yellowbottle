@@ -2,16 +2,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs, Mousewheel } from "swiper";
 import "../App.css";
 import "swiper/css";
-// import "swiper/css/navigation";
 import { useState } from "react";
 
-const slides = [
-  "https://picsum.photos/1920/1080",
-  "https://picsum.photos/1920/1081",
-  "https://picsum.photos/1920/1082",
-  "https://picsum.photos/1920/1083",
-  "https://picsum.photos/1920/1084",
-];
+const slides = ["img/eco.png", "img/title2.png", "img/title3.png"];
 
 export default function ScrollMain() {
   const [imagesNavSlider, setImagesNavSlider] = useState(null);
@@ -34,7 +27,7 @@ export default function ScrollMain() {
                 0: {
                   direction: "vertical",
                 },
-                768: {
+                700: {
                   direction: "vertical",
                 },
               }}

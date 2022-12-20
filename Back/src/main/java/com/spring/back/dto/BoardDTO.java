@@ -1,5 +1,6 @@
 package com.spring.back.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,25 +20,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class BoardDTO {
+	
 	// Column
 	// --------------------------------------------------------------------------------------------------------------------------------
+	// 게시글이 내가 작성한 글인지 확인
+	private boolean editor;
+	private Long countComment;
+
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
-	private Long likeCount;
-	private LocalDateTime createDate;
-	private LocalDateTime modifiedDate;	
+	private LocalDate createDate;
+	private LocalDate modifiedDate;	
 	private Long viewCount;
 	
 	// Join
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [File Join]
+
 	@OneToMany(fetch = FetchType.LAZY)
-	List<FileDTO> fileDTOs = new ArrayList<FileDTO>();
+	private List<FileDTO> files = new ArrayList<FileDTO>();
 	
 	// [Comment Join]
 	@OneToMany(fetch = FetchType.LAZY)
-	List<CommentDTO> commentDTOs = new ArrayList<CommentDTO>();
+	private List<CommentDTO> comments = new ArrayList<CommentDTO>();
 
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -47,9 +53,9 @@ public class BoardDTO {
 		Board board = Board.builder()
 						   .boardNo(boardDTO.getBoardNo())
 						   .boardContent(boardDTO.getBoardContent())
-						   .likeCount(0L)
 						   .viewCount(0L)
 						   .build();
 		return board;
 	}
+	
 }

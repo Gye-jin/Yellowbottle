@@ -15,13 +15,8 @@ import com.spring.back.repository.mapping.BoardMapping;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 	
-	/* [Board 저장]
-	 * 출력 : board entity 객체
-	 */
-	public Board save(Board board);
-	
 	// [user에 해당하는 BoardMapping 가져오기]
-	public ArrayList<BoardMapping> findByUser(User user);
+	public ArrayList<BoardMapping> findByUserOrderByBoardNoDesc(User user);
 	
 	// [user가 작성한 게시글 수 가져오기]
 	Long countByUser(User user);
@@ -30,8 +25,12 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 	 * 설명1 : 입력받은 boardNo에 해당하는 군집에서 조회수와 좋아요가 많은 상위 3개의 게시글 출력
 	 * 설명2 : [nativeQuery = true] => mySQL에서 사용하는 쿼리문과 동일하게 사용할 수 있도록 설정
 	 */
-	@Query(value = "SELECT * FROM board b\r\n" + 
+	@Query(value = "SELECT * FROM (SELECT * FROM board fb WHERE board_no != :no) b\r\n" + 
 			"WHERE b.cluster_no = (SELECT bb.cluster_no FROM board bb WHERE bb.board_no= :no)\r\n" + 
-			"ORDER BY b.view_count DESC, b.like_count DESC LIMIT 3", nativeQuery = true)
+			"ORDER BY b.view_count DESC LIMIT 3", nativeQuery = true)
 	public List<Board> findRecommendedBoardByBoardNo(@Param("no") Long boardNo);
+	
+	public void deleteByUser(User user);
+	
+	public List<Board> getByUser(User user);
 }

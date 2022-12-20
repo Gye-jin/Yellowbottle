@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class SessionDTO {
 	
-	private String SessionId;
+	private String sessionId;
 	
-	private String UserId;
+	private String userId;
 }

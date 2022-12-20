@@ -1,24 +1,26 @@
 package com.spring.back.controller;
 
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
 import com.spring.back.service.CertifiedServiceImpl;
+import com.spring.back.service.MailServiceImpl;
 import com.spring.back.service.UserServiceImpl;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api", produces = "application/json")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class UserController {
 	// Connection
@@ -29,6 +31,10 @@ public class UserController {
 
 	@Autowired
 	CertifiedServiceImpl certifiedService;
+	
+	// [Service]
+	@Autowired
+	MailServiceImpl mailService;
 	// Create
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [회원가입]
@@ -40,7 +46,9 @@ public class UserController {
 	// [(비밀번호 찾기용)인증번호 발송]
 	@PostMapping(value = "/findPw")
 	public int findPwByEmailAndBirthAndUserId(@RequestBody UserDTO userDTO) {
-		return userService.findPwByEmailAndBirthAndUserId(userDTO.getEmail(), userDTO.getBirth(), userDTO.getUserId());
+		int checkNum = userService.findPwByEmailAndBirthAndUserId(userDTO.getEmail(), userDTO.getBirth(), userDTO.getUserId());
+		mailService.checkEmail(checkNum, userDTO.getEmail());
+		return checkNum;
 	}
 	
 	// [인증번호 검증]
@@ -61,8 +69,8 @@ public class UserController {
 	}
 	// [로그아웃]
 	@PostMapping(value = "/logout")
-	public boolean logout(@RequestBody UserDTO userDTO) {
-		return userService.logout(userDTO.getUserId());
+	public boolean logout(@RequestBody SessionDTO sessionDTO) {
+		return userService.logout(sessionDTO.getSessionId());
 		
 	}
 	
@@ -86,18 +94,31 @@ public class UserController {
 	public boolean updatePw(@RequestBody UserDTO userDTO) {
 		return userService.updatePw(userDTO);
 	}
-
+	
+	// [회원정보가져오기]
+	@PostMapping(value = "/readUserData")
+	public UserDTO findUser(@RequestBody SessionDTO sessionDTO) {
+		UserDTO userDTO = userService.findUserData(sessionDTO);
+		return userDTO;
+	}
+	
+	
 	// [회원정보 수정]
-	@PutMapping(value = "/updateUser")
-	public UserDTO updateUserInfo(@RequestBody UserDTO userDTO) {
-		return userService.updateUserInfo(userDTO);
+	@PostMapping(value = "/updateUser")
+	public boolean updateUserInfo(@ModelAttribute SessionDTO sessionDTO, UserDTO userDTO) {
+		return userService.updateUserInfo(sessionDTO,userDTO);
+	}
+//	// [회원등급 업데이트]
+	@Scheduled(cron = "0 0 6,18 * * *")
+	public void updateUserRank() {
+		userService.updateUserRank();
 	}
 
 	// Delete
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [회원 탈퇴]
 	@PostMapping(value = "/deleteUser")
-	public boolean deleteUser(@RequestParam String userId, @RequestParam String userPw) {
-		return userService.deleteUser(userId, userPw);
+	public boolean deleteUser(@ModelAttribute SessionDTO sessionDTO,UserDTO userDTO) {
+		return userService.deleteUser(sessionDTO.getSessionId(), userDTO.getUserPw());
 	}
 }

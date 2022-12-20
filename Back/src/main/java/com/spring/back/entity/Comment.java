@@ -58,8 +58,22 @@ public class Comment {
 	// Build
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// DtoToEntity
-	public static CommentDTO commentEntityToDTO(Comment comment) {
+	public static CommentDTO falseEntityToDTO(Comment comment) {
 		CommentDTO commentDTO = CommentDTO.builder()
+									  .editor(false)
+									  .commentNo(comment.getCommentNo())
+									  .userId(comment.getUser().getUserId())
+									  .boardNo(comment.getBoard().getBoardNo())
+									  .commentContent(comment.getCommentContent())
+									  .commentDate(comment.getCommentDate())
+									  .build();
+		return commentDTO;
+	}
+	
+	
+	public static CommentDTO trueEntityToDTO(Comment comment) {
+		CommentDTO commentDTO = CommentDTO.builder()
+									  .editor(true)
 									  .commentNo(comment.getCommentNo())
 									  .userId(comment.getUser().getUserId())
 									  .boardNo(comment.getBoard().getBoardNo())
@@ -71,6 +85,7 @@ public class Comment {
 	
 	// Entity Element Update
 	// --------------------------------------------------------------------------------------------------------------------------------
+	
 	// [Board 채워주기]
 	public void boardInComment(Board board) {
 		this.board = board;
@@ -79,5 +94,10 @@ public class Comment {
 	// [User 채워주기]
 	public void userInComment(User user) {
 		this.user = user;
+	}
+	
+	// [댓글 내용 수정하기]
+	public void updateCommentContentInEntity(String commentContent) {
+		this.commentContent = commentContent;
 	}
 }
