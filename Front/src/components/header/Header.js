@@ -16,7 +16,7 @@ export default function Header() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#00ff0000",
+        main: "#4A4040",
       },
     },
   });
@@ -63,9 +63,9 @@ export default function Header() {
               {/* 로고 */}
               <img
                 className="logo"
-                src="/img/czero_Logo.jpg"
-                width="120"
-                height="70"
+                src="/img/logo.png"
+                width="100"
+                height="80"
               />
             </IconButton>
             <Typography

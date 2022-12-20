@@ -14,7 +14,7 @@ export default function HeaderLogin() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#00ff0000",
+        main: "#332C2C",
       },
     },
   });
@@ -59,14 +59,10 @@ export default function HeaderLogin() {
             onClick={() => navigate("/")}
           >
             {/* 로고 */}
-            <img
-              className="logo"
-              src="/img/czero_Logo.jpg"
-              width="120"
-              height="70"
-            />
+            <img className="logo" src="/img/logo.png" width="100" height="80" />
           </IconButton>
           <Typography
+            fontSize="23px"
             onClick={() => navigate("/feed")}
             variant="h6"
             component="div"

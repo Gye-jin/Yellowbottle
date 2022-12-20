@@ -16,7 +16,7 @@ const DetailBoard = () => {
   const [commentContent, setCommentContent] = useState("");
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 댓글내용 입력시 이벤트발생 ----수정고려중
+  // 댓글내용 입력시 이벤트발생
   const changeComment = (e) => {
     setCommentContent(e.target.value);
   };
@@ -72,79 +72,109 @@ const DetailBoard = () => {
   return (
     <>
       <Header />
-      <div>
-        {board ? (
-          <div key={board.boardNo}>
-            <div className="board">
-              {/* userId 클릭시 해당 유저의 마이페이지로 이동 */}
-              <h3 onClick={() => navigate(`/personPage/${board.userId}`)}>
-                {board.userId}
-              </h3>
-              {/* 게시글 작성장이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
-              <span>
-                {board.editor ? (
-                  <button
-                    onClick={() => navigate(`/boardUpdate/${board.boardNo}`)}
-                  >
-                    수정하기
-                  </button>
-                ) : (
-                  ""
-                )}
-                {board.editor ? (
-                  <button onClick={() => createDeleteBoardData()}>
-                    삭제하기
-                  </button>
-                ) : (
-                  ""
-                )}
+      <div className="outer-detail">
+        <div className="inner-detail">
+          {board ? (
+            <div key={board.boardNo}>
+              {/* <span> */}
+              <div className="detail-board">
+                {/* userId 클릭시 해당 유저의 마이페이지로 이동 */}
+                <p onClick={() => navigate(`/personPage/${board.userId}`)}>
+                  {board.userId}
+                </p>
+                {/* 게시글 작성자이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
+                <span className="detailboardtn-ud">
+                  {board.editor ? (
+                    <button
+                      className="detailboard-u"
+                      onClick={() => navigate(`/boardUpdate/${board.boardNo}`)}
+                    >
+                      글수정
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {board.editor ? (
+                    <button
+                      className="detailboard-d"
+                      onClick={() => createDeleteBoardData()}
+                    >
+                      글삭제
+                    </button>
+                  ) : (
+                    ""
+                  )}
 
-                <br />
-              </span>
-              {board.files &&
-                board.files.map((file) => (
-                  <img
-                    key={file}
-                    className="boardImage"
-                    src={`${file.filePath + file.fileName}`}
-                    width="350"
-                    height="300"
-                    alt="boardimage"
-                  />
-                ))}
-              <div>
-                <h3>
-                  <span>조회수 : {board.viewCount}</span>
                   <br />
-                  <span>댓글수 : {board.countComment}</span>
-                </h3>
-                <div>{board.boardContent}</div>
+                </span>
+                {board.files &&
+                  board.files.map((file) => (
+                    <img
+                      key={file}
+                      className="boardImage"
+                      src={`${file.filePath + file.fileName}`}
+                      // width="fit-content"
+                      height="300"
+                      alt="boardimage"
+                    />
+                  ))}
+                <div>
+                  <h4>
+                    <span>조회수 : {board.viewCount}</span>
+                    <br />
+                    <span>댓글수 : {board.countComment}</span>
+                  </h4>
+                  {/* <div className="boardContent">{board.boardContent}</div> */}
+                </div>
               </div>
-            </div>
-            {board.comments &&
-              board.comments.map((comment) => <Comment comment={comment} />)}
-            {/* 댓글 입력창 */}
-            <div onSubmit={changeComment}>
-              <input
-                onChange={changeComment}
-                className="Comment-write"
-                placeholder="댓글을 입력해주세요!"
-                id="commentinput"
-                onKeyDown={handleEnter}
-              />
-              <button onClick={createCommentData}>댓글작성</button>
-            </div>
 
-            {/* 버튼을 누르면 추천게시물이 나온다. */}
-            <br />
-            <ModalForRecommend boardNo={board.boardNo} />
-            {/* <button onClick={() => navigate(`/recommendBoard/${boardNo}`)}>
-              추천 게시글 보기
-            </button> */}
-          </div>
-        ) : (
-          <></>
-        )}
+              {/* <div className="detailboard-comment"> */}
+              <div className="detail-comment">
+                <div className="semi-detail-comment">
+                  <div className="DetailBoard-comments">
+                    <div className="boardContent">{board.boardContent}</div>
+                    <br />
+                    {board.comments &&
+                      board.comments.map((comment) => (
+                        <Comment id="cComment" comment={comment} />
+                      ))}
+                  </div>
+                </div>
+                <div className="write-comment">
+                  <input
+                    type="text"
+                    onChange={changeComment}
+                    className="Comment-write"
+                    placeholder="댓글을 입력해주세요!"
+                    id="commentinput"
+                    onKeyDown={handleEnter}
+                  ></input>
+                  <button
+                    className="detailboard-wcomment-btn"
+                    onClick={createCommentData}
+                  >
+                    댓글작성
+                  </button>
+                </div>
+              </div>
+              {/* </div> */}
+              {/* 댓글 입력창 */}
+              {/* <div className="write-comment"> */}
+              {/* <span>
+                </span> */}
+              {/* 버튼을 누르면 추천게시물이 나온다. */}
+              {/* <div className="recommend-board"> */}
+              <span className="recommend-board">
+                <ModalForRecommend boardNo={board.boardNo} />
+                {/* </div> */}
+              </span>
+              {/* </div> */}
+              {/* </span> */}
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </>
   );

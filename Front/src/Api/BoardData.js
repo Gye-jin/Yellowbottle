@@ -189,6 +189,7 @@ export function ForPostUpdateBoard(
         alert("😍게시글 수정 성공😍");
         setClusterData(response.data);
       })
+
       .catch(function (err) {
         // 백에서 오류(err)가 온다면 게시글 작성 실패
         console.log(err);

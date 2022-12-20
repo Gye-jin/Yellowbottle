@@ -64,10 +64,9 @@ function MyPage() {
             {/* 해당유저가 올린 게시물사진 모두 보여주는 함수 */}
             {myPageData.boards &&
               myPageData.boards.map((board) => (
-                <div className="PersonPage-image-grid-item">
+                <div>
                   <img
                     key={board.boardNo}
-                    className="myPage_Image"
                     src={`${board.filePath + board.fileName}`}
                     alt="myPageImage"
                     // 이미지 클릭시 해당 게시물의 상세보기로 넘어감

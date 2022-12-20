@@ -13,10 +13,12 @@ const Comment = ({ comment }) => {
       <span>
         <strong onClick={() => navigate(`/personPage/${comment.userId}`)}>
           {comment.userId}
+          {"  "}
         </strong>
+
         <span>{comment.commentContent}</span>
       </span>
-
+      <br />
       {/* [댓글 수정]
           설명: 댓글 작성자에게만 보이는 버튼
           이벤트: 댓글 수정 및 삭제가 가능한 팝업 생성 */}
