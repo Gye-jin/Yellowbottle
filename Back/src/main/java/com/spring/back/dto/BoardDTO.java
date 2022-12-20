@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.back.entity.Board;
 
 import lombok.AllArgsConstructor;

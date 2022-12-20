@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.spring.back.dto.CommentDTO;
 import com.spring.back.dto.SessionDTO;
-import com.spring.back.entity.Board;
 import com.spring.back.entity.Comment;
 import com.spring.back.entity.Session;
-import com.spring.back.entity.User;
 import com.spring.back.repository.BoardRepository;
 import com.spring.back.repository.CommentRepository;
 import com.spring.back.repository.SessionRepository;
