@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
 import { useNavigate } from "react-router-dom";
-import { anotherUserPageData } from "../Api/UserData";
 import { AccessAgreeUserPage, AccessAgreeBoardDetail } from "./AccessAgree";
 
 const FeedBoard = () => {
@@ -86,13 +85,14 @@ const FeedBoard = () => {
                         ))}
                       {/* <div></div> */}
                       <div className="board_BoardContent">
-                        <div>조회수 : {board.viewCount}</div>
+                        <h4>조회수 : {board.viewCount}</h4>
+                        {/* <br /> */}
                         <div className="board-BoardContent">
                           {board.boardContent}
                         </div>
-                        <div className="FeedBoard-createDate">
+                        <h4 className="FeedBoard-createDate">
                           {board.createDate}
-                        </div>
+                        </h4>
                       </div>
                     </div>
                   </div>

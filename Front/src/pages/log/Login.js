@@ -53,10 +53,27 @@ const Login = () => {
     // 입력된 값들을 loginData에 넣는다.
     const { userId, userPw } = loginData;
     // loginData에 넣은 각각의 값들은 유효성 검사를 거친다.
-    IdRegexTest(userId, setIdError);
-    PasswordRegexTest(userPw, setPasswordError);
+    // 아이디체크
+    const idRegex = /^[a-zA-Z0-9]{4,19}$/g;
+    if (!idRegex.test(userId)) {
+      {
+        setIdError("잘못된 아이디입니다.");
+      }
+    } else if (idRegex.test(userId)) {
+      {
+        setIdError("");
+      }
+    }
+    // PasswordRegexTest(userPw, setPasswordError);
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if (!passwordRegex.test(userPw)) {
+      setPasswordError("잘못된 비밀번호입니다.");
+    } else {
+      setPasswordError("");
+    }
     // 만약 위 유효성 검사를 모두 통과하면 ForPostLoginData를 실행한다.
-    if (idError === "" && passwordError === "") {
+    if (idRegex.test(userId) && passwordRegex.test(userPw)) {
       ForPostLoginData(loginData, setRegisterError);
     }
   };

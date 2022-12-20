@@ -8,10 +8,10 @@ const ControlPointOutlinedIcons = styled(ControlPointOutlinedIcon)`
   background-color: rgb(255, 217, 44);
   border-radius: 10%;
   color: white;
-  //   border: 1px solid lightgray;
+  // border: 1px solid lightgray;
   width: 70px;
   height: 70px;
-  font-size: 3rem;
+  // font-size: 3rem;
 `;
 const ArrowUpwardOutlinedIcons = styled(ArrowUpwardOutlinedIcon)`
   margin-top: 10px;
