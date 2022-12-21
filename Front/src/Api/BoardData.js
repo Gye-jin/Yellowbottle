@@ -105,6 +105,7 @@ export const postComment = async (commentWriteData) => {
     .then((response) => {
       console.log(response.data, "댓글 백으로 전송 성공!");
       alert("댓글이 작성되었습니다.");
+      window.location.reload();
     })
     .catch(function (err) {
       console.log(err);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { AccessAgreeBoardWrite } from "../../../components/AccessAgree";
-import BoardWrite from "../BoardWrite";
+import WriteBoard from "../WriteBoard";
 import styled from "styled-components";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 
@@ -23,9 +23,9 @@ export default function ModalForWrite() {
   return (
     <>
       <div>
+        {/* 게시글 작성 버튼
+        기능: 회원 => 게시글 작성 팝업 실행 / 비회원 => 로그인 페이지 이동 */}
         <ControlPointOutlinedIcons
-          className="ModalForWrite-writeBoard"
-          // 게시글 작성 버튼 눌렀을떄 회원은 게시글 작성 팝업 실행, 비회원은 로그인 페이지로 이동!
           onClick={() => AccessAgreeBoardWrite(setWirteBoardModal)}
         />
         <Modal
@@ -37,7 +37,7 @@ export default function ModalForWrite() {
           </div>
           <br />
           {/* 컴퍼넌트 들어가는 자리 */}
-          <BoardWrite />
+          <WriteBoard />
         </Modal>
       </div>
     </>

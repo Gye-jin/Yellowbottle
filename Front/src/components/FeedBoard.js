@@ -50,42 +50,36 @@ const FeedBoard = () => {
             {/* 삼항연산자로 FeedBoard가 있을때 게시물번호 순으로 출력함. */}
             {FeedBoard ? (
               FeedBoard.map((board) => (
-                <div key={board.boardNo} className="feedBoard-board">
-                  <div href={"http://localhost:3000/board/" + board.boardNo}>
-                    <div className="feedBoard-header">
-                      <h3
-                        className="feedBoard-userId"
-                        onClick={() => AccessAgreeUserPage(board.userId)}
-                      >
-                        {board.userId}
-                      </h3>
-                      {/* 이미지 출력 */}
-                      {/* React는 렌더링이 화면에 커밋된 후에 모든 효과를 실행한다. 즉, 데이터가 들어오기 전에 board.fileDTO.map을 실행시키며 이 데이터는 undefined로 나온다. */}
-                      {/* 따라서 true && expression을 설정해서 앞에 값들이 들어오면 그때 expression을 실행시키게 하면된다! */}
-                      {board.files &&
-                        board.files.map((file) => (
-                          <img
-                            // React 라이브러리는 컴포넌트와 DOM요소 간의 관계를 이용해 리렌더링 여부를 결정한다. 따라서 불필요한 리렌더링을 방지하기 위해 각 자식 컴포넌트마다 독립적인 Key값을 넣어줘야한다.
-                            key={file}
-                            className="feedBoard-boardImage"
-                            // 두개 이상의 자식을 붙여서 사용할때는 ${}를 따로 두개 쓰는 것이 아니라 ${} 하나에 + 를 사용해서 넣자!
-                            src={`${file.filePath + file.fileName}`}
-                            alt="boardimage"
-                            onClick={() =>
-                              AccessAgreeBoardDetail(board.boardNo)
-                            }
-                          />
-                        ))}
-                      {/* <div></div> */}
-                      <div className="feedBoard-boardContent">
-                        <h4>조회수 : {board.viewCount}</h4>
-                        {/* <br /> */}
-                        <div className="board-BoardContent">
-                          {board.boardContent}
-                        </div>
-                        <h4 className="feedBoard-createDate">
-                          {board.createDate}
-                        </h4>
+                <div key={board.boardNo} className="board">
+                  <div className="board_Header">
+                    <h3
+                      className="board_UserId"
+                      onClick={() => AccessAgreeUserPage(board.userId)}
+                    >
+                      {board.userId}
+                    </h3>
+                    {/* 이미지 출력 */}
+                    {/* React는 렌더링이 화면에 커밋된 후에 모든 효과를 실행한다. 즉, 데이터가 들어오기 전에 board.fileDTO.map을 실행시키며 이 데이터는 undefined로 나온다. */}
+                    {/* 따라서 true && expression을 설정해서 앞에 값들이 들어오면 그때 expression을 실행시키게 하면된다! */}
+                    {board.files &&
+                      board.files.map((file) => (
+                        <img
+                          // React 라이브러리는 컴포넌트와 DOM요소 간의 관계를 이용해 리렌더링 여부를 결정한다. 따라서 불필요한 리렌더링을 방지하기 위해 각 자식 컴포넌트마다 독립적인 Key값을 넣어줘야한다.
+                          key={file}
+                          className="board_Image"
+                          // 두개 이상의 자식을 붙여서 사용할때는 ${}를 따로 두개 쓰는 것이 아니라 ${} 하나에 + 를 사용해서 넣자!
+                          src={`${file.filePath + file.fileName}`}
+                          alt="boardimage"
+                          onClick={() => AccessAgreeBoardDetail(board.boardNo)}
+                        />
+                      ))}
+                    <div className="board_BoardContent">
+                      <div>조회수 : {board.viewCount}</div>
+                      <div className="board-BoardContent">
+                        {board.boardContent}
+                      </div>
+                      <div className="FeedBoard-createDate">
+                        {board.createDate}
                       </div>
                     </div>
                   </div>
