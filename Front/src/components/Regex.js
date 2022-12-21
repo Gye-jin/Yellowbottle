@@ -28,7 +28,7 @@ export function BirthRegexTest(birth, setBirthError) {
 
 // 이름 유효성 체크
 export function NameRegexTest(name, setNameError) {
-  const nameRegex = /^[가-힣a-zA-Z]+$/;
+  const nameRegex = /^[가-힣]{2,4}$/;
   if (!nameRegex.test(name) || name.length < 1)
     setNameError("올바른 이름을 입력해주세요.");
   else setNameError("");
@@ -43,9 +43,11 @@ export function GenderRegexTest(sex) {
 
 // 아이디 유효성 체크
 export function IdRegexTest(userId, setIdError) {
-  const idRegex = /^[a-z]+[a-z0-9]{4,19}$/g;
+  const idRegex = /^[a-zA-Z0-9]{4,19}$/g;
   if (!idRegex.test(userId)) {
     setIdError("아이디는 영문자 또는 숫자 5~20자리로 입력해주세요");
+  } else if (idRegex.test(userId)) {
+    setIdError("");
   }
 }
 

@@ -1,5 +1,6 @@
 package com.spring.back.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +51,10 @@ public class Board {
 	
 	@CreatedDate
 	@Column(updatable = false)
-	private LocalDateTime writtenDate;
+	private LocalDate writtenDate;
 	
 	@LastModifiedDate
-	private LocalDateTime modifiedDate;
+	private LocalDate modifiedDate;
 	
 	// Join
 	// --------------------------------------------------------------------------------------------------------------------------------

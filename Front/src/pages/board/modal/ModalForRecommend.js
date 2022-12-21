@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { recommendBoardFetchData } from "../../Api/BoardData";
-import RecommendBoard from "./RecommendBoard";
+import { recommendBoardFetchData } from "../../../Api/BoardData";
+import RecommendBoard from "../RecommendBoard";
 
 const ModalForRecommend = ({ boardNo }) => {
   // [변수지정]
@@ -21,10 +21,15 @@ const ModalForRecommend = ({ boardNo }) => {
 
   return (
     <>
-      <div>
-        <button onClick={() => setRecommendBoardModal(true)}>
-          추천 게시글 보기
-        </button>
+      <div className="modalforrecommand">
+        <span className="modal-recommand-btn">
+          <button
+            className="recommand-btn"
+            onClick={() => setRecommendBoardModal(true)}
+          >
+            추천 게시글 보기
+          </button>
+        </span>
         <Modal
           isOpen={recommendBoardModal}
           onRequestClose={() => setRecommendBoardModal(false)}

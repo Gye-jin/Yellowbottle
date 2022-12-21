@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import { myAllData, myPageFetchData } from "../../Api/UserData";
 import { useNavigate, useParams } from "react-router-dom";
-// import
 
 function PersonPage() {
   // useParams.userId가 의미하는 것은 /mypage/:userId 중 userId의 변화하는 값을 의미하는 것이다.
@@ -12,7 +11,7 @@ function PersonPage() {
   // 해당 userId가 올린 댓글,게시글,에디터 관련 정보를 저장할 공간
   const [myPageData, setMyPageData] = useState([]);
   // 등급별 이미지 주소값
-  const [gradeImage, setGradeImage] = useState("/img/lowPlant.png");
+  const [gradeImage, setGradeImage] = useState("/img/firstGradeImg.png");
   // 사용자의 세션값
   const userSession = sessionStorage.getItem("sessionId");
   // 이동시켜주는 함수
@@ -28,12 +27,13 @@ function PersonPage() {
   }, []);
   //  회원 댓글수와 게시글 수에 따른 이미지 변화
   useEffect(() => {
-    const personCountComment = `${myPageData.countComment}`;
-    const personCountBoard = `${myPageData.countBoard}`;
-    if (personCountComment >= 30 && personCountBoard >= 30) {
-      setGradeImage("/img/highPlant.png");
-    } else if (personCountComment >= 20 && personCountBoard >= 20) {
-      setGradeImage("/img/middlePlant.png");
+    const personGrade = `${myPageData.grade}`;
+    if (personGrade === "숲") {
+      setGradeImage("/img/finalGradeImg.jpg");
+    } else if (personGrade === "나무") {
+      setGradeImage("/img/thirdGradeImg.png");
+    } else if (personGrade === "잔디") {
+      setGradeImage("/img/secondGradeImg.jpg");
     }
   }, [myPageData]);
 
@@ -61,11 +61,15 @@ function PersonPage() {
               )}
             </div>
             <div className="PersonPage-Information-Grade">
-              <img src={gradeImage} alt="imageAboutGrade" />
+              <img
+                src={gradeImage}
+                alt="imageAboutGrade"
+                className="PersonPage-Information-GradeImg"
+              />
             </div>
             <div className="PersonPage-Information-Board">
               <div>작성한 댓글 수 :{myPageData.countComment}</div>
-              <div>게시글 수 :{myPageData.countBoard}</div>
+              <div>게시물 수 :{myPageData.countBoard}</div>
             </div>
             {/* 만약 해당페이지가 본인 마이페이지라면 회원정보수정 버튼 존재 and 타인페이지라면 회원정보수정 버튼 미존재 */}
           </div>
@@ -74,10 +78,9 @@ function PersonPage() {
             {/* 해당유저가 올린 게시물사진 모두 보여주는 함수 */}
             {myPageData.boards &&
               myPageData.boards.map((board) => (
-                <div className="PersonPage-image-grid-item">
+                <div>
                   <img
                     key={board.boardNo}
-                    className="PersonPage-image-grid-itme-img"
                     src={`${board.filePath + board.fileName}`}
                     alt="myPageImage"
                     // 이미지 클릭시 해당 게시물의 상세보기로 넘어감

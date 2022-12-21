@@ -10,16 +10,18 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import HeaderLogin from "./HeaderLogin";
 import HeaderAdmin from "./HeaderAdmin";
+import styled from "styled-components";
 
 // 상태값에 따른 헤더 부여 함수 및 비회원용 헤더
 export default function Header() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#00ff0000",
+        main: "#4A4040",
       },
     },
   });
+  const Boxs = styled(Box)``;
 
   // navigate(이동)하는 함수
   const navigate = useNavigate();
@@ -41,7 +43,7 @@ export default function Header() {
     }
     // 세션값이 존재한다면 isLogin값을 true로 수정 --> 만약 setisLogin("admin")이 안된다면 isLogin의 초기값을 false가 아닌 ""로 설정하자
     else {
-      console.log("회원입니당");
+      // console.log("회원입니당");
       setIsLogin(true);
     }
   });
@@ -63,9 +65,9 @@ export default function Header() {
               {/* 로고 */}
               <img
                 className="logo"
-                src="/img/czero_Logo.jpg"
-                width="120"
-                height="70"
+                src="/img/logo.png"
+                width="100"
+                height="80"
               />
             </IconButton>
             <Typography

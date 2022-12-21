@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { recommendBoardFetchData } from "../../Api/BoardData";
-import Header from "../../components/header/Header";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const RecommendBoard = ({
-  boardNo,
-  recommendBoards,
-  setRecommendBoardModal,
-}) => {
+const RecommendBoard = ({ recommendBoards, setRecommendBoardModal }) => {
   // [변수 지정]
   // 추천게시물 Index
   const [recommendIndex, setRecommendIndex] = useState(0);
