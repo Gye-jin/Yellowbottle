@@ -20,9 +20,6 @@ export default function HeaderAdmin() {
     },
   });
 
-  // const Typographys = styled(Typography)`
-  //   width: 90%;
-  // `;
   // navigate(이동)하는 함수
   const navigate = useNavigate();
 

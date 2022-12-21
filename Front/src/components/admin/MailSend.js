@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import Loading from "./Loading";
+import Swal from "sweetalert2";
 
 const StyledTable1 = styled.table`
   font-size: 15px;
@@ -132,7 +133,12 @@ const MailSend = () => {
         setCheckContents2((prev) => [...prev, title]);
       } else {
         setNum(3);
-        alert("3개 초과");
+        Swal.fire({
+          icon: "error",
+          title: "🌚3개만 골라주세요🌝",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       }
     } else {
       setNum(num_sel - 1);

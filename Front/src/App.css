@@ -168,6 +168,7 @@
   max-width: 700px;
   border: 1px solid lightgray;
   margin-bottom: 45px;
+  border-radius: 4%;
 }
 .FeedSideBar-Btn {
   position: fixed;

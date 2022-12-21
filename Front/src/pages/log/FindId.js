@@ -139,7 +139,6 @@ const FindId = () => {
               {/* 아이디찾기 버튼을 누르면 type="submit"에 의해 createFindIdData이 실행됨 */}
               <Button
                 className="findId-findIdBtn"
-                color="warning"
                 type="submit"
                 fullWidth
                 variant="contained"
