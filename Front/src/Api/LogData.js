@@ -133,7 +133,6 @@ export function ForSendCertiNum(userId, email, birth, setCertiNum) {
         //  반응(response)가 0이라면 경고문구 출력
         alert("없는 email입니다. 다시 입력해주세요");
       }
-      // console.log("이메일로 인증번호 발송");
     });
   };
   sendCertiNum();

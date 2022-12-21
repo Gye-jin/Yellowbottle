@@ -217,7 +217,7 @@
 }
 .FeedBoard-createDate {
   width: 600px;
-  text-align: right;
+  text-align: left;
 }
 
 /* BoardWrite : 게시글 작성화면 css */
@@ -559,7 +559,7 @@ p {
 .PersonPage-image-grid {
   display: grid;
   /* flex-wrap: wrap; */
-  border-top: 5px solid #2bb400;
+  border-top: 5px solid rgb(255, 217, 44);
   /* width: 90%; */
   /* margin: 10px auto; */
   grid-template-columns: repeat(3, 1fr);

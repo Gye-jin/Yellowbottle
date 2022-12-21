@@ -84,14 +84,7 @@ const DeleteUser = () => {
     if (!CheckedPersonal) {
       alert("회원탈퇴 동의란에 체크해주세요");
     }
-
-    // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
-    // if (passwordError === "" && rePasswordError === "" && CheckedPersonal) {
-    //   ForPostDeleteData(deleteData);
-    // } else {
-    //   setRegisterError("🌍환경지킴이 포기하실건가요?🌍");
-    // }
-    passwordError === "" && rePasswordError === "" && CheckedPersonal
+    passwordRegex.test(userPw) && rePassword === userPw && CheckedPersonal
       ? ForPostDeleteData(deleteData)
       : setRegisterError("🌍환경지킴이 포기하실건가요?🌍");
   };

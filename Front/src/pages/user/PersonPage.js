@@ -45,20 +45,25 @@ function PersonPage() {
           <div className="PersonPage-Information">
             <div className="PersonPage-Information-Log">
               <h1>{personId}</h1>
-              {personId === sessionUserId ? (
-                <button onClick={() => navigate("/updateUser")}>
-                  회원정보수정
-                </button>
-              ) : (
-                <></>
-              )}
-              {personId === sessionUserId ? (
-                <button onClick={() => navigate("/deleteUser")}>
-                  회원탈퇴
-                </button>
-              ) : (
-                <></>
-              )}
+              <br />
+              <h4>작성한 댓글 수 :{myPageData.countComment}</h4>
+              <h4>게시물 수 :{myPageData.countBoard}</h4>
+              <div className="PersonPage-informationBtn">
+                {personId === sessionUserId ? (
+                  <button onClick={() => navigate("/updateUser")}>
+                    회원정보수정
+                  </button>
+                ) : (
+                  <></>
+                )}
+                {personId === sessionUserId ? (
+                  <button onClick={() => navigate("/deleteUser")}>
+                    회원탈퇴
+                  </button>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
             <div className="PersonPage-Information-Grade">
               <img
@@ -66,10 +71,6 @@ function PersonPage() {
                 alt="imageAboutGrade"
                 className="PersonPage-Information-GradeImg"
               />
-            </div>
-            <div className="PersonPage-Information-Board">
-              <div>작성한 댓글 수 :{myPageData.countComment}</div>
-              <div>게시물 수 :{myPageData.countBoard}</div>
             </div>
             {/* 만약 해당페이지가 본인 마이페이지라면 회원정보수정 버튼 존재 and 타인페이지라면 회원정보수정 버튼 미존재 */}
           </div>

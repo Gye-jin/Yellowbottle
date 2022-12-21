@@ -68,10 +68,6 @@ const UpdateUser = () => {
   const emailHandler = (e) => {
     setEmail(e.target.value);
   };
-  // 이메일 수신 변경 인식해주는 함수
-  // const subStatusHandler = (e) => {
-  //   setSubStatus(e.target.value);
-  // };
   // 회원정보수정 페이지 접속시 기존 회원이메일 출력해줌
   useEffect(() => {
     const response = passUpdateUser(userSession);
