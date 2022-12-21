@@ -582,3 +582,37 @@ p {
 .PersonPage-informationBtn {
   margin-top: 40px;
 }
+/* Mail Service  */
+.parentmail {
+  display: flex;
+  margin: 40px 40px 40px 40px;
+  height: 500px;
+  width: 1000px;
+}
+.parentmail2 {
+  display: flex;
+  margin: 40px 80px 40px 40px;
+  padding: 0px 30px;
+  height: 400px;
+  width: 1000px;
+}
+.childmail {
+  height: 500px;
+  width: 100%;
+  flex: 1;
+  margin: 20px 20px;
+  padding: 10px;
+}
+.childmail2 {
+  height: 300px;
+  flex: 1;
+  margin: 75px 10px;
+  padding: 5px;
+}
+.checkchild1 {
+  height: 200px;
+  flex: 1;
+  margin: 13px 10px;
+  padding: 5px;
+  display: block;
+}
