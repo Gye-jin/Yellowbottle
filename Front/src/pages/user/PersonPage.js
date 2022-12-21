@@ -47,19 +47,30 @@ function PersonPage() {
               <h1>{personId}</h1>
               <div className="PersonPage-Information-Board">
                 <h4>
-                  작성한 댓글 수 :{myPageData.countComment} &nbsp;&nbsp;&nbsp;
-                  게시물 수 :{myPageData.countBoard}
+                  회원등급 : {myPageData.grade}
+                  <br />
+                  게시물 수 : {myPageData.countBoard}
+                  <br />
+                  작성한 댓글 수 : {myPageData.countComment}
                 </h4>
               </div>
+              <n />
               {personId === sessionUserId ? (
-                <button onClick={() => navigate("/updateUser")}>
+                <button
+                  className="PersonPage-update"
+                  onClick={() => navigate("/updateUser")}
+                >
                   회원정보수정
                 </button>
               ) : (
                 <></>
               )}
+              &nbsp;&nbsp;
               {personId === sessionUserId ? (
-                <button onClick={() => navigate("/deleteUser")}>
+                <button
+                  className="PersonPage-withdraw"
+                  onClick={() => navigate("/deleteUser")}
+                >
                   회원탈퇴
                 </button>
               ) : (
