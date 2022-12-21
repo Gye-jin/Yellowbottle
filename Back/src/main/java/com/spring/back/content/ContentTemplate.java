@@ -6,7 +6,7 @@ public class ContentTemplate {
 
 	public static String contentTemplate(Content content1, Content content2, Content content3) {
 		// [Move C - ZERO] 클릭 시 이동되는 사이트 주소
-		String czeroURL = "https://www.naver.com";
+		String czeroURL = "http://localhost:3000/";
 		
 		String tp = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n"
 				+ "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\r\n"
@@ -61,7 +61,7 @@ public class ContentTemplate {
 				+ "  <tbody>\r\n" + "    <tr>\r\n"
 				+ "      <td class=\"v-container-padding-padding\" style=\"overflow-wrap:break-word;word-break:break-word;padding:60px 10px 20px;font-family:'Open Sans',sans-serif;\" align=\"left\">\r\n"
 				+ "        \r\n"
-				+ "  <h1 class=\"v-font-size\" style=\"margin: 0px; line-height: 130%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: Epilogue; font-size: 32px;\"><strong>Hello<br />C - ZERO Premium</strong></h1>\r\n"
+				+ "  <h1 class=\"v-font-size\" style=\"margin: 0px; line-height: 130%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: Epilogue; font-size: 32px;\"><strong>Hello<br />Yellowbottle Premium</strong></h1>\r\n"
 				+ "\r\n" + "      </td>\r\n" + "    </tr>\r\n" + "  </tbody>\r\n" + "</table>\r\n" + "\r\n"
 				+ "<table id=\"u_content_image_1\" style=\"font-family:'Open Sans',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\r\n"
 				+ "  <tbody>\r\n" + "    <tr>\r\n"
@@ -124,7 +124,7 @@ public class ContentTemplate {
 				+ "<div align=\"center\">\r\n"
 				+ "  <!--[if mso]><v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" href=\"\" style=\"height:37px; v-text-anchor:middle; width:168px;\" arcsize=\"0%\"  stroke=\"f\" fillcolor=\"#ff5770\"><w:anchorlock/><center style=\"color:#FFFFFF;font-family:'Open Sans',sans-serif;\"><![endif]-->  \r\n"
 				+ "    <a href=" + czeroURL + " target=\"_blank\" class=\"v-button v-size-width\" style=\"box-sizing: border-box;display: inline-block;font-family:'Open Sans',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #ff5770; border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px; width:30%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;\">\r\n"
-				+ "      <span style=\"display:block;padding:10px 20px;line-height:120%;\"><span style=\"font-size: 14px; line-height: 16.8px;\">Move C -ZERO</span></span>\r\n"
+				+ "      <span style=\"display:block;padding:10px 20px;line-height:120%;\"><span style=\"font-size: 14px; line-height: 16.8px;\">Move Yellowbottle</span></span>\r\n"
 				+ "    </a>\r\n" + "  <!--[if mso]></center></v:roundrect><![endif]-->\r\n" + "</div>\r\n" + "\r\n"
 				+ "      </td>\r\n" + "    </tr>\r\n" + "  </tbody>\r\n" + "</table>\r\n" + "\r\n"
 				+ "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\r\n" + "  </div>\r\n" + "</div>\r\n"

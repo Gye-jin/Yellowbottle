@@ -173,12 +173,12 @@ public class UserServiceImpl implements UserService {
 			int boardsize = user.getBoards().size();
 			if (user.getUserId().equals("admin")) {
 				user.updateRank(UserGrade.관리자);
-			} else if (commentsize > 5 && boardsize > 5) {
-				user.updateRank(UserGrade.잔디);
-			} else if (commentsize > 20 && boardsize > 20) {
-				user.updateRank(UserGrade.나무);
 			} else if (commentsize > 30 && boardsize > 30) {
 				user.updateRank(UserGrade.숲);
+			} else if (commentsize > 20 && boardsize > 20) {
+				user.updateRank(UserGrade.나무);
+			} else if (commentsize > 5 && boardsize > 5) {
+				user.updateRank(UserGrade.잔디);
 			}
 
 		}

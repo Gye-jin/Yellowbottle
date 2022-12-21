@@ -1,6 +1,7 @@
 package com.spring.back.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.spring.back.content.ContentCategory;
 import com.spring.back.entity.Content;
@@ -24,7 +25,7 @@ public class ContentDTO {
 	private String contentContent;
 	private String contentUrl;
 	private LocalDate date;
-	private LocalDate sendDate;
+	private LocalDateTime sendDate;
 	
 	private ContentCategory contentCategory;
 	

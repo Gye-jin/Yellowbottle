@@ -46,8 +46,8 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<ContentDTO> getByCategory(ContentDTO contentDTO) {
 		ContentCategory contentCategory = contentDTO.getContentCategory();
-		System.out.println(contentDTO);
-		List<Content> contents = contentRepo.findTop10ByContentCategoryAndDateAndSendDateIsNullOrderByContentNoDesc(contentCategory,LocalDate.now());
+
+		List<Content> contents = contentRepo.findTop10ByDateAndContentCategoryAndSendDateIsNullOrderByContentNoDesc(contentCategory, LocalDate.now());
 
 		List<ContentDTO> contentDTOs = contents.stream().map(content -> Content.contentEntityToDTO(content)).collect(Collectors.toList());
 		return contentDTOs;
