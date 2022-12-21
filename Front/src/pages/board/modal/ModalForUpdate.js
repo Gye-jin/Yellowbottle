@@ -9,8 +9,13 @@ const ModalForUpdate = ({ boardNo }) => {
 
   return (
     <>
-      <div>
-        <button onClick={() => setUpdateBoardModal(true)}>수정하기</button>
+      <span>
+        <button
+          className="detailboard-u"
+          onClick={() => setUpdateBoardModal(true)}
+        >
+          글수정
+        </button>
         <Modal
           isOpen={updateBoardModal}
           onRequestClose={() => setUpdateBoardModal(false)}
@@ -22,7 +27,7 @@ const ModalForUpdate = ({ boardNo }) => {
           {/* 컴퍼넌트 들어가는 자리 */}
           <UpdateBoard boardNo={boardNo} />
         </Modal>
-      </div>
+      </span>
     </>
   );
 };

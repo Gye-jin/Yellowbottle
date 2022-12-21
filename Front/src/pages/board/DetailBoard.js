@@ -39,13 +39,12 @@ const DetailBoard = () => {
     commentWriteData.append("boardNo", boardNo);
     commentWriteData.append("commentContent", commentContent);
     postComment(commentWriteData);
-    window.location.reload();
   };
 
   // 게시글 삭제 버튼 클릭 시 = 게시글내용폼데이터 형태로 백에 보냄
   const deleteBoardData = () => {
     // 삭제 확인창 실행
-    const deleteConfirmCheck = window.confirm("정말 댓글을 삭제하겠습니까?");
+    const deleteConfirmCheck = window.confirm("정말 게시글을 삭제하겠습니까?");
     if (deleteConfirmCheck) {
       let deleteBoardData = new FormData();
       deleteBoardData.append("sessionId", sessionId);
@@ -69,47 +68,65 @@ const DetailBoard = () => {
         <div className="inner-detail">
           {board ? (
             <div key={board.boardNo}>
-              <div className="detail-board">
-                {/* userId 클릭시 해당 유저의 마이페이지로 이동 */}
-                <p onClick={() => navigate(`/personPage/${board.userId}`)}>
-                  {board.userId}
-                </p>
-                {/* 게시글 작성자이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
-                <span className="detailboardtn-ud">
-                  {board.editor ? <ModalForUpdate boardNo={boardNo} /> : ""}
-                  {board.editor ? (
-                    <button onClick={() => deleteBoardData()}>삭제하기</button>
-                  ) : (
-                    ""
-                  )}
-                  <br />
-                </span>
+              <div className="detailboard-image">
                 {board.files &&
                   board.files.map((file) => (
                     <img
                       key={file}
                       className="boardImage"
                       src={`${file.filePath + file.fileName}`}
-                      height="300"
                       alt="boardimage"
                     />
                   ))}
-                <div>
-                  <h4>
-                    <span>조회수 : {board.viewCount}</span>
-                    <br />
-                    <span>댓글수 : {board.countComment}</span>
-                  </h4>
-                </div>
+                {/* 추천게시글 보기 */}
+                <span className="recommend-board">
+                  <ModalForRecommend boardNo={board.boardNo} />
+                </span>
               </div>
-              <div className="detail-comment">
+              <div className="Detailcomment">
                 <div className="semi-detail-comment">
                   <div className="DetailBoard-comments">
-                    <div className="boardContent">{board.boardContent}</div>
+                    {/* userId 클릭시 해당 유저의 마이페이지로 이동 */}
+                    <div className="DetailBoard-writer-content">
+                      <p
+                        onClick={() => navigate(`/personPage/${board.userId}`)}
+                      >
+                        {board.userId}
+                      </p>
+
+                      <div className="boardContent">{board.boardContent}</div>
+                      <n />
+                      <div>
+                        <h5>
+                          <span>조회수 : {board.viewCount}</span>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <span>댓글수 : {board.countComment}</span>
+                        </h5>
+                        {/* 게시글 작성자이면 자신의 게시글을 수정 및 삭제할 수 있음 */}
+                        <span className="detailboardtn-ud">
+                          {board.editor ? (
+                            <ModalForUpdate boardNo={boardNo} />
+                          ) : (
+                            ""
+                          )}
+                          {board.editor ? (
+                            <button
+                              className="detailboard-d"
+                              onClick={() => deleteBoardData()}
+                            >
+                              글삭제
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          <br />
+                        </span>
+                      </div>
+                    </div>
                     <br />
                     {board.comments &&
                       board.comments.map((comment) => (
-                        <Comment id="cComment" comment={comment} />
+                        <Comment id="one-comment" comment={comment} />
                       ))}
                   </div>
                 </div>
@@ -130,9 +147,6 @@ const DetailBoard = () => {
                   </button>
                 </div>
               </div>
-              <span className="recommend-board">
-                <ModalForRecommend boardNo={board.boardNo} />
-              </span>
             </div>
           ) : (
             <></>

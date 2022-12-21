@@ -11,7 +11,7 @@ const ModalForComment = ({ comment }) => {
         className="modalforcomment-ucomment-btn"
         onClick={() => setEditCommentModal(true)}
       >
-        댓글 편집
+        edit
       </button>
       {/* 설명1: isOpen => true: 팝업 생성 / false: 팝업 닫기 */}
       <Modal

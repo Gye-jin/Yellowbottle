@@ -18,15 +18,7 @@ import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { duplicationCheck } from "../../Api/LogData";
 import { ForPostJoinData } from "../../Api/LogData";
-import {
-  BirthRegexTest,
-  EmailRegexTest,
-  GenderRegexTest,
-  IdRegexTest,
-  NameRegexTest,
-  PasswordRegexTest,
-  RePasswordRegexTest,
-} from "../../components/Regex";
+import Swal from "sweetalert2";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -59,18 +51,12 @@ const Join = () => {
   const [nameError, setNameError] = useState("");
   // 회원가입버튼 눌렀을 때 오류
   const [registerError, setRegisterError] = useState("");
-  // 재입력 비밀번호
-  const [rePassword, setRePassword] = useState("");
   // 재입력 비밀번호 입력오류
   const [rePasswordError, setRePasswordError] = useState("");
 
   // 개인정보동의 체크박스 여부 함수
   const handlePersonalAgree = (event) => {
     setCheckedPersonal(event.target.checked);
-  };
-  // rePassword 입력할때마다 인식해주는 함수
-  const rePasswordHandler = (e) => {
-    setRePassword(e.target.value);
   };
   // 아이디 중복검사 전 올바른 형식인지 확인
   const createDuplicationData = () => {
@@ -103,7 +89,6 @@ const Join = () => {
     // 입력된 값들을 joinData에 넣는다.
     const { userId, email, name, userPw, birth, sex, subStatus } = joinData;
     // 입력한 값 유효성체크
-    // IdRegexTest(userId, setIdError);
     // 아이디 유효성체크
     const idRegex = /^[a-zA-Z0-9]{4,19}$/g;
     if (!idRegex.test(userId)) {
@@ -112,7 +97,6 @@ const Join = () => {
       setIdError("");
     }
     // 이메일 유효성체크
-    // EmailRegexTest(email, setEmailError);
     const emailRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!emailRegex.test(email)) {
@@ -121,7 +105,6 @@ const Join = () => {
       setEmailError("");
     }
     // 비밀번호체크
-    // PasswordRegexTest(userPw, setPasswordError);
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
     if (!passwordRegex.test(userPw))
@@ -129,15 +112,14 @@ const Join = () => {
         "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
       );
     else setPasswordError("");
+    const rePassword = document.getElementById("rePassword").value;
     // 재비밀번호체크
     if (userPw !== rePassword) {
       setRePasswordError("비밀번호가 일치하지 않습니다.");
     } else {
       setRePasswordError("");
     }
-    // RePasswordRegexTest(userPw, rePassword, setRePasswordError);
     // 생일체크
-    // BirthRegexTest(birth, setBirthError);
     const birthRegex =
       /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
     if (!birthRegex.test(birth))
@@ -145,22 +127,37 @@ const Join = () => {
         "형식이 일치하지 않습니다. 1999-08-20과 같이 입력해주세요!"
       );
     else setBirthError("");
-
     // 이름체크
-    // NameRegexTest(name, setNameError);
     const nameRegex = /^[가-힣]{2,4}$/;
     if (!nameRegex.test(name) || name.length < 1)
       setNameError("올바른 이름을 입력해주세요.");
     else setNameError("");
-
     // 성별체크
     if (sex == null) {
-      alert("성별을 체크해주세요.");
+      Swal.fire({
+        icon: "error",
+        text: "성별을 체크해주세요",
+        showConfirmButton: false,
+        timer: 1000,
+      });
     }
-    // GenderRegexTest(sex);
-    // 회원가입 동의 체크
+    // 아이디 중복검사여부 체크
+    if (!usableId) {
+      Swal.fire({
+        icon: "error",
+        text: "아이디 중복검사를 완료해주세요",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    }
+    // 개인정보수집동의 체크
     if (!CheckedPersonal) {
-      alert("회원가입 약관에 동의해주세요.");
+      Swal.fire({
+        icon: "error",
+        text: "개인정보 수집 동의를 체크해주세요",
+        showConfirmButton: false,
+        timer: 1000,
+      });
     }
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
     if (
@@ -173,13 +170,16 @@ const Join = () => {
       CheckedPersonal &&
       usableId === true
     ) {
-      // console.log(joinData);
       ForPostJoinData(joinData, setRegisterError);
     } else {
-      setRegisterError("🌍다시 확인해주세요🌍");
+      Swal.fire({
+        icon: "error",
+        title: "🌚존재하지않는 회원정보입니다.🌝",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -251,7 +251,6 @@ const Join = () => {
                     id="rePassword"
                     name="rePassword"
                     label="비밀번호 재입력"
-                    onChange={rePasswordHandler}
                     error={rePasswordError !== "" || false}
                   />
                 </Grid>
