@@ -26,7 +26,7 @@ export function ForPostLoginData(loginData, setRegisterError) {
         } else {
           Swal.fire({
             icon: "error",
-            title: "🌝존재하지않는 회원정보입니다.🌝",
+            title: "존재하지않는 회원정보입니다",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -226,17 +226,16 @@ export function ForPostFindIdData(
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
         console.log(response);
-        response.data === []
+        response.data.length === 0
           ? Swal.fire({
               icon: "error",
-              title: "🌝잘못된 정보입니다. 다시 입력해주세요🌝",
+              text: "🌝존재하는 아이디가 없습니다🌝",
+              showConfirmButton: false,
+              timer: 1500,
             })
           : Swal.fire({
               title: "귀하의 아이디입니다.",
-              text:
-                response.data !== null
-                  ? response.data
-                  : "존재하는 아이디가 없습니다",
+              text: response.data,
             });
       })
       .catch((err) => {

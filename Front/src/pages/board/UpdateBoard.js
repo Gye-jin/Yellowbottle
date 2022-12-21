@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DetailBoardFetchData, ForPostUpdateBoard } from "../../Api/BoardData";
+import Swal from "sweetalert2";
 
 const UpBoardTest = ({ boardNo }) => {
   // [변수]
@@ -45,7 +46,6 @@ const UpBoardTest = ({ boardNo }) => {
       updateBoardData.append("boardNo", boardNo);
       updateBoardData.append("boardContent", board.boardContent);
       ForPostUpdateBoard(updateBoardData);
-      window.location.reload();
     }
     // 게시글 내용만 변경 / 게시물 파일 변경 X
     else if (newBoardContent.length !== 0 && originFileImage === fileImage) {
@@ -55,7 +55,6 @@ const UpBoardTest = ({ boardNo }) => {
       updateBoardData.append("boardNo", boardNo);
       updateBoardData.append("boardContent", newBoardContent);
       ForPostUpdateBoard(updateBoardData);
-      window.location.reload();
     }
     // 게시글 내용만 변경 / 게시물 파일 변경
     else if (newBoardContent.length !== 0 && originFileImage !== fileImage) {
@@ -65,11 +64,15 @@ const UpBoardTest = ({ boardNo }) => {
       updateBoardData.append("boardNo", boardNo);
       updateBoardData.append("boardContent", newBoardContent);
       ForPostUpdateBoard(updateBoardData);
-      window.location.reload();
     }
     // 변경사항 없음
     else {
-      alert("변경된 사항이 없습니다.");
+      Swal.fire({
+        icon: "error",
+        text: "🌚변경된 사항이 없습니다🌝",
+        showConfirmButton: false,
+        timer: 1200,
+      });
     }
   };
 

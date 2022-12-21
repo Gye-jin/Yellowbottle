@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import { createTheme } from "@material-ui/core/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
+import Swal from "sweetalert2";
 
 // 관리자용 헤더
 export default function HeaderAdmin() {
@@ -23,8 +23,6 @@ export default function HeaderAdmin() {
   // navigate(이동)하는 함수
   const navigate = useNavigate();
 
-  // const isLogin = props.isLogin;
-
   // 로그아웃 함수
   const onLogout = async () => {
     // 이 부분부터 새롭게 쓴 logout
@@ -35,11 +33,28 @@ export default function HeaderAdmin() {
       })
 
       .then((response) => {
-        response.data
-          ? // 백에서 정상적으로 처리되면 로그아웃 성공! 후 메인페이지로 이동
-            sessionStorage.removeItem("sessionId")((window.location.href = "/"))
-          : // 백에서 정상적으로 처리 실패시 로그아웃 실패!
-            alert("🤘🏿😝😜🤘🏿" + " " + "로그아웃실패");
+        sessionStorage.removeItem("sessionId");
+        Swal.fire({
+          icon: "success",
+          text: "🌚로그아웃 성공🌝",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
+      })
+      .catch((err) => {
+        sessionStorage.removeItem("sessionId");
+        Swal.fire({
+          icon: "success",
+          text: "🌚로그아웃 성공🌝",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
       });
   };
 
