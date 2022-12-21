@@ -8,17 +8,21 @@ import IconButton from "@mui/material/IconButton";
 import { createTheme } from "@material-ui/core/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
 
 // 관리자용 헤더
 export default function HeaderAdmin() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#00ff0000",
+        main: "#4A4040",
       },
     },
   });
 
+  // const Typographys = styled(Typography)`
+  //   width: 90%;
+  // `;
   // navigate(이동)하는 함수
   const navigate = useNavigate();
 
@@ -58,9 +62,9 @@ export default function HeaderAdmin() {
             <img
               alt="로고"
               className="logo"
-              src="/img/czero_Logo.jpg"
-              width="120"
-              height="70"
+              src="/img/logo.png"
+              width="100"
+              height="80"
             />
           </IconButton>
           {/* 실천내용 */}

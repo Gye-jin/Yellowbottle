@@ -18,12 +18,6 @@ export function ForPostLoginData(loginData, setRegisterError) {
               response.data
             )((window.location.href = "/"))
           : alert("🤘🏿😝😜🤘🏿" + " " + "로그인실패");
-      })
-      // 로그인 틀렸을때 경고창 나오도록 설정
-      .catch((err) => {
-        // 백에서 오류(err)가 온다면 회원가입 실패
-        console.log(err);
-        setRegisterError("🦄");
       });
   };
   // 위에서 만든 postLoginData가 로그인 페이지에서 실행되면 실행.
@@ -52,15 +46,16 @@ export const duplicationCheckAPI = async (userId) => {
 };
 
 // 중복된 아이디를 확인한 반응을 보고 사용가능여부를 알려주는 함수
-export const duplicationCheck = (setUsableId) => {
+export const duplicationCheck = (setUsableId, userId, setIdError) => {
   // userId는 id라는 id를 가진 문서안요소의 value이다.
-  const userId = document.getElementById("id").value;
+  // const userId = document.getElementById("id").value;
   // duplicationCheckAPI(userId)를 통해 아이디 중복여부 반응을 받는다.
   duplicationCheckAPI(userId).then((response) => {
     if (response === false) {
       // 백에서 받은 반응(response)의 상태값이 변하지 않았다면 사용가능한 아이디
       alert("사용 가능한 아이디입니다");
       setUsableId(true);
+      setIdError("");
     } else {
       // 백에서 받은 반응(response)의 상태값이 false에서 다른 값으로 변했다면 중복된 아이디
       alert("중복된 아이디입니다.");
@@ -125,7 +120,7 @@ export function ForSendCertiNum(userId, email, birth, setCertiNum) {
     console.log(email); // 비밀번호 확인
     SendCertiNumAPI(email, userId, birth, setCertiNum).then((response) => {
       // response는 인증번호
-      console.log(response, "인증번호 전송 전 확인 메세지");
+      console.log(response.data, "인증번호 전송 전 확인 메세지");
       if (response !== 0) {
         // 세션 발급 전 기존에 존재하는 세션 삭제
         sessionStorage.clear();
@@ -246,8 +241,12 @@ export function ForPostUpdateData(updateData, setRegisterError) {
       // 입력된 joinData를 백에 보낸다.
       .post("http://localhost:8080/api/updateUser", updateData)
       .then((response) => {
-        console.log(response);
-        alert("회원정보수정성공!")((window.location.href = "/"));
+        // console.log(response);
+        if (response.data === true) {
+          alert("🌍회원정보수정성공🌍")((window.location.href = "/"));
+        } else {
+          alert("🌚회원정보가 수정되지않았습니다🌚");
+        }
       })
       // 로그인 틀렸을때 경고창 나오도록 설정
       .catch((err) => {

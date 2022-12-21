@@ -1,5 +1,6 @@
 package com.spring.back.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.List;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.back.entity.Board;
 
 import lombok.AllArgsConstructor;
@@ -30,8 +30,8 @@ public class BoardDTO {
 	private Long boardNo;
 	private String userId;
 	private String boardContent;
-	private LocalDateTime createDate;
-	private LocalDateTime modifiedDate;	
+	private LocalDate createDate;
+	private LocalDate modifiedDate;	
 	private Long viewCount;
 	
 	// Join

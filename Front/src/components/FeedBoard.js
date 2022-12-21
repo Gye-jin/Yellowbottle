@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { boardFetchData, fetchMoreFeedBoard } from "../Api/BoardData";
-import { useNavigate } from "react-router-dom";
+import { AccessAgreeUserPage, AccessAgreeBoardDetail } from "./AccessAgree";
 
 const FeedBoard = () => {
   //백에서 보낸 10개씩 게시물을 담는 공간
@@ -9,8 +9,6 @@ const FeedBoard = () => {
   const [pageNo, setPageNo] = useState(1);
   // 추가 FeedBoard를 로드할지 안할지를 담기위한 state
   const [fetching, setFetching] = useState(false);
-  // navigate 함수
-  const navigate = useNavigate();
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
@@ -24,9 +22,7 @@ const FeedBoard = () => {
     // console.log(scrollHeight + ":: 비교비교");
     // 페이지 끝에 도달하면 추가 데이터를 받아온다.
     if (scrollTop + clientHeight >= scrollHeight - 0.5) {
-      console.log("스크롤 최하단 도착!");
       if (fetching === false) {
-        console.log("되는데?");
         setPageNo(pageNo + 1);
         fetchMoreFeedBoard(setFetching, pageNo, setFeedBoard, FeedBoard);
       }
@@ -61,7 +57,7 @@ const FeedBoard = () => {
                     <div className="board_Header">
                       <h3
                         className="board_UserId"
-                        onClick={() => navigate(`/personPage/${board.userId}`)}
+                        onClick={() => AccessAgreeUserPage(board.userId)}
                       >
                         {board.userId}
                       </h3>
@@ -78,7 +74,7 @@ const FeedBoard = () => {
                             src={`${file.filePath + file.fileName}`}
                             alt="boardimage"
                             onClick={() =>
-                              navigate(`/detailBoard/${board.boardNo}`)
+                              AccessAgreeBoardDetail(board.boardNo)
                             }
                           />
                         ))}
@@ -88,7 +84,9 @@ const FeedBoard = () => {
                         <div className="board-BoardContent">
                           {board.boardContent}
                         </div>
-                        <div>{/* {board.createDate} */}</div>
+                        <div className="FeedBoard-createDate">
+                          {board.createDate}
+                        </div>
                       </div>
                     </div>
                   </div>
