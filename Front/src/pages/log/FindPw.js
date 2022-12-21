@@ -14,6 +14,7 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import { ForSendCertiNum, passResetPw } from "../../Api/LogData";
+import Swal from "sweetalert2";
 
 //mui 템플릿 사용
 const FormHelperTexts = styled(FormHelperText)`
@@ -30,35 +31,60 @@ const Boxs = styled(Box)`
 const FindPw = () => {
   // mui 테마
   const theme = createTheme();
-  // 아이디, 생년월일, 이메일
-  const [userId, setUserId] = useState("");
-  const [birth, setBirth] = useState("");
-  const [email, setEmail] = useState("");
-  // 인증 번호
-  const [inputNum, setinputNum] = useState("");
   // 백에서 받은 인증번호
   const [certiNum, setCertiNum] = useState("");
   // 유효성검사(아이디, 생년월일, 이메일)
   const [userIdError, setUserIdError] = useState("");
   const [birthError, setBirthError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [registerError, setRegisterError] = useState("");
-
-  // userId input값 바뀔 때마다 변하게 하는 함수
-  const userIdHandler = (e) => {
-    setUserId(e.target.value);
-  };
-  // birth input값 바뀔 때마다 변하게 하는 함수
-  const birthHandler = (e) => {
-    setBirth(e.target.value);
-  };
-  // email input값 바뀔 때마다 변하게 하는 함수
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-  };
-  // 인증번호 input값 바뀔 때마다 변하게 하는 함수
-  const inputNumHandler = (e) => {
-    setinputNum(e.target.value);
+  // 인증번호받는 함수
+  const findPwRegexTest = () => {
+    const findPwData = {
+      userId: document.getElementById("id").value,
+      email: document.getElementById("email").value,
+      birth: document.getElementById("birth").value,
+    };
+    const { userId, email, birth } = findPwData;
+    // 아이디 체크
+    const idRegex = /^[a-zA-Z0-9]{4,19}$/g;
+    if (!idRegex.test(userId)) {
+      setUserIdError("잘못된 아이디 형식입니다.");
+    } else if (idRegex.test(userId)) {
+      setUserIdError("");
+    }
+    // 이메일체크
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("올바른 이메일 형식이 아닙니다.");
+    } else {
+      setEmailError("");
+    }
+    // 생년월일 체크
+    const birthRegex =
+      /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    if (!birthRegex.test(birth))
+      setBirthError(
+        "형식이 일치하지 않습니다. 1999-08-20과 같이 입력해주세요!"
+      );
+    else {
+      setBirthError("");
+    }
+    // 유효성 체크 통과하면 백에 데이터 보냄
+    if (
+      idRegex.test(userId) &&
+      emailRegex.test(email) &&
+      birthRegex.test(birth)
+    ) {
+      ForSendCertiNum(findPwData, setCertiNum);
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: "🌚잘못된 형식입니다.🌝",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (
@@ -92,7 +118,6 @@ const FindPw = () => {
                       name="id"
                       label="아이디"
                       error={userIdError !== "" || false}
-                      onChange={userIdHandler}
                     />
                   </Grid>
                   <FormHelperTexts>{userIdError}</FormHelperTexts>
@@ -106,7 +131,6 @@ const FindPw = () => {
                       id="email"
                       name="email"
                       label="이메일 주소"
-                      onChange={emailHandler}
                     />
                   </Grid>
                   <FormHelperTexts>{emailError}</FormHelperTexts>
@@ -119,7 +143,6 @@ const FindPw = () => {
                       id="birth"
                       name="birth"
                       label="생년월일 입력(ex.1999-08-20)"
-                      onChange={birthHandler}
                     />
                   </Grid>
                   <FormHelperTexts>{birthError}</FormHelperTexts>
@@ -130,9 +153,7 @@ const FindPw = () => {
               존재여부를 파악하고 있다면 인증번호를 해당 이메일로 발송한다. */}
                 <a
                   className="FindPw-sendCertiNum"
-                  onClick={() =>
-                    ForSendCertiNum(userId, email, birth, setCertiNum)
-                  }
+                  onClick={() => findPwRegexTest()}
                 >
                   인증번호 발송
                 </a>
@@ -147,7 +168,6 @@ const FindPw = () => {
                     id="inputNum"
                     name="inputNum"
                     label="인증번호 6자리 입력"
-                    onChange={inputNumHandler}
                   />
                 </Grid>
               </Grid>
@@ -161,12 +181,11 @@ const FindPw = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 size="large"
-                onClick={() => passResetPw(inputNum)}
+                onClick={() => passResetPw()}
               >
                 인증번호 확인
               </Button>
             </FormControl>
-            <FormHelperTexts>{registerError}</FormHelperTexts>
           </Boxs>
         </Box>
       </Container>

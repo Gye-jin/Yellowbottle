@@ -24,7 +24,7 @@ export default function ModalForWrite() {
     <>
       <div>
         <ControlPointOutlinedIcons
-          // className="writeBoard"
+          className="ModalForWrite-writeBoard"
           // 게시글 작성 버튼 눌렀을떄 회원은 게시글 작성 팝업 실행, 비회원은 로그인 페이지로 이동!
           onClick={() => AccessAgreeBoardWrite(setWirteBoardModal)}
         />
