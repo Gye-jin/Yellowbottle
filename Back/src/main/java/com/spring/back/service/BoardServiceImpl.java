@@ -69,7 +69,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest) {
 		return boardRepo.findAll(pageRequest).stream()
-				.map(board -> Board.yourEntityToDTO(board))
+				.map(board -> Board.countCommentEntityToDTO(board))
 				.collect(Collectors.toList());
 	}
 
