@@ -1,5 +1,6 @@
 package com.spring.back.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -45,8 +46,8 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<ContentDTO> getByCategory(ContentDTO contentDTO) {
 		ContentCategory contentCategory = contentDTO.getContentCategory();
-
-		List<Content> contents = contentRepo.findTop10ByContentCategoryAndSendDateIsNullOrderByContentNoDesc(contentCategory);
+		System.out.println(contentDTO);
+		List<Content> contents = contentRepo.findTop10ByContentCategoryAndDateAndSendDateIsNullOrderByContentNoDesc(contentCategory,LocalDate.now());
 
 		List<ContentDTO> contentDTOs = contents.stream().map(content -> Content.contentEntityToDTO(content)).collect(Collectors.toList());
 		return contentDTOs;
