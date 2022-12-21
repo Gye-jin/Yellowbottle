@@ -84,7 +84,6 @@ function PersonPage() {
                 className="PersonPage-Information-GradeImg"
               />
             </div>
-
             {/* 만약 해당페이지가 본인 마이페이지라면 회원정보수정 버튼 존재 and 타인페이지라면 회원정보수정 버튼 미존재 */}
           </div>
           <br />

@@ -18,8 +18,6 @@ const FeedBoard = () => {
     const scrollTop = document.documentElement.scrollTop;
     // 사용자가 보는 스크롤양
     const clientHeight = document.documentElement.clientHeight;
-    // console.log(scrollTop + clientHeight + ":: 합");
-    // console.log(scrollHeight + ":: 비교비교");
     // 페이지 끝에 도달하면 추가 데이터를 받아온다.
     if (scrollTop + clientHeight >= scrollHeight - 0.5) {
       if (fetching === false) {
@@ -46,8 +44,8 @@ const FeedBoard = () => {
 
   return (
     <>
-      <div className="outer">
-        <div className="inner">
+      <div className="feedBoard-outer">
+        <div className="feedBoard-inner">
           <ul>
             {/* 삼항연산자로 FeedBoard가 있을때 게시물번호 순으로 출력함. */}
             {FeedBoard ? (

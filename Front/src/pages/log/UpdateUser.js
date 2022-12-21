@@ -15,11 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { passUpdateUser, ForPostUpdateData } from "../../Api/LogData";
-import {
-  EmailRegexTest,
-  PasswordRegexTest,
-  RePasswordRegexTest,
-} from "../../components/Regex";
+import Swal from "sweetalert2";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -68,10 +64,6 @@ const UpdateUser = () => {
   const emailHandler = (e) => {
     setEmail(e.target.value);
   };
-  // 이메일 수신 변경 인식해주는 함수
-  // const subStatusHandler = (e) => {
-  //   setSubStatus(e.target.value);
-  // };
   // 회원정보수정 페이지 접속시 기존 회원이메일 출력해줌
   useEffect(() => {
     const response = passUpdateUser(userSession);
@@ -105,13 +97,42 @@ const UpdateUser = () => {
     updateData.append("email", email);
     updateData.append("subStatus", emailCheckBtn.value);
     // updateData에 넣은 각각의 값들은 유효성 검사를 거친다.
-    EmailRegexTest(email, setEmailError);
-    PasswordRegexTest(userPw, setPasswordError);
-    RePasswordRegexTest(userPw, rePassword, setRePasswordError);
-
+    // 이메일 체크
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("올바른 이메일 형식이 아닙니다.");
+    } else {
+      setEmailError("");
+    }
+    // 비밀번호 체크
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if (!passwordRegex.test(userPw))
+      setPasswordError(
+        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
+      );
+    else setPasswordError("");
+    // 재비밀번호 체크
+    if (userPw !== rePassword) {
+      setRePasswordError("비밀번호가 일치하지 않습니다.");
+    } else {
+      setRePasswordError("");
+    }
     // 만약 위 유효성 검사를 모두 통과하면 ForPostJoinData()를 실행한다.
-    if (emailError === "" && passwordError === "" && rePasswordError === "") {
+    if (
+      emailRegex.test(email) &&
+      passwordRegex.test(userPw) &&
+      rePassword === userPw
+    ) {
       ForPostUpdateData(updateData, setRegisterError);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "🌚잘못된 정보입니다. 다시 입력해주세요🌝",
+        showConfirmButton: false,
+        timer: 1200,
+      });
     }
   };
 
