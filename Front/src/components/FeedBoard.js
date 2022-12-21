@@ -50,10 +50,10 @@ const FeedBoard = () => {
             {/* 삼항연산자로 FeedBoard가 있을때 게시물번호 순으로 출력함. */}
             {FeedBoard ? (
               FeedBoard.map((board) => (
-                <div key={board.boardNo} className="board">
-                  <div className="board_Header">
+                <div key={board.boardNo} className="feedBoard-board">
+                  <div className="feedBoard-header">
                     <h3
-                      className="board_UserId"
+                      className="feedBoard-userId"
                       onClick={() => AccessAgreeUserPage(board.userId)}
                     >
                       {board.userId}
@@ -66,20 +66,26 @@ const FeedBoard = () => {
                         <img
                           // React 라이브러리는 컴포넌트와 DOM요소 간의 관계를 이용해 리렌더링 여부를 결정한다. 따라서 불필요한 리렌더링을 방지하기 위해 각 자식 컴포넌트마다 독립적인 Key값을 넣어줘야한다.
                           key={file}
-                          className="board_Image"
+                          className="feedBoard-boardImage"
                           // 두개 이상의 자식을 붙여서 사용할때는 ${}를 따로 두개 쓰는 것이 아니라 ${} 하나에 + 를 사용해서 넣자!
                           src={`${file.filePath + file.fileName}`}
                           alt="boardimage"
                           onClick={() => AccessAgreeBoardDetail(board.boardNo)}
                         />
                       ))}
-                    <div className="board_BoardContent">
-                      <div>조회수 : {board.viewCount}</div>
-                      <div className="board-BoardContent">
+                    <div className="feedBoard-boardContent">
+                      <div className="feedBoard-content">
+                        <br />
                         {board.boardContent}
                       </div>
-                      <div className="FeedBoard-createDate">
+                      <br />
+                      <div className="feedBoard-viewCount">
+                        조회수 : {board.viewCount}
+                      </div>
+                      <div className="feedBoard-createDate">
                         {board.createDate}
+                        <br />
+                        <br />
                       </div>
                     </div>
                   </div>

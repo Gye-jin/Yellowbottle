@@ -229,15 +229,18 @@
   text-align: left;
   padding-left: 20px;
 }
-.board_viewCount {
+.feedBoard-content {
+  margin-left: 20px;
+}
+.feedBoard-viewCount {
   float: left;
-  width: 20%;
+  margin-left: 20px;
+  font-weight: bolder;
 }
-.FeedBoard-createDate {
-  float: right;
-  width: 15%;
+.feedBoard-createDate {
+  text-align: right;
+  width: 650px;
 }
-
 /* BoardWrite : 게시글 작성화면 css */
 .BoardWrite-box {
   min-width: 1000px;
