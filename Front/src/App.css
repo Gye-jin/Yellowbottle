@@ -58,7 +58,6 @@
 .slider__image {
   width: 100%;
   height: 100%;
-  /* border-radius: 30px; 사진 모서리 둥글게 */
   overflow: hidden;
 }
 .slider__image img {
@@ -69,24 +68,6 @@
   object-fit: cover;
 }
 @media (max-width: 767.98px) {
-  /* .slider__flex {
-    flex-direction: column-reverse;
-  }
-  .slider__col {
-    flex-direction: row;
-    align-items: center;
-    margin-right: 0;
-    margin-top: 24px;
-    width: 100%;
-  }
-  .slider__images {
-    width: 100%;
-  }
-  .slider__prev,
-  .slider__next {
-    height: auto;
-    width: 32px;
-  } */
 }
 
 /* 회원가입 페이지 */
@@ -114,12 +95,10 @@
 /* 로그인 페이지 */
 
 .loginPage-findId {
-  /* float: left; */
   width: 49%;
   display: inline-block;
 }
 .loginPage-findPw {
-  /* float: right; */
   border: 1px solid rgb(255, 217, 44);
   width: 50%;
   display: inline-block;
@@ -135,7 +114,6 @@
   align-items: center;
   min-height: 100vh;
 }
-
 .conf {
   width: 35%;
   background-color: rgb(25, 118, 210);
@@ -204,7 +182,6 @@
 .feedBoard-outer {
   text-align: center;
   background-color: rgb(232, 230, 216);
-  /* background-color: #c1b6ac; */
 }
 .feedBoard-inner {
   display: inline-block;
@@ -212,7 +189,6 @@
 /* board_Image */
 .feedBoard-boardImage {
   width: 100%;
-  /* max-width: 700px; */
   max-height: 500px;
   object-fit: contain;
   border-top: 1px solid lightgray;
@@ -360,7 +336,6 @@
 .PersonPage-Outer {
   text-align: center;
   border-top: 5px solid lightgray;
-  /* background-color: rgb(218 239 234); */
 }
 .PersonPage-Inner {
   display: inline-block;
@@ -370,10 +345,7 @@
 /* 유저가 올린 사진 3개씩 출력되게하는 css */
 .PersonPage-image-grid {
   display: grid;
-  /* flex-wrap: wrap; */
   border-top: 5px solid #2bb400;
-  /* width: 90%; */
-  /* margin: 10px auto; */
   grid-template-columns: repeat(3, 1fr);
 }
 .PersonPage-image-grid {
@@ -408,9 +380,6 @@
 .PersonPage-informationBtn {
   margin-top: 40px;
 }
-/* .PersonPage-Information-Board {
-  margin-top: 100px;
-  display: inline-block;
 
 /* 비밀번호 찾기 */
 /* .findpw-idCheck {
@@ -561,7 +530,6 @@ h5 {
 .recommand-btn {
   width: 200px;
   height: 40px;
-  /* margin-right: 400px; */
   background-color: #fbf5dc;
   border-radius: 20px;
   border: solid 1px #6b5603;
@@ -598,7 +566,6 @@ p {
 .PersonPage-Outer {
   text-align: center;
   border-top: 5px solid lightgray;
-  /* background-color: rgb(218 239 234); */
 }
 .PersonPage-Inner {
   display: inline-block;
