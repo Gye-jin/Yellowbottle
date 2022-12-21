@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { ForPostDeleteData } from "../../Api/LogData";
-import { PasswordRegexTest, RePasswordRegexTest } from "../../components/Regex";
+import Swal from "sweetalert2";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -48,14 +48,6 @@ const DeleteUser = () => {
   const [registerError, setRegisterError] = useState("");
   // 해당유저 세션아이디 선언
   const userSession = sessionStorage.getItem("sessionId");
-  // rePassword 입력할때마다 인식해주는 함수
-  const rePasswordHandler = (e) => {
-    setRePassword(e.target.value);
-  };
-  // password 입력할떄마다 인식해주는 함수
-  const passwordHandler = (e) => {
-    setUserPw(e.target.value);
-  };
   // 회원탈퇴동의 체크박스 여부 함수
   const handlePersonalAgree = (event) => {
     setCheckedPersonal(event.target.checked);
@@ -65,16 +57,17 @@ const DeleteUser = () => {
   const createDeleteData = (e) => {
     // 실행시 화면새로고침 방지
     e.preventDefault();
+    const userPw = document.getElementById("password").value;
+    const rePassword = document.getElementById("rePassword").value;
     const deleteData = new FormData();
     deleteData.append("sessionId", userSession);
     deleteData.append("userPw", userPw);
-    // deleteData 유효성 체크
-    // PasswordRegexTest
+    // 비밀번호 체크
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
     if (!passwordRegex.test(userPw)) setPasswordError("잘못된 비밀번호입니다.");
     else setPasswordError("");
-    // RePasswordRegexTest
+    // 재비밀번호 체크
     if (userPw !== rePassword) {
       setRePasswordError("비밀번호가 일치하지 않습니다.");
     } else {
@@ -82,7 +75,12 @@ const DeleteUser = () => {
     }
     // 회원가입 동의 체크
     if (!CheckedPersonal) {
-      alert("회원탈퇴 동의란에 체크해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "🌚회원탈퇴 동의 미체크🌝",
+        showConfirmButton: false,
+        timer: 1000,
+      });
     }
     passwordRegex.test(userPw) && rePassword === userPw && CheckedPersonal
       ? ForPostDeleteData(deleteData)
@@ -124,7 +122,6 @@ const DeleteUser = () => {
                     name="password"
                     label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
                     error={passwordError !== "" || false}
-                    onChange={passwordHandler}
                   />
                 </Grid>
                 {/* 유효성 검사를 통해 비밀번호가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
@@ -138,7 +135,6 @@ const DeleteUser = () => {
                     id="rePassword"
                     name="rePassword"
                     label="비밀번호 재입력"
-                    onChange={rePasswordHandler}
                     error={rePasswordError !== "" || false}
                   />
                 </Grid>
@@ -151,7 +147,7 @@ const DeleteUser = () => {
                   control={
                     <Checkbox onChange={handlePersonalAgree} color="primary" />
                   }
-                  label="귀하는 C-ZERO 회원탈퇴에 동의합니다."
+                  label="귀하는 Yellowbottle 회원탈퇴에 동의합니다."
                 />
               </Grid>
               {/* 회원탈퇴 버튼을 누르면 위 입력한 데이터(deleteData)를 백에 보낸다. */}

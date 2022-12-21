@@ -16,7 +16,6 @@ import styled from "styled-components";
 import "../../App.css";
 import Header from "../../components/header/Header";
 import { ForPostLoginData } from "../../Api/LogData";
-import { IdRegexTest, PasswordRegexTest } from "../../components/Regex";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -28,7 +27,6 @@ const FormHelperTexts = styled(FormHelperText)`
 const Boxs = styled(Box)`
   padding-bottom: 40px !important;
 `;
-
 // 로그인 페이지
 const Login = () => {
   // mui 테마

@@ -18,8 +18,6 @@ const FeedBoard = () => {
     const scrollTop = document.documentElement.scrollTop;
     // 사용자가 보는 스크롤양
     const clientHeight = document.documentElement.clientHeight;
-    // console.log(scrollTop + clientHeight + ":: 합");
-    // console.log(scrollHeight + ":: 비교비교");
     // 페이지 끝에 도달하면 추가 데이터를 받아온다.
     if (scrollTop + clientHeight >= scrollHeight - 0.5) {
       if (fetching === false) {
@@ -46,17 +44,17 @@ const FeedBoard = () => {
 
   return (
     <>
-      <div className="outer">
-        <div className="inner">
+      <div className="feedBoard-outer">
+        <div className="feedBoard-inner">
           <ul>
             {/* 삼항연산자로 FeedBoard가 있을때 게시물번호 순으로 출력함. */}
             {FeedBoard ? (
               FeedBoard.map((board) => (
-                <div key={board.boardNo} className="board">
+                <div key={board.boardNo} className="feedBoard-board">
                   <div href={"http://localhost:3000/board/" + board.boardNo}>
-                    <div className="board_Header">
+                    <div className="feedBoard-header">
                       <h3
-                        className="board_UserId"
+                        className="feedBoard-userId"
                         onClick={() => AccessAgreeUserPage(board.userId)}
                       >
                         {board.userId}
@@ -69,7 +67,7 @@ const FeedBoard = () => {
                           <img
                             // React 라이브러리는 컴포넌트와 DOM요소 간의 관계를 이용해 리렌더링 여부를 결정한다. 따라서 불필요한 리렌더링을 방지하기 위해 각 자식 컴포넌트마다 독립적인 Key값을 넣어줘야한다.
                             key={file}
-                            className="board_Image"
+                            className="feedBoard-boardImage"
                             // 두개 이상의 자식을 붙여서 사용할때는 ${}를 따로 두개 쓰는 것이 아니라 ${} 하나에 + 를 사용해서 넣자!
                             src={`${file.filePath + file.fileName}`}
                             alt="boardimage"
@@ -79,13 +77,13 @@ const FeedBoard = () => {
                           />
                         ))}
                       {/* <div></div> */}
-                      <div className="board_BoardContent">
+                      <div className="feedBoard-boardContent">
                         <h4>조회수 : {board.viewCount}</h4>
                         {/* <br /> */}
                         <div className="board-BoardContent">
                           {board.boardContent}
                         </div>
-                        <h4 className="FeedBoard-createDate">
+                        <h4 className="feedBoard-createDate">
                           {board.createDate}
                         </h4>
                       </div>

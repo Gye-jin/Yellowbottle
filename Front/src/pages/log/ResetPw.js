@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   CssBaseline,
@@ -8,13 +8,14 @@ import {
   Grid,
   Box,
   Container,
+  Typography,
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import "../../App.css";
 import Header from "../../components/header/Header";
 import { ForResetPwPost } from "../../Api/LogData";
-import { PasswordRegexTest, RePasswordRegexTest } from "../../components/Regex";
+import Swal from "sweetalert2";
 
 // mui 기본 css 적용
 const FormHelperTexts = styled(FormHelperText)`
@@ -49,13 +50,30 @@ const ResetPw = () => {
       rePassword: data.get("rePassword"),
     };
     const { userPw, rePassword } = postResetPwData;
-    // 유효성 체크
-    PasswordRegexTest(userPw, setPasswordError);
-    RePasswordRegexTest(userPw, rePassword, setRePasswordError);
-
+    // 비밀번호 체크
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if (!passwordRegex.test(userPw))
+      setPasswordError(
+        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
+      );
+    else setPasswordError("");
+    // 재비밀번호 체크
+    if (userPw !== rePassword) {
+      setRePasswordError("비밀번호가 일치하지 않습니다.");
+    } else {
+      setRePasswordError("");
+    }
     // 위에서 설정한 유효성검사를 모두 통과하면 ForResetPwPost함수 실행
-    if (passwordError === "" && rePasswordError === "") {
+    if (passwordRegex.test(userPw) && rePassword === userPw) {
       ForResetPwPost(userPw, setRegisterError);
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: "🌚잘못된 형식입니다.🌝",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
@@ -72,6 +90,9 @@ const ResetPw = () => {
             alignItems: "center",
           }}
         >
+          <Typography component="h1" variant="h5">
+            비밀번호변경
+          </Typography>
           {/* 비밀번호 변경버튼을 눌렀을 때 postPasswordData 함수가 실행된다. */}
           <Boxs
             component="form"
@@ -108,7 +129,7 @@ const ResetPw = () => {
                   />
                 </Grid>
                 {/* rePassword 입력 오류 */}
-                <FormHelperTexts>{passwordError}</FormHelperTexts>
+                <FormHelperTexts>{rePasswordError}</FormHelperTexts>
               </Grid>
               {/* 이 버튼을 클릭할 시 postPasswordData 함수를 실행시킨다. */}
               <Button
@@ -117,6 +138,7 @@ const ResetPw = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 size="large"
+                background-color="rgb(255, 217, 44)"
               >
                 비밀번호 변경
               </Button>
