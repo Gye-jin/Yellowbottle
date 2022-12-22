@@ -19,6 +19,7 @@ import Header from "../../components/header/Header";
 import { duplicationCheck } from "../../Api/LogData";
 import { ForPostJoinData } from "../../Api/LogData";
 import Swal from "sweetalert2";
+import { yellow } from "@material-ui/core/colors";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -35,6 +36,20 @@ const Boxs = styled(Box)`
 const Join = () => {
   // mui 테마
   const theme = createTheme();
+  const theme1 = createTheme({
+    palette: {
+      primary: {
+        main: yellow[500],
+      },
+    },
+  });
+  const theme3 = createTheme({
+    palette: {
+      primary: {
+        main: "#393201",
+      },
+    },
+  });
   // 개인정보 체크박스 체크여부확인
   const [CheckedPersonal, setCheckedPersonal] = useState(false);
   // 이메일 입력오류
@@ -183,172 +198,195 @@ const Join = () => {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            회원가입
-          </Typography>
-          <Boxs
-            component="form"
-            noValidate
-            onSubmit={createJoinData}
-            sx={{ mt: 3 }}
+      <div className="logPage-background">
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <FormControl component="fieldset" variant="standard">
-              <div className="join-inputId">
-                {/* 아이디 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="text"
-                    id="id"
-                    name="id"
-                    label="아이디"
-                    error={idError !== "" || false}
-                  />
-                </Grid>
-              </div>
-              {/* 유효성 검사를 통해 아이디가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-              <FormHelperTexts>{idError}</FormHelperTexts>
-              {/* 아이디 중복검사 버튼을 누르면 입력된 아이디값을 백에 존재하는 아이디 값들과 비교해서 중복여부를 알려준다. */}
-              <a
-                className="join-idCheck"
-                onClick={() => createDuplicationData()}
-              >
-                아이디 중복검사
-              </a>
-              <Grid container spacing={1.5}>
-                {/* 비밀번호 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="password"
-                    id="password"
-                    name="password"
-                    label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
-                    error={passwordError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 비밀번호가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{passwordError}</FormHelperTexts>
-                {/* rePassword 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="password"
-                    id="rePassword"
-                    name="rePassword"
-                    label="비밀번호 재입력"
-                    error={rePasswordError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 rePassword가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{rePasswordError}</FormHelperTexts>
-                {/* 이름 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="name"
-                    name="name"
-                    label="이름"
-                    error={nameError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 이름이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{nameError}</FormHelperTexts>
-                {/* 생년월일 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="birth"
-                    id="birth"
-                    name="birth"
-                    label="생년월일 입력(ex.1999-08-20)"
-                    error={birthError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 생일이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{birthError}</FormHelperTexts>
-                {/* 이메일 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="email"
-                    id="email"
-                    name="email"
-                    label="이메일 주소"
-                    error={emailError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 이메일이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{emailError}</FormHelperTexts>
-                {/* 성별 선택칸 */}
-                <div className="join-genderRadio">
-                  <span>성별 </span>
-                  <input type="radio" id="gender" name="gender" value="F" />
-                  여성
-                  <input type="radio" id="gender" name="gender" value="M" />
-                  남성
-                  <div id="result"></div>
+            <br />
+            <br />
+            <br />
+            <Typography component="h1" variant="h5">
+              회원가입
+            </Typography>
+            <Boxs
+              component="form"
+              noValidate
+              onSubmit={createJoinData}
+              sx={{ mt: 3 }}
+            >
+              <FormControl component="fieldset" variant="standard">
+                <div className="join-inputId">
+                  {/* 아이디 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        autoFocus
+                        fullWidth
+                        type="text"
+                        id="id"
+                        name="id"
+                        label="아이디"
+                        error={idError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
                 </div>
-                {/* 개인정보 동의칸 */}
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        onChange={handlePersonalAgree}
-                        color="primary"
+                {/* 유효성 검사를 통해 아이디가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                <FormHelperTexts>{idError}</FormHelperTexts>
+                {/* 아이디 중복검사 버튼을 누르면 입력된 아이디값을 백에 존재하는 아이디 값들과 비교해서 중복여부를 알려준다. */}
+                <a
+                  className="join-idCheck"
+                  onClick={() => createDuplicationData()}
+                >
+                  아이디 중복검사
+                </a>
+                <Grid container spacing={1.5}>
+                  {/* 비밀번호 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        type="password"
+                        id="password"
+                        name="password"
+                        label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
+                        error={passwordError !== "" || false}
                       />
-                    }
-                    label="개인정보 수집 동의"
-                  />
-                </Grid>
-                {/* 이메일 수신동의칸 */}
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        id="userEmail"
-                        name="userEmail"
-                        color="primary"
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 비밀번호가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{passwordError}</FormHelperTexts>
+                  {/* rePassword 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        type="password"
+                        id="rePassword"
+                        name="rePassword"
+                        label="비밀번호 재입력"
+                        error={rePasswordError !== "" || false}
                       />
-                    }
-                    label="(선택)이메일 수신 동의"
-                  />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 rePassword가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{rePasswordError}</FormHelperTexts>
+                  {/* 이름 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="name"
+                        name="name"
+                        label="이름"
+                        error={nameError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 이름이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{nameError}</FormHelperTexts>
+                  {/* 생년월일 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        type="birth"
+                        id="birth"
+                        name="birth"
+                        label="생년월일 입력(ex.1999-08-20)"
+                        error={birthError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 생일이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{birthError}</FormHelperTexts>
+                  {/* 이메일 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        autoFocus
+                        fullWidth
+                        type="email"
+                        id="email"
+                        name="email"
+                        label="이메일 주소"
+                        error={emailError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 이메일이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{emailError}</FormHelperTexts>
+                  {/* 성별 선택칸 */}
+                  <div className="join-genderRadio">
+                    <span>성별 </span>
+                    <input type="radio" id="gender" name="gender" value="F" />
+                    여성
+                    <input type="radio" id="gender" name="gender" value="M" />
+                    남성
+                    <div id="result"></div>
+                  </div>
+                  {/* 개인정보 동의칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            onChange={handlePersonalAgree}
+                            color="primary"
+                          />
+                        }
+                        label="개인정보 수집 동의"
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 이메일 수신동의칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            id="userEmail"
+                            name="userEmail"
+                            color="primary"
+                          />
+                        }
+                        label="(선택)이메일 수신 동의"
+                      />
+                    </ThemeProvider>
+                  </Grid>
                 </Grid>
-              </Grid>
-              {/* 회원가입 버튼을 누르면 위 입력한 데이터(joinData)를 백에 보낸다. */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                size="large"
-              >
-                회원가입
-              </Button>
-            </FormControl>
-            {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
-            <FormHelperTexts>{registerError}</FormHelperTexts>
-          </Boxs>
-        </Box>
-      </Container>
+                {/* 회원가입 버튼을 누르면 위 입력한 데이터(joinData)를 백에 보낸다. */}
+                <ThemeProvider theme={theme1}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    size="large"
+                  >
+                    회원가입
+                  </Button>
+                </ThemeProvider>
+              </FormControl>
+              {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
+              <FormHelperTexts>{registerError}</FormHelperTexts>
+            </Boxs>
+          </Box>
+        </Container>
+      </div>
     </ThemeProvider>
   );
 };

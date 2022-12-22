@@ -118,7 +118,9 @@ const MailCheck = () => {
                       {contents.contentTitle}
                     </A>
                   </td>
-                  <td className="second-row2">{contents.sendDate}</td>
+                  <td className="second-row2">
+                    {String(contents.sendDate).replace("T", " ")}
+                  </td>
                 </tr>
               ))}
             </tbody>

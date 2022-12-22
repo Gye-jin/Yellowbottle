@@ -77,19 +77,22 @@
 }
 .join-idCheck {
   width: 35%;
-  background-color: rgb(25, 118, 210);
-  color: white;
+  background-color: #ffeb3b;
+  color: black;
   height: 26px;
   border: 0;
   margin-top: 5px;
   margin-bottom: 10px;
   margin-left: 130px;
   padding-left: 10px;
-  border: 1px solid lightslategray;
+  border: 1px solid lightgray;
   border-radius: 5%;
 }
 .join-inputId {
   width: 100%;
+}
+input[type="radio"] {
+  accent-color: #393201;
 }
 
 /* 로그인 페이지 */
@@ -125,13 +128,20 @@
   padding-left: 10px;
 }
 
+.logPage-background {
+  background-color: rgb(232, 230, 216);
+  width: 100%;
+  height: 860px;
+  margin-top: -64px;
+}
+
 /* FindPw */
-.FindPw-sendCertiNum {
+.findPw-sendCertiNum {
   width: 33%;
-  background-color: rgb(25, 118, 210);
-  color: white;
-  height: 22px;
-  border: 0;
+  background-color: #ffeb3b;
+  color: black;
+  height: 25px;
+  border: 1px solid lightgray;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 130px;
@@ -189,6 +199,7 @@
 /* board_Image */
 .feedBoard-boardImage {
   width: 100%;
+  /* border-radius: 5%; */
   max-height: 500px;
   object-fit: contain;
   border-top: 1px solid lightgray;
@@ -217,6 +228,18 @@
   text-align: right;
   width: 650px;
 }
+
+/* Feed.js */
+.feed-boardWriteBtn {
+  width: 80px;
+  height: 80px;
+  border-radius: 10%;
+}
+.feed-goToTopBtn {
+  width: 80px;
+  height: 80px;
+}
+
 /* BoardWrite : 게시글 작성화면 css */
 .BoardWrite-box {
   min-width: 1000px;

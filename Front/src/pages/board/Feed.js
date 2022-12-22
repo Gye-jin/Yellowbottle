@@ -2,17 +2,6 @@ import React from "react";
 import Header from "../../components/header/Header";
 import FeedBoard from "../../components/FeedBoard";
 import ModalForWrite from "./modal/ModalForWrite";
-import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
-import styled from "styled-components";
-
-const ArrowUpwardOutlinedIcons = styled(ArrowUpwardOutlinedIcon)`
-  margin-top: 10px;
-  color: #fff;
-  border-radius: 10%;
-  background-color: rgb(251, 182, 3);
-  width: 70px;
-  height: 70px;
-`;
 
 // 실천내용 전체 페이지
 function Feed() {
@@ -28,7 +17,13 @@ function Feed() {
           <FeedBoard />
           <div className="FeedSideBar-Btn">
             <ModalForWrite />
-            <ArrowUpwardOutlinedIcons onClick={() => goToTop()} />
+            <br />
+            <img
+              onClick={() => goToTop()}
+              src="/img/goToTopBtn.png"
+              alt="goToTopBtn"
+              className="feed-goToTopBtn"
+            />
           </div>
         </div>
       </body>
