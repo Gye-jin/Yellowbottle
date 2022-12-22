@@ -657,3 +657,32 @@ p {
   padding: 5px;
   display: block;
 }
+
+/* ModalForWrite 게시글 작성 모달 */
+
+.modalForWrite-close-btn {
+  margin-top: 12px;
+  margin-bottom: -5;
+  margin-left: 48%;
+  border: 2px solid #7d6607;
+  background-color: #ebe8da;
+  color: #433603;
+  border-radius: 10px;
+}
+
+.writeBoard-write {
+  border: 2px solid #7d6607;
+  background-color: #ebe8da;
+  color: #433603;
+  border-radius: 10px;
+}
+
+.BoardWrite-header {
+  border: 2px solid #c1b6ac;
+  border-radius: 5px;
+}
+
+.modalForWrite-close-btn {
+  margin-left: 95%;
+  height: 30px;
+}

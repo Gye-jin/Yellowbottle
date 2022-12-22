@@ -120,7 +120,9 @@ function WriteBoard() {
               </div>
             </div>
             {/* 버튼을 누를시 선택한 파일과 작성된 게시글 데이터를 boardWriteData에 담아 이를 백에 전달한다. */}
-            <button onClick={sendBoardWriteData}>게시글 작성</button>
+            <button className="writeBoard-write" onClick={sendBoardWriteData}>
+              게시글 작성
+            </button>
           </div>
         </div>
       </form>
