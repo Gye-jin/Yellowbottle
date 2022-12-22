@@ -23,6 +23,7 @@ function Feed() {
               src="/img/goToTopBtn.png"
               alt="goToTopBtn"
               className="feed-goToTopBtn"
+              style={{ cursor: "pointer" }}
             />
           </div>
         </div>
