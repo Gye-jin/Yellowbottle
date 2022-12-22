@@ -9,13 +9,13 @@ import {
   Box,
   Typography,
   Container,
-  // Label,
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { passUpdateUser, ForPostUpdateData } from "../../Api/LogData";
 import Swal from "sweetalert2";
+import { yellow } from "@material-ui/core/colors";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -32,6 +32,20 @@ const Boxs = styled(Box)`
 const UpdateUser = () => {
   // mui 테마
   const theme = createTheme();
+  const theme1 = createTheme({
+    palette: {
+      primary: {
+        main: yellow[500],
+      },
+    },
+  });
+  const theme3 = createTheme({
+    palette: {
+      primary: {
+        main: "#393201",
+      },
+    },
+  });
   // 이메일 입력오류
   const [emailError, setEmailError] = useState("");
   // 비밀번호
@@ -139,112 +153,125 @@ const UpdateUser = () => {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            회원정보수정
-          </Typography>
-
-          <Boxs
-            component="form"
-            noValidate
-            onSubmit={createUpdateData}
-            sx={{ mt: 3 }}
+      <div className="logPage-background">
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <FormControl component="fieldset" variant="standard">
-              <Grid container spacing={1.5}>
-                {/* 비밀번호 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
+            <br />
+            <br />
+            <br />
+            <Typography component="h1" variant="h5">
+              회원정보수정
+            </Typography>
+
+            <Boxs
+              component="form"
+              noValidate
+              onSubmit={createUpdateData}
+              sx={{ mt: 3 }}
+            >
+              <FormControl component="fieldset" variant="standard">
+                <Grid container spacing={1.5}>
+                  {/* 비밀번호 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        type="password"
+                        id="userPw"
+                        name="userPw"
+                        label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
+                        error={passwordError !== "" || false}
+                        onChange={passwordHandler}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 비밀번호가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{passwordError}</FormHelperTexts>
+                  {/* rePassword 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        type="password"
+                        id="rePassword"
+                        name="rePassword"
+                        label="비밀번호 재입력"
+                        onChange={rePasswordHandler}
+                        error={rePasswordError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 rePassword가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{rePasswordError}</FormHelperTexts>
+                  {/* 이메일 입력칸 */}
+                  <Grid item xs={12}>
+                    이메일 변경을 원하시면 입력해주세요
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        autoFocus
+                        fullWidth
+                        type="email"
+                        id="email"
+                        name="email"
+                        label={`기존이메일: ${userDTO.email}`}
+                        onChange={emailHandler}
+                        error={emailError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 이메일이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{emailError}</FormHelperTexts>
+                  {/* <h3>기존이메일수신동의</h3> */}
+                  <div className="join-genderRadio">
+                    <span>이메일 수신 동의 </span>
+                    <input
+                      type="radio"
+                      id="email-agreement"
+                      name="subStatus"
+                      value="1"
+                    />
+                    동의
+                    <input
+                      type="radio"
+                      id="email-disagreement"
+                      name="subStatus"
+                      value="0"
+                    />
+                    비동의
+                  </div>
+                </Grid>
+                {/* 수정 버튼을 누르면 위 입력한 데이터(updateData)를 백에 보낸다. */}
+                <ThemeProvider theme={theme1}>
+                  <Button
+                    type="submit"
                     fullWidth
-                    type="password"
-                    id="userPw"
-                    name="userPw"
-                    label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
-                    error={passwordError !== "" || false}
-                    onChange={passwordHandler}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 비밀번호가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{passwordError}</FormHelperTexts>
-                {/* rePassword 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="password"
-                    id="rePassword"
-                    name="rePassword"
-                    label="비밀번호 재입력"
-                    onChange={rePasswordHandler}
-                    error={rePasswordError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 rePassword가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{rePasswordError}</FormHelperTexts>
-                {/* 이메일 입력칸 */}
-                <Grid item xs={12}>
-                  이메일 변경을 원하시면 입력해주세요
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="email"
-                    id="email"
-                    name="email"
-                    label={`기존이메일: ${userDTO.email}`}
-                    onChange={emailHandler}
-                    error={emailError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성 검사를 통해 이메일이 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{emailError}</FormHelperTexts>
-                {/* <h3>기존이메일수신동의</h3> */}
-                <div className="join-genderRadio">
-                  <span>이메일 수신 동의 </span>
-                  <input
-                    type="radio"
-                    id="email-agreement"
-                    name="subStatus"
-                    value="1"
-                  />
-                  동의
-                  <input
-                    type="radio"
-                    id="email-disagreement"
-                    name="subStatus"
-                    value="0"
-                  />
-                  비동의
-                </div>
-              </Grid>
-              {/* 수정 버튼을 누르면 위 입력한 데이터(updateData)를 백에 보낸다. */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                size="large"
-              >
-                회원정보수정
-              </Button>
-            </FormControl>
-            {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
-            <FormHelperTexts>{registerError}</FormHelperTexts>
-          </Boxs>
-        </Box>
-      </Container>
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    size="large"
+                  >
+                    회원정보수정
+                  </Button>
+                </ThemeProvider>
+              </FormControl>
+              {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
+              <FormHelperTexts>{registerError}</FormHelperTexts>
+            </Boxs>
+          </Box>
+        </Container>
+      </div>
     </ThemeProvider>
   );
 };

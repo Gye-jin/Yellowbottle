@@ -17,7 +17,7 @@ export default function Header() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#4A4040",
+        main: "#332C2C",
       },
     },
   });
@@ -27,7 +27,14 @@ export default function Header() {
   const navigate = useNavigate();
   // login 상태값... 기본값은 false
   const [isLogin, setIsLogin] = useState(false);
-  // const isLogin = props.isLogin;
+  // 실천내용버튼에 마우스 올렸을때 pointer 효과
+  const handleMouseEnter = () => {
+    document.body.style.cursor = "pointer";
+  };
+
+  const handleMouseLeave = () => {
+    document.body.style.cursor = "default";
+  };
   // session을 확인해 userId의 값에따라 Header부분을 변경함
   useEffect(() => {
     // userId 키를 이용해 세션을 찾음
@@ -75,6 +82,8 @@ export default function Header() {
               variant="h6"
               component="div"
               sx={{ flexGrow: 1 }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               실천내용
             </Typography>

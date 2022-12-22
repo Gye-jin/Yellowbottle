@@ -21,6 +21,14 @@ export default function HeaderLogin() {
 
   // navigate(이동)하는 함수
   const navigate = useNavigate();
+  // 실천내용버튼에 마우스 올렸을때 pointer 효과
+  const handleMouseEnter = () => {
+    document.body.style.cursor = "pointer";
+  };
+
+  const handleMouseLeave = () => {
+    document.body.style.cursor = "default";
+  };
   // 로그아웃 함수
   const onLogout = async () => {
     // 이 부분부터 새롭게 쓴 logout
@@ -51,6 +59,8 @@ export default function HeaderLogin() {
             aria-label="menu"
             sx={{ mr: 2 }}
             onClick={() => navigate("/")}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             {/* 로고 */}
             <img className="logo" src="/img/logo.png" width="100" height="80" />

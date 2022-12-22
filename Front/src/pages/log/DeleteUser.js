@@ -18,6 +18,7 @@ import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { ForPostDeleteData } from "../../Api/LogData";
 import Swal from "sweetalert2";
+import { yellow } from "@material-ui/core/colors";
 
 // mui의 기본 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -34,10 +35,20 @@ const Boxs = styled(Box)`
 const DeleteUser = () => {
   // mui 테마
   const theme = createTheme();
-  // 비밀번호
-  const [userPw, setUserPw] = useState();
-  // 재입력 비밀번호
-  const [rePassword, setRePassword] = useState("");
+  const theme1 = createTheme({
+    palette: {
+      primary: {
+        main: yellow[500],
+      },
+    },
+  });
+  const theme3 = createTheme({
+    palette: {
+      primary: {
+        main: "#393201",
+      },
+    },
+  });
   // 비밀번호 입력오류
   const [passwordError, setPasswordError] = useState("");
   // 재입력 비밀번호 입력오류
@@ -90,82 +101,98 @@ const DeleteUser = () => {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            회원탈퇴
-          </Typography>
-
-          <Boxs
-            component="form"
-            noValidate
-            onSubmit={createDeleteData}
-            sx={{ mt: 3 }}
+      <div className="logPage-background">
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <FormControl component="fieldset" variant="standard">
-              <Grid container spacing={1.5}>
-                {/* 비밀번호 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="password"
-                    id="password"
-                    name="password"
-                    label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
-                    error={passwordError !== "" || false}
-                  />
+            <br />
+            <br />
+            <br />
+            <Typography component="h1" variant="h5">
+              회원탈퇴
+            </Typography>
+
+            <Boxs
+              component="form"
+              noValidate
+              onSubmit={createDeleteData}
+              sx={{ mt: 3 }}
+            >
+              <FormControl component="fieldset" variant="standard">
+                <Grid container spacing={1.5}>
+                  {/* 비밀번호 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        type="password"
+                        id="password"
+                        name="password"
+                        label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
+                        error={passwordError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 비밀번호가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{passwordError}</FormHelperTexts>
+                  {/* rePassword 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        type="password"
+                        id="rePassword"
+                        name="rePassword"
+                        label="비밀번호 재입력"
+                        error={rePasswordError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성 검사를 통해 rePassword가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
+                  <FormHelperTexts>{rePasswordError}</FormHelperTexts>
                 </Grid>
-                {/* 유효성 검사를 통해 비밀번호가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{passwordError}</FormHelperTexts>
-                {/* rePassword 입력칸 */}
+                {/* 개인정보 동의칸 */}
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="password"
-                    id="rePassword"
-                    name="rePassword"
-                    label="비밀번호 재입력"
-                    error={rePasswordError !== "" || false}
-                  />
+                  <ThemeProvider theme={theme3}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handlePersonalAgree}
+                          color="primary"
+                        />
+                      }
+                      label="귀하는 Yellowbottle 회원탈퇴에 동의합니다."
+                    />
+                  </ThemeProvider>
                 </Grid>
-                {/* 유효성 검사를 통해 rePassword가 형식에 맞지 않으면 밑에 빨간 글씨로 오류가 뜬다. */}
-                <FormHelperTexts>{rePasswordError}</FormHelperTexts>
-              </Grid>
-              {/* 개인정보 동의칸 */}
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox onChange={handlePersonalAgree} color="primary" />
-                  }
-                  label="귀하는 Yellowbottle 회원탈퇴에 동의합니다."
-                />
-              </Grid>
-              {/* 회원탈퇴 버튼을 누르면 위 입력한 데이터(deleteData)를 백에 보낸다. */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                size="large"
-              >
-                탈퇴
-              </Button>
-            </FormControl>
-            {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
-            <FormHelperTexts>{registerError}</FormHelperTexts>
-          </Boxs>
-        </Box>
-      </Container>
+                {/* 회원탈퇴 버튼을 누르면 위 입력한 데이터(deleteData)를 백에 보낸다. */}
+                <ThemeProvider theme={theme1}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    size="large"
+                  >
+                    탈퇴
+                  </Button>
+                </ThemeProvider>
+              </FormControl>
+              {/* 입력한 값이 백에 정상적으로 전송되지 않는다면 오류가 뜬다. */}
+              <FormHelperTexts>{registerError}</FormHelperTexts>
+            </Boxs>
+          </Box>
+        </Container>
+      </div>
     </ThemeProvider>
   );
 };
