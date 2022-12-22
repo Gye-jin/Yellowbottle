@@ -81,6 +81,7 @@ const FeedBoard = () => {
                       <br />
                       <div className="feedBoard-viewCount">
                         조회수 : {board.viewCount}
+                        &nbsp;&nbsp;&nbsp;&nbsp; 댓글수 : {board.countComment}
                       </div>
                       <div className="feedBoard-createDate">
                         {board.createDate}

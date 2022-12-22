@@ -117,6 +117,26 @@ public class Board {
 		return boardDTO;
 	}
 	
+	public static BoardDTO countCommentEntityToDTO (Board board) {
+		BoardDTO boardDTO = BoardDTO.builder()
+				.editor(false)
+				.countComment(Long.valueOf(board.getComments().size()))
+				.boardNo(board.getBoardNo())
+				.userId(board.getUser().getUserId())
+				.boardContent(board.getBoardContent())
+				.createDate(board.getWrittenDate())
+				.viewCount(board.getViewCount())
+				.files(board.getFiles().stream()
+						.map(file -> File.entotyToDTO(file))
+						.collect(Collectors.toList()))
+				.comments(board.getComments().stream()
+						.map(comment -> Comment.trueEntityToDTO(comment))
+						.collect(Collectors.toList()))
+				.modifiedDate(board.getModifiedDate())
+				.build();
+		return boardDTO;
+	}
+	
 	// Entity Element Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [BoardContent 변경]
