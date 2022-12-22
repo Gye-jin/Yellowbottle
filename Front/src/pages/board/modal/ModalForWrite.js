@@ -22,9 +22,37 @@ export default function ModalForWrite() {
         <Modal
           isOpen={wirteBoardModal}
           onRequestClose={() => setWirteBoardModal(false)}
+          style={{
+            overlay: {
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(255, 255, 255, 0.75)",
+            },
+            content: {
+              position: "absolute",
+              top: "10%",
+              left: "15%",
+              right: "15%",
+              bottom: "10%",
+              border: "1px solid lightgray",
+              background: "#fff",
+              overflow: "auto",
+              WebkitOverflowScrolling: "touch",
+              borderRadius: "5%",
+              outline: "none",
+              padding: "20px",
+            },
+          }}
         >
           <div>
-            <button onClick={() => setWirteBoardModal(false)}>닫기</button>
+            <img
+              src="/img/close_btn.png"
+              className="modalForWrite-close-btn"
+              onClick={() => setWirteBoardModal(false)}
+            />
           </div>
           <br />
           {/* 컴퍼넌트 들어가는 자리 */}

@@ -8,11 +8,10 @@ export const myPageFetchData = async (userSession, setSessionUserId) => {
       sessionId: userSession,
     })
     .then((response) => {
-      console.log("백에서 userId 불러오기 성공!", response);
       setSessionUserId(response.data);
     })
     .catch((err) => {
-      console.log("첫번쨰 axios에서 오류오류오류!", err);
+      // console.log("첫번쨰 axios에서 오류오류오류!", err);
     });
 };
 

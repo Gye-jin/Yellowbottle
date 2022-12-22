@@ -354,69 +354,6 @@ input[type="radio"] {
   margin-left: 10px;
 }
 
-/* PersonPage */
-/* PersonPage 전체 틀 css */
-.PersonPage-Outer {
-  text-align: center;
-  border-top: 5px solid lightgray;
-}
-.PersonPage-Inner {
-  display: inline-block;
-  width: 80%;
-  background-color: white;
-}
-/* 유저가 올린 사진 3개씩 출력되게하는 css */
-.PersonPage-image-grid {
-  padding-top: 30px;
-  display: grid;
-  border-top: 5px solid #2bb400;
-  grid-template-columns: repeat(3, 1fr);
-}
-.PersonPage-image-grid {
-  width: 100%;
-}
-.PersonPage-image-grid img {
-  margin: 10px;
-  min-height: 400px;
-  max-height: 400px;
-  width: 90%;
-  border: 1px solid lightgray;
-  border-radius: 18%;
-}
-/* 유저 기본 정보 보여주는 css */
-.PersonPage-Information {
-  margin-top: 5%;
-  display: flex;
-}
-.PersonPage-Information-Log {
-  margin-top: 70px;
-  display: inline-block;
-  width: 50%;
-}
-.PersonPage-Information-Grade {
-  display: inline-block;
-  width: 50%;
-}
-.PersonPage-Information-GradeImg {
-  width: 400px;
-  height: 400px;
-}
-.PersonPage-informationBtn {
-  margin-top: 40px;
-}
-
-/* 비밀번호 찾기 */
-/* .findpw-idCheck {
-  width: 35%;
-  background-color: dodgerblue;
-  color: white;
-  height: 20px;
-  border: 0;
-  margin-bottom: 10px;
-  margin-left: 60px;
-  padding-left: 10px;
-} */
-
 /** DetailBoard 게시글 세부보기+댓글 **/
 .outer-detail {
   display: flex;
@@ -448,8 +385,6 @@ input[type="radio"] {
 .detailboardtn-ud {
   margin-left: 200px;
 }
-
-/* margin-left: 240px; */
 
 .detailboard-u {
   margin-right: 2px;
@@ -509,15 +444,11 @@ input[type="radio"] {
   background: #e8e5da;
 }
 
-/* .comment-commentstyle {
-  padding-bottom: 10px; */
-
 .comment-commentdate {
   display: inline;
   float: right;
   color: #231d019e;
   font-size: small;
-  /* justify-content: center; */
 }
 
 .DetailBoard-writer-content {
@@ -531,7 +462,6 @@ input[type="radio"] {
 
 h5 {
   display: inline;
-  /* margin: 17px; */
   margin-left: 0px;
   margin-bottom: 10px;
   margin-right: 45px;
@@ -560,8 +490,6 @@ h5 {
   font-size: 25px;
   font-weight: lighter;
   cursor: pointer;
-  /* border: solid 1px #6b5603;
-  background-color: #f5e9b5; */
   border: solid 1px white;
   background-color: white;
   color: #6b5603;
@@ -599,7 +527,6 @@ p {
 }
 
 .modalforcomment-ucomment-btn {
-  /* float: right; */
   background-color: #d8d2b8;
   border: none;
   border-radius: 12px;
@@ -627,7 +554,6 @@ p {
   border: 2px solid #7d6607;
   background-color: #e8e2c8;
   color: #433603;
-
   border-radius: 10px;
 }
 
@@ -644,14 +570,15 @@ p {
   margin: 10px;
   min-height: 400px;
   max-height: 400px;
-  width: 85%;
+  width: 90%;
   border: 1px solid lightgray;
   border-radius: 18%;
 }
+
 /* 유저 기본 정보 보여주는 css */
 .PersonPage-Information {
   display: flex;
-  margin-top: 0;
+  margin-top: 50px;
 }
 .PersonPage-Information-Log {
   display: inline-block;
@@ -701,4 +628,33 @@ p {
   margin: 13px 10px;
   padding: 5px;
   display: block;
+}
+
+/* ModalForWrite 게시글 작성 모달 */
+
+.modalForWrite-close-btn {
+  margin-top: 12px;
+  margin-bottom: -5;
+  margin-left: 48%;
+  border: 2px solid #7d6607;
+  background-color: #ebe8da;
+  color: #433603;
+  border-radius: 10px;
+}
+
+.writeBoard-write {
+  border: 2px solid #7d6607;
+  background-color: #ebe8da;
+  color: #433603;
+  border-radius: 10px;
+}
+
+.BoardWrite-header {
+  border: 2px solid #c1b6ac;
+  border-radius: 5px;
+}
+
+.modalForWrite-close-btn {
+  margin-left: 95%;
+  height: 30px;
 }

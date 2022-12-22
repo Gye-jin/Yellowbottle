@@ -7,7 +7,6 @@ const ModalForComment = ({ comment }) => {
   return (
     <>
       {/* 설명: 팝업 생성 버튼 */}
-
       <button
         className="modalforcomment-ucomment-btn"
         onClick={() => setEditCommentModal(true)}
