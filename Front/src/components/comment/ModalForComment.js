@@ -7,7 +7,6 @@ const ModalForComment = ({ comment }) => {
   return (
     <>
       {/* 설명: 팝업 생성 버튼 */}
-
       <button
         className="modalforcomment-ucomment-btn"
         onClick={() => setEditCommentModal(true)}
@@ -29,15 +28,15 @@ const ModalForComment = ({ comment }) => {
           },
           content: {
             position: "absolute",
-            top: "250px",
+            top: "30%",
             left: "40%",
-            right: "33%",
-            bottom: "50%",
+            right: "40%",
+            bottom: "45%",
             border: "1px solid lightgray",
             background: "#fff",
             overflow: "auto",
             WebkitOverflowScrolling: "touch",
-            borderRadius: "5%",
+            borderRadius: "10px",
             outline: "none",
             padding: "20px",
           },

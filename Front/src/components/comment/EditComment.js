@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { deleteComment, repostComment } from "../../Api/BoardData";
+import Swal from "sweetalert2";
 const EditComment = ({
   setEditCommentModal,
   commentNo,
@@ -18,7 +19,12 @@ const EditComment = ({
   // 댓글 수정
   const updateComment = () => {
     if (newCommentContent.length == 0) {
-      alert("수정할 댓글을 입력해주세요.");
+      Swal.fire({
+        icon: "warning",
+        title: "수정할 댓글을 입력해주세요",
+        showConfirmButton: false,
+        timer: 1200,
+      });
     } else if (newCommentContent.length != 0) {
       let newCommentData = new FormData();
       const sessionId = sessionStorage.getItem("sessionId");
@@ -27,23 +33,35 @@ const EditComment = ({
       newCommentData.append("boardNo", boardNo);
       newCommentData.append("commentContent", newCommentContent);
       repostComment(newCommentData);
-      window.location.reload();
     }
   };
 
-  // 게시글 삭제
+  // 댓글 삭제
   const commentDeleteButton = () => {
     // 확인창 실행
-    const deleteConfirmCheck = window.confirm("정말 댓글을 삭제하겠습니까?");
-    // 삭제할 경우
-    if (deleteConfirmCheck) {
-      let deleteCommentData = new FormData();
-      const sessionId = sessionStorage.getItem("sessionId");
-      deleteCommentData.append("sessionId", sessionId);
-      deleteCommentData.append("commentNo", commentNo);
-      deleteComment(deleteCommentData);
-      window.location.reload();
-    }
+    Swal.fire({
+      title: "정말 댓글을 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+      confirmButtonColor: "#3085d6", // confrim 버튼 색깔 지정
+      cancelButtonColor: "#d33", // cancel 버튼 색깔 지정
+      confirmButtonText: "승인", // confirm 버튼 텍스트 지정
+      cancelButtonText: "취소", // cancel 버튼 텍스트 지정
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let deleteCommentData = new FormData();
+        const sessionId = sessionStorage.getItem("sessionId");
+        deleteCommentData.append("sessionId", sessionId);
+        deleteCommentData.append("commentNo", commentNo);
+        deleteComment(deleteCommentData);
+      } else {
+        Swal.fire({
+          text: "🌚댓글 삭제취소🌝",
+          showConfirmButton: false,
+          timer: 1200,
+        });
+      }
+    });
   };
 
   return (
@@ -52,16 +70,28 @@ const EditComment = ({
       <div>
         <input
           onChange={newComment}
-          className="Comment-write"
+          className="editComment-write"
           placeholder="댓글을 입력해주세요!"
           defaultValue={commentContent}
           id="commentinput"
         />
       </div>
       <br />
-      <button onClick={() => updateComment()}>수정하기</button>
-      <button onClick={() => commentDeleteButton()}>삭제하기</button>
-      <button onClick={() => setEditCommentModal(false)}>돌아가기</button>
+      <button onClick={() => updateComment()} className="editComment-updateBtn">
+        수정하기
+      </button>
+      <button
+        onClick={() => commentDeleteButton()}
+        className="editComment-deleteBtn"
+      >
+        삭제하기
+      </button>
+      <button
+        onClick={() => setEditCommentModal(false)}
+        className="editComment-goBackBtn"
+      >
+        돌아가기
+      </button>
     </span>
   );
 };

@@ -41,16 +41,13 @@ export default function Header() {
     const whoSession = sessionStorage.getItem("sessionId");
     // 세션값이 없으면 비회원
     if (whoSession === null) {
-      console.log("비회원입니당 :: 콘솔확인용");
     }
     // 세션값이 백에서 지정한 관리자 값이면 isLogin값을 admin으로 수정
     else if (whoSession === "관리자") {
-      console.log("관리자입니당");
       setIsLogin("admin");
     }
     // 세션값이 존재한다면 isLogin값을 true로 수정 --> 만약 setisLogin("admin")이 안된다면 isLogin의 초기값을 false가 아닌 ""로 설정하자
     else {
-      // console.log("회원입니당");
       setIsLogin(true);
     }
   });
