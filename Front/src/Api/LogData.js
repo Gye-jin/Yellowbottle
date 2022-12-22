@@ -189,7 +189,6 @@ export const passResetPw = async () => {
     })
     // 백에서 response가 정상적으로 오면
     .then((response) => {
-      console.log(response, "인증번호 인증 성공!");
       Swal.fire({
         icon: "success",
         title: "인증번호인증 성공!",
@@ -202,7 +201,6 @@ export const passResetPw = async () => {
       }, 1000);
     })
     .catch(function (err) {
-      console.log(err, "에러 ㅠㅠ");
       Swal.fire({
         icon: "error",
         text: "🌚인증번호가 일치하지않습니다.🌝",
@@ -225,7 +223,6 @@ export function ForPostFindIdData(
       .post("http://localhost:8080/api/findId", findIdData)
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
-        console.log(response);
         response.data.length === 0
           ? Swal.fire({
               icon: "error",
@@ -240,7 +237,6 @@ export function ForPostFindIdData(
       })
       .catch((err) => {
         // 백에서 오류(err)가 뜬다면 아이디 찾기 실패
-        console.log(err);
         setRegisterError(
           "해당 정보와 동일한 아이디가 존재하지 않습니다. 다시 한번 확인해 주세요."
         );
@@ -312,7 +308,6 @@ export function ForPostUpdateData(updateData, setRegisterError) {
       // 입력된 joinData를 백에 보낸다.
       .post("http://localhost:8080/api/updateUser", updateData)
       .then((response) => {
-        console.log(response);
         if (response.data === true) {
           Swal.fire({
             icon: "success",

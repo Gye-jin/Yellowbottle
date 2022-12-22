@@ -76,6 +76,7 @@ const EditComment = ({
           id="commentinput"
         />
       </div>
+      <br />
       <button onClick={() => updateComment()}>수정하기</button>
       <button onClick={() => commentDeleteButton()}>삭제하기</button>
       <button onClick={() => setEditCommentModal(false)}>돌아가기</button>

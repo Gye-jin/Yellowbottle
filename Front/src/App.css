@@ -512,18 +512,12 @@ input[type="radio"] {
   padding-right: 15px;
 }
 
-.boardContent {
-}
-
 h5 {
   display: inline;
   /* margin: 17px; */
   margin-left: 0px;
   margin-bottom: 10px;
   margin-right: 45px;
-}
-
-.one-comment {
 }
 
 .write-comment {
@@ -535,6 +529,7 @@ h5 {
 
 .Comment-write {
   width: 470px;
+  height: 100px;
 }
 
 .detailboard-wcomment-btn {
@@ -564,10 +559,6 @@ h5 {
   text-align: center;
   justify-content: center;
   display: flex;
-}
-
-.modal-recommand-btn {
-  /* display: flex; */
 }
 
 p {
