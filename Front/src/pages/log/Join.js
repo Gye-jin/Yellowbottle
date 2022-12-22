@@ -174,7 +174,7 @@ const Join = () => {
     } else {
       Swal.fire({
         icon: "error",
-        title: "🌚잘못된 형식입니다🌝",
+        title: "🌚존재하지않는 회원정보입니다.🌝",
         showConfirmButton: false,
         timer: 1500,
       });

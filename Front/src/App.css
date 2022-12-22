@@ -398,7 +398,8 @@
 .outer-detail {
   display: flex;
   justify-content: center;
-  background-color: white;
+  background-color: #e8e6d8;
+  height: 1000px;
 }
 
 .inner-detail {
@@ -407,11 +408,12 @@
 }
 
 .detailboard-image {
+  border-radius: 5px;
   flex-direction: left;
   justify-content: center;
   margin: auto;
   width: 600px;
-  height: 580px;
+  height: 610px;
   background-color: white;
   border: 2px solid #c1b6ac;
   border-right: none;
@@ -438,6 +440,7 @@
 }
 
 .boardImage {
+  border-radius: 10px;
   margin-top: 25px;
   width: 550px;
   height: 500px;
@@ -446,9 +449,10 @@
 .Detailcomment {
   height: 525px;
   width: 550px;
-  height: 580px;
+  height: 610px;
   background-color: white;
   border: 2px solid #c1b6ac;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -482,8 +486,15 @@
   background: #e8e5da;
 }
 
-.comment-commentstyle {
-  padding-bottom: 10px;
+/* .comment-commentstyle {
+  padding-bottom: 10px; */
+
+.comment-commentdate {
+  display: inline;
+  float: right;
+  color: #231d019e;
+  font-size: small;
+  /* justify-content: center; */
 }
 
 .DetailBoard-writer-content {
@@ -509,7 +520,7 @@ h5 {
 .one-comment {
 }
 
-.write-comment {
+.detailboard-write-comment {
   /* 자식 */
   position: absolute;
   bottom: 0;
@@ -519,25 +530,34 @@ h5 {
   border-top: 1px solid lightgray;
 }
 
-.Comment-write {
-  width: 475px;
-  height: 40px;
+.detailboard-Comment-write {
+  width: 450px;
+  height: 70px;
   border: none;
 }
 
 .detailboard-wcomment-btn {
-  border: none;
-  background-color: #f5e9b5;
-  color: #433603;
+  display: inline;
+  margin-left: 12px;
+  margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: lighter;
+  cursor: pointer;
+  /* border: solid 1px #6b5603;
+  background-color: #f5e9b5; */
+  border: solid 1px white;
+  background-color: white;
+  color: #6b5603;
+  border-radius: 7px;
+}
+
+.comment-commentstyle {
+  padding-bottom: 10px;
+  border-bottom: 0.5px dotted lightgray;
 }
 
 /** DetailBoard 추천게시물 **/
 
-.recommend-board {
-  display: inline;
-  padding: 10px;
-  margin: auto;
-}
 .recommand-btn {
   width: 200px;
   height: 40px;
@@ -549,13 +569,10 @@ h5 {
 }
 
 .modalforrecommand {
+  padding-top: 18px;
   text-align: center;
   justify-content: center;
   display: flex;
-}
-
-.modal-recommand-btn {
-  /* display: flex; */
 }
 
 p {
@@ -564,13 +581,11 @@ p {
   font-size: 20px;
 }
 
-.modalforrecommand {
-  text-align: center;
-}
-
 .modalforcomment-ucomment-btn {
+  /* float: right; */
   background-color: #d8d2b8;
   border: none;
+  border-radius: 12px;
 }
 
 /* personPage */

@@ -19,6 +19,8 @@ const Comment = ({ comment }) => {
           설명: 댓글 작성자에게만 보이는 버튼
           이벤트: 댓글 수정 및 삭제가 가능한 팝업 생성 */}
         {comment.editor ? <ModalForComment comment={comment} /> : <></>}
+
+        <div className="comment-commentdate">{comment.commentDate}</div>
         <br />
         <span>{comment.commentContent}</span>
       </span>

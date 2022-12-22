@@ -79,18 +79,21 @@ public class MailServiceImpl implements MailService {
 	// [인증번호 메일 발송]
 	// 설명 : 해당 컨텐츠 고객 상태가 true인 고객을 대상으로 메일 발송
 	public void checkEmail(int checkNum, String email) {
-		String title = "비밀번호를 찾기 위한 인증 이메일 입니다.";
-		String content = "인증 번호는 " + checkNum + "입니다." + "<br>" + "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-		try {
-			MimeMessage message = javaMailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-			helper.setFrom(setFrom);
-			helper.setTo(email);
-			helper.setSubject(title);
-			helper.setText(content, true);
-			javaMailSender.send(message);
-		} catch (MessagingException e) {
-			e.printStackTrace();
+		if (checkNum != 0) {
+
+			String title = "비밀번호를 찾기 위한 인증 이메일 입니다.";
+			String content = "인증 번호는 " + checkNum + "입니다." + "<br>" + "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+			try {
+				MimeMessage message = javaMailSender.createMimeMessage();
+				MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+				helper.setFrom(setFrom);
+				helper.setTo(email);
+				helper.setSubject(title);
+				helper.setText(content, true);
+				javaMailSender.send(message);
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 		}
 	};
 
