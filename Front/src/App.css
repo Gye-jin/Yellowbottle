@@ -58,7 +58,6 @@
 .slider__image {
   width: 100%;
   height: 100%;
-  /* border-radius: 30px; 사진 모서리 둥글게 */
   overflow: hidden;
 }
 .slider__image img {
@@ -69,24 +68,6 @@
   object-fit: cover;
 }
 @media (max-width: 767.98px) {
-  /* .slider__flex {
-    flex-direction: column-reverse;
-  }
-  .slider__col {
-    flex-direction: row;
-    align-items: center;
-    margin-right: 0;
-    margin-top: 24px;
-    width: 100%;
-  }
-  .slider__images {
-    width: 100%;
-  }
-  .slider__prev,
-  .slider__next {
-    height: auto;
-    width: 32px;
-  } */
 }
 
 /* 회원가입 페이지 */
@@ -114,12 +95,11 @@
 /* 로그인 페이지 */
 
 .loginPage-findId {
-  /* float: left; */
   width: 49%;
   display: inline-block;
 }
 .loginPage-findPw {
-  /* float: right; */
+  border: 1px solid rgb(255, 217, 44);
   width: 50%;
   display: inline-block;
 }
@@ -134,7 +114,6 @@
   align-items: center;
   min-height: 100vh;
 }
-
 .conf {
   width: 35%;
   background-color: rgb(25, 118, 210);
@@ -144,11 +123,6 @@
   margin-bottom: 10px;
   margin-left: 130px;
   padding-left: 10px;
-}
-.find-id {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* FindPw */
@@ -166,12 +140,14 @@
 }
 
 /* board 전체 틀 */
-.board {
+.feedBoard-board {
   min-width: 700px;
   background-color: white;
   max-width: 700px;
   border: 1px solid lightgray;
   margin-bottom: 45px;
+  border-radius: 4%;
+  padding: 10px;
 }
 .FeedSideBar-Btn {
   position: fixed;
@@ -179,47 +155,68 @@
   border-radius: 20%;
   width: 100px;
   height: 200px;
-  background-color: white;
+  background-color: rgb(232, 230, 216);
   right: 5%;
+}
+.recommendBoard {
+  width: 60%;
+  background-color: white;
+  max-width: 700px;
+  border: 1px solid lightgray;
+  margin-bottom: 45px;
+  padding: 10px;
+  float: left;
+}
+.board_recommendLeftBtn {
+  padding: 10px;
+  width: 5%;
+  float: left;
+}
+.board_recommendRightBtn {
+  padding: 10px;
+  width: 5%;
+  float: left;
 }
 
 /* 게시글 전체 가운데 정렬 */
-.outer {
+.feedBoard-outer {
   text-align: center;
+  background-color: rgb(232, 230, 216);
 }
-.inner {
+.feedBoard-inner {
   display: inline-block;
 }
 /* board_Image */
-.board_Image {
+.feedBoard-boardImage {
   width: 100%;
-  /* max-width: 700px; */
   max-height: 500px;
   object-fit: contain;
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
 }
 /* board_BoardContent */
-.board_BoardContent {
+.feedBoard-boardContent {
   text-align: left;
   font-weight: flex;
-  padding: 20px;
-}
-/* boader_Header */
-.boader_Header {
-  display: flex;
-  align-items: center;
+  padding: 2px;
 }
 /* board-UserId */
-.board_UserId {
+.feedBoard-userId {
   text-align: left;
   padding-left: 20px;
 }
-.FeedBoard-createDate {
-  width: 600px;
-  text-align: right;
+.feedBoard-content {
+  margin-left: 20px;
 }
-
+.feedBoard-viewCount {
+  float: left;
+  margin-left: 20px;
+  font-weight: bolder;
+}
+.feedBoard-createDate {
+  text-align: right;
+  width: 650px;
+}
 /* BoardWrite : 게시글 작성화면 css */
 .BoardWrite-box {
   min-width: 1000px;
@@ -238,12 +235,9 @@
 .BoardWrite-header {
   display: flex;
   align-items: center;
-  /* padding: 20px; */
 }
 /* 게시글 쓰는 부분 css */
 .BoardWrite-rightBox {
-  /* border: 2px solid black; */
-  /* background-color: beige; */
   border-left: 2px solid lightgray;
   float: right;
   width: 50%;
@@ -251,8 +245,6 @@
 }
 /* 사진 선택하는 부분 css */
 .BoardWrite-leftBox {
-  /* border: 2px solid black; */
-  /* background-color: beige; */
   float: left;
   width: 50%;
 }
@@ -310,7 +302,6 @@
 .BoardUpdate-header {
   display: flex;
   align-items: center;
-  /* padding: 20px; */
 }
 .BoardUpdate-boardContent {
   margin-top: 80px;
@@ -325,7 +316,6 @@
   height: 300px;
 }
 .BoardUpdate-defaultImg {
-  /* margin: px; */
   margin-left: 20px;
   margin-right: 10px;
   width: 50%;
@@ -346,7 +336,6 @@
 .PersonPage-Outer {
   text-align: center;
   border-top: 5px solid lightgray;
-  /* background-color: rgb(218 239 234); */
 }
 .PersonPage-Inner {
   display: inline-block;
@@ -355,11 +344,9 @@
 }
 /* 유저가 올린 사진 3개씩 출력되게하는 css */
 .PersonPage-image-grid {
+  padding-top: 30px;
   display: grid;
-  /* flex-wrap: wrap; */
   border-top: 5px solid #2bb400;
-  /* width: 90%; */
-  /* margin: 10px auto; */
   grid-template-columns: repeat(3, 1fr);
 }
 .PersonPage-image-grid {
@@ -394,9 +381,6 @@
 .PersonPage-informationBtn {
   margin-top: 40px;
 }
-/* .PersonPage-Information-Board {
-  margin-top: 100px;
-  display: inline-block;
 
 /* 비밀번호 찾기 */
 /* .findpw-idCheck {
@@ -477,8 +461,9 @@
 }
 
 .DetailBoard-comments {
-  width: 550px;
+  width: 530px;
   height: 510px;
+  padding-right: 20px;
   overflow: scroll;
   overflow-x: hidden;
 }
@@ -497,13 +482,17 @@
   background: #e8e5da;
 }
 
+.comment-commentstyle {
+  padding-bottom: 10px;
+}
+
 .DetailBoard-writer-content {
   border: 1px solid lightgray;
   border-top: none;
   border-left: none;
   border-right: none;
   padding: 10px;
-  padding-right: 15px;
+  padding-right: 5px;
 }
 
 .boardContent {
@@ -524,15 +513,20 @@ h5 {
   /* 자식 */
   position: absolute;
   bottom: 0;
-  border: 10px;
+  border: 15px;
+  border-right: 10px;
+  margin-left: 10px;
+  border-top: 1px solid lightgray;
 }
 
 .Comment-write {
-  width: 470px;
+  width: 475px;
+  height: 40px;
+  border: none;
 }
 
 .detailboard-wcomment-btn {
-  border: 1px solid #7d6607;
+  border: none;
   background-color: #f5e9b5;
   color: #433603;
 }
@@ -547,7 +541,6 @@ h5 {
 .recommand-btn {
   width: 200px;
   height: 40px;
-  /* margin-right: 400px; */
   background-color: #fbf5dc;
   border-radius: 20px;
   border: solid 1px #6b5603;
@@ -584,7 +577,6 @@ p {
 .PersonPage-Outer {
   text-align: center;
   border-top: 5px solid lightgray;
-  /* background-color: rgb(218 239 234); */
 }
 .PersonPage-Inner {
   display: inline-block;
@@ -626,11 +618,10 @@ p {
 }
 /* 유저 기본 정보 보여주는 css */
 .PersonPage-Information {
-  margin-top: 5%;
   display: flex;
+  margin-top: 0;
 }
 .PersonPage-Information-Log {
-  margin-top: 70px;
   display: inline-block;
   width: 50%;
 }
@@ -644,4 +635,38 @@ p {
 }
 .PersonPage-informationBtn {
   margin-top: 40px;
+}
+/* Mail Service  */
+.parentmail {
+  display: flex;
+  margin: 40px 40px 40px 40px;
+  height: 500px;
+  width: 1000px;
+}
+.parentmail2 {
+  display: flex;
+  margin: 40px 80px 40px 40px;
+  padding: 0px 30px;
+  height: 400px;
+  width: 1000px;
+}
+.childmail {
+  height: 500px;
+  width: 100%;
+  flex: 1;
+  margin: 20px 20px;
+  padding: 10px;
+}
+.childmail2 {
+  height: 300px;
+  flex: 1;
+  margin: 75px 10px;
+  padding: 5px;
+}
+.checkchild1 {
+  height: 200px;
+  flex: 1;
+  margin: 13px 10px;
+  padding: 5px;
+  display: block;
 }

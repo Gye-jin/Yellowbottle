@@ -1,5 +1,6 @@
 package com.spring.back.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,8 @@ public interface ContentRepository extends JpaRepository<Content, Long>{
 	
 	public Content findByContentNo(Long contentNo);
 		
-	public List<Content> findTop10ByContentCategoryAndSendDateIsNullOrderByContentNoDesc(ContentCategory contentCategory);
+//	public List<Content> findTop10ByContentCategoryAndDateAndSendDateIsNullOrderByContentNoDesc(ContentCategory contentCategory,LocalDate Date);
+	public List<Content> findTop10ByDateAndContentCategoryAndSendDateIsNullOrderByContentNoDesc(ContentCategory contentCategory,LocalDate Date);
 	
 	public List<Content> findByContentCategoryAndSendDateIsNotNullOrderBySendDateDesc(ContentCategory contentCategory);
 	

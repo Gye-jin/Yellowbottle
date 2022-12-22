@@ -131,11 +131,12 @@ const DetailBoard = () => {
                   </div>
                 </div>
                 <div className="write-comment">
-                  <input
+                  <textarea
+                    resize="none;"
                     type="text"
                     onChange={changeComment}
                     className="Comment-write"
-                    placeholder="댓글을 입력해주세요!"
+                    placeholder="  댓글 입력.."
                     id="commentinput"
                     onKeyDown={handleEnter}
                   />
@@ -143,7 +144,7 @@ const DetailBoard = () => {
                     className="detailboard-wcomment-btn"
                     onClick={createCommentData}
                   >
-                    댓글작성
+                    등록
                   </button>
                 </div>
               </div>
