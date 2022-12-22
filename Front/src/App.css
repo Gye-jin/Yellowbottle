@@ -534,7 +534,7 @@ p {
 
 /* EditComment */
 .editComment-write {
-  width: 235px;
+  width: 250px;
   height: 40px;
 }
 .editComment-updateBtn {
@@ -664,10 +664,6 @@ p {
   margin-top: 12px;
   margin-bottom: -5;
   margin-left: 48%;
-  border: 2px solid #7d6607;
-  background-color: #ebe8da;
-  color: #433603;
-  border-radius: 10px;
 }
 
 .writeBoard-write {

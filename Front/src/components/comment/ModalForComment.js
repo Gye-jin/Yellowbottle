@@ -29,9 +29,9 @@ const ModalForComment = ({ comment }) => {
           content: {
             position: "absolute",
             top: "30%",
-            left: "40%",
+            left: "44%",
             right: "40%",
-            bottom: "45%",
+            bottom: "48%",
             border: "1px solid lightgray",
             background: "#fff",
             overflow: "auto",
