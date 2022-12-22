@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 function NotFound() {
   const choices = ["가위", "바위", "보"];
@@ -13,16 +14,13 @@ function NotFound() {
 
   // 승부를 가립니다.
   if (userChoice === computerChoice) {
-    console.log("비겼습니다!");
   } else if (
     (userChoice === "가위" && computerChoice === "보") ||
     (userChoice === "바위" && computerChoice === "가위") ||
     (userChoice === "보" && computerChoice === "바위")
   ) {
-    console.log("승리");
     setResult("🌍이겼습니다!🌍");
   } else {
-    console.log("패배");
     setResult("🌚졌지롱🌚");
   }
   return (

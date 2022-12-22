@@ -12,25 +12,12 @@ export function ForPostLoginData(loginData, setRegisterError) {
       .then((response) => {
         // response 는 백에서 프론트로 ... request는 프론트에서 백으로
         // 백에서 반응(response)가 정상적으로 온다면 userId라는 키값과 백에서 보내주는 세션값을 value라고 세션에 저장한다.
-        if (response.data !== "") {
-          sessionStorage.setItem("sessionId", response.data);
-          Swal.fire({
-            icon: "success",
-            title: `환영합니다 ${loginData.userId}님`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 1000);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "🌝존재하지않는 회원정보입니다.🌝",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+        response.data
+          ? sessionStorage.setItem(
+              "sessionId",
+              response.data
+            )((window.location.href = "/"))
+          : alert("🤘🏿😝😜🤘🏿" + " " + "로그인실패");
       });
   };
   // 위에서 만든 postLoginData가 로그인 페이지에서 실행되면 실행.
@@ -225,19 +212,8 @@ export function ForPostFindIdData(
       .post("http://localhost:8080/api/findId", findIdData)
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
-        console.log(response);
-        response.data === []
-          ? Swal.fire({
-              icon: "error",
-              title: "🌝잘못된 정보입니다. 다시 입력해주세요🌝",
-            })
-          : Swal.fire({
-              title: "귀하의 아이디입니다.",
-              text:
-                response.data !== null
-                  ? response.data
-                  : "존재하는 아이디가 없습니다",
-            });
+        setUserId(response.data);
+        console.log(response.data + "아이디찾기 성공");
       })
       .catch((err) => {
         // 백에서 오류(err)가 뜬다면 아이디 찾기 실패

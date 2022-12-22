@@ -9,6 +9,7 @@ import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
 import ModalForRecommend from "./modal/ModalForRecommend";
 import ModalForUpdate from "./modal/ModalForUpdate";
+import Swal from "sweetalert2";
 
 const DetailBoard = () => {
   // [변수 지정]
@@ -44,14 +45,29 @@ const DetailBoard = () => {
   // 게시글 삭제 버튼 클릭 시 = 게시글내용폼데이터 형태로 백에 보냄
   const deleteBoardData = () => {
     // 삭제 확인창 실행
-    const deleteConfirmCheck = window.confirm("정말 게시글을 삭제하겠습니까?");
-    if (deleteConfirmCheck) {
-      let deleteBoardData = new FormData();
-      deleteBoardData.append("sessionId", sessionId);
-      deleteBoardData.append("boardNo", boardNo);
-      // 폼데이터로 모은 deleteBoardData를 백에 보내주는 함수
-      postDeleteBoardData(deleteBoardData);
-    }
+    Swal.fire({
+      title: "정말 게시글을 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+      confirmButtonColor: "#3085d6", // confrim 버튼 색깔 지정
+      cancelButtonColor: "#d33", // cancel 버튼 색깔 지정
+      confirmButtonText: "승인", // confirm 버튼 텍스트 지정
+      cancelButtonText: "취소", // cancel 버튼 텍스트 지정
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let deleteBoardData = new FormData();
+        deleteBoardData.append("sessionId", sessionId);
+        deleteBoardData.append("boardNo", boardNo);
+        // 폼데이터로 모은 deleteBoardData를 백에 보내주는 함수
+        postDeleteBoardData(deleteBoardData);
+      } else {
+        Swal.fire({
+          text: "🌚게시글 삭제취소🌝",
+          showConfirmButton: false,
+          timer: 1200,
+        });
+      }
+    });
   };
 
   // [useEffect]
