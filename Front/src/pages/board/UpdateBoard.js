@@ -134,7 +134,12 @@ const UpBoardTest = ({ boardNo }) => {
               </div>
             </div>
             {/* 버튼을 누를시 선택한 파일과 작성된 게시글 데이터를 boardWriteData에 담아 이를 백에 전달한다. */}
-            <button onClick={sendUpdateBoardData}>게시글 수정</button>
+            <button
+              onClick={sendUpdateBoardData}
+              className="updateBoard-updateBtn"
+            >
+              게시글 수정
+            </button>
           </div>
         </div>
       </form>

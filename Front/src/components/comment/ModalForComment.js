@@ -30,7 +30,7 @@ const ModalForComment = ({ comment }) => {
             position: "absolute",
             top: "30%",
             left: "44%",
-            right: "40%",
+            right: "36%",
             bottom: "48%",
             border: "1px solid lightgray",
             background: "#fff",

@@ -18,6 +18,7 @@ export default function ModalForWrite() {
           src="/img/boardWriteBtn.png"
           alt="boardWriteBtn"
           className="feed-boardWriteBtn"
+          style={{ cursor: "pointer" }}
         />
         <Modal
           isOpen={wirteBoardModal}
