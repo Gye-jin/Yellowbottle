@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 	// [로그인]
 	@Override
 	@Transactional
-	public String login(String userId, String userPw, HttpSession httpsession) {
+	public String login(String userId, String userPw, HttpSession httpsession) throws NullPointerException{
 		User user = userRepo.findByUserId(userId);
 		Session usersession = sessionRepo.findByUser(user);
 		if (userPw.equals(user.getUserPw())) {
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
 	}
 	// [로그아웃]
 	@Override
-	public boolean logout(String sessionId) {
+	public boolean logout(String sessionId) throws NullPointerException{
 		sessionRepo.deleteById(sessionId);
 			return true;
 	}
@@ -125,23 +125,29 @@ public class UserServiceImpl implements UserService {
 	// [아이디 찾기]
 	@Override
 	public String[] findUserIdByEmailAndBirth(String email, String birth) {
-		ArrayList<User> users = userRepo.findByEmailAndBirth(email, birth);
-		String[] userIds = new String[users.size()];
-		for (int i = 0; i < users.size(); i++) {
-			userIds[i] = users.get(i).getUserId();
+		try {
+			ArrayList<User> users = userRepo.findByEmailAndBirth(email, birth);
+			String[] userIds = new String[users.size()];
+			for (int i = 0; i < users.size(); i++) {
+				userIds[i] = users.get(i).getUserId();
+			}
+			return userIds;
 		}
-		return userIds;
+		catch(NullPointerException e){
+			
+		}
+		return null;
 	}
 
 	// Update
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [비밀번호 변경]
+	@Transactional
 	@Override
 	public boolean updatePw(UserDTO userDTO) {
 		User user = userRepo.findByUserId(userDTO.getUserId());
 		user.updatePw(userDTO);
 		certifiedRepo.deleteByUser(user);
-		userRepo.save(user);
 		return true;
 	}
 

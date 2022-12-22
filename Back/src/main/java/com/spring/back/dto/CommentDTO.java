@@ -1,6 +1,6 @@
 package com.spring.back.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.spring.back.entity.Comment;
 
@@ -23,7 +23,7 @@ public class CommentDTO {
 	private Long boardNo;
 	private String userId;
 	private String commentContent;
-	private LocalDateTime commentDate;
+	private LocalDate commentDate;
 	
 	// comment객체 DTO에서 entity로 변경
 	public static Comment commentDtoToEntity(CommentDTO commentDTO) {
