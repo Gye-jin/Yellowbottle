@@ -1,6 +1,6 @@
 package com.spring.back.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -41,7 +41,7 @@ public class Comment {
 	private String commentContent;
 	
 	@LastModifiedDate
-	private LocalDateTime commentDate;
+	private LocalDate commentDate;
 	
 	// Join
 	// --------------------------------------------------------------------------------------------------------------------------------

@@ -45,11 +45,16 @@ function MyPage() {
               {/* 사용자 아이디 */}
               <h1>{sessionUserId}</h1>
               {/* 회원정보수정 버튼 */}
+              <div className="PersonPage-Information-Board">
+                <h4>
+                  회원등급 : {myPageData.grade}
+                  <br />
+                  게시물 수 : {myPageData.countBoard}
+                  <br />
+                  작성한 댓글 수 : {myPageData.countComment}
+                </h4>
+              </div>
               <n />
-              <h4>
-                작성한 댓글 수 :{myPageData.countComment}
-                &nbsp;&nbsp;&nbsp;게시물 수 :{myPageData.countBoard}
-              </h4>
               <div className="PersonPage-informationBtn">
                 <button
                   className="PersonPage-update"
@@ -57,6 +62,7 @@ function MyPage() {
                 >
                   회원정보수정
                 </button>
+                &nbsp;&nbsp;
                 {/* 회원탈퇴 버튼 */}
                 <button
                   className="PersonPage-withdraw"

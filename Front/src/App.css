@@ -367,6 +367,7 @@ input[type="radio"] {
 }
 /* 유저가 올린 사진 3개씩 출력되게하는 css */
 .PersonPage-image-grid {
+  padding-top: 30px;
   display: grid;
   border-top: 5px solid #2bb400;
   grid-template-columns: repeat(3, 1fr);
@@ -420,7 +421,8 @@ input[type="radio"] {
 .outer-detail {
   display: flex;
   justify-content: center;
-  background-color: white;
+  background-color: #e8e6d8;
+  height: 1000px;
 }
 
 .inner-detail {
@@ -429,11 +431,12 @@ input[type="radio"] {
 }
 
 .detailboard-image {
+  border-radius: 5px;
   flex-direction: left;
   justify-content: center;
   margin: auto;
   width: 600px;
-  height: 580px;
+  height: 610px;
   background-color: white;
   border: 2px solid #c1b6ac;
   border-right: none;
@@ -460,6 +463,7 @@ input[type="radio"] {
 }
 
 .boardImage {
+  border-radius: 10px;
   margin-top: 25px;
   width: 550px;
   height: 500px;
@@ -468,9 +472,10 @@ input[type="radio"] {
 .Detailcomment {
   height: 525px;
   width: 550px;
-  height: 580px;
+  height: 610px;
   background-color: white;
   border: 2px solid #c1b6ac;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -483,8 +488,9 @@ input[type="radio"] {
 }
 
 .DetailBoard-comments {
-  width: 550px;
+  width: 530px;
   height: 510px;
+  padding-right: 20px;
   overflow: scroll;
   overflow-x: hidden;
 }
@@ -503,13 +509,24 @@ input[type="radio"] {
   background: #e8e5da;
 }
 
+/* .comment-commentstyle {
+  padding-bottom: 10px; */
+
+.comment-commentdate {
+  display: inline;
+  float: right;
+  color: #231d019e;
+  font-size: small;
+  /* justify-content: center; */
+}
+
 .DetailBoard-writer-content {
   border: 1px solid lightgray;
   border-top: none;
   border-left: none;
   border-right: none;
   padding: 10px;
-  padding-right: 15px;
+  padding-right: 5px;
 }
 
 h5 {
@@ -520,31 +537,44 @@ h5 {
   margin-right: 45px;
 }
 
-.write-comment {
+.detailboard-write-comment {
   /* 자식 */
   position: absolute;
   bottom: 0;
-  border: 10px;
+  border: 15px;
+  border-right: 10px;
+  margin-left: 10px;
+  border-top: 1px solid lightgray;
 }
 
-.Comment-write {
-  width: 470px;
-  height: 100px;
+.detailboard-Comment-write {
+  width: 450px;
+  height: 70px;
+  border: none;
 }
 
 .detailboard-wcomment-btn {
-  border: 1px solid #7d6607;
-  background-color: #f5e9b5;
-  color: #433603;
+  display: inline;
+  margin-left: 12px;
+  margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: lighter;
+  cursor: pointer;
+  /* border: solid 1px #6b5603;
+  background-color: #f5e9b5; */
+  border: solid 1px white;
+  background-color: white;
+  color: #6b5603;
+  border-radius: 7px;
+}
+
+.comment-commentstyle {
+  padding-bottom: 10px;
+  border-bottom: 0.5px dotted lightgray;
 }
 
 /** DetailBoard 추천게시물 **/
 
-.recommend-board {
-  display: inline;
-  padding: 10px;
-  margin: auto;
-}
 .recommand-btn {
   width: 200px;
   height: 40px;
@@ -556,6 +586,7 @@ h5 {
 }
 
 .modalforrecommand {
+  padding-top: 18px;
   text-align: center;
   justify-content: center;
   display: flex;
@@ -567,13 +598,11 @@ p {
   font-size: 20px;
 }
 
-.modalforrecommand {
-  text-align: center;
-}
-
 .modalforcomment-ucomment-btn {
+  /* float: right; */
   background-color: #d8d2b8;
   border: none;
+  border-radius: 12px;
 }
 
 /* personPage */
@@ -621,11 +650,10 @@ p {
 }
 /* 유저 기본 정보 보여주는 css */
 .PersonPage-Information {
-  margin-top: 5%;
   display: flex;
+  margin-top: 0;
 }
 .PersonPage-Information-Log {
-  margin-top: 70px;
   display: inline-block;
   width: 50%;
 }

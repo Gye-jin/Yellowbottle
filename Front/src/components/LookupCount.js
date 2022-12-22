@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { BoardFetchData } from "../Api/BoardData";
 
 //조회수 카운트
@@ -7,6 +7,9 @@ function LookupCount() {
   const onClickHandler = (e) => {
     setLookup(e.target.value);
   };
+  // const onClickHandler = () => {
+  //   onIncrease();
+  // };
   const { boardNumber } = useParams;
   const [board, setBoard] = useState([]);
   let [LookupCount, setLookup] = useState(0);

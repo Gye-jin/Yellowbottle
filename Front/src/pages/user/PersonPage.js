@@ -54,7 +54,7 @@ function PersonPage() {
                   작성한 댓글 수 : {myPageData.countComment}
                 </h4>
               </div>
-              <n />
+              {/* <n /> */}
               {personId === sessionUserId ? (
                 <button
                   className="PersonPage-update"
