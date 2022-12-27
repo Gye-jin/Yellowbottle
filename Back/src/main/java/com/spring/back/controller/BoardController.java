@@ -23,7 +23,7 @@ import com.spring.back.service.FileServiceImpl;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/json")
-@CrossOrigin(origins = { "http://localhost:3000" })
+@CrossOrigin(origins = { "*" })
 public class BoardController {
 	// Connection
 	// --------------------------------------------------------------------------------------------------------------------------------

@@ -2,18 +2,6 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { AccessAgreeBoardWrite } from "../../../components/AccessAgree";
 import WriteBoard from "../WriteBoard";
-import styled from "styled-components";
-import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
-
-const ControlPointOutlinedIcons = styled(ControlPointOutlinedIcon)`
-  background-color: rgb(255, 217, 44);
-  border-radius: 10%;
-  color: white;
-  //   border: 1px solid lightgray;
-  width: 70px;
-  height: 70px;
-  font-size: 3rem;
-`;
 
 export default function ModalForWrite() {
   // [변수지정]
@@ -25,16 +13,48 @@ export default function ModalForWrite() {
       <div>
         {/* 게시글 작성 버튼
         기능: 회원 => 게시글 작성 팝업 실행 / 비회원 => 로그인 페이지 이동 */}
-        <ControlPointOutlinedIcons
+        <img
           onClick={() => AccessAgreeBoardWrite(setWirteBoardModal)}
+          src="/img/boardWriteBtn.png"
+          alt="boardWriteBtn"
+          className="feed-boardWriteBtn"
+          style={{ cursor:"pointer" }}
         />
         <Modal
           isOpen={wirteBoardModal}
           onRequestClose={() => setWirteBoardModal(false)}
+          style={{
+            overlay: {
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(255, 255, 255, 0.75)",
+            },
+            content: {
+              position: "absolute",
+              top: "10%",
+              left: "15%",
+              right: "15%",
+              bottom: "10%",
+              border: "1px solid lightgray",
+              background: "#fff",
+              overflow: "auto",
+              WebkitOverflowScrolling: "touch",
+              borderRadius: "5%",
+              outline: "none",
+              padding: "20px",
+            },
+          }}
         >
-          <div>
-            <button onClick={() => setWirteBoardModal(false)}>닫기</button>
-          </div>
+          <img
+            src="/img/close_btn.png"
+            className="modalForWrite-close-btn"
+            onClick={() => setWirteBoardModal(false)}
+            style={{ cursor: "pointer" }}
+          />
+
           <br />
           {/* 컴퍼넌트 들어가는 자리 */}
           <WriteBoard />

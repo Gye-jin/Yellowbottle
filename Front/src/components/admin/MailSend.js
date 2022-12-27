@@ -153,7 +153,7 @@ const MailSend = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/mail?FirstcontentNo=${mailData[0]}&SecondcontentNo=${mailData[1]}&ThirdcontentNo=${mailData[2]}`
+        `http://43.200.181.65:8080/mail?FirstcontentNo=${mailData[0]}&SecondcontentNo=${mailData[1]}&ThirdcontentNo=${mailData[2]}`
       );
       console.log(response);
       setCheckContents([]);

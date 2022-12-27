@@ -16,6 +16,7 @@ import styled from "styled-components";
 import Header from "../../components/header/Header";
 import { ForPostFindIdData } from "../../Api/LogData";
 import Swal from "sweetalert2";
+import { yellow } from "@material-ui/core/colors";
 
 // mui의 내장 css
 const FormHelperTexts = styled(FormHelperText)`
@@ -32,7 +33,22 @@ const Boxs = styled(Box)`
 // 아이디 찾기 페이지
 const FindId = () => {
   //mui테마
+  const theme1 = createTheme({
+    palette: {
+      primary: {
+        main: yellow[500],
+      },
+    },
+  });
+  const theme3 = createTheme({
+    palette: {
+      primary: {
+        main: "#393201",
+      },
+    },
+  });
   const theme = createTheme();
+
   //이메일 입력오류
   const [emailError, setEmailError] = useState("");
   //생년월일 입력오류
@@ -85,88 +101,103 @@ const FindId = () => {
     // mui의 theme사용, Header컴포넌트 삽입, Container, Box, Boxs구성
     <ThemeProvider theme={theme}>
       <Header />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            아이디찾기
-          </Typography>
-          <Boxs
-            component="form"
-            noValidate
-            onSubmit={createFindIdData}
-            sx={{ mt: 3 }}
+      <div className="logPage-background">
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <FormControl component="fieldset" variant="standard">
-              <Grid container spacing={1.5}>
-                {/* 생년월일 입력칸 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="birth"
-                    id="birth"
-                    name="birth"
-                    label="생년월일 입력(ex.1995-02-19)"
-                    error={birthError !== "" || false}
-                  />
-                </Grid>
-                {/* 유효성검사 맞지않으면 birthError로 빨간글씨 표시 */}
-                <FormHelperTexts>{birthError}</FormHelperTexts>
-                {/* 이메일 입력 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="email"
-                    id="email"
-                    name="email"
-                    label="이메일 주소"
-                    error={emailError !== "" || false}
-                  />
-                </Grid>
-                {/* 이메일형식에 맞지않을 경우, 빨간글자로 표시 */}
-                <FormHelperTexts>{emailError}</FormHelperTexts>
-              </Grid>
-              {/* 아이디찾기 버튼을 누르면 type="submit"에 의해 createFindIdData이 실행됨 */}
-              <Button
-                className="findId-findIdBtn"
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                size="large"
-              >
-                아이디 찾기
-              </Button>
-              {/* 입력된 값이 정상적으로 post 되지 않으면 아래 빨간글씨 오류 띄우기 */}
-              <FormHelperTexts>{registerError}</FormHelperTexts>
-            </FormControl>
-            {/* 아이디찾기 버튼을 누를경우 해당 페이지로 이동한다. */}
-            <Button
-              className="loginPage-findId"
-              onClick={() => navigate("/login")}
+            <br />
+            <br />
+            <br />
+            <Typography component="h1" variant="h5">
+              아이디찾기
+            </Typography>
+            <Boxs
+              component="form"
+              noValidate
+              onSubmit={createFindIdData}
+              sx={{ mt: 3 }}
             >
-              로그인
-            </Button>
-            {/* 비밀번호찾기 버튼을 누를경우 해당 페이지로 이동한다. */}
-            <Button
-              className="loginPage-findPw"
-              onClick={() => navigate("/findPw")}
-            >
-              비밀번호찾기
-            </Button>
-          </Boxs>
-        </Box>
-      </Container>
+              <FormControl component="fieldset" variant="standard">
+                <Grid container spacing={1.5}>
+                  {/* 생년월일 입력칸 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        fullWidth
+                        type="birth"
+                        id="birth"
+                        name="birth"
+                        label="생년월일 입력(ex.1995-02-19)"
+                        error={birthError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 유효성검사 맞지않으면 birthError로 빨간글씨 표시 */}
+                  <FormHelperTexts>{birthError}</FormHelperTexts>
+                  {/* 이메일 입력 */}
+                  <Grid item xs={12}>
+                    <ThemeProvider theme={theme3}>
+                      <TextField
+                        required
+                        autoFocus
+                        fullWidth
+                        type="email"
+                        id="email"
+                        name="email"
+                        label="이메일 주소"
+                        error={emailError !== "" || false}
+                      />
+                    </ThemeProvider>
+                  </Grid>
+                  {/* 이메일형식에 맞지않을 경우, 빨간글자로 표시 */}
+                  <FormHelperTexts>{emailError}</FormHelperTexts>
+                </Grid>
+                <ThemeProvider theme={theme1}>
+                  {/* 아이디찾기 버튼을 누르면 type="submit"에 의해 createFindIdData이 실행됨 */}
+                  <Button
+                    className="findId-findIdBtn"
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    size="large"
+                  >
+                    아이디 찾기
+                  </Button>
+                </ThemeProvider>
+                {/* 입력된 값이 정상적으로 post 되지 않으면 아래 빨간글씨 오류 띄우기 */}
+                <FormHelperTexts>{registerError}</FormHelperTexts>
+              </FormControl>
+              {/* 아이디찾기 버튼을 누를경우 해당 페이지로 이동한다. */}
+              <ThemeProvider theme={theme3}>
+                <Button
+                  className="loginPage-findId"
+                  onClick={() => navigate("/login")}
+                >
+                  로그인
+                </Button>
+              </ThemeProvider>
+              {/* 비밀번호찾기 버튼을 누를경우 해당 페이지로 이동한다. */}
+              <ThemeProvider theme={theme3}>
+                <Button
+                  className="loginPage-findPw"
+                  onClick={() => navigate("/findPw")}
+                >
+                  비밀번호찾기
+                </Button>
+              </ThemeProvider>
+            </Boxs>
+          </Box>
+        </Container>
+      </div>
     </ThemeProvider>
   );
 };

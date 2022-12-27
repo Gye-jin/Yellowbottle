@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ForPostBoardWrite } from "../../Api/BoardData";
+import Swal from "sweetalert2";
 
 function WriteBoard() {
   // [변수 지정]----------------------------------------------------------------
@@ -46,11 +47,14 @@ function WriteBoard() {
       boardWriteData.append("boardContent", boardContent);
       boardWriteData.append("image", selectImage);
       // 입력된 값들을 boardWriteData에 넣는다.
-      console.log("boardWriteData: ", boardWriteData);
       ForPostBoardWrite(boardWriteData);
-      window.location.reload();
     } else {
-      alert("게시글 작성은 사진 1장과 최소 10자의 내용이 필요합니다.");
+      Swal.fire({
+        icon: "error",
+        text: "게시글작성은 사진1장과 최소 10자의 내용이 필요합니다",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
@@ -116,7 +120,9 @@ function WriteBoard() {
               </div>
             </div>
             {/* 버튼을 누를시 선택한 파일과 작성된 게시글 데이터를 boardWriteData에 담아 이를 백에 전달한다. */}
-            <button onClick={sendBoardWriteData}>게시글 작성</button>
+            <button className="writeBoard-write" onClick={sendBoardWriteData}>
+              게시글 작성
+            </button>
           </div>
         </div>
       </form>

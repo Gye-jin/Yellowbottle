@@ -14,7 +14,7 @@ import com.spring.back.service.CommentServiceImpl;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/json")
-@CrossOrigin(origins = { "http://localhost:3000" })
+@CrossOrigin(origins = { "*" })
 public class CommentController {
 	// Connection
 	// --------------------------------------------------------------------------------------------------------------------------------

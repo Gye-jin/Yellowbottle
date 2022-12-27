@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.spring.back.entity.Board;
 import com.spring.back.entity.Comment;
 import com.spring.back.entity.User;
 
@@ -19,9 +18,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	void deleteByboardNo(@Param("no") Long boardNo);
 	
 	// 해당 user의 댓글 수 반환
-	Long countByUser(User user);
+//	Long countByUser(User user);
 	
-	Long countByBoard(Board board);
+//	Long countByBoard(Board board);
 	
 	public void deleteByUser(User user);
 }

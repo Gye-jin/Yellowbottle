@@ -77,19 +77,22 @@
 }
 .join-idCheck {
   width: 35%;
-  background-color: rgb(25, 118, 210);
-  color: white;
+  background-color: #ffeb3b;
+  color: black;
   height: 26px;
   border: 0;
   margin-top: 5px;
   margin-bottom: 10px;
   margin-left: 130px;
   padding-left: 10px;
-  border: 1px solid lightslategray;
+  border: 1px solid lightgray;
   border-radius: 5%;
 }
 .join-inputId {
   width: 100%;
+}
+input[type="radio"] {
+  accent-color: #393201;
 }
 
 /* 로그인 페이지 */
@@ -125,13 +128,20 @@
   padding-left: 10px;
 }
 
+.logPage-background {
+  background-color: rgb(232, 230, 216);
+  width: 100%;
+  height: 860px;
+  margin-top: -64px;
+}
+
 /* FindPw */
-.FindPw-sendCertiNum {
+.findPw-sendCertiNum {
   width: 33%;
-  background-color: rgb(25, 118, 210);
-  color: white;
-  height: 22px;
-  border: 0;
+  background-color: #ffeb3b;
+  color: black;
+  height: 25px;
+  border: 1px solid lightgray;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 130px;
@@ -158,24 +168,77 @@
   background-color: rgb(232, 230, 216);
   right: 5%;
 }
-.recommendBoard {
-  width: 60%;
+
+/* [Recommend] */
+.recommend-modal {
+  width: 100%;
+}
+.recommend-view {
+  width: 100%;
+}
+.recommend-outer {
+  background-color: #e8e6d9;
+  display: inline-block;
+  width: 100%;
+}
+.recommend-inner {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  display: flex;
+}
+.recommend-board {
+  min-width: 600px;
+  max-width: 70%;
   background-color: white;
-  max-width: 700px;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   margin-bottom: 45px;
+  border-radius: 4%;
   padding: 10px;
-  float: left;
+  width: 70%;
+  display: inline-block;
 }
 .board_recommendLeftBtn {
   padding: 10px;
-  width: 5%;
-  float: left;
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .board_recommendRightBtn {
   padding: 10px;
-  width: 5%;
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.recommend-boardImage {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+.recommend-boardContent {
+  text-align: left;
+  font-weight: flex;
+  padding: 5px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+.recommend_userId {
+  text-align: left;
+  margin-left: 30px;
+  margin-top: 1px;
+  margin-bottom: 15px;
+}
+.recommend_viewCount {
   float: left;
+  font-weight: bolder;
+}
+.recommend-createDate {
+  float: right;
+  margin-right: 15px;
 }
 
 /* 게시글 전체 가운데 정렬 */
@@ -185,6 +248,7 @@
 }
 .feedBoard-inner {
   display: inline-block;
+  margin-top: 25px;
 }
 /* board_Image */
 .feedBoard-boardImage {
@@ -217,6 +281,18 @@
   text-align: right;
   width: 650px;
 }
+
+/* Feed.js */
+.feed-boardWriteBtn {
+  width: 80px;
+  height: 80px;
+  border-radius: 10%;
+}
+.feed-goToTopBtn {
+  width: 80px;
+  height: 80px;
+}
+
 /* BoardWrite : 게시글 작성화면 css */
 .BoardWrite-box {
   min-width: 1000px;
@@ -261,6 +337,7 @@
 .BoardWrite-defaultImg {
   width: 300px;
   height: 300px;
+  margin-left: 50px;
 }
 .BoardWrite-prevImg {
   margin: auto;
@@ -272,9 +349,8 @@
 /* 사진 선택 */
 .BoardUpdate-leftBox {
   float: left;
-  width: 65%;
-  max-height: 500px;
-  display: flex;
+  width: 50%;
+  max-height: 400;
   align-items: flex-start;
   margin: 30px 0;
 }
@@ -282,14 +358,14 @@
 .BoardUpdate-rightBox {
   border-left: 2px solid lightgray;
   float: right;
-  width: 35%;
-  height: 500px;
+  width: 30%;
+  height: 400px;
 }
 .BoardUpdate-box {
-  min-width: 1000px;
+  min-width: 800px;
   background-color: white;
-  max-width: 1000px;
-  height: 500px;
+  max-width: 800px;
+  height: 400px;
   border: 1px solid lightgray;
   margin-bottom: 45px;
 }
@@ -304,7 +380,8 @@
   align-items: center;
 }
 .BoardUpdate-boardContent {
-  margin-top: 80px;
+  margin-top: 40px;
+  margin-left: 40px;
   width: 300px;
   height: 300px;
 }
@@ -322,7 +399,6 @@
   height: 350px;
   width: 300px;
   height: 300px;
-  /* display: none; */
 }
 .BoardUpdate-selectedImg {
   width: 300px;
@@ -330,74 +406,18 @@
   margin-right: 10px;
   margin-left: 10px;
 }
-
-/* PersonPage */
-/* PersonPage 전체 틀 css */
-.PersonPage-Outer {
-  text-align: center;
-  border-top: 5px solid lightgray;
+.updateBoard-updateBtn {
+  background-color: #f0f0e6;
+  color: #433603;
+  border-radius: 10px;
 }
-.PersonPage-Inner {
-  display: inline-block;
-  width: 80%;
-  background-color: white;
-}
-/* 유저가 올린 사진 3개씩 출력되게하는 css */
-.PersonPage-image-grid {
-  display: grid;
-  border-top: 5px solid #2bb400;
-  grid-template-columns: repeat(3, 1fr);
-}
-.PersonPage-image-grid {
-  width: 100%;
-}
-.PersonPage-image-grid img {
-  margin: 10px;
-  min-height: 400px;
-  max-height: 400px;
-  width: 90%;
-  border: 1px solid lightgray;
-  border-radius: 18%;
-}
-/* 유저 기본 정보 보여주는 css */
-.PersonPage-Information {
-  margin-top: 5%;
-  display: flex;
-}
-.PersonPage-Information-Log {
-  margin-top: 70px;
-  display: inline-block;
-  width: 50%;
-}
-.PersonPage-Information-Grade {
-  display: inline-block;
-  width: 50%;
-}
-.PersonPage-Information-GradeImg {
-  width: 400px;
-  height: 400px;
-}
-.PersonPage-informationBtn {
-  margin-top: 40px;
-}
-
-/* 비밀번호 찾기 */
-/* .findpw-idCheck {
-  width: 35%;
-  background-color: dodgerblue;
-  color: white;
-  height: 20px;
-  border: 0;
-  margin-bottom: 10px;
-  margin-left: 60px;
-  padding-left: 10px;
-} */
 
 /** DetailBoard 게시글 세부보기+댓글 **/
 .outer-detail {
   display: flex;
   justify-content: center;
-  background-color: white;
+  background-color: #e8e6d8;
+  height: 1000px;
 }
 
 .inner-detail {
@@ -406,11 +426,12 @@
 }
 
 .detailboard-image {
+  border-radius: 5px;
   flex-direction: left;
   justify-content: center;
   margin: auto;
   width: 600px;
-  height: 580px;
+  height: 610px;
   background-color: white;
   border: 2px solid #c1b6ac;
   border-right: none;
@@ -422,8 +443,6 @@
 .detailboardtn-ud {
   margin-left: 200px;
 }
-
-/* margin-left: 240px; */
 
 .detailboard-u {
   margin-right: 2px;
@@ -437,6 +456,7 @@
 }
 
 .boardImage {
+  border-radius: 10px;
   margin-top: 25px;
   width: 550px;
   height: 500px;
@@ -445,9 +465,10 @@
 .Detailcomment {
   height: 525px;
   width: 550px;
-  height: 580px;
+  height: 610px;
   background-color: white;
   border: 2px solid #c1b6ac;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -460,8 +481,9 @@
 }
 
 .DetailBoard-comments {
-  width: 550px;
+  width: 530px;
   height: 510px;
+  padding-right: 20px;
   overflow: scroll;
   overflow-x: hidden;
 }
@@ -480,53 +502,66 @@
   background: #e8e5da;
 }
 
+.comment-commentdate {
+  display: inline;
+  float: right;
+  color: #231d019e;
+  font-size: small;
+}
+
 .DetailBoard-writer-content {
   border: 1px solid lightgray;
   border-top: none;
   border-left: none;
   border-right: none;
   padding: 10px;
-  padding-right: 15px;
-}
-
-.boardContent {
+  padding-right: 5px;
 }
 
 h5 {
   display: inline;
-  /* margin: 17px; */
   margin-left: 0px;
   margin-bottom: 10px;
   margin-right: 45px;
 }
 
-.one-comment {
-}
-
-.write-comment {
+.detailboard-write-comment {
   /* 자식 */
   position: absolute;
   bottom: 0;
-  border: 10px;
+  border: 15px;
+  border-right: 10px;
+  margin-left: 10px;
+  border-top: 1px solid lightgray;
 }
 
-.Comment-write {
-  width: 470px;
+.detailboard-Comment-write {
+  width: 450px;
+  height: 70px;
+  border: none;
 }
 
 .detailboard-wcomment-btn {
-  border: 1px solid #7d6607;
-  background-color: #f5e9b5;
-  color: #433603;
+  display: inline;
+  /* margin: 15px; */
+  /* margin-left: 12px;
+  margin-bottom: 15px; */
+  font-size: 25px;
+  font-weight: lighter;
+  cursor: pointer;
+  border: solid 1px white;
+  background-color: white;
+  color: #6b5603;
+  border-radius: 7px;
+}
+
+.comment-commentstyle {
+  padding-bottom: 10px;
+  border-bottom: 0.5px dotted lightgray;
 }
 
 /** DetailBoard 추천게시물 **/
 
-.recommend-board {
-  display: inline;
-  padding: 10px;
-  margin: auto;
-}
 .recommand-btn {
   width: 200px;
   height: 40px;
@@ -538,13 +573,10 @@ h5 {
 }
 
 .modalforrecommand {
+  padding-top: 18px;
   text-align: center;
   justify-content: center;
   display: flex;
-}
-
-.modal-recommand-btn {
-  /* display: flex; */
 }
 
 p {
@@ -553,13 +585,38 @@ p {
   font-size: 20px;
 }
 
-.modalforrecommand {
-  text-align: center;
-}
-
 .modalforcomment-ucomment-btn {
   background-color: #d8d2b8;
   border: none;
+  border-radius: 12px;
+}
+
+/* EditComment */
+.editComment-write {
+  width: 230px;
+  height: 40px;
+}
+.editComment-updateBtn {
+  border: 2px solid #7d6607;
+  background-color: #ebe8da;
+  color: #433603;
+  border-radius: 10px;
+  margin-right: 12px;
+  margin-left: 5px;
+}
+.editComment-deleteBtn {
+  border: 2px solid #7d6607;
+  background-color: #ebe8da;
+  color: #433603;
+  border-radius: 10px;
+  margin-right: 12px;
+}
+.editComment-goBackBtn {
+  border: 2px solid #7d6607;
+  background-color: #ebe8da;
+  color: #433603;
+  border-radius: 10px;
+  margin-right: 12px;
 }
 
 /* personPage */
@@ -584,7 +641,6 @@ p {
   border: 2px solid #7d6607;
   background-color: #e8e2c8;
   color: #433603;
-
   border-radius: 10px;
 }
 
@@ -601,17 +657,17 @@ p {
   margin: 10px;
   min-height: 400px;
   max-height: 400px;
-  width: 85%;
+  width: 90%;
   border: 1px solid lightgray;
   border-radius: 18%;
 }
+
 /* 유저 기본 정보 보여주는 css */
 .PersonPage-Information {
-  margin-top: 5%;
   display: flex;
+  margin-top: 50px;
 }
 .PersonPage-Information-Log {
-  margin-top: 70px;
   display: inline-block;
   width: 50%;
 }
@@ -659,4 +715,35 @@ p {
   margin: 13px 10px;
   padding: 5px;
   display: block;
+}
+
+/* ModalForWrite 게시글 작성 모달 */
+
+.modalForWrite-close-btn {
+  margin-top: 12px;
+  margin-bottom: -5;
+  margin-left: 48%;
+}
+
+.writeBoard-write {
+  border: 2px solid #7d6607;
+  background-color: #ebe8da;
+  color: #433603;
+  border-radius: 10px;
+}
+
+.BoardWrite-header {
+  border: 2px solid #c1b6ac;
+  border-radius: 5px;
+}
+
+.modalForWrite-close-btn {
+  margin-left: 95%;
+  height: 30px;
+}
+
+.modal-close-btn {
+  float: right;
+  margin-top: 5px;
+  margin-right: 15px;
 }

@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import { createTheme } from "@material-ui/core/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 // 회원용 헤더
 export default function HeaderLogin() {
@@ -21,6 +22,14 @@ export default function HeaderLogin() {
 
   // navigate(이동)하는 함수
   const navigate = useNavigate();
+  // 실천내용버튼에 마우스 올렸을때 pointer 효과
+  const handleMouseEnter = () => {
+    document.body.style.cursor = "pointer";
+  };
+
+  const handleMouseLeave = () => {
+    document.body.style.cursor = "default";
+  };
   // 로그아웃 함수
   const onLogout = async () => {
     // 이 부분부터 새롭게 쓴 logout
@@ -30,13 +39,28 @@ export default function HeaderLogin() {
         sessionId: sessionStorage.getItem("sessionId"),
       })
       .then((response) => {
-        response.data
-          ? // 백에서 정상적으로 처리되면 로그아웃 성공! 후 메인페이지로 이동
-            sessionStorage.removeItem("sessionId")((window.location.href = "/"))
-          : // 백에서 정상적으로 처리 실패해도 로그아웃 성공!
-            sessionStorage.removeItem("sessionId")(
-              (window.location.href = "/")
-            );
+        sessionStorage.removeItem("sessionId");
+        Swal.fire({
+          icon: "success",
+          text: "🌚로그아웃 성공🌝",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
+      })
+      .catch((err) => {
+        sessionStorage.removeItem("sessionId");
+        Swal.fire({
+          icon: "success",
+          text: "🌚로그아웃 성공🌝",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
       });
   };
 
@@ -51,6 +75,7 @@ export default function HeaderLogin() {
             aria-label="menu"
             sx={{ mr: 2 }}
             onClick={() => navigate("/")}
+
           >
             {/* 로고 */}
             <img className="logo" src="/img/logo.png" width="100" height="80" />
@@ -61,6 +86,8 @@ export default function HeaderLogin() {
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             실천내용
           </Typography>

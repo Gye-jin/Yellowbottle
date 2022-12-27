@@ -1,5 +1,6 @@
 package com.spring.back.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -43,10 +44,11 @@ public class ContentServiceImpl implements ContentService {
 	// --------------------------------------------------------------------------------------------------------------------------------
 	// [카테고리 가져오기]
 	@Override
-	public List<ContentDTO> getByCategory(ContentDTO contentDTO) {
+	public List<ContentDTO> getByCategory(ContentDTO contentDTO) throws NullPointerException{
 		ContentCategory contentCategory = contentDTO.getContentCategory();
 
-		List<Content> contents = contentRepo.findTop10ByContentCategoryAndSendDateIsNullOrderByContentNoDesc(contentCategory);
+//		List<Content> contents = contentRepo.findTop10ByContentCategoryAndSendDateIsNullOrderByContentNoDesc(contentCategory);
+		List<Content> contents = contentRepo.findTop10ByContentCategoryAndDateAndSendDateIsNullOrderByContentNoDesc(contentCategory,LocalDate.now());
 
 		List<ContentDTO> contentDTOs = contents.stream().map(content -> Content.contentEntityToDTO(content)).collect(Collectors.toList());
 		return contentDTOs;

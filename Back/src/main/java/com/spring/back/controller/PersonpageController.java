@@ -18,7 +18,7 @@ import com.spring.back.service.SessionServiceImpl;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/json")
-@CrossOrigin(origins = { "http://localhost:3000" })
+@CrossOrigin(origins = { "*" })
 public class PersonpageController {
 	
 	@Autowired

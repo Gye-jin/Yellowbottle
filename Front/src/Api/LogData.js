@@ -8,7 +8,7 @@ export function ForPostLoginData(loginData, setRegisterError) {
     // post
     await axios
       // 입력된 joinData를 백에 보낸다.
-      .post("http://localhost:8080/api/login", loginData)
+      .post("http://43.200.181.65:8080/login", loginData)
       .then((response) => {
         // response 는 백에서 프론트로 ... request는 프론트에서 백으로
         // 백에서 반응(response)가 정상적으로 온다면 userId라는 키값과 백에서 보내주는 세션값을 value라고 세션에 저장한다.
@@ -26,7 +26,7 @@ export function ForPostLoginData(loginData, setRegisterError) {
         } else {
           Swal.fire({
             icon: "error",
-            title: "🌝존재하지않는 회원정보입니다.🌝",
+            title: "존재하지않는 회원정보입니다",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -43,7 +43,7 @@ export const duplicationCheckAPI = async (userId) => {
   let returnId;
   await axios
     // 입력된 아이디를 백에 보낸다.
-    .post("http://localhost:8080/api/userSearch", {
+    .post("http://43.200.181.65:8080/userSearch", {
       userId: userId,
     })
     // 백에서 정상적으로 response가 오면 입력한 아이디값을  returnId로 선언한다.
@@ -90,7 +90,7 @@ export function ForPostJoinData(joinData, setRegisterError) {
     // post
     await axios
       // 입력된 joinData를 백에 보낸다.
-      .post("http://localhost:8080/api/join", joinData)
+      .post("http://43.200.181.65:8080/join", joinData)
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
         console.log(response, "성공");
@@ -126,7 +126,7 @@ export const SendCertiNumAPI = async (findPwData, setCertiNum) => {
   let returnCertiNum;
   // 이메일, 아이디, 생년월일 파라메터들을 백에 보내준다.
   await axios
-    .post("http://localhost:8080/api/findPw", findPwData)
+    .post("http://43.200.181.65:8080/findPw", findPwData)
     // 백에서 해당 유저가 있다는 확인을 한다면 인증번호를 백에서 설정한다.
     .then((response) => {
       returnCertiNum = response.data;
@@ -181,7 +181,7 @@ export const passResetPw = async () => {
   const inputNum = document.getElementById("inputNum").value;
   await axios
     // 백에 입력한 인증번호와 userSession을 request한다.
-    .get("http://localhost:8080/api/checkCertifiedNo", {
+    .get("http://43.200.181.65:8080/checkCertifiedNo", {
       params: {
         userId: sessionStorage.getItem("userId"),
         certifiedNo: inputNum,
@@ -189,7 +189,6 @@ export const passResetPw = async () => {
     })
     // 백에서 response가 정상적으로 오면
     .then((response) => {
-      console.log(response, "인증번호 인증 성공!");
       Swal.fire({
         icon: "success",
         title: "인증번호인증 성공!",
@@ -202,7 +201,6 @@ export const passResetPw = async () => {
       }, 1000);
     })
     .catch(function (err) {
-      console.log(err, "에러 ㅠㅠ");
       Swal.fire({
         icon: "error",
         text: "🌚인증번호가 일치하지않습니다.🌝",
@@ -222,26 +220,23 @@ export function ForPostFindIdData(
     // post
     await axios
       // 입력된 findIdData를 백에 보낸다.
-      .post("http://localhost:8080/api/findId", findIdData)
+      .post("http://43.200.181.65:8080/findId", findIdData)
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
-        console.log(response);
-        response.data === []
+        response.data.length === 0
           ? Swal.fire({
               icon: "error",
-              title: "🌝잘못된 정보입니다. 다시 입력해주세요🌝",
+              text: "🌝존재하는 아이디가 없습니다🌝",
+              showConfirmButton: false,
+              timer: 1500,
             })
           : Swal.fire({
               title: "귀하의 아이디입니다.",
-              text:
-                response.data !== null
-                  ? response.data
-                  : "존재하는 아이디가 없습니다",
+              text: response.data,
             });
       })
       .catch((err) => {
         // 백에서 오류(err)가 뜬다면 아이디 찾기 실패
-        console.log(err);
         setRegisterError(
           "해당 정보와 동일한 아이디가 존재하지 않습니다. 다시 한번 확인해 주세요."
         );
@@ -258,7 +253,7 @@ export function ForResetPwPost(password, setRegisterError) {
     // post
     await axios
       // 백에 userId와 userPw를 전송한다.
-      .post("http://localhost:8080/api/updatePw", {
+      .post("http://43.200.181.65:8080/updatePw", {
         userId: sessionStorage.getItem("userId"),
         userPw: password,
       })
@@ -298,7 +293,7 @@ export function ForResetPwPost(password, setRegisterError) {
 // UpdateUser
 // 회원정보수정 페이지에서 쓰일 기존 회원정보 불러오는 함수
 export const passUpdateUser = async (userSession) => {
-  const response = await axios.post("http://localhost:8080/api/readUserData", {
+  const response = await axios.post("http://43.200.181.65:8080/readUserData", {
     sessionId: userSession,
   });
   return response.data;
@@ -311,9 +306,8 @@ export function ForPostUpdateData(updateData, setRegisterError) {
     // post
     await axios
       // 입력된 joinData를 백에 보낸다.
-      .post("http://localhost:8080/api/updateUser", updateData)
+      .post("http://43.200.181.65:8080/updateUser", updateData)
       .then((response) => {
-        console.log(response);
         if (response.data === true) {
           Swal.fire({
             icon: "success",
@@ -349,7 +343,7 @@ export function ForPostUpdateData(updateData, setRegisterError) {
 export function ForPostDeleteData(deleteData) {
   const postDeleteData = async (deleteData) => {
     await axios
-      .post("http://localhost:8080/api/deleteUser", deleteData)
+      .post("http://43.200.181.65:8080/deleteUser", deleteData)
       .then((response) => {
         sessionStorage.removeItem("sessionId");
         Swal.fire({

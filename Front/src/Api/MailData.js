@@ -10,7 +10,7 @@ export function ForContentData(
     // post
     await axios
       // 입력된 findIdData를 백에 보낸다.
-      .post("http://localhost:8080/api/readCategory", {
+      .post("43.200.181.65:8080/readCategory", {
         contentCategory: category,
       })
       .then((response) => {
@@ -35,7 +35,7 @@ export function ForSendMail(
     // post
     await axios
       // 입력된 findIdData를 백에 보낸다.
-      .post("http://localhost:8080/api/readsendmail", {
+      .post("43.200.181.65:8080/readsendmail", {
         contentCategory: category,
       })
       .then((response) => {

@@ -9,6 +9,7 @@ import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
 import ModalForRecommend from "./modal/ModalForRecommend";
 import ModalForUpdate from "./modal/ModalForUpdate";
+import Swal from "sweetalert2";
 
 const DetailBoard = () => {
   // [변수 지정]
@@ -25,33 +26,56 @@ const DetailBoard = () => {
   };
 
   //Enter로도 댓글달기 가능하게 하는 함수
-  const handleEnter = (e) => {
-    if (e.key == "Enter") {
+  const handleEnter = (event) => {
+    if (event.key == "Enter" && !event.shiftKey) {
       createCommentData();
-      console.log(commentContent);
     }
   };
 
   // 댓글입력버튼 클릭or엔터 시 - 댓글내용폼데이터 형태로 백에 보냄
   const createCommentData = () => {
-    let commentWriteData = new FormData();
-    commentWriteData.append("sessionId", sessionId);
-    commentWriteData.append("boardNo", boardNo);
-    commentWriteData.append("commentContent", commentContent);
-    postComment(commentWriteData);
+    if (!commentContent) {
+      Swal.fire({
+        icon: "error",
+        text: "🌚댓글을 입력해주세요🌝",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      let commentWriteData = new FormData();
+      commentWriteData.append("sessionId", sessionId);
+      commentWriteData.append("boardNo", boardNo);
+      commentWriteData.append("commentContent", commentContent);
+      postComment(commentWriteData);
+    }
   };
 
   // 게시글 삭제 버튼 클릭 시 = 게시글내용폼데이터 형태로 백에 보냄
   const deleteBoardData = () => {
     // 삭제 확인창 실행
-    const deleteConfirmCheck = window.confirm("정말 게시글을 삭제하겠습니까?");
-    if (deleteConfirmCheck) {
-      let deleteBoardData = new FormData();
-      deleteBoardData.append("sessionId", sessionId);
-      deleteBoardData.append("boardNo", boardNo);
-      // 폼데이터로 모은 deleteBoardData를 백에 보내주는 함수
-      postDeleteBoardData(deleteBoardData);
-    }
+    Swal.fire({
+      title: "정말 게시글을 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+      confirmButtonColor: "#3085d6", // confrim 버튼 색깔 지정
+      cancelButtonColor: "#d33", // cancel 버튼 색깔 지정
+      confirmButtonText: "승인", // confirm 버튼 텍스트 지정
+      cancelButtonText: "취소", // cancel 버튼 텍스트 지정
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let deleteBoardData = new FormData();
+        deleteBoardData.append("sessionId", sessionId);
+        deleteBoardData.append("boardNo", boardNo);
+        // 폼데이터로 모은 deleteBoardData를 백에 보내주는 함수
+        postDeleteBoardData(deleteBoardData);
+      } else {
+        Swal.fire({
+          text: "🌚게시글 삭제취소🌝",
+          showConfirmButton: false,
+          timer: 1200,
+        });
+      }
+    });
   };
 
   // [useEffect]
@@ -130,12 +154,14 @@ const DetailBoard = () => {
                       ))}
                   </div>
                 </div>
-                <div className="write-comment">
-                  <input
+
+                <div className="detailboard-write-comment">
+                  <textarea
+                    resize="none;"
                     type="text"
                     onChange={changeComment}
-                    className="Comment-write"
-                    placeholder="댓글을 입력해주세요!"
+                    className="detailboard-Comment-write"
+                    placeholder="  댓글 입력.."
                     id="commentinput"
                     onKeyDown={handleEnter}
                   />
@@ -143,7 +169,7 @@ const DetailBoard = () => {
                     className="detailboard-wcomment-btn"
                     onClick={createCommentData}
                   >
-                    댓글작성
+                    등록
                   </button>
                 </div>
               </div>
