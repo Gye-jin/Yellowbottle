@@ -25,11 +25,12 @@ Visualization: GoogleAnalytics, Tableau
 ### `사용기술`
 ![<Useskill>](./issue/사용기술.png)
 
+### `ERD`
+![<ERD>](./issue/스키마.png)
+
 ### `아키텍쳐`
 ![<architecture>](./issue/아키텍쳐.png)
 
-### `ERD`
-![<ERD>](./issue/스키마.png)
 
 ## 기능구현
 1. User의 회원가입 CRUD 기능 구현  
