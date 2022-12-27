@@ -1,12 +1,17 @@
-# Getting Started with Create React App
+# Yellowbottle 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+제로웨이스트에 관심이 있는 사람들을 위한 의견 및 후기 공유 커뮤니티
 
-## Available Scripts
+## 팀원
 
-In the project directory, you can run:
+정계진: 백엔드, 서버배포
+박형규: 데이터 모델링, 데이터 시각화
+장우성: 프론트엔드, 백엔드
+이현지: 프론트엔드
+김민수: 데이터 모델링, 데이터 시각화
+박종서: 프론트엔드
 
-### `npm start`
+### `서비스 소개`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
