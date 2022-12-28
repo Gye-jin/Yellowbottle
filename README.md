@@ -41,9 +41,6 @@ Visualization: GoogleAnalytics, Tableau
 6. 회원가입시 구독 알림을 한 고객들을 대상으로 메일 뉴스레터 발송 기능 구현  
 7. 관리자로 로그인 시 유저별 행동 패턴 분석 대쉬보드 제공 기능 구현  
 
-## 시연영상
-![<view>](./issue/시연영상.gif)
-
 ## 추후 고려사항
 ![<Future considerations>](./issue/고려사항.png)
 
