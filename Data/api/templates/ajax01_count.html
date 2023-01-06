@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var xhr;
+	// 서버로 요청하는 로직을 이 안에 담아낸다.
+	function startRequest(){
+		//1. 클라이언트와 서버를 왔다가 갔다하는 것은 생성...XMLHttpRequest
+		xhr = new XMLHttpRequest();
+		//alert(xhr);
+		
+		// 비동기는 응답페이지가 따로 있는 것이 아니라 요청한 곳으로 응답을 한다.
+		//2. 응답 받을 함수를 일단 지정해 놓는다.
+		xhr.onreadystatechange = callback;	//()을 쓰지 않음: 나중에 서버에서 응답이 들어오면 그 때 callback으로 가라
+		// callback(); 이 뜻은 함수를 지금 바로 호출하겠다는 의미
+		
+		//3. 서버의 어떤 페이지로 요청을 보내는지 지정한다.(get, post)
+		//xhr.open("get", "CountServlet?id=encore&&pass=playdata");	//메서드 방식과 페이지 이름 넣는다.
+		xhr.open("get", "/encore?id=encore&pass=playdata");	//메서드 방식과 페이지 이름 넣는다.
+		
+		//4. 실제 서버로 요청이 들어감..	요청의 가장 마지막은 send로 끝나야 한다.
+		xhr.send(null);		//객체로 담지 않겠다는 것을 null..?
+	}
+	
+	// 서버가 응답하면 그 내용을 여기서 받아서 리턴되는 데이터의 내용을 까서 적적한 곳(span)에다 뿌린다.
+	function callback(){
+		if(xhr.readyState==4){
+			if(xhr.status==200){	//200은 성공했을 때를 의미, status값은 서버에서 보내준다.
+				var text = xhr.responseText;	//out.print()로 보내는 내용을 받는다. CountServlet.java에 있음
+				document.getElementById("resultView").innerHTML = "<h3>" + text + "</hr>"
+			}
+		}
+	}
+</script>
+
+<!-- 
+	비동기 기술
+	XMLHttpRequest: 별도의 루틴을 타고 비정식적인 요청을 서버에 한다.
+	readyState의 값은 0~4를 갖는다.
+	XMLHttpRequest가 아무것도 준비가 안됐을 때 
+	XMLHttpRequest가 서버에 어느 페이지에 가겠다 목적지를 정할 때 - open() 할 때
+	send() 이때는 1을 유지
+	오고있는 단계에서 2~3을 갖는다.
+	응답이 제대로 왔을 때 4를 갖는다.
+ -->
+
+</head>
+<body>
+<h2>Show Count Update</h2>
+<input type="button" value="COUNT 증가시키기" onclick="startRequest()">
+<p></p>
+<span id="resultView"></span>
+</body>
+</html>

@@ -1,12 +1,12 @@
-// import { Add } from "@mui/icons-material";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 // FeedBoardData
 // 게시물 10개씩 피드에 가져오는 함수
 export const boardFetchData = async (pageNo) => {
   // 전체 게시물(ID)보기 _피드게시물넘버에 맞게 가져오기.
   const response = await axios.get(
-    `http://localhost:8080/api/Allboard?pageNo=${pageNo}`
+    `http://43.200.181.65:8080/Allboard?pageNo=${pageNo}`
   );
   return response.data;
 };
@@ -22,15 +22,11 @@ export const fetchMoreFeedBoard = async (
   setFetching(true);
   await axios
     // 백으로부터 기존pageNo + 1에 해당하는 페이지의 게시물(10개 묶음)을 가져온다.
-    .get(`http://localhost:8080/api/Allboard?pageNo=${pageNo + 1}`)
+    .get(`http://43.200.181.65:8080/Allboard?pageNo=${pageNo + 1}`)
     .then((response) => {
-      console.log(response.data);
       setBoards(boards.concat(response.data));
     })
-    .catch((err) => {
-      console.log(err);
-      alert("비상 오류 발생!");
-    });
+    .catch((err) => {});
   setFetching(false);
 };
 
@@ -38,7 +34,7 @@ export const fetchMoreFeedBoard = async (
 export const recommendBoardFetchData = async (boardNo) => {
   // boardNo에 해당하는 recommendBoard 3개 가져오기
   const response = await axios.get(
-    `http://localhost:8080/api/recomendBoard/${boardNo}`
+    `http://43.200.181.65:8080/recomendBoard/${boardNo}`
   );
   return response.data;
 };
@@ -50,21 +46,35 @@ export function ForPostBoardWrite(boardWriteData) {
     // post
     await axios
       // 입력된 데이터를 백에 보낸다.
-      .post("http://localhost:8080/api/board", boardWriteData, {
+      .post("http://43.200.181.65:8080/board", boardWriteData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
-        console.log(response, "성공");
         addClusterNo(response.data);
-        alert("🌍게시글작성 성공!🌍");
+        Swal.fire({
+          icon: "success",
+          title: "게시글 작성 성공🎉",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       })
       .catch(function (err) {
         // 백에서 오류(err)가 온다면 게시글 작성 실패
-        console.log(err);
-        alert("🌚게시글 작성에 실패🌚");
+        Swal.fire({
+          icon: "error",
+          text: "🌚게시글 작성실패🌝",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       });
   };
   postBoardWrite(boardWriteData);
@@ -72,17 +82,15 @@ export function ForPostBoardWrite(boardWriteData) {
 // 장고에서 군집번호 부여
 export const addClusterNo = async (clusterData) => {
   await axios
-    .post("http://43.200.193.64:8000/predict/", {
+    .post("http://43.200.181.65:8000/predict/", {
       boardNo: clusterData.boardNo,
       boardContent: clusterData.boardContent,
     })
     .then((res) => {
-      console.log("장고에 보내기 성공!!🦄", res);
       // 장고에 보냄으로써 게시글 작성이 완료되면 해당 게시글로 이동
       window.location.href = `/detailBoard/${clusterData.boardNo}`;
     })
     .catch((err) => {
-      console.log(err, "장고에 보낼 때 에러 발생!!👅");
       window.location.href = "/feed";
     });
 };
@@ -93,7 +101,7 @@ export const DetailBoardFetchData = async (boardNo) => {
   // 전체 게시물(ID)보기 _피드게시물넘버에 맞게 가져오기.
   const sessionId = sessionStorage.getItem("sessionId");
   const response = await axios.get(
-    `http://localhost:8080/api/board/${boardNo}?sessionId=${sessionId}`
+    `http://43.200.181.65:8080/board/${boardNo}?sessionId=${sessionId}`
   );
   return response.data;
 };
@@ -101,55 +109,108 @@ export const DetailBoardFetchData = async (boardNo) => {
 // 작성한 댓글 데이터 보내는 함수
 export const postComment = async (commentWriteData) => {
   await axios
-    .post("http://localhost:8080/api/insertComment", commentWriteData)
+    .post("http://43.200.181.65:8080/insertComment", commentWriteData)
     .then((response) => {
-      console.log(response.data, "댓글 백으로 전송 성공!");
-      alert("댓글이 작성되었습니다.");
+      Swal.fire({
+        icon: "success",
+        title: "댓글 작성 성공🎉",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1200);
     })
     .catch(function (err) {
-      console.log(err);
-      alert("댓글이 작성되지않습니다. 잠시후 다시 시도해주세요");
+      Swal.fire({
+        icon: "error",
+        text: "🌚댓글 작성실패🌝",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     });
 };
 
 // 댓글 수정하기 요청
 export const repostComment = async (newCommentData) => {
   await axios
-    .post("http://localhost:8080/api/updateComment", newCommentData)
-    .then(
-      ((response) => {
-        console.log(response.data);
-        alert("댓글을 수정하였습니다.");
-      }).catch(function (err) {
-        console.log(err);
-        alert("댓글 수정에 실패하였습니다. 잠시후 다시 시도해주세요");
-      })
-    );
+    .post("http://43.200.181.65:8080/updateComment", newCommentData)
+    .then((response) => {
+      Swal.fire({
+        icon: "success",
+        title: "댓글 수정 성공🎉",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1200);
+    })
+    .catch(function (err) {
+      Swal.fire({
+        icon: "error",
+        text: "🌚댓글 수정실패🌝",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1200);
+    });
 };
 
 // 댓글 삭제 요청
 export const deleteComment = async (deleteCommentData) => {
   await axios
-    .post("http://localhost:8080/api/deleteComment", deleteCommentData)
-    .then(
-      ((response) => {
-        console.log(response.data);
-        alert("댓글을 삭제하였습니다.");
-      }).catch(function (err) {
-        console.log(err);
-        alert("댓글 삭제를 실패하였습니다. 잠시후 다시 시도해주세요.");
-      })
-    );
+    .post("http://43.200.181.65:8080/deleteComment", deleteCommentData)
+    .then((response) => {
+      Swal.fire({
+        icon: "success",
+        title: "댓글 삭제 성공🌍",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200);
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        icon: "error",
+        text: "🌚댓글 삭제실패🌝",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1200);
+    });
 };
 
 // 게시글 삭제 함수
 export const postDeleteBoardData = async (deleteBoardData) => {
   await axios
-    .post("http://localhost:8080/api/boarddelete", deleteBoardData)
+    .post("http://43.200.181.65:8080/boarddelete", deleteBoardData)
     .then((response) => {
       response.data
-        ? alert("🌍게시글 삭제 성공!🌍")((window.location.href = "/feed"))
-        : alert("🌍🌍게시글 삭제 실패🌍🌍");
+        ? Swal.fire({
+            icon: "success",
+            title: "게시글 삭제 성공🌍",
+            showConfirmButton: false,
+            timer: 1200,
+          })(
+            setTimeout(() => {
+              window.location.href = "/feed";
+            }, 1200)
+          )
+        : Swal.fire({
+            icon: "error",
+            text: "🌚게시글 삭제실패🌝",
+            showConfirmButton: false,
+            timer: 1200,
+          });
     });
 };
 
@@ -160,22 +221,34 @@ export function ForPostUpdateBoard(updateBoardData) {
     // post
     await axios
       // 입력된 데이터를 백에 보낸다.
-      .post("http://localhost:8080/api/boardupdate", updateBoardData, {
+      .post("http://43.200.181.65:8080/boardupdate", updateBoardData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         // 백에서 반응(response)이 정상적으로 온다면 성공
-        console.log(response, "성공");
         addClusterNo(response.data);
-        alert("🌍게시글수정 성공!🌍");
+        Swal.fire({
+          icon: "success",
+          title: "게시글 수정 성공🌍",
+          showConfirmButton: false,
+          timer: 1200,
+        });
+        {
+          setTimeout(() => {
+            window.location.reload();
+          }, 1200);
+        }
       })
-
       .catch(function (err) {
         // 백에서 오류(err)가 온다면 게시글 작성 실패
-        console.log(err);
-        alert("🌚게시글수정 실패ㅠㅠ🌚");
+        Swal.fire({
+          icon: "error",
+          text: "🌚게시글 수정실패🌝",
+          showConfirmButton: false,
+          timer: 1200,
+        });
       });
   };
   postBoardUpdate(updateBoardData);

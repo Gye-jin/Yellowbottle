@@ -1,17 +1,23 @@
 import React from "react";
 import Header from "../../components/header/Header";
-import HeaderMail from "../../components/admin/MailSendPage";
+import SideHeader from "../../components/admin/SideHeader";
+import MailSend from "../../components/admin/MailSend";
+import styled from "styled-components";
+const Center = styled.div`
+  height: 92vh;
 
+  display: flex;
+  flex-direction: row;
+`;
 function AdminMailPage() {
-  
   return (
-   <>
+    <>
       <Header />
-      <HeaderMail/>
-      
-      
-     
-  </>
+      <Center>
+        <SideHeader />
+        <MailSend />
+      </Center>
+    </>
   );
 }
 

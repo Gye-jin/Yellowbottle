@@ -1,7 +1,6 @@
 package com.spring.back.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -101,6 +100,26 @@ public class Board {
 	public static BoardDTO myboardEntityToDTO (Board board) {
 		BoardDTO boardDTO = BoardDTO.builder()
 				.editor(true)
+				.boardNo(board.getBoardNo())
+				.userId(board.getUser().getUserId())
+				.boardContent(board.getBoardContent())
+				.createDate(board.getWrittenDate())
+				.viewCount(board.getViewCount())
+				.files(board.getFiles().stream()
+						.map(file -> File.entotyToDTO(file))
+						.collect(Collectors.toList()))
+				.comments(board.getComments().stream()
+						.map(comment -> Comment.trueEntityToDTO(comment))
+						.collect(Collectors.toList()))
+				.modifiedDate(board.getModifiedDate())
+				.build();
+		return boardDTO;
+	}
+	
+	public static BoardDTO countCommentEntityToDTO (Board board) {
+		BoardDTO boardDTO = BoardDTO.builder()
+				.editor(false)
+				.countComment(Long.valueOf(board.getComments().size()))
 				.boardNo(board.getBoardNo())
 				.userId(board.getUser().getUserId())
 				.boardContent(board.getBoardContent())

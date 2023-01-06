@@ -2,42 +2,51 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ForSendMail } from "../../Api/MailData";
 import TableScrollbar from "react-table-scrollbar";
-
-const StyledTable1 = styled.table`
-  display: inline-block;
-  margin: 30px;
+const A = styled.a`
+  color: black;
   text-align: center;
   border-collapse: collapse;
-
+  text-decoration: none;
+`;
+const StyledTable = styled.table`
+  font-size: 15px;
+  text-align: center;
+  border-collapse: collapse;
   thead {
     tr {
+      border: 2px solid orange;
       th {
-        padding: 10px 15px;
-        background-color: #888;
+        padding: 5px 8px;
+        background-color: #f3c73c;
         color: #fff;
-        font-weight: 700;
+        font-weight: 1000;
       }
     }
   }
   tbody {
     tr {
       td {
-        padding: 7px 15px;
+        padding: 5px 5px;
         border-bottom: 1px solid #eee;
+        font-color: black;
+        border-bottom: 1px solid orange;
       }
     }
   }
   .second-row {
-    width: 1100px;
+    width: 1200px;
+  }
+  .second-row2 {
+    width: 700px;
   }
 `;
 
-const Select2 = styled.select`
+const Select = styled.select`
   float: center;
-  margin: 0;
+  margin: 3px 340px;
   min-width: 0;
   display: inline-block;
-  width: 13%;
+  width: 30%;
   padding: 8px 8px;
   font-size: inherit;
   line-height: inherit;
@@ -45,6 +54,7 @@ const Select2 = styled.select`
   border-radius: 4px;
   color: inherit;
   background-color: transparent;
+  padding: 10px;
   &:focus {
     border-color: red;
   }
@@ -80,37 +90,44 @@ const MailCheck = () => {
   }, [selected]);
 
   return (
-    <>
-      <TableScrollbar rows={15}>
-        <StyledTable1>
-          <Select2 onChange={handleSelect} value={selected}>
-            {selectList.map((item) => (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            ))}
-          </Select2>
-          <thead>
-            <tr>
-              <th></th>
-              <th className="second-row">목록</th>
-            </tr>
-          </thead>
-          <tbody>
-            {contents?.map((contents, key) => (
-              <tr key={key}>
-                <td></td>
-                <td className="second-row">
-                  <a href={contents.contentUrl} target="blank">
-                    {contents.contentTitle}
-                  </a>
-                </td>
+    <div class="parentmail2">
+      <div class="checkchild1">
+        <Select onChange={handleSelect} value={selected}>
+          {selectList.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </Select>
+
+        <TableScrollbar rows={15}>
+          <StyledTable>
+            <thead>
+              <tr>
+                <th></th>
+                <th className="second-row">보낸 기사</th>
+                <th className="second-row">보낸 날짜</th>
               </tr>
-            ))}
-          </tbody>
-        </StyledTable1>
-      </TableScrollbar>
-    </>
+            </thead>
+            <tbody>
+              {contents?.map((contents, key) => (
+                <tr key={key}>
+                  <td></td>
+                  <td className="second-row">
+                    <A href={contents.contentUrl} target="blank">
+                      {contents.contentTitle}
+                    </A>
+                  </td>
+                  <td className="second-row2">
+                    {String(contents.sendDate).replace("T", " ")}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </StyledTable>
+        </TableScrollbar>
+      </div>
+    </div>
   );
 };
 export default MailCheck;

@@ -1,71 +1,29 @@
-// https://babycoder05.tistory.com/entry/React-%EC%B2%B4%ED%81%AC%EB%B0%95%EC%8A%A4-%EC%A0%84%EC%B2%B4-%EC%84%A0%ED%83%9D%ED%95%B4%EC%A0%9C-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
 import { ForContentData } from "../../Api/MailData";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-
-const StyledTable0 = styled.div`
-  display: flex;
-  // height: 100%;
-`;
+import Loading from "./Loading";
+import Swal from "sweetalert2";
 
 const StyledTable1 = styled.table`
-  display: inline;
-  // margin: 30px;
+  font-size: 15px;
   text-align: center;
   border-collapse: collapse;
-  // width:600px;
-  float: left;
-  width: 50%;
-  height: 500px;
+  // height:470px;
   thead {
     tr {
       th {
-        padding: 10px 15px;
-        background-color: #888;
+        padding: 5px 8px;
+        background-color: #f3c73c;
         color: #fff;
-        font-weight: 700;
+        font-weight: 1000;
       }
     }
   }
   tbody {
     tr {
       td {
-        padding: 10px 15px;
-        border-bottom: 1px solid #eee;
-      }
-    }
-  }
-  .second-row {
-    width: 600px;
-  }
-`;
-
-const StyledTable2 = styled.table`
-  display: inline;
-  text-align: center;
-  border-collapse: collapse;
-  height: 500px;
-  margin-top: 40px;
-  float: right;
-  width: 50%;
-  right: 0%;
-  top: 23%;
-  thead {
-    tr {
-      th {
-        padding: 10px 15px;
-        background-color: #888;
-        border-right: 2px solid white;
-        color: black;
-        font-weight: 700;
-      }
-    }
-  }
-  tbody {
-    tr {
-      td {
-        padding: 10px 15px;
+        padding: 5px 5px;
         border-bottom: 1px solid #eee;
       }
     }
@@ -74,15 +32,48 @@ const StyledTable2 = styled.table`
     width: 1000px;
   }
 `;
-const Select2 = styled.select`
-  // float: center;
-  margin: 0;
+const A = styled.a`
+  color: black;
+  text-align: center;
+  border-collapse: collapse;
+  text-decoration: none;
+`;
+const StyledTable2 = styled.table`
+  font-size: 15px;
+  text-align: center;
+  border-collapse: collapse;
+
+  thead {
+    tr {
+      th {
+        padding: 5px 8px;
+        background-color: #f3c73c;
+        color: #fff;
+        font-weight: 700;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding: 5px 5px;
+        border-bottom: 1px solid #eee;
+        font-color: black;
+      }
+    }
+  }
+  .second-row {
+    width: 600px;
+  }
+`;
+
+const Select = styled.select`
+  float: center;
+  margin: 5px 178px;
   min-width: 0;
-  // display: inline;
   width: 30%;
   padding: 8px 8px;
   font-size: inherit;
-  // line-height: inherit;
   height: 40px;
   border: 1px solid;
   border-radius: 4px;
@@ -93,22 +84,24 @@ const Select2 = styled.select`
   }
 `;
 const Btn = styled.button`
-  background-color: green;
-  color: white;
+  background-color: white;
   width: 140px;
   height: 40px;
+  border: none;
 `;
 const Btn2 = styled.div`
-  position: fixed;
-  bottom: 150px;
-  right: 230px;
+  width: 140px;
+  height: 40px;
+  border: solid 5px #f3c73c;
+  margin: auto;
 `;
-// const options = [
-//   { value: "비건", label: "비건" },
-//   { value: "제로웨이스트", label: "제로웨이스트" },
-//   { value: "플로깅", label: "플로깅" },
-// ];
+
 const MailSend = () => {
+  // 로딩중 만들기
+  const [loading, setLoading] = useState(true);
+  //3 개만 선택
+  const [num_sel, setNum] = useState(0);
+
   //체크박스 고르기
   const selectList = ["비건", "제로웨이스트", "플로깅"];
 
@@ -123,9 +116,6 @@ const MailSend = () => {
   // 백에서 보낸 contents 받는 공간
   const [contents, setContent] = useState([]);
 
-  // 보낼 No을 받고
-  // 2는 목록에 보여줄 title
-
   // 체크된 아이템을 담을 배열 << spring으로 전송용  contentNo
   const [checkContent, setCheckContents] = useState([]);
 
@@ -133,13 +123,25 @@ const MailSend = () => {
   const [checkContent2, setCheckContents2] = useState([]);
 
   // 체크박스 단일 선택
-  const handleSingleCheck = (checked, id, title) => {
+  const handleSingleCheck = (checked, id, title, num_sel) => {
     if (checked) {
-      // 단일 선택 시 체크된 아이템을 배열에 추가
-      setCheckContents((prev) => [...prev, id]);
-      // 단일 선택 시 체크된 아이템을 배열10 에 추가
-      setCheckContents2((prev) => [...prev, title]);
+      setNum(num_sel + 1);
+      if (num_sel <= 2) {
+        // 단일 선택 시 체크된 아이템을 배열에 추가
+        setCheckContents((prev) => [...prev, id]);
+        // 단일 선택 시 체크된 아이템을 배열2 에 추가
+        setCheckContents2((prev) => [...prev, title]);
+      } else {
+        setNum(3);
+        Swal.fire({
+          icon: "error",
+          title: "🌚3개만 골라주세요🌝",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
     } else {
+      setNum(num_sel - 1);
       // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
       setCheckContents(checkContent.filter((el) => el !== id));
       setCheckContents2(checkContent2.filter((el1) => el1 !== title));
@@ -148,12 +150,19 @@ const MailSend = () => {
 
   const sendMail = async (mailData) => {
     // 전체 게시물(ID)보기 _피드게시물넘버에 맞게 가져오기.
-    const response = await axios.get(
-      `http://localhost:8080/api/mail?FirstcontentNo=${mailData[0]}&SecondcontentNo=${mailData[1]}&ThirdcontentNo=${mailData[2]}`
-    );
-    setCheckContents([]);
-    setCheckContents2([]);
-    console.log(response);
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://43.200.181.65:8080/mail?FirstcontentNo=${mailData[0]}&SecondcontentNo=${mailData[1]}&ThirdcontentNo=${mailData[2]}`
+      );
+      console.log(response);
+      setCheckContents([]);
+      setCheckContents2([]);
+      setNum(0);
+      setLoading(false);
+    } catch (error) {
+      console.log("error");
+    }
   };
 
   useEffect(() => {
@@ -164,26 +173,30 @@ const MailSend = () => {
     ForContentData(selected, setContent);
   }, [selected]);
 
-  return (
-    <>
-      <StyledTable0>
-        <StyledTable1>
-          <Select2
-            onChange={handleSelect}
-            value={selected}
-            defaultValue="제로웨이스트"
-          >
-            {selectList.map((item) => (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            ))}
-          </Select2>
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
+  return (
+    <div class="parentmail">
+      <div class="childmail">
+        <Select
+          onChange={handleSelect}
+          value={selected}
+          defaultValue="제로웨이스트"
+        >
+          {selectList.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </Select>
+
+        <StyledTable1>
           <thead>
             <tr>
               <th></th>
-              <th className="second-row">목록</th>
+              <th className="second-row">기사 목록</th>
             </tr>
           </thead>
           <tbody>
@@ -197,7 +210,8 @@ const MailSend = () => {
                       handleSingleCheck(
                         e.target.checked,
                         contents.contentNo,
-                        contents.contentTitle
+                        contents.contentTitle,
+                        num_sel
                       )
                     }
                     // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
@@ -207,20 +221,22 @@ const MailSend = () => {
                   />
                 </td>
                 <td className="second-row">
-                  <a href={contents.contentUrl} target="blank">
+                  <A href={contents.contentUrl} target="blank">
                     {contents.contentTitle}
-                  </a>
+                  </A>
                 </td>
               </tr>
             ))}
           </tbody>
         </StyledTable1>
+      </div>
 
+      <div class="childmail2">
         <StyledTable2>
           <thead>
             <tr>
               <th></th>
-              <th className="second-row">목록</th>
+              <th className="second-row">보낼 기사</th>
             </tr>
           </thead>
           <tbody>
@@ -231,13 +247,20 @@ const MailSend = () => {
               </tr>
             ))}
           </tbody>
-          {/* </StyledTable2> */}
-          <Btn2>
-            <Btn onClick={() => sendMail(checkContent)}>보내기</Btn>
-          </Btn2>
         </StyledTable2>
-      </StyledTable0>
-    </>
+        <Btn2>
+          <Btn
+            onClick={() => {
+              sendMail(checkContent);
+            }}
+          >
+            보내기
+          </Btn>
+        </Btn2>
+      </div>
+
+      {loading && <Loading />}
+    </div>
   );
 };
 export default MailSend;

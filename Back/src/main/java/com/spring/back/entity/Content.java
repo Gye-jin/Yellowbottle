@@ -1,6 +1,7 @@
 package com.spring.back.entity;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -44,7 +45,7 @@ public class Content {
 	
 	@CreatedDate
 	@Column(updatable = false)
-	private LocalDateTime date;
+	private LocalDate date;
 	
 	private LocalDateTime sendDate;
 	

@@ -11,7 +11,7 @@ function PersonPage() {
   // 해당 userId가 올린 댓글,게시글,에디터 관련 정보를 저장할 공간
   const [myPageData, setMyPageData] = useState([]);
   // 등급별 이미지 주소값
-  const [gradeImage, setGradeImage] = useState("/img/firstGradeImg.png");
+  const [gradeImage, setGradeImage] = useState("/img/grade_1.jpg");
   // 사용자의 세션값
   const userSession = sessionStorage.getItem("sessionId");
   // 이동시켜주는 함수
@@ -29,11 +29,11 @@ function PersonPage() {
   useEffect(() => {
     const personGrade = `${myPageData.grade}`;
     if (personGrade === "숲") {
-      setGradeImage("/img/finalGradeImg.jpg");
+      setGradeImage("/img/grade_4.jpg");
     } else if (personGrade === "나무") {
-      setGradeImage("/img/thirdGradeImg.png");
+      setGradeImage("/img/grade_3.jpg");
     } else if (personGrade === "잔디") {
-      setGradeImage("/img/secondGradeImg.jpg");
+      setGradeImage("/img/grade_2.jpg");
     }
   }, [myPageData]);
 
@@ -45,15 +45,32 @@ function PersonPage() {
           <div className="PersonPage-Information">
             <div className="PersonPage-Information-Log">
               <h1>{personId}</h1>
+              <div className="PersonPage-Information-Board">
+                <h4>
+                  회원등급 : {myPageData.grade}
+                  <br />
+                  게시물 수 : {myPageData.countBoard}
+                  <br />
+                  작성한 댓글 수 : {myPageData.countComment}
+                </h4>
+              </div>
+              {/* <n /> */}
               {personId === sessionUserId ? (
-                <button onClick={() => navigate("/updateUser")}>
+                <button
+                  className="PersonPage-update"
+                  onClick={() => navigate("/updateUser")}
+                >
                   회원정보수정
                 </button>
               ) : (
                 <></>
               )}
+              &nbsp;&nbsp;
               {personId === sessionUserId ? (
-                <button onClick={() => navigate("/deleteUser")}>
+                <button
+                  className="PersonPage-withdraw"
+                  onClick={() => navigate("/deleteUser")}
+                >
                   회원탈퇴
                 </button>
               ) : (
@@ -67,10 +84,6 @@ function PersonPage() {
                 className="PersonPage-Information-GradeImg"
               />
             </div>
-            <div className="PersonPage-Information-Board">
-              <div>작성한 댓글 수 :{myPageData.countComment}</div>
-              <div>게시물 수 :{myPageData.countBoard}</div>
-            </div>
             {/* 만약 해당페이지가 본인 마이페이지라면 회원정보수정 버튼 존재 and 타인페이지라면 회원정보수정 버튼 미존재 */}
           </div>
           <br />
@@ -78,7 +91,9 @@ function PersonPage() {
             {/* 해당유저가 올린 게시물사진 모두 보여주는 함수 */}
             {myPageData.boards &&
               myPageData.boards.map((board) => (
-                <div>
+                <div className="personPage-one-image">
+                  <br />
+                  <br />
                   <img
                     key={board.boardNo}
                     src={`${board.filePath + board.fileName}`}

@@ -1,0 +1,182 @@
+Watching for file changes with StatReloader
+2022-12-13 09:08:21.824417: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-12-13 09:08:21.962167: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2022-12-13 09:08:21.962200: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-12-13 09:08:22.767585: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2022-12-13 09:08:22.767665: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2022-12-13 09:08:22.767675: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2022-12-13 09:08:23.845284: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2022-12-13 09:08:23.845317: W tensorflow/compiler/xla/stream_executor/cuda/cuda_driver.cc:265] failed call to cuInit: UNKNOWN ERROR (303)
+2022-12-13 09:08:23.845340: I tensorflow/compiler/xla/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (ip-172-31-36-57): /proc/driver/nvidia/version does not exist
+2022-12-13 09:08:23.845565: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Performing system checks...
+
+------------model load-------------
+Watching for file changes with StatReloader
+2022-12-13 09:08:30.105367: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-12-13 09:08:30.249639: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2022-12-13 09:08:30.249673: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-12-13 09:08:31.081218: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2022-12-13 09:08:31.081303: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2022-12-13 09:08:31.081315: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2022-12-13 09:08:32.212451: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2022-12-13 09:08:32.212486: W tensorflow/compiler/xla/stream_executor/cuda/cuda_driver.cc:265] failed call to cuInit: UNKNOWN ERROR (303)
+2022-12-13 09:08:32.212509: I tensorflow/compiler/xla/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (ip-172-31-36-57): /proc/driver/nvidia/version does not exist
+2022-12-13 09:08:32.212745: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Performing system checks...
+
+------------model load-------------
+---------master load----------
+System check identified no issues (0 silenced).
+December 13, 2022 - 09:08:34
+Django version 4.1.4, using settings 'model_service.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+<class 'PIL.JpegImagePlugin.JpegImageFile'>
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 2s 2s/step
+[13/Dec/2022 09:10:52] "POST /predict/ HTTP/1.1" 200 28
+Method Not Allowed: /predict/
+[13/Dec/2022 09:11:56] "GET /predict/ HTTP/1.1" 405 40
+[13/Dec/2022 10:58:58] "GET / HTTP/1.1" 200 36
+Method Not Allowed: /predict/
+[13/Dec/2022 12:58:13] "GET /predict/ HTTP/1.1" 405 10526
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3385
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3597
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 200 89476
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1719
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+[13/Dec/2022 12:58:13] "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+Not Found: /favicon.ico
+[13/Dec/2022 12:58:14] "GET /favicon.ico HTTP/1.1" 404 2423
+Method Not Allowed: /predict/
+[13/Dec/2022 13:00:04] "GET /predict/ HTTP/1.1" 405 10526
+Method Not Allowed: /predict/
+[13/Dec/2022 13:00:06] "GET /predict/ HTTP/1.1" 405 10526
+[13/Dec/2022 13:00:07] "GET / HTTP/1.1" 200 10012
+[13/Dec/2022 13:00:15] "OPTIONS /predict/ HTTP/1.1" 200 10799
+<class 'PIL.JpegImagePlugin.JpegImageFile'>
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 157ms/step
+[13/Dec/2022 13:00:47] "POST /predict/ HTTP/1.1" 200 28
+Method Not Allowed: /predict/
+[13/Dec/2022 13:01:07] "GET /predict/ HTTP/1.1" 405 10526
+<class 'PIL.JpegImagePlugin.JpegImageFile'>
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 151ms/step
+[13/Dec/2022 13:01:32] "POST /predict/ HTTP/1.1" 200 28
+Method Not Allowed: /predict/
+[13/Dec/2022 13:01:41] "GET /predict/ HTTP/1.1" 405 10526
+Internal Server Error: /predict/
+Traceback (most recent call last):
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/workspace/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/workspace/dog_model_service/api/views.py", line 54, in predict_model
+    img = Image.open(BytesIO(base64.b64decode(base64_string)))
+  File "/usr/lib/python3.8/base64.py", line 80, in b64decode
+    s = _bytes_from_decode_data(s)
+  File "/usr/lib/python3.8/base64.py", line 45, in _bytes_from_decode_data
+    raise TypeError("argument should be a bytes-like object or ASCII "
+TypeError: argument should be a bytes-like object or ASCII string, not 'NoneType'
+[13/Dec/2022 13:01:45] "POST /predict/ HTTP/1.1" 500 98416
+<class 'PIL.JpegImagePlugin.JpegImageFile'>
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 137ms/step
+[13/Dec/2022 13:02:03] "POST /predict/ HTTP/1.1" 200 28
+Method Not Allowed: /predict/
+[13/Dec/2022 13:02:12] "GET /predict/ HTTP/1.1" 405 10526
+Bad Request: /predict/
+[13/Dec/2022 13:02:25] "POST /predict/ HTTP/1.1" 400 10543
+Method Not Allowed: /predict/
+[13/Dec/2022 13:13:18] "GET /predict/ HTTP/1.1" 405 10526
+<class 'PIL.JpegImagePlugin.JpegImageFile'>
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 139ms/step
+[13/Dec/2022 13:13:34] "POST /predict/ HTTP/1.1" 200 28
+
+Type 'manage.py help <subcommand>' for help on a specific subcommand.
+
+Available subcommands:
+
+[auth]
+    changepassword
+    createsuperuser
+
+[contenttypes]
+    remove_stale_contenttypes
+
+[django]
+    check
+    compilemessages
+    createcachetable
+    dbshell
+    diffsettings
+    dumpdata
+    flush
+    inspectdb
+    loaddata
+    makemessages
+    makemigrations
+    migrate
+    optimizemigration
+    sendtestemail
+    shell
+    showmigrations
+    sqlflush
+    sqlmigrate
+    sqlsequencereset
+    squashmigrations
+    startapp
+    startproject
+    test
+    testserver
+
+[rest_framework]
+    generateschema
+
+[sessions]
+    clearsessions
+
+[staticfiles]
+    collectstatic
+    findstatic
+    runserver
+Method Not Allowed: /predict/
+[13/Dec/2022 13:50:33] "GET /predict/ HTTP/1.1" 405 10526
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+[13/Dec/2022 13:50:33] "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+<class 'PIL.JpegImagePlugin.JpegImageFile'>
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 140ms/step
+[13/Dec/2022 13:59:47] "POST /predict/ HTTP/1.1" 200 28
+<class 'PIL.JpegImagePlugin.JpegImageFile'>
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 136ms/step
+[13/Dec/2022 14:01:34] "POST /predict/ HTTP/1.1" 200 28

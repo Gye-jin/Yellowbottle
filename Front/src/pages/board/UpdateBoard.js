@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DetailBoardFetchData, ForPostUpdateBoard } from "../../Api/BoardData";
+import Swal from "sweetalert2";
 
 const UpBoardTest = ({ boardNo }) => {
   // [변수]
@@ -7,7 +8,7 @@ const UpBoardTest = ({ boardNo }) => {
   const [board, setBoard] = useState([]);
   // 기존 게시물 file
   const [originFileImage, setOriginFileImage] = useState([]);
-  // 미리보기 이미지 url
+  // 미리보기 이미지 URL
   const [fileImage, setFileImage] = useState("");
   //  입력한 게시글 내용
   const [newBoardContent, setNewBoardContent] = useState("");
@@ -35,41 +36,43 @@ const UpBoardTest = ({ boardNo }) => {
   };
 
   // 수정한 이미지와 게시글을 백에 보내기
-  const createUpdateBoardData = (e) => {
+  const sendUpdateBoardData = (e) => {
     e.preventDefault();
     // 게시물 내용 변경 X && 게시물 파일 변경
-    if (newBoardContent.length == 0 && originFileImage != fileImage) {
+    if (newBoardContent.length === 0 && originFileImage !== fileImage) {
       let updateBoardData = new FormData();
       updateBoardData.append("sessionId", userSession);
       updateBoardData.append("images", selectImage);
       updateBoardData.append("boardNo", boardNo);
       updateBoardData.append("boardContent", board.boardContent);
       ForPostUpdateBoard(updateBoardData);
-      window.location.reload();
     }
     // 게시글 내용만 변경 / 게시물 파일 변경 X
-    else if (newBoardContent.length != 0 && originFileImage == fileImage) {
+    else if (newBoardContent.length !== 0 && originFileImage === fileImage) {
       let updateBoardData = new FormData();
       updateBoardData.append("sessionId", userSession);
       updateBoardData.append("images", board.files);
       updateBoardData.append("boardNo", boardNo);
       updateBoardData.append("boardContent", newBoardContent);
       ForPostUpdateBoard(updateBoardData);
-      window.location.reload();
     }
     // 게시글 내용만 변경 / 게시물 파일 변경
-    else if (newBoardContent.length != 0 && originFileImage != fileImage) {
+    else if (newBoardContent.length !== 0 && originFileImage !== fileImage) {
       let updateBoardData = new FormData();
       updateBoardData.append("sessionId", userSession);
       updateBoardData.append("images", selectImage);
       updateBoardData.append("boardNo", boardNo);
       updateBoardData.append("boardContent", newBoardContent);
       ForPostUpdateBoard(updateBoardData);
-      window.location.reload();
     }
     // 변경사항 없음
     else {
-      alert("변경된 사항이 없습니다.");
+      Swal.fire({
+        icon: "error",
+        text: "🌚변경된 사항이 없습니다🌝",
+        showConfirmButton: false,
+        timer: 1200,
+      });
     }
   };
 
@@ -131,7 +134,12 @@ const UpBoardTest = ({ boardNo }) => {
               </div>
             </div>
             {/* 버튼을 누를시 선택한 파일과 작성된 게시글 데이터를 boardWriteData에 담아 이를 백에 전달한다. */}
-            <button onClick={createUpdateBoardData}>게시글 수정</button>
+            <button
+              onClick={sendUpdateBoardData}
+              className="updateBoard-updateBtn"
+            >
+              게시글 수정
+            </button>
           </div>
         </div>
       </form>

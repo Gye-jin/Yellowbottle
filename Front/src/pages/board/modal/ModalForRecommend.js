@@ -21,7 +21,7 @@ const ModalForRecommend = ({ boardNo }) => {
 
   return (
     <>
-      <div className="modalforrecommand">
+      <div className="modalforrecommand-btn-set">
         <span className="modal-recommand-btn">
           <button
             className="recommand-btn"
@@ -33,10 +33,31 @@ const ModalForRecommend = ({ boardNo }) => {
         <Modal
           isOpen={recommendBoardModal}
           onRequestClose={() => setRecommendBoardModal(false)}
+          style={{
+            overlay: {
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(255, 255, 255, 0.75)",
+            },
+            content: {
+              position: "absolute",
+              top: "40px",
+              left: "300px",
+              right: "300px",
+              bottom: "40px",
+              border: "1px solid #ccc",
+              background: "#e8e6d9",
+              overflow: "auto",
+              WebkitOverflowScrolling: "touch",
+              borderRadius: "4px",
+              outline: "none",
+              padding: "2px",
+            },
+          }}
         >
-          <div>
-            <button onClick={() => setRecommendBoardModal(false)}>닫기</button>
-          </div>
           <br />
           {recommendBoards ? (
             <RecommendBoard

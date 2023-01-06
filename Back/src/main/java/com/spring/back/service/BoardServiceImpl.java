@@ -69,7 +69,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDTO> findBoardsByPage(PageRequest pageRequest) {
 		return boardRepo.findAll(pageRequest).stream()
-				.map(board -> Board.yourEntityToDTO(board))
+				.map(board -> Board.countCommentEntityToDTO(board))
 				.collect(Collectors.toList());
 	}
 
@@ -83,7 +83,7 @@ public class BoardServiceImpl implements BoardService {
 		Session session = sessionRepo.findBySessionId(sessionId);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateViewCount(board.getViewCount() + 1);
-		Long Countcomment = commentRepo.countByBoard(board);
+		Long Countcomment = Long.valueOf(board.getComments().size());
 		if (session.getUser().getUserId().equals(board.getUser().getUserId())) {
 			BoardDTO boardDTO = Board.myboardEntityToDTO(board);
 			boardDTO.setCountComment(Countcomment);
@@ -130,7 +130,7 @@ public class BoardServiceImpl implements BoardService {
 		List<Board> recoBoard = boardRepo.findRecommendedBoardByBoardNo(boardNo);		
 		List<BoardDTO> boardDTOs = recoBoard.stream().map(board -> Board.yourEntityToDTO(board)).collect(Collectors.toList());
 		for(BoardDTO boardDTO : boardDTOs) {
-			Long CountComment = commentRepo.countByBoard(BoardDTO.boardDtotoEntity(boardDTO));
+			Long CountComment = Long.valueOf(boardDTO.getComments().size());
 			boardDTO.setCountComment(CountComment);
 		}
 		return boardDTOs;
@@ -142,15 +142,15 @@ public class BoardServiceImpl implements BoardService {
 	public PersonpageDTO getBoardByUserId(String userId) {
 		User user = userRepo.findByUserId(userId);
 		ArrayList<BoardMapping> boardMappings = boardRepo.findByUserOrderByBoardNoDesc(user);
-		Long countBoard = boardRepo.countByUser(user);
-		Long countComment = commentRepo.countByUser(user);
 		if (sessionRepo.findByUser(user) != null) {
-			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(true).grade(user.getGrade()).countBoard(countBoard).countComment(countComment)
-					.boards(boardMappings).build();
+			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(true).grade(user.getGrade())
+					.countBoard(Long.valueOf(user.getBoards().size()))
+					.countComment(Long.valueOf(user.getComments().size())).boards(boardMappings).build();
 			return mypageDTO;
 		} else {
-			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(false).grade(user.getGrade()).countBoard(countBoard).countComment(countComment)
-					.boards(boardMappings).build();
+			PersonpageDTO mypageDTO = PersonpageDTO.builder().editor(false).grade(user.getGrade())
+					.countBoard(Long.valueOf(user.getBoards().size()))
+					.countComment(Long.valueOf(user.getComments().size())).boards(boardMappings).build();
 			return mypageDTO;
 		}
 
