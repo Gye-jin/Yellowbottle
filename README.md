@@ -14,6 +14,55 @@
 * 유저들의 마이페이지에서 유저의 실천내역들을 토대로 레벨 상태들을 확인할 수 있습니다.
 * 관리자는 관리자화면에서 유저들이 웹페이지에서 어떤 경향을 보내는지 태블로 대시보드를 통해 확인을 할 수 있습니다.
 
+## 화면 미리보기
+
+<details>
+<summary>메인화면</summary>
+<div>
+<img src="./issue/메인화면.gif" width="800" height="400"/>
+
+</div>
+</details>
+
+<details>
+<summary>회원가입</summary>
+<div>
+<img src="./issue/회원가입.gif" width="800" height="400"/>
+
+</div>
+</details>
+
+<details>
+<summary>로그인</summary>
+<div>
+<img src="./issue/로그인.gif" width="800" height="400"/>
+
+</div>
+</details>
+
+<details>
+<summary>게시글 확인</summary>
+<div>
+<img src="./issue/게시글 확인.gif" width="800" height="400"/>
+
+</div>
+</details>
+
+<details>
+<summary>관리자 화면</summary>
+<div>
+<img src="./issue/관리자 화면.gif" width="800" height="400"/>
+
+</div>
+</details>
+
+<details>
+<summary>메일 발송</summary>
+<div>
+<img src="./issue/메일 발송.gif" width="800" height="400"/>
+
+</div>
+</details>
 
 ## 멤버구성
 
@@ -32,13 +81,14 @@ Modeling: LDA
 Visualization: GoogleAnalytics, Tableau   
 
 ### `사용기술`
-![<Useskill>](./issue/사용기술.png)
+<img src="./issue/사용기술.png" width="800" height="400"/>
 
 ### `ERD`
-![<ERD>](./issue/스키마.png)
-
+<img src="./issue/스키마.png" width="800" height="400"/>
+  
+  
 ### `아키텍쳐`
-![<architecture>](./issue/아키텍쳐.png)
+
 
 
 ## 기능구현
@@ -54,5 +104,5 @@ Visualization: GoogleAnalytics, Tableau
 https://youtu.be/_1zUNl3Th3Q  
   
 ## 추후 고려사항
-![<Future considerations>](./issue/고려사항.png)
+<img src="./issue/고려사항.png" width="800" height="400"/>
 
