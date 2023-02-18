@@ -1,6 +1,6 @@
 # Yellowbottle 프로젝트
 
-제로웨이스트에 관심이 있는 사람들을 위한 의견 및 후기 공유 커뮤니티
+제로웨이스트에 관심이 있지만 실천에 부담을 느끼는 사람들을 대상으로 다양한 정보들을 제공해주며 부담없이 가볍게 제로웨이스트를 실천하고 이용후기들을 공유하는 서비스입니다. 
 
 ## 프로젝트 기간
 
@@ -81,27 +81,10 @@ Modeling: LDA
 Visualization: GoogleAnalytics, Tableau   
 
 ### `사용기술`
-<img src="./issue/사용기술.png" width="800" height="400"/>
-
-### `ERD`
-<img src="./issue/스키마.png" width="800" height="400"/>
-  
+<img src="./issue/사용기술.png" width="800" height="400"/>  
   
 ### `아키텍쳐`
-
-
-
-## 기능구현
-1. User의 회원가입 CRUD 기능 구현  
-2. 게시글의 CRUD 기능 구현  
-3. 게시글 별 댓글의 CRUD 기능 구현  
-4. 게시글 별 유사게시글 추천 서비스 구현  
-5. 피드화면 구현 시 인피니티 스크롤 기능 구현  
-6. 회원가입시 구독 알림을 한 고객들을 대상으로 메일 뉴스레터 발송 기능 구현  
-7. 관리자로 로그인 시 유저별 행동 패턴 분석 대쉬보드 제공 기능 구현  
-
-## 시연영상
-https://youtu.be/_1zUNl3Th3Q  
+<img src="./issue/아키텍쳐.png" width="800" height="400"/>
   
 ## 추후 고려사항
 <img src="./issue/고려사항.png" width="800" height="400"/>
