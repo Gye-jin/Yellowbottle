@@ -1,8 +1,12 @@
 package com.spring.back.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.common.ErrorCode;
+import com.spring.back.common.exception.ApiControllerException;
 import com.spring.back.entity.Certified;
 import com.spring.back.repository.CertifiedRepository;
 
@@ -20,12 +24,12 @@ public class CertifiedServiceImpl implements CertifiedService{
 	// [인증번호 저장]
 	@Override 
 	public boolean findByCertifiedNo(String userId,int certifiedNo) {
-		Certified certified=certifiedRepo.findByCertifiedNo(certifiedNo);
-
-		if(userId == certified.getUser().getUserId()) {
-			return true;
+		Optional<Certified> certified=certifiedRepo.findByCertifiedNo(certifiedNo);
+		if(!certified.isPresent()) {
+			certified.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	

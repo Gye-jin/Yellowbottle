@@ -1,10 +1,13 @@
 package com.spring.back.service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.common.ErrorCode;
+import com.spring.back.common.exception.ApiControllerException;
 import com.spring.back.dto.CommentDTO;
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.entity.Comment;
@@ -36,7 +39,11 @@ public class CommentServiceImpl implements CommentService {
 	// [댓글 작성]
 	@Override
 	public CommentDTO insertComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		Optional<Session>userSession=sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!userSession.isPresent()) {
+			userSession.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		Session session = userSession.orElseGet(Session::new);
 
 		Comment comment = CommentDTO.commentDtoToEntity(commentDTO);
 
@@ -59,7 +66,11 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public CommentDTO getComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
 
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		Optional<Session>userSession=sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!userSession.isPresent()) {
+			userSession.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		Session session = userSession.orElseGet(Session::new);
 		Comment comment = commentRepo.findById(commentDTO.getCommentNo()).orElseThrow(NoSuchElementException::new);
 
 		if (session.getUser().equals(comment.getUser())) {
@@ -92,7 +103,11 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public boolean updateComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
 		// userId 가져오기
-		String userId = sessionRepo.findBySessionId(sessionDTO.getSessionId()).getUser().getUserId();
+		Optional<Session>session=sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!session.isPresent()) {
+			session.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		String userId = session.orElseGet(Session::new).getUser().getUserId();
 		// commentNo를 활용하여 Comment Entity 가져오기
 		Comment comment = commentRepo.findById(commentDTO.getCommentNo()).orElseThrow(NoSuchElementException::new);
 		String newCommentContent = commentDTO.getCommentContent();
@@ -109,7 +124,11 @@ public class CommentServiceImpl implements CommentService {
 	// [특정 댓글 삭제]
 	public boolean deleteComment(SessionDTO sessionDTO, CommentDTO commentDTO) {
 		Long commentNo = commentDTO.getCommentNo();
-		String userId = sessionRepo.findBySessionId(sessionDTO.getSessionId()).getUser().getUserId();
+		Optional<Session>session=sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!session.isPresent()) {
+			session.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		String userId = session.orElseGet(Session::new).getUser().getUserId();
 
 		Comment comment = commentRepo.findById(commentNo).orElseThrow(NoSuchElementException::new);
 

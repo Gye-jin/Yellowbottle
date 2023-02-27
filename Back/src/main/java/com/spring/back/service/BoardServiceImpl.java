@@ -3,6 +3,7 @@ package com.spring.back.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.common.ErrorCode;
+import com.spring.back.common.exception.ApiControllerException;
 import com.spring.back.dto.BoardDTO;
 import com.spring.back.dto.CommentDTO;
 import com.spring.back.dto.PersonpageDTO;
@@ -49,7 +52,11 @@ public class BoardServiceImpl implements BoardService {
 	// [게시글 작성]
 	@Override
 	public BoardDTO insertBoard(SessionDTO sessionDTO, BoardDTO boardDTO) {
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		Optional<Session>userSession=sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!userSession.isPresent()) {
+			userSession.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		Session session = userSession.orElseGet(Session::new);
 		Board board = BoardDTO.boardDtotoEntity(boardDTO);
 		// board에 user 직접 삽입하기
 		board.updateUser(session.getUser());
@@ -80,7 +87,11 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public BoardDTO getBoardByBoardNo(String sessionId, Long boardNo) {
 		System.out.println(sessionId);
-		Session session = sessionRepo.findBySessionId(sessionId);
+		Optional<Session>userSession=sessionRepo.findBySessionId(sessionId);
+		if(!userSession.isPresent()) {
+			userSession.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		Session session = userSession.orElseGet(Session::new);
 		Board board = boardRepo.findById(boardNo).orElseThrow(NoSuchElementException::new);
 		board.updateViewCount(board.getViewCount() + 1);
 		Long Countcomment = Long.valueOf(board.getComments().size());
@@ -163,7 +174,11 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public BoardDTO updateBoard(SessionDTO sessionDTO, BoardDTO newboardDTO) {
 		Board board = boardRepo.findById(newboardDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		Optional<Session>userSession=sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!userSession.isPresent()) {
+			userSession.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		Session session = userSession.orElseGet(Session::new);
 		if(session.getUser().equals(session.getUser())) {
 			board.updateBoard(newboardDTO.getBoardContent());
 			return newboardDTO;
@@ -178,7 +193,11 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public boolean deleteBoard(SessionDTO sessionDTO, BoardDTO boardDTO) {
 		Board deleteBoard = boardRepo.findById(boardDTO.getBoardNo()).orElseThrow(NoSuchElementException::new);
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		Optional<Session>userSession=sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!userSession.isPresent()) {
+			userSession.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		Session session = userSession.orElseGet(Session::new);
 		// 삭제 요청한 userId와 요청한 게시글의 userId가 같을 경우에만 삭제 진행
 		if (deleteBoard.getUser().equals(session.getUser())) {
 			// file과 comment먼저 삭제 후 게시글 삭제 진행

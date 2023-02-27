@@ -1,5 +1,7 @@
 package com.spring.back.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,5 @@ public interface SessionRepository extends JpaRepository<Session, String>{
 	
 	public void deleteBySessionId(String sessionId);
 	
-	public Session findBySessionId(String sessionId);
+	public Optional<Session> findBySessionId(String sessionId);
 }

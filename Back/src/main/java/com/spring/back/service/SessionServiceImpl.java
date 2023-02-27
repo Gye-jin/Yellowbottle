@@ -1,10 +1,14 @@
 package com.spring.back.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.common.ErrorCode;
+import com.spring.back.common.exception.ApiControllerException;
 import com.spring.back.entity.Session;
 import com.spring.back.entity.User;
 import com.spring.back.repository.SessionRepository;
@@ -37,7 +41,10 @@ public class SessionServiceImpl implements SessionService{
 	
 	@Override
 	public String findBySessionId(String sessionId) {
-		Session session=sessionRepo.findBySessionId(sessionId);
-		return session.getUser().getUserId();
+		Optional<Session>session=sessionRepo.findBySessionId(sessionId);
+		if(!session.isPresent()) {
+			session.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+		}
+		return session.orElseGet(Session::new).getSessionId();
 	}
 }

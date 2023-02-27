@@ -2,6 +2,7 @@ package com.spring.back.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.back.common.ErrorCode;
+import com.spring.back.common.exception.ApiControllerException;
 import com.spring.back.dto.SessionDTO;
 import com.spring.back.dto.UserDTO;
 import com.spring.back.entity.Board;
@@ -59,7 +62,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int findPwByEmailAndBirthAndUserId(String email, String birth, String userId) {
 		User user = userRepo.findByEmailAndBirthAndUserId(email, birth, userId);
-		Certified certification = certifiedRepo.findByUser(user);
+		Certified certification = certifiedRepo.findByUser(user).orElseGet(Certified::new);
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
 		Certified certified = Certified.builder().certifiedNo(checkNum).user(user).build();
@@ -85,6 +88,7 @@ public class UserServiceImpl implements UserService {
 	public String login(String userId, String userPw, HttpSession httpsession) throws NullPointerException{
 		User user = userRepo.findByUserId(userId);
 		Session usersession = sessionRepo.findByUser(user);
+		
 		if (userPw.equals(user.getUserPw())) {
 			if (usersession != null) {
 				return usersession.getSessionId();
@@ -154,19 +158,24 @@ public class UserServiceImpl implements UserService {
 	// [회원정보 불러오기]
 	@Override
 	public UserDTO findUserData(SessionDTO sessionDTO) {
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		Optional<Session> session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!session.isPresent()){
+			session.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+			
+		}
 	
-		return User.userEntityToDTO(session.getUser());
+		return User.userEntityToDTO(session.orElseGet(Session::new).getUser());
 	}
 	// [회원정보 수정]
 	@Override
 	@Transactional
 	public boolean updateUserInfo(SessionDTO sessionDTO,UserDTO newUserDTO) {
-		Session session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
-		if(session.getUser().getUserPw().equals(newUserDTO.getUserPw()) && session.getUser().getEmail().equals(newUserDTO.getEmail())){
-			return false;
+		Optional<Session> session = sessionRepo.findBySessionId(sessionDTO.getSessionId());
+		if(!session.isPresent()){
+			session.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+			
 		}
-		session.getUser().updateUser(newUserDTO);
+		session.orElseGet(Session::new).getUser().updateUser(newUserDTO);
 		
 		return true;
 	}
@@ -197,8 +206,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public boolean deleteUser(String sessionId, String userPw) {
-		User userSession = sessionRepo.findBySessionId(sessionId).getUser();
-
+		Optional<Session> session = sessionRepo.findBySessionId(sessionId);
+		if(!session.isPresent()){
+			session.orElseThrow(() -> new ApiControllerException(ErrorCode.UNAUTHORIZED));
+			
+		}
+		User userSession = session.orElseGet(Session::new).getUser();
 		if (userSession.getUserPw().equals(userPw)) {
 			commentRepo.deleteByUser(userSession);
 			for(Board board : userSession.getBoards()) {

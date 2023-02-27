@@ -128,9 +128,6 @@ public class Board {
 				.files(board.getFiles().stream()
 						.map(file -> File.entotyToDTO(file))
 						.collect(Collectors.toList()))
-				.comments(board.getComments().stream()
-						.map(comment -> Comment.trueEntityToDTO(comment))
-						.collect(Collectors.toList()))
 				.modifiedDate(board.getModifiedDate())
 				.build();
 		return boardDTO;
